@@ -330,8 +330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceroller: {fileID: 671079728}
-  Player1Hero: {fileID: 11400000, guid: 2baaa0d285709764f87b30a6ecb59dc3, type: 2}
-  Player2Hero: {fileID: 11400000, guid: 7e6e36ad5cdd9e549b69578fb9e4f1f7, type: 2}
+  Player1Hero: {fileID: 11400000, guid: 7e6e36ad5cdd9e549b69578fb9e4f1f7, type: 2}
+  Player2Hero: {fileID: 11400000, guid: 2baaa0d285709764f87b30a6ecb59dc3, type: 2}
 --- !u!4 &2052005785
 Transform:
   m_ObjectHideFlags: 0
