@@ -2,15 +2,30 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private DiceRoller diceroller;
+    public HeroSO Player1Hero;
+    public HeroSO Player2Hero;
+    int damage;
+    private void Update()
     {
-        
-    }
+        int atkValue = diceroller.RollTotal(Player1Hero.atk, Player1Hero.atkSize);
+        int defValue = diceroller.RollTotal(Player2Hero.def, Player2Hero.defSize);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (atkValue > defValue)
+        {
+            damage = atkValue - defValue;
+        }
+        else if (atkValue < defValue)
+        {
+            damage = 0;
+            //block attack
+        }
+        else
+        {
+            damage = 0;
+            //(atkValue = defValue)! Clash!
+        }
+
+        Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
     }
 }
