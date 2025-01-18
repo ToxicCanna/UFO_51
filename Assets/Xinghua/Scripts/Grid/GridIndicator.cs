@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
-using static UnityEditorInternal.VersionControl.ListControl;
+
 
 public class GridIndicator : MonoBehaviour
 {
     [SerializeField] private GameObject heroPrefab;
-    [SerializeField] private Vector2 gridSize = new Vector2(-100, 100); 
+    [SerializeField] private Vector2 gridOrigin = new Vector2(-10, -10);
+    [SerializeField] private Vector2 gridSize = new Vector2(20, 20); 
     [SerializeField] private float tileSize = 1f; 
     private Vector2 currentGridPosition; 
 
     void Start()
     {
         //should get the current player position
-        transform.position = heroPrefab.transform.position;
+        currentGridPosition = heroPrefab.transform.position;
     }
 
     void Update()
@@ -37,8 +38,8 @@ public class GridIndicator : MonoBehaviour
     private void MoveIndicator(Vector2 direction)
     { 
         Vector2 newPosition = currentGridPosition + direction;  
-        if (newPosition.x >= 0 && newPosition.x < gridSize.x &&
-            newPosition.y >= 0 && newPosition.y < gridSize.y)
+        if (newPosition.x >= gridOrigin.x && newPosition.x < gridSize.x+gridOrigin.x &&
+            newPosition.y >= gridOrigin.y && newPosition.y < gridSize.y+gridOrigin.y)
         {
             currentGridPosition = newPosition; 
         }
@@ -49,4 +50,5 @@ public class GridIndicator : MonoBehaviour
         Vector3 worldPosition = new Vector3(currentGridPosition.x * tileSize, currentGridPosition.y * tileSize, 0);
         transform.position = worldPosition;
     }
+    
 }
