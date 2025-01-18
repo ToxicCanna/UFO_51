@@ -3,16 +3,22 @@
 
 public class GridIndicator : MonoBehaviour
 {
+    [SerializeField] enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
+
+    [SerializeField] private GameObject playerRedHero;
+    [SerializeField] private GameObject playerBlueHero;
+    private PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
     [SerializeField] private GameObject heroPrefab;
     [SerializeField] private Vector2 gridOrigin = new Vector2(-10, -10);
-    [SerializeField] private Vector2 gridSize = new Vector2(20, 20); 
-    [SerializeField] private float tileSize = 1f; 
-    private Vector2 currentGridPosition; 
+    [SerializeField] private Vector2 gridSize = new Vector2(20, 20);
+    [SerializeField] private float tileSize = 1f;
+    private Vector2 currentGridPosition;
+    [SerializeField] private GameObject startPosition;
 
-    void Start()
+    void Awake()
     {
         //should get the current player position
-        currentGridPosition = heroPrefab.transform.position;
+        transform.position = startPosition.transform.position;
     }
 
     void Update()
@@ -30,18 +36,33 @@ public class GridIndicator : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector3 targetPosition = transform.position;
-            heroPrefab.transform.position = targetPosition;
+            if (currentTurn == PlayerTurn.PlayerRedSide)
+            {
+                playerRedHero.transform.position = transform.position;
+                currentTurn = PlayerTurn.PlayerBlueSide;
+                // Invoke(nameof(ResetIndicator), 2f);
+                Debug.Log($"current player is:{currentTurn}");
+            }
+            else if (currentTurn == PlayerTurn.PlayerBlueSide)
+            {
+                playerBlueHero.transform.position = transform.position;
+                currentTurn = PlayerTurn.PlayerRedSide;
+                transform.position = playerRedHero.transform.position;
+                Debug.Log($"current player is:{currentTurn}");
+            }
         }
     }
-
+    //private void ResetIndicator()
+    //{
+    //    transform.position = playerBlueHero.transform.position;
+    //}
     private void MoveIndicator(Vector2 direction)
-    { 
-        Vector2 newPosition = currentGridPosition + direction;  
-        if (newPosition.x >= gridOrigin.x && newPosition.x < gridSize.x+gridOrigin.x &&
-            newPosition.y >= gridOrigin.y && newPosition.y < gridSize.y+gridOrigin.y)
+    {
+        Vector2 newPosition = currentGridPosition + direction;
+        if (newPosition.x >= gridOrigin.x && newPosition.x < gridSize.x + gridOrigin.x &&
+            newPosition.y >= gridOrigin.y && newPosition.y < gridSize.y + gridOrigin.y)
         {
-            currentGridPosition = newPosition; 
+            currentGridPosition = newPosition;
         }
     }
 
@@ -50,5 +71,5 @@ public class GridIndicator : MonoBehaviour
         Vector3 worldPosition = new Vector3(currentGridPosition.x * tileSize, currentGridPosition.y * tileSize, 0);
         transform.position = worldPosition;
     }
-    
+
 }

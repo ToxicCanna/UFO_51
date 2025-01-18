@@ -1,5 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HighLight : MonoBehaviour
 {
@@ -22,13 +21,20 @@ public class HighLight : MonoBehaviour
             Vector3.right * tileSize
         };
 
-         for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             highlights[i] = Instantiate(highlightPrefab);
-            highlights[i].SetActive(false);
+            highlights[i].SetActive(true);
         }
     }
-
+    private void Update()
+    {
+        UpdateHighlights();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            highlightPrefab.SetActive(false);
+        };
+    }
     private void UpdateHighlights()
     {
         Vector3 playerPosition = transform.position;
@@ -37,11 +43,7 @@ public class HighLight : MonoBehaviour
             Vector3 targetPosition = playerPosition + directions[i];
             highlights[i].transform.position = targetPosition;
             highlights[i].SetActive(CanMoveTo(targetPosition));
-        }
 
-        for (int i = 0; i < highlights.Length; i++)
-        {
-            highlights[i].GetComponent<SpriteRenderer>().color = (i == selectedDirection) ? Color.yellow : Color.white;
         }
     }
 
