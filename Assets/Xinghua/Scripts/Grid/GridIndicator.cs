@@ -46,15 +46,28 @@ public class GridIndicator : MonoBehaviour
             {
                 playerRedHero.transform.position = transform.position;
                 currentTurn = PlayerTurn.PlayerBlueSide;
-                // Invoke(nameof(ResetIndicator), 2f);
+                Vector3 heroPosition = playerBlueHero.transform.position;
+                currentGridPosition = new Vector2(
+                    Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                    Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+                );
+               
                 Debug.Log($"current player is:{currentTurn}");
+
             }
             else if (currentTurn == PlayerTurn.PlayerBlueSide)
             {
+                Vector3 heroPosition = playerRedHero.transform.position;
+                currentGridPosition = new Vector2(
+                    Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                    Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+                );
+
                 playerBlueHero.transform.position = transform.position;
                 currentTurn = PlayerTurn.PlayerRedSide;
-                transform.position = playerRedHero.transform.position;
+                //transform.position = playerRedHero.transform.position;
                 Debug.Log($"current player is:{currentTurn}");
+                
             }
         }
     }

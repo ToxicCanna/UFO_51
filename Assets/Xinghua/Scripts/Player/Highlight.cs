@@ -8,7 +8,7 @@ public class HighLight : MonoBehaviour
 
     private GameObject[] highlights = new GameObject[4];
     private Vector3[] directions;
-    private int selectedDirection = 0;
+   
 
     void Start()
     {
@@ -37,14 +37,20 @@ public class HighLight : MonoBehaviour
     }
     private void UpdateHighlights()
     {
-        Vector3 playerPosition = transform.position;
-        for (int i = 0; i < highlights.Length; i++)
+        //inside of if() should be the player choose some hero already
+        if (Input.anyKeyDown)
         {
-            Vector3 targetPosition = playerPosition + directions[i];
-            highlights[i].transform.position = targetPosition;
-            highlights[i].SetActive(CanMoveTo(targetPosition));
+            Vector3 playerPosition = transform.position;
+            for (int i = 0; i < highlights.Length; i++)
+            {
+                Vector3 targetPosition = playerPosition + directions[i];
+                highlights[i].transform.position = targetPosition;
+                Debug.Log("can move to target" + CanMoveTo(targetPosition));
+                highlights[i].SetActive(CanMoveTo(targetPosition));
 
+            }
         }
+        
     }
 
     private bool CanMoveTo(Vector3 targetPosition)

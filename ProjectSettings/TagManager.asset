@@ -47,5 +47,8 @@ TagManager:
   - name: Player
     uniqueID: 1932192151
     locked: 0
+  - name: Indicator
+    uniqueID: 3085248639
+    locked: 0
   m_RenderingLayers:
   - Default
