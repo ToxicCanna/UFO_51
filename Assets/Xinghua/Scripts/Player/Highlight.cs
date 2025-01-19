@@ -24,7 +24,7 @@ public class HighLight : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             highlights[i] = Instantiate(highlightPrefab);
-            highlights[i].SetActive(true);
+            highlights[i].SetActive(false);
         }
     }
     private void Update()

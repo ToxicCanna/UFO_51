@@ -15,10 +15,16 @@ public class GridIndicator : MonoBehaviour
     private Vector2 currentGridPosition;
     [SerializeField] private GameObject startPosition;
 
-    void Awake()
+
+    void Start()
     {
         //should get the current player position
-        transform.position = startPosition.transform.position;
+        Vector3 heroPosition = playerRedHero.transform.position;
+        currentGridPosition = new Vector2(
+            Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+            Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+        );
+        transform.position = playerRedHero.transform.position;
     }
 
     void Update()
@@ -52,10 +58,7 @@ public class GridIndicator : MonoBehaviour
             }
         }
     }
-    //private void ResetIndicator()
-    //{
-    //    transform.position = playerBlueHero.transform.position;
-    //}
+
     private void MoveIndicator(Vector2 direction)
     {
         Vector2 newPosition = currentGridPosition + direction;
@@ -68,7 +71,7 @@ public class GridIndicator : MonoBehaviour
 
     private void UpdateIndicatorPosition()
     {
-        Vector3 worldPosition = new Vector3(currentGridPosition.x * tileSize, currentGridPosition.y * tileSize, 0);
+        Vector3 worldPosition = new Vector3(currentGridPosition.x * tileSize + +gridOrigin.x, currentGridPosition.y * tileSize + gridOrigin.y, 0);
         transform.position = worldPosition;
     }
 
