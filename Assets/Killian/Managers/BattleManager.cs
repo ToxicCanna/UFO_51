@@ -26,6 +26,10 @@ public class BattleManager : MonoBehaviour
             //(atkValue = defValue)! Clash!
         }
 
-        Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
+        //Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
+        Player1Hero.PowerUp();
+        Debug.Log($"{Player1Hero.atk}");
+        Player1Hero.PowerDown();
+        Debug.Log($"{Player1Hero.atk}");
     }
 }
