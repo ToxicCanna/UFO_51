@@ -21,6 +21,6 @@ MonoBehaviour:
   healSize: 4
   moveSpeed: 1
   range: 1
-  ability: 0
-  abilityScore: 
+  ability: 1
+  abilityScore: move
   Upgrade: {fileID: 11400000, guid: ab9ea07da06cbf544aaff01de08f9d15, type: 2}
