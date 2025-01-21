@@ -245,6 +245,67 @@ Transform:
   - {fileID: 635771394}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &272257726
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2204258201096919698, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: baseHero
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e6e36ad5cdd9e549b69578fb9e4f1f7, type: 2}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872171132521721858, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4829102094302208973, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_Name
+      value: AtkHero
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
 --- !u!1 &475550080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2469,6 +2530,7 @@ GameObject:
   - component: {fileID: 1577943041}
   - component: {fileID: 1577943040}
   - component: {fileID: 1577943043}
+  - component: {fileID: 1577943044}
   m_Layer: 6
   m_Name: PlayerRed
   m_TagString: Untagged
@@ -2563,6 +2625,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
+--- !u!114 &1577943044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577943039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3c89698f93293419c7fb6ce16e8e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHero: {fileID: 0}
 --- !u!1 &1873268860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,3 +2754,4 @@ SceneRoots:
   - {fileID: 252701339}
   - {fileID: 172201333}
   - {fileID: 475550081}
+  - {fileID: 272257726}

@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 public class GridIndicator : MonoBehaviour
 {
+    [SerializeField] private List<ScriptableObject> items; 
+    private int currentIndex = 0;
     [SerializeField] enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
+    private PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
-    private PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
+    
     [SerializeField] private GameObject heroPrefab;
     [SerializeField] private Vector2 gridOrigin = new Vector2(-10, -10);
     [SerializeField] private Vector2 gridSize = new Vector2(20, 20);
