@@ -9,9 +9,10 @@ public class BattleManager : MonoBehaviour
     int damage;
     int clashDamage;
     bool poweredUp;
+    bool ability = false;
     private void Update()
     {
-        if (something)
+        if (ability == true)
         {
             Player1Hero.PowerUp();
             Debug.Log($"{Player1Hero.atk}");
