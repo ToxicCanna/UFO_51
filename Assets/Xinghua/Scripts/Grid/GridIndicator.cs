@@ -7,7 +7,7 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private List<ScriptableObject> items; 
     private int currentIndex = 0;
     [SerializeField] enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
-    private PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
+    public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
