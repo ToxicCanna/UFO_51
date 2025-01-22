@@ -8,7 +8,7 @@ public class HighLight : MonoBehaviour
 
     private GameObject[] highlights = new GameObject[4];
     private Vector3[] directions;
-   
+
 
     void Start()
     {
@@ -18,13 +18,18 @@ public class HighLight : MonoBehaviour
             Vector3.up * tileSize,
             Vector3.down * tileSize,
             Vector3.left * tileSize,
-            Vector3.right * tileSize
-        };
+            Vector3.right * tileSize,
 
-        for (int i = 0; i < 4; i++)
+            new Vector3(-1, 1, 0).normalized * tileSize,
+            new Vector3(1, 1, 0).normalized * tileSize,
+            new Vector3(-1, -1, 0).normalized * tileSize,
+            new Vector3(1, -1, 0).normalized * tileSize
+        };
+        highlights = new GameObject[directions.Length];
+        for (int i = 0; i < highlights.Length; i++)
         {
             highlights[i] = Instantiate(highlightPrefab);
-            highlights[i].SetActive(false);
+            highlights[i].SetActive(true);
         }
     }
     private void Update()
@@ -43,14 +48,14 @@ public class HighLight : MonoBehaviour
             Vector3 playerPosition = transform.position;
             for (int i = 0; i < highlights.Length; i++)
             {
-                Vector3 targetPosition = playerPosition + directions[i];
+                Vector3 targetPosition = AlignToGrid(playerPosition + directions[i]);
                 highlights[i].transform.position = targetPosition;
                 Debug.Log("can move to target" + CanMoveTo(targetPosition));
                 highlights[i].SetActive(CanMoveTo(targetPosition));
 
             }
         }
-        
+
     }
 
     private bool CanMoveTo(Vector3 targetPosition)
@@ -65,5 +70,12 @@ public class HighLight : MonoBehaviour
             highlight.SetActive(false);
         }
 
+    }
+    private Vector3 AlignToGrid(Vector3 position)
+    {
+        
+        float x = Mathf.Round(position.x / tileSize) * tileSize;
+        float y = Mathf.Round(position.y / tileSize) * tileSize;
+        return new Vector3(x, y, position.z);
     }
 }
