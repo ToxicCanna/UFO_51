@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7863236680485545892}
   - component: {fileID: 3400529634245100322}
   - component: {fileID: 1365417572889948529}
+  - component: {fileID: -5689295702450097573}
   m_Layer: 0
   m_Name: BlueHealer
   m_TagString: Untagged
@@ -101,3 +102,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: 8c28ba321e3fa1b4fbd850aa34d622c7, type: 2}
+--- !u!114 &-5689295702450097573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657800514934027367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d1fd845d565084883741a1229b98f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  gridLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tileSize: 1

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4584970300538902678}
   - component: {fileID: 3707323782365960981}
   - component: {fileID: 5539500973995925803}
+  - component: {fileID: 5472513217160041433}
   m_Layer: 0
   m_Name: RedKnight
   m_TagString: Untagged
@@ -101,3 +102,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: 1c3aac3c9fab36142a7251ee9ccf65e3, type: 2}
+--- !u!114 &5472513217160041433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996134876235478659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d1fd845d565084883741a1229b98f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  gridLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tileSize: 1

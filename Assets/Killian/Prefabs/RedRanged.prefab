@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3219740659037161664}
   - component: {fileID: 5595558672741437732}
   - component: {fileID: 4242525420612761904}
+  - component: {fileID: 6992957559215821083}
   m_Layer: 0
   m_Name: RedRanged
   m_TagString: Untagged
@@ -101,3 +102,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: a3a52699da14d624580d05c04588f405, type: 2}
+--- !u!114 &6992957559215821083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684743947540134915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d1fd845d565084883741a1229b98f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  gridLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tileSize: 1
