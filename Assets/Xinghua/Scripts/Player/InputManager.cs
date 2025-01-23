@@ -4,6 +4,8 @@ public class InputManager : MonoBehaviour
 {
     private PlayerControls controls;
     [SerializeField] GridIndicator indicatorMove;
+    [SerializeField] HeroSelect heroSelect;
+   
 
     private void Awake()
     {
@@ -11,6 +13,7 @@ public class InputManager : MonoBehaviour
 
         controls.GamePlay.Move.performed += ctx => indicatorMove.HandleInput(ctx.ReadValue<Vector2>());
         controls.GamePlay.Confirm.performed += ctx => indicatorMove.ConfirmMovePosition();
+        controls.GamePlay.Select.performed += ctx => heroSelect.CycleHero();
     }
 
     private void OnEnable()

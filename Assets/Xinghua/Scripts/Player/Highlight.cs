@@ -12,7 +12,28 @@ public class HighLight : MonoBehaviour
 
     public HeroMovementRule currentRule;
     public List<Vector3> directions;
+    [SerializeField] private GridIndicator gridIndicator;
 
+    private void OnEnable()
+    {
+        if (gridIndicator != null)
+        {
+            gridIndicator.finishSelection += OnHeroSelectionFinished;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (gridIndicator != null)
+        {
+            gridIndicator.finishSelection -= OnHeroSelectionFinished;
+        }
+    }
+    private void OnHeroSelectionFinished()
+    {
+        UpdateHighlights();
+       
+    }
     public void SetHeroRule(HeroMovementRule rule)
     {
         if (rule == null)
@@ -69,6 +90,7 @@ public class HighLight : MonoBehaviour
             highlightPrefab.SetActive(false);
         };
     }
+   
     private void UpdateHighlights()
     {
         if (highlights == null || directions == null || highlights.Length == 0 || directions.Count == 0)
@@ -76,9 +98,11 @@ public class HighLight : MonoBehaviour
             Debug.LogWarning("Highlights or directions are not initialized.");
             return;
         }
-        //inside of if() should be the player choose some hero already
-        if (Input.anyKeyDown)
-        {
+
+        //inside of if () should be the player choose some hero already
+
+       // if (Input.anyKeyDown)
+       // {
             Vector3 playerPosition = transform.position;
             for (int i = 0; i < highlights.Length; i++)
             {
@@ -87,7 +111,7 @@ public class HighLight : MonoBehaviour
                 Debug.Log("can move to target" + CanMoveTo(targetPosition));
                 highlights[i].SetActive(CanMoveTo(targetPosition));
             }
-        }
+       // }
 
     }
    
