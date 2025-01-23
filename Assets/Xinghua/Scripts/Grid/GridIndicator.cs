@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GridIndicator : MonoBehaviour
 {
-    [SerializeField] private List<ScriptableObject> items; 
-    private int currentIndex = 0;
+   // [SerializeField] private List<ScriptableObject> items; 
+   
     public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
@@ -17,7 +17,7 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private Vector2 gridSize = new Vector2(20, 20);
     [SerializeField] private float tileSize = 1f;
     private Vector2 currentGridPosition;
-    [SerializeField] private GameObject startPosition;
+    //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
 
 
     void Start()
@@ -71,7 +71,6 @@ public class GridIndicator : MonoBehaviour
                 currentTurn = PlayerTurn.PlayerRedSide;
                 //transform.position = playerRedHero.transform.position;
                 Debug.Log($"current player is:{currentTurn}");
-                
             }
         }
     }

@@ -301,6 +301,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: AtkHero
       objectReference: {fileID: 0}
+    - target: {fileID: 4829102094302208973, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992193303841001992, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: currentRule
+      value: 
+      objectReference: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
+    - target: {fileID: 7992193303841001992, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: directions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992193303841001992, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: directions.Array.data[0].x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992193303841001992, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: directions.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992193303841001992, guid: 1e571b0fad613254b970ee958828ac86, type: 3}
+      propertyPath: directions.Array.data[0].z
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2625,6 +2649,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
+  currentRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
+  directions: []
 --- !u!114 &1577943044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2673,6 +2699,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
+  currentRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
+  directions: []
 --- !u!212 &1873268862
 SpriteRenderer:
   m_ObjectHideFlags: 0
