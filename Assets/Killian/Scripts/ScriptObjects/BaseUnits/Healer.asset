@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e41a21da5945ff4d948b44ed7b783f2, type: 3}
-  m_Name: BasicHero
+  m_Name: Healer
   m_EditorClassIdentifier: 
-  health: 5
-  atk: 1
+  health: 10
+  cost: 7
+  atk: 0
   atkSize: 6
   def: 1
   defSize: 6
-  heal: 1
-  healSize: 4
+  heal: 2
+  healSize: 6
+  moveSpeed: 1
+  range: 2
+  ability: 1
+  abilityScore: Heal
+  Upgrade: {fileID: 11400000, guid: d0f5b5b7d5d124547b787aa84faf2972, type: 2}

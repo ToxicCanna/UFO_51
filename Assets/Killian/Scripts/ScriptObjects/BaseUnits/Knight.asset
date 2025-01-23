@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e41a21da5945ff4d948b44ed7b783f2, type: 3}
-  m_Name: DebugHero
+  m_Name: Knight
   m_EditorClassIdentifier: 
-  health: 50
-  atk: 5
+  health: 10
+  cost: 5
+  atk: 1
   atkSize: 6
-  def: 5
+  def: 2
   defSize: 6
-  heal: 5
+  heal: 1
   healSize: 4
+  moveSpeed: 1
+  range: 1
+  ability: 1
+  abilityScore: atk
+  Upgrade: {fileID: 11400000, guid: 1737807a28d7b734ea504120091690f3, type: 2}
