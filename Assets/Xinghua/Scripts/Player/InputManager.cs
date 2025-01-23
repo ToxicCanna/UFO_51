@@ -12,8 +12,8 @@ public class InputManager : MonoBehaviour
         controls = new PlayerControls();
 
         controls.GamePlay.Move.performed += ctx => indicatorMove.HandleInput(ctx.ReadValue<Vector2>());
+        controls.GamePlay.Switch.performed += ctx => heroSelect.SwitchHero();
         controls.GamePlay.Confirm.performed += ctx => indicatorMove.ConfirmMovePosition();
-        controls.GamePlay.Select.performed += ctx => heroSelect.CycleHero();
     }
 
     private void OnEnable()

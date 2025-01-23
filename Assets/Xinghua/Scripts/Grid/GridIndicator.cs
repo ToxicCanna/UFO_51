@@ -116,6 +116,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void ConfirmMovePosition()
     {
+        finishSelection?.Invoke();
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             playerRedHero.transform.position = transform.position;//this should be the current in the array

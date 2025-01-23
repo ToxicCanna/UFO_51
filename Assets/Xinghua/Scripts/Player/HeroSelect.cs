@@ -18,7 +18,7 @@ public class HeroSelect : MonoBehaviour
         GetSelectHeroIndex(0);
     }
 
-    public void CycleHero()
+    public void SwitchHero()
     {
         Debug.Log("hero in the scene"+heros.Count);
         if (heros == null || heros.Count == 0) return;

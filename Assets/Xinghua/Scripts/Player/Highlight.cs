@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class HighLight : MonoBehaviour
 {
@@ -8,17 +7,32 @@ public class HighLight : MonoBehaviour
     [SerializeField] private LayerMask gridLayer;
     [SerializeField] private float tileSize = 1f;
 
-    private GameObject[] highlights = new GameObject[4];
+    private GameObject[] highlights;
 
-    public HeroMovementRule currentRule;
+    public HeroMovementRule currentRule;//this rule is for player move path generate
     public List<Vector3> directions;
     [SerializeField] private GridIndicator gridIndicator;
+    void Start()
+    {
+        if (currentRule != null)
+        {
+            SetHeroRule(currentRule);
+        }
+        else
+        {
+            Debug.LogError("currentRule is not assigned in the Inspector!");
+        }
 
+    }
     private void OnEnable()
     {
         if (gridIndicator != null)
         {
             gridIndicator.finishSelection += OnHeroSelectionFinished;
+        }
+        else
+        {
+            Debug.Log("gridIndicator is null");
         }
     }
 
@@ -31,8 +45,9 @@ public class HighLight : MonoBehaviour
     }
     private void OnHeroSelectionFinished()
     {
+        Debug.Log("selected update path");
         UpdateHighlights();
-       
+
     }
     public void SetHeroRule(HeroMovementRule rule)
     {
@@ -41,10 +56,10 @@ public class HighLight : MonoBehaviour
             Debug.LogError("HeroMovementRule is null!");
             return;
         }
-        currentRule = rule; 
-        UpdateDirections(); 
+        currentRule = rule;
+        UpdateDirections();
 
-        
+
         highlights = new GameObject[directions.Count];
         for (int i = 0; i < highlights.Length; i++)
         {
@@ -61,36 +76,21 @@ public class HighLight : MonoBehaviour
         for (int i = 1; i <= currentRule.leftSteps; i++) directions.Add(new Vector3(-i * tileSize, 0, 0));
         for (int i = 1; i <= currentRule.rightSteps; i++) directions.Add(new Vector3(i * tileSize, 0, 0));
 
-       
+
         for (int i = 1; i <= currentRule.diagonalSteps; i++)
         {
-            directions.Add(new Vector3(i * tileSize, i * tileSize, 0)); 
-            directions.Add(new Vector3(-i * tileSize, i * tileSize, 0)); 
+            directions.Add(new Vector3(i * tileSize, i * tileSize, 0));
+            directions.Add(new Vector3(-i * tileSize, i * tileSize, 0));
             directions.Add(new Vector3(i * tileSize, -i * tileSize, 0));
-            directions.Add(new Vector3(-i * tileSize, -i * tileSize, 0)); 
+            directions.Add(new Vector3(-i * tileSize, -i * tileSize, 0));
         }
     }
-    void Start()
+
+    private void ShowHighlightPath()
     {
-        if (currentRule != null)
-        {
-            SetHeroRule(currentRule);
-        }
-        else
-        {
-            Debug.LogError("currentRule is not assigned in the Inspector!");
-        }
-        
+        highlightPrefab.SetActive(false);
     }
-    private void Update()
-    {
-        UpdateHighlights();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            highlightPrefab.SetActive(false);
-        };
-    }
-   
+
     private void UpdateHighlights()
     {
         if (highlights == null || directions == null || highlights.Length == 0 || directions.Count == 0)
@@ -98,23 +98,17 @@ public class HighLight : MonoBehaviour
             Debug.LogWarning("Highlights or directions are not initialized.");
             return;
         }
-
-        //inside of if () should be the player choose some hero already
-
-       // if (Input.anyKeyDown)
-       // {
-            Vector3 playerPosition = transform.position;
-            for (int i = 0; i < highlights.Length; i++)
-            {
-                Vector3 targetPosition = AlignToGrid(playerPosition + directions[i]);
-                highlights[i].transform.position = targetPosition;
-                Debug.Log("can move to target" + CanMoveTo(targetPosition));
-                highlights[i].SetActive(CanMoveTo(targetPosition));
-            }
-       // }
-
+        ShowHighlightPath();
+        Vector3 playerPosition = transform.position;
+        for (int i = 0; i < highlights.Length; i++)
+        {
+            Vector3 targetPosition = AlignToGrid(playerPosition + directions[i]);
+            highlights[i].transform.position = targetPosition;
+            Debug.Log("can move to target" + CanMoveTo(targetPosition));
+            highlights[i].SetActive(CanMoveTo(targetPosition));
+        }
     }
-   
+
     private bool CanMoveTo(Vector3 targetPosition)
     {
         Collider2D hit = Physics2D.OverlapCircle(targetPosition, 0.1f, gridLayer);
@@ -130,7 +124,7 @@ public class HighLight : MonoBehaviour
     }
     private Vector3 AlignToGrid(Vector3 position)
     {
-        
+
         float x = Mathf.Round(position.x / tileSize) * tileSize;
         float y = Mathf.Round(position.y / tileSize) * tileSize;
         return new Vector3(x, y, position.z);
