@@ -84,8 +84,8 @@ public class GridIndicator : MonoBehaviour
             MoveIndicator(direction);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
             if (currentTurn == PlayerTurn.PlayerRedSide)
             {
                 playerRedHero.transform.position = transform.position;
@@ -112,7 +112,7 @@ public class GridIndicator : MonoBehaviour
                 //transform.position = playerRedHero.transform.position;
                 Debug.Log($"current player is:{currentTurn}");
             }
-        }
+       // }
     }
     public void ConfirmMovePosition()
     {
