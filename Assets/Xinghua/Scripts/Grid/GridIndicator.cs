@@ -34,10 +34,10 @@ public class GridIndicator : MonoBehaviour
         transform.position = playerRedHero.transform.position;
     }
 
-    //void Update()
-    //{
-    //    UpdateIndicatorPosition();
-    //}
+    void Update()
+    {
+        UpdateIndicatorPosition();
+    }
 
     public void HandleConfirmInput()
     {
