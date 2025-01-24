@@ -13,8 +13,8 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private GameObject playerBlueHero;
 
     [SerializeField] private GameObject heroPrefab;
-    [SerializeField] private Vector2 gridOrigin = new Vector2(-10, -10);
-    [SerializeField] private Vector2 gridSize = new Vector2(20, 20);
+    [SerializeField] private Vector2 gridOrigin;
+    [SerializeField] private Vector2 gridSize;
     [SerializeField] private float tileSize = 1f;
     private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
@@ -25,6 +25,7 @@ public class GridIndicator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log($"Grid Origin: {gridOrigin}, Tile Size: {tileSize}");
         //should get the current player position
         Vector3 heroPosition = playerRedHero.transform.position;
         currentGridPosition = new Vector2(
@@ -133,6 +134,7 @@ public class GridIndicator : MonoBehaviour
                 Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
                 Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
             );
+            GridManager.Instance.AddOccupiedGrid(currentGridPosition);
 
             Debug.Log($"current player is:{currentTurn}");
 
