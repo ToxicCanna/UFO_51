@@ -21,7 +21,7 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] HeroSelect heroSelect;
     public event Action finishSelection;
 
-   
+    private Vector3 heroPosition;
 
     void Start()
     {
@@ -42,7 +42,7 @@ public class GridIndicator : MonoBehaviour
     public void HandleConfirmInput()
     {
         Debug.Log("swith in the hero array ");//swith in the hero array I already buy then confirm one to move
-        UpdateIndicatorToSelectedHero(); 
+        UpdateIndicatorToSelectedHero();
     }
 
     private void UpdateIndicatorToSelectedHero()
@@ -79,7 +79,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleInput(Vector2 direction)
     {
-        if(direction!=Vector2.zero)
+        if (direction != Vector2.zero)
         {
             MoveIndicator(direction);
         }
@@ -88,9 +88,11 @@ public class GridIndicator : MonoBehaviour
         {
             if (currentTurn == PlayerTurn.PlayerRedSide)
             {
+
                 playerRedHero.transform.position = transform.position;
-                currentTurn = PlayerTurn.PlayerBlueSide;
-                Vector3 heroPosition = playerBlueHero.transform.position;
+                //currentTurn = PlayerTurn.PlayerBlueSide;
+                UpdateHeroPosition();
+                heroPosition = playerBlueHero.transform.position;
                 currentGridPosition = new Vector2(
                     Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
                     Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
@@ -101,7 +103,8 @@ public class GridIndicator : MonoBehaviour
             }
             else if (currentTurn == PlayerTurn.PlayerBlueSide)
             {
-                Vector3 heroPosition = playerRedHero.transform.position;
+                UpdateHeroPosition();
+                //heroPosition = playerRedHero.transform.position;
                 currentGridPosition = new Vector2(
                     Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
                     Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
@@ -113,6 +116,10 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log($"current player is:{currentTurn}");
             }
         }
+    }
+    private void UpdateHeroPosition()
+    {
+        heroPosition = heroSelect.GetSelectedHeroPosition();
     }
     public void ConfirmMovePosition()
     {

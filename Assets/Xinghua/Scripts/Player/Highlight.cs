@@ -88,7 +88,10 @@ public class HighLight : MonoBehaviour
 
     private void ShowHighlightPath()
     {
-        highlightPrefab.SetActive(false);
+        for (int i = 0; i <= currentRule.downSteps; i++)
+        {
+            highlights[i].gameObject.SetActive(false);
+        }
     }
 
     private void UpdateHighlights()
@@ -104,7 +107,7 @@ public class HighLight : MonoBehaviour
         {
             Vector3 targetPosition = AlignToGrid(playerPosition + directions[i]);
             highlights[i].transform.position = targetPosition;
-            Debug.Log("can move to target" + CanMoveTo(targetPosition));
+            //Debug.Log("can move to target" + CanMoveTo(targetPosition));
             highlights[i].SetActive(CanMoveTo(targetPosition));
         }
     }

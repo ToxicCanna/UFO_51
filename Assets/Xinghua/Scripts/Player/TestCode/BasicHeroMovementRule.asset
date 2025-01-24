@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb861fd7979c98d4db983ff72717e858, type: 3}
-  m_Name: HeroMovementRule
+  m_Name: BasicHeroMovementRule
   m_EditorClassIdentifier: 
-  upSteps: 2
-  downSteps: 3
-  leftSteps: 4
-  rightSteps: 5
+  upSteps: 1
+  downSteps: 1
+  leftSteps: 1
+  rightSteps: 1
   diagonalSteps: 0
