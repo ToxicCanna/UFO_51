@@ -1,27 +1,31 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 
 public class GridIndicator : MonoBehaviour
 {
-    [SerializeField] private List<ScriptableObject> items; 
-    private int currentIndex = 0;
+    // [SerializeField] private List<ScriptableObject> items; 
+
     public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
-    
+
     [SerializeField] private GameObject heroPrefab;
-    [SerializeField] private Vector2 gridOrigin = new Vector2(-10, -10);
-    [SerializeField] private Vector2 gridSize = new Vector2(20, 20);
+    [SerializeField] private Vector2 gridOrigin;
+    [SerializeField] private Vector2 gridSize;
     [SerializeField] private float tileSize = 1f;
     private Vector2 currentGridPosition;
-    [SerializeField] private GameObject startPosition;
+    //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
+    [SerializeField] HeroSelect heroSelect;
+    public event Action finishSelection;
 
+    private Vector3 heroPosition;
 
     void Start()
     {
+        Debug.Log($"Grid Origin: {gridOrigin}, Tile Size: {tileSize}");
         //should get the current player position
         Vector3 heroPosition = playerRedHero.transform.position;
         currentGridPosition = new Vector2(
@@ -33,35 +37,75 @@ public class GridIndicator : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
         UpdateIndicatorPosition();
     }
 
-    private void HandleInput()
+    public void HandleConfirmInput()
     {
-        if (Input.GetKeyDown(KeyCode.W)) MoveIndicator(Vector2.up);
-        if (Input.GetKeyDown(KeyCode.S)) MoveIndicator(Vector2.down);
-        if (Input.GetKeyDown(KeyCode.A)) MoveIndicator(Vector2.left);
-        if (Input.GetKeyDown(KeyCode.D)) MoveIndicator(Vector2.right);
+        Debug.Log("swith in the hero array ");//swith in the hero array I already buy then confirm one to move
+        UpdateIndicatorToSelectedHero();
+    }
+
+    private void UpdateIndicatorToSelectedHero()
+    {
+        finishSelection?.Invoke();
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            var currentHeroPosition = heroSelect.GetSelectedHeroPosition();
+            currentHeroPosition = transform.position;
+            currentTurn = PlayerTurn.PlayerBlueSide;
+            Vector3 heroPosition = playerBlueHero.transform.position;
+            currentGridPosition = new Vector2(
+                Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+            );
+
+            Debug.Log($"current player is:{currentTurn}");
+
+        }
+        else if (currentTurn == PlayerTurn.PlayerBlueSide)
+        {
+            Vector3 heroPosition = playerRedHero.transform.position;
+            currentGridPosition = new Vector2(
+                Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+            );
+
+            playerBlueHero.transform.position = transform.position;
+            currentTurn = PlayerTurn.PlayerRedSide;
+            //transform.position = playerRedHero.transform.position;
+            Debug.Log($"current player is:{currentTurn}");
+        }
+
+    }
+    public void HandleInput(Vector2 direction)
+    {
+        if (direction != Vector2.zero)
+        {
+            MoveIndicator(direction);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (currentTurn == PlayerTurn.PlayerRedSide)
             {
+
                 playerRedHero.transform.position = transform.position;
-                currentTurn = PlayerTurn.PlayerBlueSide;
-                Vector3 heroPosition = playerBlueHero.transform.position;
+                //currentTurn = PlayerTurn.PlayerBlueSide;
+                UpdateHeroPosition();
+                heroPosition = playerBlueHero.transform.position;
                 currentGridPosition = new Vector2(
                     Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
                     Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
                 );
-               
+
                 Debug.Log($"current player is:{currentTurn}");
 
             }
             else if (currentTurn == PlayerTurn.PlayerBlueSide)
             {
-                Vector3 heroPosition = playerRedHero.transform.position;
+                UpdateHeroPosition();
+                //heroPosition = playerRedHero.transform.position;
                 currentGridPosition = new Vector2(
                     Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
                     Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
@@ -71,11 +115,44 @@ public class GridIndicator : MonoBehaviour
                 currentTurn = PlayerTurn.PlayerRedSide;
                 //transform.position = playerRedHero.transform.position;
                 Debug.Log($"current player is:{currentTurn}");
-                
             }
         }
     }
+    private void UpdateHeroPosition()
+    {
+        heroPosition = heroSelect.GetSelectedHeroPosition();
+    }
+    public void ConfirmMovePosition()
+    {
+        finishSelection?.Invoke();
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            playerRedHero.transform.position = transform.position;//this should be the current in the array
+            currentTurn = PlayerTurn.PlayerBlueSide;
+            Vector3 heroPosition = playerBlueHero.transform.position;
+            currentGridPosition = new Vector2(
+                Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+            );
+            GridManager.Instance.AddOccupiedGrid(currentGridPosition);
 
+            Debug.Log($"current player is:{currentTurn}");
+
+        }
+        else if (currentTurn == PlayerTurn.PlayerBlueSide)
+        {
+            Vector3 heroPosition = playerRedHero.transform.position;
+            currentGridPosition = new Vector2(
+                Mathf.Round((heroPosition.x - gridOrigin.x) / tileSize),
+                Mathf.Round((heroPosition.y - gridOrigin.y) / tileSize)
+            );
+
+            playerBlueHero.transform.position = transform.position;
+            currentTurn = PlayerTurn.PlayerRedSide;
+            //transform.position = playerRedHero.transform.position;
+            Debug.Log($"current player is:{currentTurn}");
+        }
+    }
     private void MoveIndicator(Vector2 direction)
     {
         Vector2 newPosition = currentGridPosition + direction;
@@ -86,7 +163,7 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
-    private void UpdateIndicatorPosition()
+    public void UpdateIndicatorPosition()
     {
         Vector3 worldPosition = new Vector3(currentGridPosition.x * tileSize + +gridOrigin.x, currentGridPosition.y * tileSize + gridOrigin.y, 0);
         transform.position = worldPosition;
