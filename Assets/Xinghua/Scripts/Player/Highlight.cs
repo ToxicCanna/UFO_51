@@ -9,14 +9,14 @@ public class HighLight : MonoBehaviour
 
     private GameObject[] highlights;
 
-    public HeroMovementRule currentRule;//this rule is for player move path generate
+    public HeroMovementRule[] currentRule;//this rule is for player move path generate
     public List<Vector3> directions;
     [SerializeField] private GridIndicator gridIndicator;
     void Start()
     {
         if (currentRule != null)
         {
-            SetHeroRule(currentRule);
+            SetHeroRule(currentRule[0]);
         }
         else
         {
@@ -56,7 +56,7 @@ public class HighLight : MonoBehaviour
             Debug.LogError("HeroMovementRule is null!");
             return;
         }
-        currentRule = rule;
+        currentRule[0] = rule;
         UpdateDirections();
 
 
@@ -71,13 +71,13 @@ public class HighLight : MonoBehaviour
     {
         directions = new List<Vector3>();
 
-        for (int i = 1; i <= currentRule.upSteps; i++) directions.Add(new Vector3(0, i * tileSize, 0));
-        for (int i = 1; i <= currentRule.downSteps; i++) directions.Add(new Vector3(0, -i * tileSize, 0));
-        for (int i = 1; i <= currentRule.leftSteps; i++) directions.Add(new Vector3(-i * tileSize, 0, 0));
-        for (int i = 1; i <= currentRule.rightSteps; i++) directions.Add(new Vector3(i * tileSize, 0, 0));
+        for (int i = 1; i <= currentRule[0].upSteps; i++) directions.Add(new Vector3(0, i * tileSize, 0));
+        for (int i = 1; i <= currentRule[0].downSteps; i++) directions.Add(new Vector3(0, -i * tileSize, 0));
+        for (int i = 1; i <= currentRule[0].leftSteps; i++) directions.Add(new Vector3(-i * tileSize, 0, 0));
+        for (int i = 1; i <= currentRule[0].rightSteps; i++) directions.Add(new Vector3(i * tileSize, 0, 0));
 
 
-        for (int i = 1; i <= currentRule.diagonalSteps; i++)
+        for (int i = 1; i <= currentRule[0].diagonalSteps; i++)
         {
             directions.Add(new Vector3(i * tileSize, i * tileSize, 0));
             directions.Add(new Vector3(-i * tileSize, i * tileSize, 0));
@@ -88,7 +88,7 @@ public class HighLight : MonoBehaviour
 
     private void ShowHighlightPath()
     {
-        for (int i = 0; i <= currentRule.downSteps; i++)
+        for (int i = 0; i <= currentRule[0].downSteps; i++)
         {
             highlights[i].gameObject.SetActive(false);
         }

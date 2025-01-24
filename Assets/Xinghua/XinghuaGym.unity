@@ -2405,7 +2405,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
-  currentRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
+  currentRule:
+  - {fileID: 11400000, guid: df42d637c7f478543a9fc996d8d5ce09, type: 2}
+  - {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
+  - {fileID: 11400000, guid: df42d637c7f478543a9fc996d8d5ce09, type: 2}
   directions: []
   gridIndicator: {fileID: 646920146}
 --- !u!1 &1873268860
@@ -2443,7 +2446,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
-  currentRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
+  currentRule:
+  - {fileID: 11400000, guid: df42d637c7f478543a9fc996d8d5ce09, type: 2}
+  - {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
+  - {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
   directions: []
   gridIndicator: {fileID: 646920146}
 --- !u!212 &1873268862
