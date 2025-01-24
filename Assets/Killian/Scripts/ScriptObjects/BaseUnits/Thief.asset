@@ -18,8 +18,8 @@ MonoBehaviour:
   atkSize: 6
   def: 0
   defSize: 6
-  heal: 1
-  healSize: 4
+  heal: 0
+  healSize: 6
   moveSpeed: 1
   range: 1
   ability: 1

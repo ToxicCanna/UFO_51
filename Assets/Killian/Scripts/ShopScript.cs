@@ -5,11 +5,11 @@ public class ShopScript : MonoBehaviour
 {
     [SerializeField] public Transform redSpawn, redCastle, blueSpawn, blueCastle;
     [SerializeField] GridIndicator gridIndicator;
-    [SerializeField] GameObject redheroprefab;
-    [SerializeField] GameObject blueheroprefab;
+    [SerializeField] GameObject[] redHeroPrefab;
+    [SerializeField] GameObject[] blueHeroPrefab;
+    private GameObject[] shopList;
 
     private Transform spawnLoc;
-    private Transform shopLoc;
 
     private void Update()
     {
@@ -22,25 +22,25 @@ public class ShopScript : MonoBehaviour
         if(gridIndicator == GridIndicator.PlayerTurn.PlayerRedSide)
         {
             spawnLoc = redSpawn;
-            shopLoc = redCastle;
+            shopList = redHeroPrefab;
         }
 
         else if(gridIndicator == GridIndicator.PlayerTurn.PlayerBlueSide)
         {
             spawnLoc = blueSpawn;
-            shopLoc = blueCastle;
+            shopList = blueHeroPrefab;
         }
     }
 
-    public void Spawn()
+    public void Spawn(int i)
     {
         if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerRedSide)
         {
-            Instantiate(redheroprefab, spawnLoc);
+            Instantiate(shopList[i], spawnLoc);
         }
         if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerBlueSide)
         {
-            Instantiate(blueheroprefab, spawnLoc);
+            Instantiate(shopList[i], spawnLoc);
         }
     }
 }

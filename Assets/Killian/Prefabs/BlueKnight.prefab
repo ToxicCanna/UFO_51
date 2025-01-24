@@ -103,6 +103,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: 1c3aac3c9fab36142a7251ee9ccf65e3, type: 2}
+  maxHealth: 0
+  currentHealth: 0
+  cost: 0
+  atk: 0
+  atkSize: 0
+  def: 0
+  defSize: 0
+  heal: 0
+  healSize: 0
+  moveSpeed: 0
+  range: 0
+  ability: 0
 --- !u!114 &5398649125293985314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +132,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
-  currentRule: []
+  currentRule:
+  - {fileID: 11400000, guid: df42d637c7f478543a9fc996d8d5ce09, type: 2}
   directions: []
   gridIndicator: {fileID: 0}
 --- !u!61 &849808656283150273
