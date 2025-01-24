@@ -16,7 +16,7 @@ public class Castle : MonoBehaviour
         castleHP -= damage;
         if (castleHP <= 0)
         {
-            WinGame();
+            LoseGame();
         }
     }
     public virtual void LoseGame()
