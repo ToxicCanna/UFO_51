@@ -18,10 +18,14 @@ public class MovingHero : BaseState
         //confirm target
     }
 
+
+
     public override void UpdateState()
     {
-        //move to target
-    }
+        Debug.Log("base state update game state");
+      // HandleInput();
+    //move to target
+}
 
   
 }

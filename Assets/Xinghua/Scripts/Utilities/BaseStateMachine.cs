@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseStateMachine : MonoBehaviour
+public  class BaseStateMachine : MonoBehaviour
 {
     protected BaseState CurrentState;
 
     public virtual void SetState(BaseState newState)
     {
-        
+
         CurrentState?.ExitState();
 
         CurrentState = newState;
@@ -16,8 +14,10 @@ public abstract class BaseStateMachine : MonoBehaviour
         CurrentState.EnterState();
     }
 
-    public virtual void Update()
+    private void Update()
     {
+        Debug.Log("base state update");
         CurrentState?.UpdateState();
+        Debug.Log("current state" + CurrentState);
     }
 }

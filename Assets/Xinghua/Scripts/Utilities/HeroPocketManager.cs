@@ -26,10 +26,9 @@ public class HeroPocketManager : MonoBehaviour
         if (heroComponent != null)
         { 
             int heroHealth =heroComponent.heroData.cost;
-            Debug.Log("health" + heroHealth);
+           // Debug.Log("health" + heroHealth);
         }
-        
-        Debug.Log("heroData" + heroComponent);
+       // Debug.Log("heroData" + heroComponent);
     }
 
     public void RemoveHighlight(string heroId)

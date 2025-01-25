@@ -13,9 +13,6 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private GameObject playerBlueHero;
 
     [SerializeField] private GameObject heroPrefab;
-    //[SerializeField] private Vector2 gridOrigin;
-    //[SerializeField] private Vector2 gridSize;
-    [SerializeField] private float tileSize = 1f;
     private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     [SerializeField] HeroSelect heroSelect;
