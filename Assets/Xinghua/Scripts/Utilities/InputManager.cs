@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,12 +8,8 @@ public class InputManager : MonoBehaviour
     private PlayerControls controls;
     [SerializeField] GridIndicator indicatorMove;
     [SerializeField] HeroSelect heroSelect;
-    public void SetInputMode(InputMode mode)
-    {
-        CurrentMode = mode;
-        Debug.Log($"Input mode switched to: {mode}");
-    }
-   
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,46 +24,51 @@ public class InputManager : MonoBehaviour
         {
             Debug.LogError("GridIndicator or HeroSelect is not assigned in the Inspector!");
         }
-        //CurrentMode = InputMode.UI;
+        SetInputMode(InputMode.Gameplay);
     }
-  
+    public void SetInputMode(InputMode mode)
+    {
+        CurrentMode = mode;
+
+        if (mode == InputMode.Gameplay)
+        {
+            controls.GamePlay.Enable();
+            controls.UI.Disable();
+        }
+        else if (mode == InputMode.UI)
+        {
+            controls.GamePlay.Disable();
+            controls.UI.Enable();
+        }
+
+        Debug.Log($"Input mode switched to: {mode}");
+    }
+
     private void OnEnable()
     {
-        if (CurrentMode == InputMode.Gameplay)
-        {
-            Debug.Log("active gameplay input");
-            controls.GamePlay.Enable();
-            controls.GamePlay.Move.performed += ctx => indicatorMove?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
-            controls.GamePlay.Switch.performed += ctx => heroSelect?.SwitchHero();
-            controls.GamePlay.Confirm.performed += ctx => indicatorMove?.MoveToTargetIndicator();
-        }
-        else if (CurrentMode == InputMode.UI)
-        {
-
-            controls.UI.Enable();
-            controls.UI.Navigate.performed += ctx => HandleUINavigation(ctx.ReadValue<Vector2>());
-        }
+        controls.GamePlay.Enable();
+        controls.GamePlay.Move.performed += ctx => indicatorMove?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+        controls.GamePlay.Switch.performed += ctx => heroSelect?.SwitchHero();
+        controls.GamePlay.Confirm.performed += ctx => indicatorMove?.MoveToTargetIndicator();
+        controls.UI.Navigate.performed += ctx => HandleUINavigation(ctx.ReadValue<Vector2>());
     }
 
     private void OnDisable()
     {
-        if (CurrentMode == InputMode.Gameplay)
-        {
-            controls.GamePlay.Disable();
-            controls.GamePlay.Move.performed -= ctx => indicatorMove?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
-            controls.GamePlay.Switch.performed -= ctx => heroSelect?.SwitchHero();
-            controls.GamePlay.Confirm.performed -= ctx => indicatorMove?.MoveToTargetIndicator();
-        }
-        else if (CurrentMode == InputMode.UI)
-        {
-            controls.UI.Disable();
-            controls.UI.Navigate.performed -= ctx => HandleUINavigation(ctx.ReadValue<Vector2>());
-        }
+
+        controls.GamePlay.Disable();
+        controls.GamePlay.Move.performed -= ctx => indicatorMove?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+        controls.GamePlay.Switch.performed -= ctx => heroSelect?.SwitchHero();
+        controls.GamePlay.Confirm.performed -= ctx => indicatorMove?.MoveToTargetIndicator();
+
+        controls.UI.Disable();
+        controls.UI.Navigate.performed -= ctx => HandleUINavigation(ctx.ReadValue<Vector2>());
+
     }
-   private void HandleUINavigation(Vector2 vector2)
+    private void HandleUINavigation(Vector2 vector2)
     {
         Debug.Log("WASD for UI nav now");
     }
 
-    
+
 }

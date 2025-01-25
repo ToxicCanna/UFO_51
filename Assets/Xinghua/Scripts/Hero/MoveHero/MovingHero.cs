@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MovingHero : BaseState
 {
-    private HeroStateMachine  _stateMachine;
-    public MovingHero(HeroStateMachine stateMachine)
+    private GamePlayStateMachine  _stateMachine;
+    public MovingHero(GamePlayStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
     }
