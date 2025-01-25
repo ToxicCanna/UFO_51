@@ -19,7 +19,7 @@ public class Tile : MonoBehaviour
     }
     public void InitialGridColor(bool isOffset)
     {
-        Debug.Log("grid color");
+        //Debug.Log("grid color");
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
 }
