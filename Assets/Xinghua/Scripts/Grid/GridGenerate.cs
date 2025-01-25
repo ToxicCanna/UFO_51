@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GrideGenerate : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class GrideGenerate : MonoBehaviour
     [SerializeField] private Tile tilePerfab;
     [SerializeField] private GameObject tileParentObject;
     [SerializeField] private Transform cam;
+    private Vector3 tilePosition;
     private void Start()
     {
         GenerateGrid();
@@ -24,6 +26,7 @@ public class GrideGenerate : MonoBehaviour
                 spawnTile.transform.SetParent(tileParentObject.transform);
                 var isOffset = (i + j) % 2 != 0;
                 spawnTile.InitialGridColor(isOffset);
+                //tilePosition =spawnTile.transform.position;
             }
         }
     }
@@ -31,4 +34,8 @@ public class GrideGenerate : MonoBehaviour
     {
         cam.transform.position = new Vector3((float)gridWide / 2 - 0.5f, (float)gridHigh / 2 - 0.5f, -10);
     }
+    //private Vector3 GetTilePosition()
+    //{
+    //    return tilePosition;
+    //}
 }
