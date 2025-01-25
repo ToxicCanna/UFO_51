@@ -637,6 +637,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4270549aef407c418a8118d7b84344e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &740613754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -3144436484174687488, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+  m_PrefabInstance: {fileID: 2606306557142619562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36702f3a1ba65e4e9db132873fa6774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &925358859
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridWide: 10
   gridHigh: 8
-  tilePerfab: {fileID: -3144436484174687488, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+  tilePerfab: {fileID: 740613754}
   tileParentObject: {fileID: 925358859}
   cam: {fileID: 519420032}
 --- !u!1 &1577943039
@@ -1154,9 +1165,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3144436484174687488, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+      propertyPath: _offsetColor.b
+      value: 0.2847334
+      objectReference: {fileID: 0}
+    - target: {fileID: -3144436484174687488, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+      propertyPath: _offsetColor.g
+      value: 0.5801887
+      objectReference: {fileID: 0}
+    - target: {fileID: -3144436484174687488, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+      propertyPath: _offsetColor.r
+      value: 0.24356978
+      objectReference: {fileID: 0}
     - target: {fileID: 1065256052602345541, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
       propertyPath: m_Name
       value: Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 1986597711836058512, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2114001856009473017, guid: 994bc91a4615eba409aee5eef749bf35, type: 3}
       propertyPath: m_LocalPosition.x

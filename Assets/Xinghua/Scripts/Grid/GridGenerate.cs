@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class GrideGenerate : MonoBehaviour
 {
@@ -15,18 +14,21 @@ public class GrideGenerate : MonoBehaviour
     }
     private void GenerateGrid()
     {
-        for (int i = 1; i < gridWide; i++)
+        for (int i = 0; i < gridWide; i++)
         {
-            for (int j = 1; j < gridHigh; j++)
+            for (int j = 0; j < gridHigh; j++)
             {
                 var spawnTile = Instantiate(tilePerfab, new Vector3(i, j), Quaternion.identity);
+                spawnTile.SetColorAlpha();
                 spawnTile.name = $"Tile{i}{j}";
                 spawnTile.transform.SetParent(tileParentObject.transform);
+                var isOffset = (i + j) % 2 != 0;
+                spawnTile.InitialGridColor(isOffset);
             }
         }
     }
     private void SetCameraPosition()
     {
-        cam.transform.position = new Vector3((float) gridWide / 2-0.5f, (float)gridHigh / 2-0.5f,-10);
+        cam.transform.position = new Vector3((float)gridWide / 2 - 0.5f, (float)gridHigh / 2 - 0.5f, -10);
     }
 }
