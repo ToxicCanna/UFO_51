@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MovingHero : BaseState
 {
-    private GamePlayStateMachine  _stateMachine;
-    public MovingHero(GamePlayStateMachine stateMachine)
+    private GameStateMachine  _stateMachine;
+    public MovingHero(GameStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
     }
@@ -17,8 +17,6 @@ public class MovingHero : BaseState
     {
         //confirm target
     }
-
-
 
     public override void UpdateState()
     {

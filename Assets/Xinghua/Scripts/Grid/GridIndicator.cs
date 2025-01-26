@@ -35,6 +35,7 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMove(Vector2 direction)
     {
+        Debug.Log("move indicator");
         transform.position += new Vector3(direction.x, direction.y, 0);
         //newIndicatorLocation = transform.position + new Vector3(direction.x+1,direction.y,0);
     }

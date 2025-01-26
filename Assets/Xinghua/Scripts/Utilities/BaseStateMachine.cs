@@ -12,12 +12,12 @@ public  class BaseStateMachine : MonoBehaviour
         CurrentState = newState;
 
         CurrentState.EnterState();
+        CurrentState.HandleInput(InputManager.Instance);
     }
 
     private void Update()
     {
-        Debug.Log("base state update");
+        //Debug.Log("base state update");
         CurrentState?.UpdateState();
-        Debug.Log("current state" + CurrentState);
     }
 }
