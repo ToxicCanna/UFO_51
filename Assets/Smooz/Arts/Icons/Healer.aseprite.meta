@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1394adf6dfdbf1f469905b39d873a8ad
+guid: 7731febee673bc2449cd35168aa4429b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,7 +122,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Heal
+  - name: Healer
     originalName: 
     pivot: {x: 0.5, y: -0.071428575}
     alignment: 9
@@ -134,7 +134,7 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
-    spriteID: 8cf3edba5d22bf341b25bd88980b5e1d
+    spriteID: dd121b2d35590014c87009b9ab680010
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,13 +146,13 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1713545768
-    name: Heal
+    guid: 505336595
+    name: Healer
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Heal
+    - name: Healer
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
-      spriteId: 8cf3edba5d22bf341b25bd88980b5e1d
+      spriteId: dd121b2d35590014c87009b9ab680010
     linkedCells: []
     parentIndex: -1
   platformSettings:

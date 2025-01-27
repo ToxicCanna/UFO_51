@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1394adf6dfdbf1f469905b39d873a8ad
+guid: d12f380133ca4cb418d1e239692a1026
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638735930966259182
+  platformSettingsDirtyTick: 638735930966254103
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,7 +122,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Heal
+  - name: Ranged
     originalName: 
     pivot: {x: 0.5, y: -0.071428575}
     alignment: 9
@@ -134,7 +134,7 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
-    spriteID: 8cf3edba5d22bf341b25bd88980b5e1d
+    spriteID: 7669bc603947f8c4281fe1357dcb5c9a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,13 +146,13 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1713545768
-    name: Heal
+    guid: -843185453
+    name: Ranged
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Heal
+    - name: Ranged
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
-      spriteId: 8cf3edba5d22bf341b25bd88980b5e1d
+      spriteId: 7669bc603947f8c4281fe1357dcb5c9a
     linkedCells: []
     parentIndex: -1
   platformSettings:
