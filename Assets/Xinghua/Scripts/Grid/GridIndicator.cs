@@ -33,7 +33,7 @@ public class GridIndicator : MonoBehaviour
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
     }
-    private bool IsWithinBounds(Vector2Int position)
+    public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;

@@ -3,7 +3,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
-    public enum InputMode { Gameplay, UI }
+    public enum InputMode { Gameplay, UI,UINav }
     public InputMode CurrentMode { get; private set; }
     private PlayerControls controls;
     [SerializeField] GridIndicator indicatorMove;
@@ -41,6 +41,7 @@ public class InputManager : MonoBehaviour
             controls.GamePlay.Disable();
             controls.UI.Enable();
         }
+      
 
         Debug.Log($"Input mode switched to: {mode}");
     }

@@ -253,6 +253,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 703127157}
     - target: {fileID: 8027587424801466491, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
+      propertyPath: gameStateMachine
+      value: 
+      objectReference: {fileID: 1978772880}
+    - target: {fileID: 8027587424801466491, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
       propertyPath: 'currentRule.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}

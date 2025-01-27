@@ -74,16 +74,20 @@ public class HighLight : MonoBehaviour
         int y = Mathf.RoundToInt(worldPosition.y / tileSize);
         return new Vector2Int(x, y);
     }
+
     private void DisplayHightlight(Vector2Int[] neighbors)
     {
         ClearHighlights();
 
         foreach (var neighbor in neighbors)
         {
-            Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
-            GameObject highlight = Instantiate(highlightPrefab, neighborPosition, Quaternion.identity);
-            highlight.gameObject.SetActive(true);
-            highlights.Add(highlight);
+            if (gridIndicator.IsWithinBounds(neighbor))
+            {
+                Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
+                GameObject highlight = Instantiate(highlightPrefab, neighborPosition, Quaternion.identity);
+                highlight.gameObject.SetActive(true);
+                highlights.Add(highlight);
+            }
         }
     }
     private void ClearHighlights()
@@ -101,10 +105,10 @@ public class HighLight : MonoBehaviour
 
         Vector2Int[] directions = new Vector2Int[]
         {
-        new Vector2Int(0, 1),  
-        new Vector2Int(0, -1), 
-        new Vector2Int(-1, 0), 
-        new Vector2Int(1, 0)  
+        new Vector2Int(0, 1),
+        new Vector2Int(0, -1),
+        new Vector2Int(-1, 0),
+        new Vector2Int(1, 0)
         };
 
 
