@@ -17,6 +17,7 @@ public class GridIndicator : MonoBehaviour
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     [SerializeField] HeroSelect heroSelect;
     public event Action finishSelection;
+    public event Action heroSelecting;
 
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
@@ -31,13 +32,24 @@ public class GridIndicator : MonoBehaviour
     //{
     //    var currentHeroPosition = heroSelect.GetSelectedHeroPosition();
     //}
-  
+
 
     public void HandleIndicatorMove(Vector2 direction)
     {
         Debug.Log("move indicator");
         transform.position += new Vector3(direction.x, direction.y, 0);
-        newIndicatorLocation = transform.position ;
+        newIndicatorLocation = transform.position;
+        heroSelecting?.Invoke();//this if for path highlight to listen
+    }
+    public Vector2Int[] GetNeighbors(Vector2Int currentPosition)
+    {
+        return new Vector2Int[]
+        {
+        new Vector2Int(currentPosition.x, currentPosition.y + 1), 
+        new Vector2Int(currentPosition.x, currentPosition.y - 1), 
+        new Vector2Int(currentPosition.x - 1, currentPosition.y), 
+        new Vector2Int(currentPosition.x + 1, currentPosition.y)  
+        };
     }
 
     //private void UpdateHeroPosition()
@@ -47,8 +59,8 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-        finishSelection?.Invoke();//this if for path highlight to listen
 
+        finishSelection?.Invoke();
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
 
@@ -69,7 +81,7 @@ public class GridIndicator : MonoBehaviour
             currentTurn = PlayerTurn.PlayerBlueSide;
         }
         else
-        {                                                     
+        {
             currentTurn = PlayerTurn.PlayerRedSide;
         }
         return currentTurn;
