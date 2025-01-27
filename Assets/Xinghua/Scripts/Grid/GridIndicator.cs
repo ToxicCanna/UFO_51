@@ -37,7 +37,7 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("move indicator");
         transform.position += new Vector3(direction.x, direction.y, 0);
-        //newIndicatorLocation = transform.position + new Vector3(direction.x+1,direction.y,0);
+        newIndicatorLocation = transform.position ;
     }
 
     //private void UpdateHeroPosition()
@@ -46,9 +46,12 @@ public class GridIndicator : MonoBehaviour
     //}
     public void MoveToTargetIndicator()
     {
-        //Debug.Log("ConfirmMovePosition");
+        Debug.Log("MoveToTargetIndicator");
         finishSelection?.Invoke();//this if for path highlight to listen
-        //GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
+
+        //store the location that was occupied
+        GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
+
         if (GetPlayerTurn() == PlayerTurn.PlayerBlueSide)
         {
             playerBlueHero.transform.position = transform.position;//PlayerBlue Hero need Dynamic from array

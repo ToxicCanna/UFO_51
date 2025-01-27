@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour
        // Debug.Log("occupiedGrids" +occupiedGrids.Count);
         foreach (Vector2 grid in occupiedGrids)
         {
-           // Debug.Log("Occupied Grid: " + grid);
+            Debug.Log("Occupied Grid: " + grid);
         }
     }
 

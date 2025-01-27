@@ -8,6 +8,7 @@ public class GameStateMachine : BaseStateMachine
 
     public MovingHero HeroSelect => _heroSelectState;
     public GridIndicator GridIndicator => _gridIndicator;
+
     private GamePlayState gameplayState;
     private UIState uiState;
 
