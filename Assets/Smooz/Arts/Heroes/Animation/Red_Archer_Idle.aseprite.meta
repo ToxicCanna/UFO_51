@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7fa1bdbf72cb7df4285dfbfdf8598e67
+guid: 2c441621796fe4e4ca952faad2a0f009
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638735922027408872
+  platformSettingsDirtyTick: 638735922027429458
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Blue_Basic_Idle
+  - name: Red_Archer_Idle
     originalName: 
-    pivot: {x: 0.59999996, y: -0.033333335}
+    pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,9 +132,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 25
+      width: 32
       height: 30
-    spriteID: 97b4754907c874e43ac284c8c817ade6
+    spriteID: 296262181c0686a42897f33b529f14a2
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,21 +146,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1290184934
-    name: Blue_Basic_Idle
+    guid: 533665140
+    name: Red_Archer_Idle
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Blue_Basic_Idle
+    - name: Red_Archer_Idle
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
+        x: 0
         y: 1
-        width: 25
+        width: 32
         height: 30
-      spriteId: 97b4754907c874e43ac284c8c817ade6
+      spriteId: 296262181c0686a42897f33b529f14a2
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -200,7 +200,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  - name: WebGL
+  - name: Android
     overridden: 0
     ignorePlatformSupport: 0
     maxTextureSize: 2048
@@ -212,7 +212,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  - name: Android
+  - name: WebGL
     overridden: 0
     ignorePlatformSupport: 0
     maxTextureSize: 2048
