@@ -49,7 +49,7 @@ public class HighLight : MonoBehaviour
     {
         Debug.Log("show highlight path");
         Vector2Int currentGridPosition = GetGridPosition(transform.position);
-        Vector2Int[] neighbors = gridIndicator.GetNeighbors(currentGridPosition);
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
         DisplayHightlight(neighbors);
 
     }
@@ -94,7 +94,29 @@ public class HighLight : MonoBehaviour
         }
         highlights.Clear();
     }
+    public Vector2Int[] GetNeighbors(Vector2Int currentPosition)
+    {
+        List<Vector2Int> neighbors = new List<Vector2Int>();
 
+
+        Vector2Int[] directions = new Vector2Int[]
+        {
+        new Vector2Int(0, 1),  
+        new Vector2Int(0, -1), 
+        new Vector2Int(-1, 0), 
+        new Vector2Int(1, 0)  
+        };
+
+
+        foreach (var direction in directions)
+        {
+            neighbors.Add(currentPosition + direction);
+            //neighbors.Add(currentPosition + direction * 2);
+            //neighbors.Add(currentPosition + direction * 3);
+        }
+
+        return neighbors.ToArray();
+    }
     private Vector3 AlignToGrid(Vector3 position)
     {
         float x = Mathf.Round(position.x / tileSize) * tileSize;
@@ -119,7 +141,7 @@ public class HighLight : MonoBehaviour
     }
     void DisplayNeighbors(Vector2Int currentGridPosition)
     {
-        Vector2Int[] neighbors = gridIndicator.GetNeighbors(currentGridPosition);
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
 
         foreach (var neighbor in neighbors)
         {
@@ -139,7 +161,7 @@ public class HighLight : MonoBehaviour
         ClearHighlights();
 
         Vector2Int currentGridPosition = GetGridPosition(transform.position);
-        Vector2Int[] neighbors = gridIndicator.GetNeighbors(currentGridPosition);
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
 
         foreach (var neighbor in neighbors)
         {

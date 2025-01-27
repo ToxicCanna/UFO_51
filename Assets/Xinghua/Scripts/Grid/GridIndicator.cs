@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -56,16 +57,7 @@ public class GridIndicator : MonoBehaviour
             heroSelecting?.Invoke();//this if for path highlight to listen
         }
     }
-    public Vector2Int[] GetNeighbors(Vector2Int currentPosition)
-    {
-        return new Vector2Int[]
-        {
-        new Vector2Int(currentPosition.x, currentPosition.y + 1),
-        new Vector2Int(currentPosition.x, currentPosition.y - 1),
-        new Vector2Int(currentPosition.x - 1, currentPosition.y),
-        new Vector2Int(currentPosition.x + 1, currentPosition.y)
-        };
-    }
+   
 
     //private void UpdateHeroPosition()
     //{
