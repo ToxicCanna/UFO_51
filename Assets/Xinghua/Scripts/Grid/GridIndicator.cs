@@ -16,9 +16,10 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private GameObject heroPrefab;
     // private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
-    [SerializeField] HeroSelect heroSelect;
+    private HeroSelect heroSelect;
     public event Action finishSelection;
     public event Action heroSelecting;
+    public event Action rollingDice;//this is for the dic roll function
 
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
