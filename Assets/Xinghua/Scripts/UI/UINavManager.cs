@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISelectorManager : MonoBehaviour
+public class UINavManager : MonoBehaviour
 {
-    public static UISelectorManager Instance;
+    public static UINavManager Instance;
     public Button[] buttons; // Assign buttons in order
     public RectTransform selector; // Assign the selector GameObject
     private int currentIndex = 0; // Tracks the currently selected button
@@ -37,8 +37,8 @@ public class UISelectorManager : MonoBehaviour
 
     private void Update()
     {
-       // HandleNavigation(); // Move selector
-       // HandleSelection(); // Select the current button
+        // HandleNavigation(); // Move selector
+        // HandleSelection(); // Select the current button
     }
 
     public void HandleNavigation(Vector2 direction)
@@ -60,7 +60,7 @@ public class UISelectorManager : MonoBehaviour
              MoveSelector(-1); // Move left
          }*/
     }
-    
+
     public void MoveSelector(int direction)
     {
         if (buttons.Length == 0) return;

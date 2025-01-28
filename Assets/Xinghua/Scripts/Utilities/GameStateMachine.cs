@@ -30,7 +30,7 @@ public class GameStateMachine : BaseStateMachine
         // Ensure a default state is set
         if (gameplayState != null)
         {
-            SetState(gameplayState); // Ensure the default state is set here
+            SetState(uiState); // Ensure the default state is set here
         }
         else
         {

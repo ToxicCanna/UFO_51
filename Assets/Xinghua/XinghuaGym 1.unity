@@ -204,14 +204,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 50868578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d313c95cb842049abf3b01cfee5b76, type: 3}
+  m_Script: {fileID: 11500000, guid: 4173f91b3371fd745b47a882531d1f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
   - {fileID: 472623566}
   - {fileID: 122079038}
   - {fileID: 1158118879}
-  - {fileID: 1675840435}
   - {fileID: 733353985}
   selector: {fileID: 260385017}
 --- !u!1 &122079037
