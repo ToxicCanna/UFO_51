@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -23,6 +21,7 @@ public class GridIndicator : MonoBehaviour
     public event Action heroSelecting;
     public event Action heroUnselected;
     public event Action rollingDice;//this is for the dic roll function
+    public event Action activeShop;
 
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
@@ -64,24 +63,24 @@ public class GridIndicator : MonoBehaviour
             //judge if this position have hero already
             var heros = GridManager.Instance.GetHeros();
             var isHeroOccupied = false;
-          
+
             foreach (var hero in heros)
             {
-                Debug.Log("hero postion:"+hero.transform.position.x + ", " + hero.transform.position.y);
+                Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
                 if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
                 {
                     isHeroOccupied = true;
                     Debug.Log("current position have hero");
-                   selectedHero = hero;
+                    selectedHero = hero;
                 }
             }
             if (isHeroOccupied)
             {
                 var heroPath = selectedHero.GetComponent<HeroPath>();
-                Debug.Log("heroData:"+ heroPath);
+                Debug.Log("heroData:" + heroPath);
                 heroPathID = heroPath.GetHeroMoveIndex();
                 Debug.Log("heroMoveIndex:" + heroPathID);
-
+                activeShop?.Invoke();
                 heroSelecting?.Invoke();//this if for path highlight to listen
             }
             else
@@ -90,12 +89,12 @@ public class GridIndicator : MonoBehaviour
             }
 
 
-            
+
             newIndicatorLocation = transform.position;
-            
+
         }
     }
-   public int GetHeroMoveIndex()
+    public int GetHeroMoveIndex()
     {
         return heroPathID;
     }

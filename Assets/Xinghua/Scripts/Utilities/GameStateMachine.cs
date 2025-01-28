@@ -4,7 +4,7 @@ public class GameStateMachine : BaseStateMachine
 {
     // Keep track of all the states of gamePlay
     private MovingHero _heroSelectState;
-    [SerializeField]private GridIndicator _gridIndicator;
+    [SerializeField] private GridIndicator _gridIndicator;
 
     public MovingHero HeroSelect => _heroSelectState;
     public GridIndicator GridIndicator => _gridIndicator;
@@ -25,12 +25,28 @@ public class GameStateMachine : BaseStateMachine
         gameplayState = new GamePlayState(_gridIndicator);
     }
 
+    private void OnEnable()
+    {
+        if (_gridIndicator != null)
+        {
+            _gridIndicator.activeShop += SwitchToUIState;
+
+        }
+    }
+    private void OnDisable()
+    {
+        if (_gridIndicator != null)
+        {
+            _gridIndicator.activeShop -= SwitchToUIState;
+
+        }
+    }
     private void Start()
     {
         // Ensure a default state is set
         if (gameplayState != null)
         {
-            SetState(uiState); // Ensure the default state is set here
+            SetState(gameplayState); // Ensure the default state is set here
         }
         else
         {
@@ -40,6 +56,7 @@ public class GameStateMachine : BaseStateMachine
 
     public void SwitchToUIState()
     {
+
         SetState(uiState);
     }
 
