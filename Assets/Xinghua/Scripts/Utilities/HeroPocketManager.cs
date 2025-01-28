@@ -9,9 +9,13 @@ public class HeroPocketManager : MonoBehaviour
     [SerializeField] private GameObject[] heros;
     private void Start()
     {
-        RegisterHero("hero01", heros[0]);
+        //RegisterHero("hero01", heros[0]);
 
-        GetHeroData("hero01");
+        //GetHeroData("hero01");
+        foreach(var hero in heros)
+        {
+            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+        }
     }
     public void RegisterHero(string heroId, GameObject hero)
     {

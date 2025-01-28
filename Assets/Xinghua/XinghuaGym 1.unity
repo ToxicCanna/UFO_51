@@ -129,11 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4105839272640533609, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4105839272640533609, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4105839272640533609, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
       propertyPath: m_LocalPosition.z
@@ -367,6 +367,10 @@ PrefabInstance:
     - target: {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
       propertyPath: m_Name
       value: BlueRanged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8520747964517729165, guid: a4e31d3aade02d144a079e179088368e, type: 3}
       propertyPath: m_Sprite
@@ -697,6 +701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedRanged
       objectReference: {fileID: 0}
+    - target: {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -781,7 +789,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
-  currentRule: []
+  currentRule:
+  - {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
   directions: []
   gridIndicator: {fileID: 646920146}
 --- !u!1 &619394800
@@ -995,7 +1004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heros:
   - {fileID: 250542783}
-  - {fileID: 2084673628}
+  - {fileID: 585028599}
 --- !u!4 &1100082102
 Transform:
   m_ObjectHideFlags: 0
@@ -3048,11 +3057,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridIndicator: {fileID: 646920146}
---- !u!1 &2084673628 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
-  m_PrefabInstance: {fileID: 543077745}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

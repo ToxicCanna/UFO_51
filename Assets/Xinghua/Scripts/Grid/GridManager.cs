@@ -24,20 +24,17 @@ public class GridManager : MonoBehaviour
     {
         occupiedGrids.Add(gridPosition);
        // Debug.Log("occupiedGrids" +occupiedGrids.Count);
-        foreach (Vector2 grid in occupiedGrids)
-        {
-            Debug.Log("Occupied Grid: " + grid);
-            
-        }
+        //foreach (Vector2 grid in occupiedGrids)
+        //{
+        //    Debug.Log("Occupied Grid: " + grid);
+        //}
     }
 
-    public  HashSet<Vector2> GetOccupiedGrid(Vector2 gridPositionWithHero)
+    public HashSet<Vector2> GetOccupiedGrids()
     {
         // print all the position been occupied by heros
-      
-       return occupiedGrids;
-       Debug.Log("occupiedGrids "+ occupiedGrids);
-       
+        Debug.Log("occupiedGrids " + occupiedGrids);
+        return occupiedGrids;
     }
 
     public void RemoveOccupiedGrid(Vector2 gridPosition)

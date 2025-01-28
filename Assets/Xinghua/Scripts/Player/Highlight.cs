@@ -30,6 +30,7 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection += OnHeroSelectionFinished;
             gridIndicator.heroSelecting += OnHeroSelecting;
+            gridIndicator.heroUnselected += HideHightlight;
         }
         else
         {
@@ -43,13 +44,14 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnHeroSelectionFinished;
             gridIndicator.heroSelecting -= OnHeroSelecting;
+            gridIndicator.heroUnselected += HideHightlight; 
         }
     }
     private void OnHeroSelecting()
     {
-        Debug.Log("show highlight path");
+        //Debug.Log("show highlight path");
         Vector2Int currentGridPosition = GetGridPosition(transform.position);//this position need been hero selected 
-        Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
+        //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
         
        
         Vector2Int[] neighbors = GetNeighbors(currentGridPosition);

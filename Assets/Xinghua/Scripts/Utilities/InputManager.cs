@@ -43,7 +43,7 @@ public class InputManager : MonoBehaviour
         }
       
 
-        Debug.Log($"Input mode switched to: {mode}");
+        //Debug.Log($"Input mode switched to: {mode}");
     }
 
     /* private void OnEnable()

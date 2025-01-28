@@ -19,6 +19,7 @@ public class GridIndicator : MonoBehaviour
     private HeroSelect heroSelect;
     public event Action finishSelection;
     public event Action heroSelecting;
+    public event Action heroUnselected;
     public event Action rollingDice;//this is for the dic roll function
 
     private Vector3 heroPosition;
@@ -47,15 +48,43 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMove(Vector2 direction)
     {
+        //Debug.Log("currentPosition x:" + currentGridPosition.x + ",y:" + currentGridPosition.y);
+        //Debug.Log("direction.x:" + direction.x+ ",direction.y:"+ direction.y);
+
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         Vector2Int targetPosition = currentGridPosition + intDirection;
         if (IsWithinBounds(targetPosition))
         {
-            Debug.Log("move indicator");
+            //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
+            Debug.Log("currentGridPosition after move" + currentGridPosition);
+
+            //judge if this position have hero already
+            var heros = GridManager.Instance.GetOccupiedGrids();
+            var isHeroOccupied = false;
+            foreach (var hero in heros)
+            {
+                Debug.Log("hero postion:"+hero.x + ", " + hero.y);
+                if (hero.x == currentGridPosition.x && hero.y == currentGridPosition.y)
+                {
+                    isHeroOccupied = true;
+                    Debug.Log("current position have hero");
+                   
+                }
+            }
+            if (isHeroOccupied)
+            {
+                heroSelecting?.Invoke();//this if for path highlight to listen
+            }
+            else
+            {
+                heroUnselected?.Invoke();
+            }
+
+
             transform.position += new Vector3(direction.x, direction.y, 0);
             newIndicatorLocation = transform.position;
-            heroSelecting?.Invoke();//this if for path highlight to listen
+            
         }
     }
    
