@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.5943396, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 1676291864919098947, guid: 0bf0c1e3db0a4f049b060c524f088453, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,6 +103,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: 8c28ba321e3fa1b4fbd850aa34d622c7, type: 2}
+  maxHealth: 0
+  currentHealth: 0
+  cost: 0
+  atk: 0
+  atkSize: 0
+  def: 0
+  defSize: 0
+  heal: 0
+  healSize: 0
+  moveSpeed: 0
+  range: 0
+  ability: 0
 --- !u!114 &7133954728524933050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,8 +172,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: -0.032258064}
+    oldSize: {x: 0.2, y: 0.31}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
