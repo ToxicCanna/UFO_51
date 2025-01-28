@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -12,7 +13,8 @@ public class GridIndicator : MonoBehaviour
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
-
+    GameObject selectedHero;
+    private int heroPathID;
     [SerializeField] private GameObject heroPrefab;
     // private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
@@ -60,20 +62,26 @@ public class GridIndicator : MonoBehaviour
             Debug.Log("currentGridPosition after move" + currentGridPosition);
             transform.position += new Vector3(direction.x, direction.y, 0);
             //judge if this position have hero already
-            var heros = GridManager.Instance.GetOccupiedGrids();
+            var heros = GridManager.Instance.GetHeros();
             var isHeroOccupied = false;
+          
             foreach (var hero in heros)
             {
-                Debug.Log("hero postion:"+hero.x + ", " + hero.y);
-                if (hero.x == currentGridPosition.x && hero.y == currentGridPosition.y)
+                Debug.Log("hero postion:"+hero.transform.position.x + ", " + hero.transform.position.y);
+                if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
                 {
                     isHeroOccupied = true;
                     Debug.Log("current position have hero");
-                   
+                   selectedHero = hero;
                 }
             }
             if (isHeroOccupied)
             {
+                var heroPath = selectedHero.GetComponent<HeroPath>();
+                Debug.Log("heroData:"+ heroPath);
+                heroPathID = heroPath.GetHeroMoveIndex();
+                Debug.Log("heroMoveIndex:" + heroPathID);
+
                 heroSelecting?.Invoke();//this if for path highlight to listen
             }
             else
@@ -87,7 +95,10 @@ public class GridIndicator : MonoBehaviour
             
         }
     }
-   
+   public int GetHeroMoveIndex()
+    {
+        return heroPathID;
+    }
 
     //private void UpdateHeroPosition()
     //{

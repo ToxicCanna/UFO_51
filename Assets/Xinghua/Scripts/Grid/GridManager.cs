@@ -7,6 +7,7 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance { get; private set; }
 
     private HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
+    private List<GameObject> heros = new List<GameObject>();
 
     private void Awake()
     {
@@ -28,6 +29,16 @@ public class GridManager : MonoBehaviour
         //{
         //    Debug.Log("Occupied Grid: " + grid);
         //}
+    }
+
+    public void AddHero(GameObject hero)
+    {
+        heros.Add(hero);
+    }
+
+    public List<GameObject> GetHeros()
+    {
+        return heros;
     }
 
     public HashSet<Vector2> GetOccupiedGrids()

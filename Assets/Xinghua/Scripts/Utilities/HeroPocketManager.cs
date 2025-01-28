@@ -14,7 +14,9 @@ public class HeroPocketManager : MonoBehaviour
         //GetHeroData("hero01");
         foreach(var hero in heros)
         {
-            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            GridManager.Instance.AddHero(hero);
+          
         }
     }
     public void RegisterHero(string heroId, GameObject hero)
