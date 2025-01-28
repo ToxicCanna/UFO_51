@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 9.656657
     speed: 2
-    m_Value: 10
+    m_Value: 589.33246
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_VSyncEnabled: 0
   m_Gizmos: 0
   m_Stats: 0
-  m_SelectedSizes: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_SelectedSizes: 03000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
     m_VRangeLocked: 0
