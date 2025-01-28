@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &139922962 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
-  m_PrefabInstance: {fileID: 314606904}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &159297859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -856,56 +851,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
   m_PrefabInstance: {fileID: 545176683}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &835056882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 835056884}
-  - component: {fileID: 835056883}
-  m_Layer: 0
-  m_Name: HeroOwnedManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &835056883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835056882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46176145f8b981c4da0a7d5cd6d29ee9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  redSideHeroOwed:
-  - {fileID: 250542783}
-  - {fileID: 2084673628}
-  blueSideHeroOwed:
-  - {fileID: 585028599}
-  - {fileID: 139922962}
---- !u!4 &835056884
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835056882}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12073232, y: 3.594575, z: -0.06206497}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925358859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,7 +960,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889a2bc0bc793ef44957e8638c8ddc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero: {fileID: 0}
+  heros:
+  - {fileID: 250542783}
+  - {fileID: 2084673628}
 --- !u!4 &1100082102
 Transform:
   m_ObjectHideFlags: 0
@@ -3094,4 +3041,3 @@ SceneRoots:
   - {fileID: 1559695723}
   - {fileID: 159297859}
   - {fileID: 314606904}
-  - {fileID: 835056884}
