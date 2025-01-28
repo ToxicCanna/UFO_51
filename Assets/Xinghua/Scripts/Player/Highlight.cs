@@ -48,7 +48,10 @@ public class HighLight : MonoBehaviour
     private void OnHeroSelecting()
     {
         Debug.Log("show highlight path");
-        Vector2Int currentGridPosition = GetGridPosition(transform.position);
+        Vector2Int currentGridPosition = GetGridPosition(transform.position);//this position need been hero selected 
+        Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
+        
+       
         Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
         DisplayHightlight(neighbors);
 

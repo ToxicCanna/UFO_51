@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class GridManager : MonoBehaviour
 {
@@ -26,7 +27,17 @@ public class GridManager : MonoBehaviour
         foreach (Vector2 grid in occupiedGrids)
         {
             Debug.Log("Occupied Grid: " + grid);
+            
         }
+    }
+
+    public  HashSet<Vector2> GetOccupiedGrid(Vector2 gridPositionWithHero)
+    {
+        // print all the position been occupied by heros
+      
+       return occupiedGrids;
+       Debug.Log("occupiedGrids "+ occupiedGrids);
+       
     }
 
     public void RemoveOccupiedGrid(Vector2 gridPosition)
