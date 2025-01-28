@@ -58,7 +58,7 @@ public class GridIndicator : MonoBehaviour
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
             Debug.Log("currentGridPosition after move" + currentGridPosition);
-
+            transform.position += new Vector3(direction.x, direction.y, 0);
             //judge if this position have hero already
             var heros = GridManager.Instance.GetOccupiedGrids();
             var isHeroOccupied = false;
@@ -82,7 +82,7 @@ public class GridIndicator : MonoBehaviour
             }
 
 
-            transform.position += new Vector3(direction.x, direction.y, 0);
+            
             newIndicatorLocation = transform.position;
             
         }
