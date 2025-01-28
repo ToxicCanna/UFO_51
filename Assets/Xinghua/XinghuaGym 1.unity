@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &139922962 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
+  m_PrefabInstance: {fileID: 314606904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &159297859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -880,8 +885,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46176145f8b981c4da0a7d5cd6d29ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redSideHeroOwed: []
-  blueSideHeroOwed: []
+  redSideHeroOwed:
+  - {fileID: 250542783}
+  - {fileID: 2084673628}
+  blueSideHeroOwed:
+  - {fileID: 585028599}
+  - {fileID: 139922962}
 --- !u!4 &835056884
 Transform:
   m_ObjectHideFlags: 0
@@ -3059,6 +3068,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridIndicator: {fileID: 646920146}
+--- !u!1 &2084673628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+  m_PrefabInstance: {fileID: 543077745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3074,10 +3088,10 @@ SceneRoots:
   - {fileID: 1807640481}
   - {fileID: 1425988271}
   - {fileID: 925358860}
-  - {fileID: 1559695723}
   - {fileID: 1469706333}
   - {fileID: 545176683}
-  - {fileID: 314606904}
   - {fileID: 543077745}
+  - {fileID: 1559695723}
   - {fileID: 159297859}
+  - {fileID: 314606904}
   - {fileID: 835056884}
