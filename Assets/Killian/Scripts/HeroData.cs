@@ -6,6 +6,8 @@ public class HeroData : MonoBehaviour
 {
     public HeroSO heroData;
 
+    public Sprite mySprite;
+
     public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     private string abilityScore;
 
@@ -17,6 +19,7 @@ public class HeroData : MonoBehaviour
 
     void SetStats()
     {
+        mySprite = heroData.sprite;
         maxHealth = heroData.health;
         currentHealth = maxHealth;
         cost = heroData.cost;
@@ -48,7 +51,7 @@ public class HeroData : MonoBehaviour
         if (heroData.Upgrade != null)
         {
             heroData = heroData.Upgrade;
-            SetHealth();
+            SetStats();
         }
     }*/
     public void PowerUp()

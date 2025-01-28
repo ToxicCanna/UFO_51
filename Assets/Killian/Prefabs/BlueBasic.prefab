@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroData: {fileID: 11400000, guid: 2baaa0d285709764f87b30a6ecb59dc3, type: 2}
+  mySprite: {fileID: 8476291759544491924, guid: 7fa1bdbf72cb7df4285dfbfdf8598e67, type: 3}
   maxHealth: 0
   currentHealth: 0
   cost: 0
