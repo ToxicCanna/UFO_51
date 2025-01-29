@@ -28,6 +28,7 @@ public class BattleManager : MonoBehaviour
             poweredUp = true;
         }
 
+
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
 
@@ -56,6 +57,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"{currentHero.atk}");
             poweredUp = false;
         }
+        //start next turn
     }
     void Clash(HeroData target)
     {

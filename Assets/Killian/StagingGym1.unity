@@ -650,6 +650,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1932192151
       objectReference: {fileID: 0}
+    - target: {fileID: 9002317770488668507, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
+      propertyPath: DiceRoller
+      value: 
+      objectReference: {fileID: 453296907}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -972,7 +976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceroller: {fileID: 453296907}
-  Player1Hero: {fileID: 0}
+  currentHero: {fileID: 0}
 --- !u!1001 &314606904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3873,6 +3877,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4087598484406199446, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
+      propertyPath: DiceRoller
+      value: 
+      objectReference: {fileID: 453296907}
     - target: {fileID: 299199557036477060, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3900,6 +3908,10 @@ PrefabInstance:
     - target: {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
       propertyPath: m_Name
       value: RedBasic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213497359716877039, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5153970084588831760, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
       propertyPath: heroMoveRule
