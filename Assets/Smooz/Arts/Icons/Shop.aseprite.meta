@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: 3f490e5b7a8046c418c470f351698fdc
-=======
-guid: dda20da9c412f2746bb699680d38ad0d
->>>>>>> origin/Smooztime
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -39,7 +35,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 32
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -79,11 +75,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-<<<<<<< HEAD
     defaultPivotAlignment: 7
-=======
-    defaultPivotAlignment: 0
->>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -96,11 +88,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-<<<<<<< HEAD
     defaultPivotAlignment: 7
-=======
-    defaultPivotAlignment: 0
->>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -109,11 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-<<<<<<< HEAD
-  platformSettingsDirtyTick: 638733115968522683
-=======
-  platformSettingsDirtyTick: 638735968600934569
->>>>>>> origin/Smooztime
+  platformSettingsDirtyTick: 0
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -140,11 +124,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Shop
     originalName: 
-<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
-=======
-    pivot: {x: 0.5, y: 0.5}
->>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -154,11 +134,7 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
-<<<<<<< HEAD
-    spriteID: c55cce0774f8c634b9c53bbfb6619960
-=======
-    spriteID: 7d6bb5518a52d234895d2cfd7c083d43
->>>>>>> origin/Smooztime
+    spriteID: 9d38dd8baaffaf943ae1ddb5767f603b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -184,11 +160,7 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
-<<<<<<< HEAD
-      spriteId: c55cce0774f8c634b9c53bbfb6619960
-=======
-      spriteId: 7d6bb5518a52d234895d2cfd7c083d43
->>>>>>> origin/Smooztime
+      spriteId: 9d38dd8baaffaf943ae1ddb5767f603b
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -199,66 +171,6 @@ ScriptedImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: DefaultTexturePlatform
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Android
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: WebGL
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Windows Store Apps
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
