@@ -14,8 +14,9 @@ public class CastleAttack : MonoBehaviour
         var castle = other.GetComponent<Castle>();
         if (castle != null)
         {
-            castle.TakeDamage(DiceRoller.RollTotal(heroData.atk, heroData.atkSize));
+            int damage = DiceRoller.RollTotal(heroData.atk, heroData.atkSize);
+            castle.TakeDamage(damage);
+        Debug.Log($"attacked castle for {damage}");
         }
-        Debug.Log("attacked castle");
     }
 }

@@ -15,6 +15,8 @@ public class Castle : MonoBehaviour
     {
         castleHP = maxHP;
         CheckHealthBarGradientAmount();
+        _target = castleHP / maxHP;
+        _image.fillAmount = _target;
     }
 
     public void TakeDamage(int damage)
