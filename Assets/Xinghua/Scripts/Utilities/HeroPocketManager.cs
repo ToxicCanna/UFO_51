@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HeroPocketManager : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class HeroPocketManager : MonoBehaviour
     //private List<GameObject> redSideHeroes = new List<GameObject>();
     //private List<GameObject> blueSideHeroes = new List<GameObject>();
 
-    private List<GameObject> heros;
+    private List<GameObject> RedSideheros;
+    private List<GameObject> BlueSideheros;
     private void Awake()
     {
         if (Instance == null)
@@ -27,23 +29,28 @@ public class HeroPocketManager : MonoBehaviour
 
     private void Start()
     {
-        heros = GetComponent<TwoSidesHero>().GetHeros();
-        foreach (var hero in heros)
+        RedSideheros = GetComponent<TwoSidesHero>().GetHerosRed();
+        foreach (var hero in RedSideheros)
         {
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
-            RegisterHero(key, hero);
-        }
-
-
-        //GetHeroData("hero01");
-        foreach (var hero in heros)
-        {
-            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
-            GridManager.Instance.AddHero(hero);
-
+            RegisterHero(key, hero,"red");
         }
         GetAllRedSideHeroes();
+
+        //GetHeroData("hero01");
+        BlueSideheros = GetComponent<TwoSidesHero>().GetHerosBlue();
+        foreach (var hero in BlueSideheros)
+        {
+            var heroData = hero.GetComponent<HeroData>();
+            var key = hero.name;
+            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            GridManager.Instance.AddHero(hero);
+            RegisterHero(key, hero, "blue");
+
+        }
+        GetAllBlueSideHeroes();
+
     }
 
     public List<GameObject> GetAllRedSideHeroes()
@@ -63,17 +70,46 @@ public class HeroPocketManager : MonoBehaviour
 
         return heroListRedSide; // Return the list
     }
-
-    public void RegisterHero(string heroId, GameObject hero)
+    public List<GameObject> GetAllBlueSideHeroes()
     {
-        if (!redSideHeroes.ContainsKey(heroId))
+        List<GameObject> heroListBlueSide = new List<GameObject>(); // Create a new list
+        Debug.Log("blueSideHeroes in GetAllBlueSideHeroes" + blueSideHeroes);
+
+        foreach (var hero in blueSideHeroes)
         {
-            redSideHeroes.Add(heroId, hero);
+            string heroName = hero.Key;
+            GameObject heroObject = hero.Value;
+
+            Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
+
+            heroListBlueSide.Add(heroObject); // Add to list
         }
 
 
+        return heroListBlueSide; // Return the list
+    }
+
+    public void RegisterHero(string heroId, GameObject hero,string heroColor)
+    {
+        if (heroColor == "red")
+        {
+            if (!redSideHeroes.ContainsKey(heroId))
+            {
+                redSideHeroes.Add(heroId, hero);
+            }
+        }
+        else
+        {
+            if (!blueSideHeroes.ContainsKey(heroId))
+            {
+                blueSideHeroes.Add(heroId, hero);
+            }
+        }
+        
         Debug.Log("hero have already" + redSideHeroes.Count);
     }
+
+
     public void GetHeroData(string heroId)
     {
         var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();

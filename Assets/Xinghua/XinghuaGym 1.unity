@@ -2654,9 +2654,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca869691b09ac2458cee726cb9091b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heros:
+  redSideheros:
   - {fileID: 250542783}
   - {fileID: 2084673628}
+  blueSideheros:
+  - {fileID: 585028599}
+  - {fileID: 348752649}
 --- !u!1 &1157735327
 GameObject:
   m_ObjectHideFlags: 0

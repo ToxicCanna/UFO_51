@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -26,6 +27,8 @@ public class GridIndicator : MonoBehaviour
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
     private Vector2Int currentGridPosition;
+    private List<GameObject> herosInRedSide;
+    private List<GameObject> herosInBlueSide;
 
 
     void Start()
@@ -36,6 +39,9 @@ public class GridIndicator : MonoBehaviour
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
+
+
+       
 
 
     }
@@ -122,7 +128,21 @@ public class GridIndicator : MonoBehaviour
         {
             playerRedHero.transform.position = transform.position;//PlayerRedHero need Dynamic
         }
+
         UpdatePlayerTurn();
+        UpdateIndicatorWhenTurnChange();
+    }
+    private void UpdateIndicatorWhenTurnChange()
+    {
+        Debug.Log("current turn:" + currentTurn);
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            transform.position = herosInRedSide[0].transform.position;
+        }
+        else
+        {
+            transform.position = herosInBlueSide[0].transform.position;
+        }
     }
     private PlayerTurn GetCurrentPlayerTurn()
     {
@@ -168,30 +188,59 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleSelectHero()
     {
+        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
+        Debug.Log("start hero in red side :" + herosInRedSide.Count);
+        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+        Debug.Log("start hero in blue side :" + herosInBlueSide.Count);
         Debug.Log("use X key to switch");
-
-
-
-        Debug.Log("current indicator position" + transform.position);
+        //Debug.Log("current indicator position" + transform.position);
         Debug.Log("current turn" + GetCurrentPlayerTurn());
-        var herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
-        //Debug.Log("count:"+herosInRedSide.Count);
-        var currentHeroIndex=0;
-        for (int i = 0; i < herosInRedSide.Count; i++)
+        Debug.Log("red hero coun when select :" + herosInRedSide.Count);
+        Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
+        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
         {
-            Debug.Log($"Index: {i}, Value: {herosInRedSide[i]}");
-            var hero = herosInRedSide[i];
-            Debug.Log("hero position x:"+hero.transform.position.x + " y:" +hero.transform.position.y);
-
-            if(hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+            
+            //Debug.Log("count:"+herosInRedSide.Count);
+            var currentHeroIndex = 0;
+            for (int i = 0; i < herosInRedSide.Count; i++)
             {
-                Debug.Log("current i :"+i);
-                currentHeroIndex = i;
+                Debug.Log($"Index: {i}, Value: {herosInRedSide[i]}");
+                var hero = herosInRedSide[i];
+                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
+
+                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+                {
+                    Debug.Log("current i :" + i);
+                    currentHeroIndex = i;
+                    break;
+                }
             }
+            var nextHeroIndex = (currentHeroIndex + 1) % herosInRedSide.Count;
+            var nextHero = herosInRedSide[nextHeroIndex];
+            transform.position = nextHero.transform.position;
         }
-        var nextHeroIndex = (currentHeroIndex + 1) % herosInRedSide.Count;
-        var nextHero = herosInRedSide[nextHeroIndex];
-        transform.position = nextHero.transform.position;
+        else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
+        {
+           
+            //Debug.Log("count:"+herosInRedSide.Count);
+            var currentHeroIndex = 0;
+            for (int i = 0; i < herosInBlueSide.Count; i++)
+            {
+                Debug.Log($"Index: {i}, Value: {herosInBlueSide[i]}");
+                var hero = herosInBlueSide[i];
+                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
+
+                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+                {
+                    Debug.Log("current i :" + i);
+                    currentHeroIndex = i;
+                    break;
+                }
+            }
+            var nextHeroIndex = (currentHeroIndex + 1) % herosInBlueSide.Count;
+            var nextHero = herosInBlueSide[nextHeroIndex];
+            transform.position = nextHero.transform.position;
+        }
     }
 
 }
