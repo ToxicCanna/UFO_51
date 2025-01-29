@@ -11,6 +11,7 @@ public class GameStateMachine : BaseStateMachine
 
     private GamePlayState gameplayState;
     private UIState uiState;
+    private AttackState attackState;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameStateMachine : BaseStateMachine
         }
 
         gameplayState = new GamePlayState(_gridIndicator);
+        attackState = new AttackState();
     }
 
     private void OnEnable()

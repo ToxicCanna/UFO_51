@@ -9,7 +9,7 @@ public class AttackState : BaseState
 
     public override void UpdateState()
     {
-        
+        Debug.Log("update attack state");
     }
 
     public override void ExitState()

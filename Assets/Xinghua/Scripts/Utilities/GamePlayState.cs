@@ -37,7 +37,7 @@ public class GamePlayState : BaseState
 
     public override void UpdateState()
     {
-        // Debug.Log("Update Gameplay State");
+        Debug.Log("Update Gameplay State");
         InputManager.Instance.SetInputMode(InputManager.InputMode.Gameplay);
     }
 }
