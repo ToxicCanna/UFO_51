@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18d9b5c23e88944b8887dcd3c8e3b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DiceRoller: {fileID: 0}
+  DiceRoller: {fileID: 4703557157713625399, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
 --- !u!114 &-2552917480465320952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   currentRule:
   - {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
   directions: []
-  gridIndicator: {fileID: 0}
+  gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &4704285411493171951
 BoxCollider2D:
   m_ObjectHideFlags: 0

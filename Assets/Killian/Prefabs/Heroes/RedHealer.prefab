@@ -136,7 +136,7 @@ MonoBehaviour:
   tileSize: 1
   currentRule: []
   directions: []
-  gridIndicator: {fileID: 0}
+  gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &6056250194065573593
 BoxCollider2D:
   m_ObjectHideFlags: 0
