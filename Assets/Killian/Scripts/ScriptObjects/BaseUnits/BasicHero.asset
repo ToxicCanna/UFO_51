@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e41a21da5945ff4d948b44ed7b783f2, type: 3}
   m_Name: BasicHero
   m_EditorClassIdentifier: 
-  health: 5
+  sprite: {fileID: 0}
+  health: 3
   cost: 1
   atk: 1
   atkSize: 6
   def: 1
   defSize: 6
-  heal: 1
-  healSize: 4
+  heal: 0
+  healSize: 6
   moveSpeed: 1
   range: 1
   ability: 1
   abilityScore: move
-  Upgrade: {fileID: 11400000, guid: ab9ea07da06cbf544aaff01de08f9d15, type: 2}

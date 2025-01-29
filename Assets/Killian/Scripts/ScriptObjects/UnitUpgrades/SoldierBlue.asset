@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e41a21da5945ff4d948b44ed7b783f2, type: 3}
-  m_Name: Soldier
+  m_Name: SoldierBlue
   m_EditorClassIdentifier: 
+  sprite: {fileID: 6381345389102722522, guid: 00fd5d73d8cf4b74f87b2ad639c756a4, type: 3}
   health: 10
   cost: 1
   atk: 1
   atkSize: 6
   def: 1
   defSize: 6
-  heal: 1
-  healSize: 4
+  heal: 0
+  healSize: 6
   moveSpeed: 2
   range: 1
   ability: 1
   abilityScore: move
-  Upgrade: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeroSelect : MonoBehaviour
 {
     //when in my turn,I need select the hero to move in my already hero array
-    [SerializeField] private List<HeroData> heros;//this list should been add when player buy hero
+    [SerializeField] public List<HeroData> heros;//this list should been add when player buy hero
     private int currentSelectIndex;
     [SerializeField] private GridIndicator gridIndicator;
     private void Start()
