@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c7326aa28a08a384e802c8a8a452622b
+=======
+guid: 4fb80cd616257c347b3192782af7482f
+>>>>>>> origin/Smooztime
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -35,7 +39,11 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
     spritePixelsToUnits: 100
+=======
+    spritePixelsToUnits: 32
+>>>>>>> origin/Smooztime
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -75,7 +83,11 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
+<<<<<<< HEAD
     defaultPivotAlignment: 7
+=======
+    defaultPivotAlignment: 0
+>>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -88,7 +100,11 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
+<<<<<<< HEAD
     defaultPivotAlignment: 7
+=======
+    defaultPivotAlignment: 0
+>>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -97,7 +113,11 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
+<<<<<<< HEAD
   platformSettingsDirtyTick: 0
+=======
+  platformSettingsDirtyTick: 638735968660755673
+>>>>>>> origin/Smooztime
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -124,7 +144,11 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Frame_0
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -134,7 +158,11 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: d212b5af9e266684ab28d02af5281059
+=======
+    spriteID: bd6dd90b07cf6e84196fe6f42c922899
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -145,7 +173,11 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Frame_1
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -155,7 +187,11 @@ ScriptedImporter:
       y: 40
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: daa401a8d7ad6d7478b7d3ded45e973c
+=======
+    spriteID: 794bd48a879feb342af57b8ec731b1c1
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -166,7 +202,11 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 40}
   - name: Frame_2
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -176,7 +216,11 @@ ScriptedImporter:
       y: 76
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: 322d3c7c354abab41a02d9be5a799ab1
+=======
+    spriteID: b55e68ca3de777a439c1a43f2349f6ec
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -187,7 +231,11 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 76}
   - name: Frame_3
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -197,7 +245,11 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: 0119fce5d47aebc4fa34be2bf77f9b8d
+=======
+    spriteID: 73b590c8ec25372489e706ebf0c29b35
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -208,7 +260,11 @@ ScriptedImporter:
     uvTransform: {x: 40, y: 4}
   - name: Frame_4
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -218,7 +274,11 @@ ScriptedImporter:
       y: 40
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: b4d3c89fa3a1dcd4ab6ba51c0869d3f5
+=======
+    spriteID: d87fdde219603d7429a1c86f9a7f478c
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -229,7 +289,11 @@ ScriptedImporter:
     uvTransform: {x: 40, y: 40}
   - name: Frame_5
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -239,7 +303,11 @@ ScriptedImporter:
       y: 76
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: 39412e3d91d66e342bfabe5558cb5f67
+=======
+    spriteID: 817c0106ef1432342bb5f75ccb741723
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -265,7 +333,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: d212b5af9e266684ab28d02af5281059
+=======
+      spriteId: bd6dd90b07cf6e84196fe6f42c922899
+>>>>>>> origin/Smooztime
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
@@ -274,7 +346,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: daa401a8d7ad6d7478b7d3ded45e973c
+=======
+      spriteId: 794bd48a879feb342af57b8ec731b1c1
+>>>>>>> origin/Smooztime
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -283,7 +359,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: 322d3c7c354abab41a02d9be5a799ab1
+=======
+      spriteId: b55e68ca3de777a439c1a43f2349f6ec
+>>>>>>> origin/Smooztime
     - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
@@ -292,7 +372,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: 0119fce5d47aebc4fa34be2bf77f9b8d
+=======
+      spriteId: 73b590c8ec25372489e706ebf0c29b35
+>>>>>>> origin/Smooztime
     - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
@@ -301,7 +385,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: b4d3c89fa3a1dcd4ab6ba51c0869d3f5
+=======
+      spriteId: d87fdde219603d7429a1c86f9a7f478c
+>>>>>>> origin/Smooztime
     - name: Frame_5
       frameIndex: 5
       additiveSortOrder: 0
@@ -310,7 +398,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: 39412e3d91d66e342bfabe5558cb5f67
+=======
+      spriteId: 817c0106ef1432342bb5f75ccb741723
+>>>>>>> origin/Smooztime
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -326,6 +418,69 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
+<<<<<<< HEAD
+=======
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: WebGL
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Windows Store Apps
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+>>>>>>> origin/Smooztime
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 

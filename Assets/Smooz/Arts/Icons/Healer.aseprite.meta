@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: c997dca20bce3ab4282be0135ca70e20
+=======
+guid: 7731febee673bc2449cd35168aa4429b
+>>>>>>> origin/Smooztime
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -75,7 +79,11 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
+<<<<<<< HEAD
     defaultPivotAlignment: 7
+=======
+    defaultPivotAlignment: 0
+>>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -88,7 +96,11 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
+<<<<<<< HEAD
     defaultPivotAlignment: 7
+=======
+    defaultPivotAlignment: 0
+>>>>>>> origin/Smooztime
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -97,7 +109,11 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
+<<<<<<< HEAD
   platformSettingsDirtyTick: 638733115968522683
+=======
+  platformSettingsDirtyTick: 638735968600928580
+>>>>>>> origin/Smooztime
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -124,7 +140,11 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Healer
     originalName: 
+<<<<<<< HEAD
     pivot: {x: 0.5, y: -0.071428575}
+=======
+    pivot: {x: 0.5, y: 0.5}
+>>>>>>> origin/Smooztime
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -134,7 +154,11 @@ ScriptedImporter:
       y: 4
       width: 28
       height: 28
+<<<<<<< HEAD
     spriteID: a4ac0069659ce0f4ab1502fc31e5dc83
+=======
+    spriteID: dd121b2d35590014c87009b9ab680010
+>>>>>>> origin/Smooztime
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,7 +184,11 @@ ScriptedImporter:
         y: 2
         width: 28
         height: 28
+<<<<<<< HEAD
       spriteId: a4ac0069659ce0f4ab1502fc31e5dc83
+=======
+      spriteId: dd121b2d35590014c87009b9ab680010
+>>>>>>> origin/Smooztime
     linkedCells: []
     parentIndex: -1
   platformSettings:
