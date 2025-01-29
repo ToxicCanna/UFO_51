@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class Castle : MonoBehaviour
 {
-    public int maxHP;
-    public int castleHP;
+    public float maxHP = 10;
+    public float castleHP;
 
     [SerializeField] private Image _image;
     [SerializeField] private Gradient _gradient;
@@ -22,7 +22,9 @@ public class Castle : MonoBehaviour
     public void TakeDamage(int damage)
     {
         castleHP -= damage;
+        Debug.Log($"castle HP: {castleHP}");
         _target = castleHP/maxHP;
+        Debug.Log($"HealthBar fill: {_target}");
         _image.fillAmount = _target;
         if (castleHP <= 0)
         {
