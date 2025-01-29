@@ -30,6 +30,7 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection += OnHeroSelectionFinished;
             gridIndicator.heroSelecting += OnHeroSelecting;
+            gridIndicator.heroUnselected += HideHightlight;
         }
         else
         {
@@ -43,13 +44,18 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnHeroSelectionFinished;
             gridIndicator.heroSelecting -= OnHeroSelecting;
+            gridIndicator.heroUnselected += HideHightlight;
         }
     }
     private void OnHeroSelecting()
     {
-        Debug.Log("show highlight path");
-        Vector2Int currentGridPosition = GetGridPosition(transform.position);
-        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
+        //Debug.Log("show highlight path");
+        Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
+        Debug.Log("gridIndicator:" + currentGridPosition);
+        //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
+
+
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
         DisplayHightlight(neighbors);
 
     }
@@ -78,6 +84,7 @@ public class HighLight : MonoBehaviour
     private void DisplayHightlight(Vector2Int[] neighbors)
     {
         ClearHighlights();
+        Debug.Log("neighbor:" + neighbors);
 
         foreach (var neighbor in neighbors)
         {
@@ -98,27 +105,36 @@ public class HighLight : MonoBehaviour
         }
         highlights.Clear();
     }
-    public Vector2Int[] GetNeighbors(Vector2Int currentPosition)
+    public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-
-
         Vector2Int[] directions = new Vector2Int[]
-        {
-        new Vector2Int(0, 1),
-        new Vector2Int(0, -1),
-        new Vector2Int(-1, 0),
-        new Vector2Int(1, 0)
-        };
+          {
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0)
+          };
 
-
-        foreach (var direction in directions)
+        if (gridIndicator.GetHeroMoveIndex() == 0)
         {
-            neighbors.Add(currentPosition + direction);
-            //neighbors.Add(currentPosition + direction * 2);
-            //neighbors.Add(currentPosition + direction * 3);
+
+            foreach (var direction in directions)
+            {
+                neighbors.Add(currentPosition + direction);
+
+            }
         }
+        else if (gridIndicator.GetHeroMoveIndex() == 3)
+        {
 
+            foreach (var direction in directions)
+            {
+                neighbors.Add(currentPosition + direction);
+                neighbors.Add(currentPosition + direction * 2);
+                neighbors.Add(currentPosition + direction * 3);
+            }
+        }
         return neighbors.ToArray();
     }
     private Vector3 AlignToGrid(Vector3 position)
@@ -145,7 +161,7 @@ public class HighLight : MonoBehaviour
     }
     void DisplayNeighbors(Vector2Int currentGridPosition)
     {
-        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
 
         foreach (var neighbor in neighbors)
         {
@@ -165,7 +181,7 @@ public class HighLight : MonoBehaviour
         ClearHighlights();
 
         Vector2Int currentGridPosition = GetGridPosition(transform.position);
-        Vector2Int[] neighbors = GetNeighbors(currentGridPosition);
+        Vector2Int[] neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
 
         foreach (var neighbor in neighbors)
         {

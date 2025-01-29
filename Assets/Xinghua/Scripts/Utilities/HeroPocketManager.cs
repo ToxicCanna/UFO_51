@@ -4,25 +4,33 @@ using UnityEngine;
 public class HeroPocketManager : MonoBehaviour
 {
     //this is hero in the scene
-    private Dictionary<string, GameObject> heroes = new Dictionary<string, GameObject>();
-    [SerializeField] private GameObject hero;
+    private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
+    private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
+    [SerializeField] private GameObject[] heros;
     private void Start()
     {
-        RegisterHero("hero01", hero);
-        GetHeroData("hero01");
+        //RegisterHero("hero01", heros[0]);
+
+        //GetHeroData("hero01");
+        foreach(var hero in heros)
+        {
+            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            GridManager.Instance.AddHero(hero);
+          
+        }
     }
     public void RegisterHero(string heroId, GameObject hero)
     {
-        if (!heroes.ContainsKey(heroId))
+        if (!redSideHeroes.ContainsKey(heroId))
         {
-            heroes.Add(heroId, hero);
+            redSideHeroes.Add(heroId, hero);
         }
 
-        Debug.Log("hero have already" + heroes.Count);
+        Debug.Log("hero have already" + redSideHeroes.Count);
     }
     public void GetHeroData(string heroId)
     {
-        var heroComponent = heroes[heroId].GetComponent<HeroData>();
+        var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();
         if (heroComponent != null)
         { 
             int heroHealth =heroComponent.heroData.cost;
@@ -33,7 +41,7 @@ public class HeroPocketManager : MonoBehaviour
 
     public void RemoveHighlight(string heroId)
     {
-        if (heroes.TryGetValue(heroId, out GameObject hero))
+        if (redSideHeroes.TryGetValue(heroId, out GameObject hero))
         {
             Debug.Log("hide highlight path");
         }

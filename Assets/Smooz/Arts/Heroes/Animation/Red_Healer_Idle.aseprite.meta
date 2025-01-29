@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0bf0c1e3db0a4f049b060c524f088453
+guid: 0696859c9c7968046b7c14ec43e1b6a1
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -75,7 +75,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -88,7 +88,7 @@ ScriptedImporter:
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
-    defaultPivotAlignment: 7
+    defaultPivotAlignment: 0
     customPivotPosition: {x: 0.5, y: 0.5}
     mosaicPadding: 4
     spritePadding: 0
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 638735967869606621
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -124,7 +124,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Red_Healer_Idle
     originalName: 
-    pivot: {x: 0.5, y: -0.032258064}
+    pivot: {x: 0.5, y: 0.48387095}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -134,7 +134,7 @@ ScriptedImporter:
       y: 4
       width: 20
       height: 31
-    spriteID: 3f10a2187d50aaf4b9281cb2e960499d
+    spriteID: 58984a7d2c2b8054a9891326842a452a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -160,7 +160,7 @@ ScriptedImporter:
         y: 1
         width: 20
         height: 31
-      spriteId: 3f10a2187d50aaf4b9281cb2e960499d
+      spriteId: 58984a7d2c2b8054a9891326842a452a
     linkedCells: []
     parentIndex: -1
   platformSettings:

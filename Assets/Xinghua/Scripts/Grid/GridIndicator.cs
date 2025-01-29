@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,14 +11,17 @@ public class GridIndicator : MonoBehaviour
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
-
+    GameObject selectedHero;
+    private int heroPathID;
     [SerializeField] private GameObject heroPrefab;
     // private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     private HeroSelect heroSelect;
     public event Action finishSelection;
     public event Action heroSelecting;
+    public event Action heroUnselected;
     public event Action rollingDice;//this is for the dic roll function
+    public event Action activeShop;
 
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
@@ -47,18 +49,55 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMove(Vector2 direction)
     {
+        //Debug.Log("currentPosition x:" + currentGridPosition.x + ",y:" + currentGridPosition.y);
+        //Debug.Log("direction.x:" + direction.x+ ",direction.y:"+ direction.y);
+
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         Vector2Int targetPosition = currentGridPosition + intDirection;
         if (IsWithinBounds(targetPosition))
         {
-            Debug.Log("move indicator");
+            //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
+            Debug.Log("currentGridPosition after move" + currentGridPosition);
             transform.position += new Vector3(direction.x, direction.y, 0);
+            //judge if this position have hero already
+            var heros = GridManager.Instance.GetHeros();
+            var isHeroOccupied = false;
+
+            foreach (var hero in heros)
+            {
+                Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
+                if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
+                {
+                    isHeroOccupied = true;
+                    Debug.Log("current position have hero");
+                    selectedHero = hero;
+                }
+            }
+            if (isHeroOccupied)
+            {
+                var heroPath = selectedHero.GetComponent<HeroPath>();
+                Debug.Log("heroData:" + heroPath);
+                heroPathID = heroPath.GetHeroMoveIndex();
+                Debug.Log("heroMoveIndex:" + heroPathID);
+                activeShop?.Invoke();
+                heroSelecting?.Invoke();//this if for path highlight to listen
+            }
+            else
+            {
+                heroUnselected?.Invoke();
+            }
+
+
+
             newIndicatorLocation = transform.position;
-            heroSelecting?.Invoke();//this if for path highlight to listen
+
         }
     }
-   
+    public int GetHeroMoveIndex()
+    {
+        return heroPathID;
+    }
 
     //private void UpdateHeroPosition()
     //{
