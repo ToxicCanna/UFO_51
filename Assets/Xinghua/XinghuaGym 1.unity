@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
-  heroPathID: 1
+  heroPathID: 0
 --- !u!1 &461092831
 GameObject:
   m_ObjectHideFlags: 0
@@ -5843,8 +5843,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64270c3ecfd00da41b0d7ccdf63d505f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redSideHerosScene: []
-  blueSideHerosScne: []
 --- !u!4 &1807640481
 Transform:
   m_ObjectHideFlags: 0
@@ -6303,7 +6301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
-  heroPathID: 3
+  heroPathID: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

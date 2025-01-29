@@ -9,8 +9,8 @@ public class GridManager : MonoBehaviour
     private HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
     private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
 
-    [SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
-    [SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
+    //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
+    //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
 
     private void Awake()
     {

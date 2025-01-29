@@ -29,7 +29,7 @@ public class GridIndicator : MonoBehaviour
     private Vector2Int currentGridPosition;
     private List<GameObject> herosInRedSide;
     private List<GameObject> herosInBlueSide;
-
+    private List<GameObject> currentTurnHeros;
 
     void Start()
     {
@@ -67,7 +67,12 @@ public class GridIndicator : MonoBehaviour
             transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
             Debug.Log("currentGridPosition after move" + currentGridPosition);
             //judge if this position have hero already
-            var heros = GridManager.Instance.GetHeros();
+            //var heros = GridManager.Instance.GetHeros();
+
+
+
+
+            var heros = HeroPocketManager.Instance.GetAllHeroes();
             var isHeroOccupied = false;
 
             foreach (var hero in heros)
@@ -100,6 +105,8 @@ public class GridIndicator : MonoBehaviour
 
         }
     }
+
+  
     public int GetHeroMoveIndex()
     {
         return heroPathID;

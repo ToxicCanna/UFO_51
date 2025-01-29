@@ -89,6 +89,13 @@ public class HeroPocketManager : MonoBehaviour
         return heroListBlueSide; // Return the list
     }
 
+    public List<GameObject> GetAllHeroes()
+    {
+        List<GameObject> allHeroes = new List<GameObject>();
+        allHeroes.AddRange(GetAllRedSideHeroes()); 
+        allHeroes.AddRange(GetAllBlueSideHeroes()); 
+        return allHeroes;
+    }
     public void RegisterHero(string heroId, GameObject hero,string heroColor)
     {
         if (heroColor == "red")
