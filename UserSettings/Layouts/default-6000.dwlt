@@ -1139,8 +1139,10 @@ MonoBehaviour:
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
     m_Target: {x: -1.1350203, y: -2.3003235, z: -0.43429327}
+    m_Target: {x: -1.7411638, y: -0.96415097, z: 0.037571643}
     speed: 2
     m_Value: {x: -1.1350203, y: -2.3003235, z: -0.43429327}
+    m_Value: {x: -1.7411638, y: -0.96415097, z: 0.037571643}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1191,8 +1193,10 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
     m_Target: 5.9854884
+    m_Target: 6.2428217
     speed: 2
     m_Value: 5.9854884
+    m_Value: 6.2428217
   m_Ortho:
     m_Target: 1
     speed: 2
