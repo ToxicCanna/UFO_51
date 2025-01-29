@@ -6,6 +6,7 @@ public class HeroPocketManager : MonoBehaviour
     //this is hero in the scene
     private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
+
     [SerializeField] private GameObject[] heros;
     private void Start()
     {

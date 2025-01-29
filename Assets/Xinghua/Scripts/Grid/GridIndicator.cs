@@ -80,7 +80,7 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("heroData:" + heroPath);
                 heroPathID = heroPath.GetHeroMoveIndex();
                 Debug.Log("heroMoveIndex:" + heroPathID);
-                activeShop?.Invoke();
+               // activeShop?.Invoke();
                 heroSelecting?.Invoke();//this if for path highlight to listen
             }
             else
@@ -111,7 +111,7 @@ public class GridIndicator : MonoBehaviour
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
 
-        if (GetPlayerTurn() == PlayerTurn.PlayerBlueSide)
+        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
         {
             playerBlueHero.transform.position = transform.position;//PlayerBlue Hero need Dynamic from array
         }
@@ -119,9 +119,14 @@ public class GridIndicator : MonoBehaviour
         {
             playerRedHero.transform.position = transform.position;//PlayerRedHero need Dynamic
         }
-        UpdateIndicatorPosition();
+        UpdatePlayerTurn();
     }
-    private PlayerTurn GetPlayerTurn()
+    private PlayerTurn GetCurrentPlayerTurn()
+    {
+        return currentTurn;
+    }
+
+    private PlayerTurn GetNextPlayerTurn()
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
@@ -133,17 +138,15 @@ public class GridIndicator : MonoBehaviour
         }
         return currentTurn;
     }
-
-    private void UpdateIndicatorPosition()
+    private void UpdatePlayerTurn()
     {
-
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
-            transform.position = playerRedHero.transform.position;
+           currentTurn =PlayerTurn.PlayerRedSide;
         }
         else
         {
-            transform.position = playerBlueHero.transform.position;
+            currentTurn = PlayerTurn.PlayerBlueSide;
         }
     }
 
@@ -160,6 +163,14 @@ public class GridIndicator : MonoBehaviour
         float y = gridPosition.y;
         return new Vector3(x, y, 0);
     }
+    public void HandleSelectHero()
+    {
+        Debug.Log("use X key to switch");
+        Debug.Log("current indicator position"+ transform.position);
+        Debug.Log("current turn" + GetCurrentPlayerTurn());
+      
 
+
+    }
 
 }

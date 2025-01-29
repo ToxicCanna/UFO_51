@@ -5817,6 +5817,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64270c3ecfd00da41b0d7ccdf63d505f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redSideHerosScene:
+  - {fileID: 250542783}
+  - {fileID: 2084673628}
+  blueSideHerosScne:
+  - {fileID: 585028599}
+  - {fileID: 348752649}
 --- !u!4 &1807640481
 Transform:
   m_ObjectHideFlags: 0
