@@ -4,8 +4,8 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private DiceRoller diceroller;
-    public HeroData Player1Hero;
-    private HeroData Player2Hero;
+    public HeroData currentHero;
+    private HeroData targetHero;
     int damage;
     int clashDamage;
     bool poweredUp;
@@ -13,30 +13,30 @@ public class BattleManager : MonoBehaviour
 
     public void Heal(HeroData target)
     {
-        int healValue = diceroller.RollTotal(Player1Hero.heal, Player1Hero.healSize);
+        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
 
         target.currentHealth += healValue;
     }
 
     public void Attack(HeroData target)
     {
-        Player2Hero = target;
+        targetHero = target;
         if (ability == true)
         {
-            Player1Hero.PowerUp();
-            Debug.Log($"{Player1Hero.atk}");
+            currentHero.PowerUp();
+            Debug.Log($"{currentHero.atk}");
             poweredUp = true;
         }
 
-        int atkValue = diceroller.RollTotal(Player1Hero.atk, Player1Hero.atkSize);
-        int defValue = diceroller.RollTotal(Player2Hero.def, Player2Hero.defSize);
+        int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
+        int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
 
         if (atkValue > defValue)
         {
             damage = atkValue - defValue;
             target.currentHealth -= damage;
         }
-        else if (atkValue < defValue || (atkValue == defValue && Player1Hero.range > 1))
+        else if (atkValue < defValue || (atkValue == defValue && currentHero.range > 1))
         {
             damage = 0;
             //block attack
@@ -52,8 +52,8 @@ public class BattleManager : MonoBehaviour
 
         if (poweredUp == true)
         {
-            Player1Hero.PowerDown();
-            Debug.Log($"{Player1Hero.atk}");
+            currentHero.PowerDown();
+            Debug.Log($"{currentHero.atk}");
             poweredUp = false;
         }
     }
@@ -72,7 +72,7 @@ public class BattleManager : MonoBehaviour
         {
             clashDamage = clashDefValue - clashAtkValue;
             //counter attack
-            Player1Hero.currentHealth -= clashDamage;
+            currentHero.currentHealth -= clashDamage;
         }
         else
         {
