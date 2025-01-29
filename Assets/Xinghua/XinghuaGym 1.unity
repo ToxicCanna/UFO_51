@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroMoveRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
-  heroPathID: 0
+  heroPathID: 2
 --- !u!1 &252701337
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
-  heroPathID: 3
+  heroPathID: 1
 --- !u!1 &461092831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,6 +1573,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8775971541676210871, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.90625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775971541676210871, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.9375
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1709,7 +1717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroMoveRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
-  heroPathID: 0
+  heroPathID: 2
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
