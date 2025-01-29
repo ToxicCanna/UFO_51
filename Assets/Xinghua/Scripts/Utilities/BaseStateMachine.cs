@@ -17,7 +17,7 @@ public  class BaseStateMachine : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("base state update");
+       // Debug.Log("base state update");
         CurrentState?.UpdateState();
     }
 }
