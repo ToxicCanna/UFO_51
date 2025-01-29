@@ -4881,6 +4881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueBasic
       objectReference: {fileID: 0}
+    - target: {fileID: 9002317770488668507, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
+      propertyPath: DiceRoller
+      value: 
+      objectReference: {fileID: 671079728}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6770,43 +6774,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1872588243}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
 --- !u!1 &1872588236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
   m_PrefabInstance: {fileID: 1872588235}
   m_PrefabAsset: {fileID: 0}
---- !u!50 &1872588243
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872588236}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1906162530
 GameObject:
   m_ObjectHideFlags: 0

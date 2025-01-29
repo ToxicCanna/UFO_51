@@ -17,6 +17,7 @@ public class CastleAttack : MonoBehaviour
             int damage = DiceRoller.RollTotal(heroData.atk, heroData.atkSize);
             castle.TakeDamage(damage);
         Debug.Log($"attacked castle for {damage}");
+            Destroy(gameObject);
         }
     }
 }
