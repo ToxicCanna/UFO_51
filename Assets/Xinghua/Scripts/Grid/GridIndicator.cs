@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -26,6 +27,9 @@ public class GridIndicator : MonoBehaviour
     private Vector3 heroPosition;
     private Vector3 newIndicatorLocation;
     private Vector2Int currentGridPosition;
+    private List<GameObject> herosInRedSide;
+    private List<GameObject> herosInBlueSide;
+
 
     void Start()
     {
@@ -35,6 +39,11 @@ public class GridIndicator : MonoBehaviour
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
+
+
+       
+
+
     }
     public bool IsWithinBounds(Vector2Int position)
     {
@@ -58,8 +67,9 @@ public class GridIndicator : MonoBehaviour
         {
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
+           
+            transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
             Debug.Log("currentGridPosition after move" + currentGridPosition);
-            transform.position += new Vector3(direction.x, direction.y, 0);
             //judge if this position have hero already
             var heros = GridManager.Instance.GetHeros();
             var isHeroOccupied = false;
@@ -80,7 +90,7 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("heroData:" + heroPath);
                 heroPathID = heroPath.GetHeroMoveIndex();
                 Debug.Log("heroMoveIndex:" + heroPathID);
-                activeShop?.Invoke();
+                // activeShop?.Invoke();
                 heroSelecting?.Invoke();//this if for path highlight to listen
             }
             else
@@ -111,7 +121,7 @@ public class GridIndicator : MonoBehaviour
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
 
-        if (GetPlayerTurn() == PlayerTurn.PlayerBlueSide)
+        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
         {
             playerBlueHero.transform.position = transform.position;//PlayerBlue Hero need Dynamic from array
         }
@@ -119,9 +129,28 @@ public class GridIndicator : MonoBehaviour
         {
             playerRedHero.transform.position = transform.position;//PlayerRedHero need Dynamic
         }
-        UpdateIndicatorPosition();
+
+        UpdatePlayerTurn();
+        UpdateIndicatorWhenTurnChange();
     }
-    private PlayerTurn GetPlayerTurn()
+    private void UpdateIndicatorWhenTurnChange()
+    {
+        Debug.Log("current turn:" + currentTurn);
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            transform.position = herosInRedSide[0].transform.position;
+        }
+        else
+        {
+            transform.position = herosInBlueSide[0].transform.position;
+        }
+    }
+    private PlayerTurn GetCurrentPlayerTurn()
+    {
+        return currentTurn;
+    }
+
+    private PlayerTurn GetNextPlayerTurn()
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
@@ -133,17 +162,15 @@ public class GridIndicator : MonoBehaviour
         }
         return currentTurn;
     }
-
-    private void UpdateIndicatorPosition()
+    private void UpdatePlayerTurn()
     {
-
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
-            transform.position = playerRedHero.transform.position;
+            currentTurn = PlayerTurn.PlayerRedSide;
         }
         else
         {
-            transform.position = playerBlueHero.transform.position;
+            currentTurn = PlayerTurn.PlayerBlueSide;
         }
     }
 
@@ -160,6 +187,61 @@ public class GridIndicator : MonoBehaviour
         float y = gridPosition.y;
         return new Vector3(x, y, 0);
     }
+    public void HandleSelectHero()
+    {
+        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
+        Debug.Log("start hero in red side :" + herosInRedSide.Count);
+        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+        Debug.Log("start hero in blue side :" + herosInBlueSide.Count);
+        Debug.Log("use X key to switch");
+        //Debug.Log("current indicator position" + transform.position);
+        Debug.Log("current turn" + GetCurrentPlayerTurn());
+        Debug.Log("red hero coun when select :" + herosInRedSide.Count);
+        Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
+        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
+        {
+            
+            //Debug.Log("count:"+herosInRedSide.Count);
+            var currentHeroIndex = 0;
+            for (int i = 0; i < herosInRedSide.Count; i++)
+            {
+                Debug.Log($"Index: {i}, Value: {herosInRedSide[i]}");
+                var hero = herosInRedSide[i];
+                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
 
+                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+                {
+                    Debug.Log("current i :" + i);
+                    currentHeroIndex = i;
+                    break;
+                }
+            }
+            var nextHeroIndex = (currentHeroIndex + 1) % herosInRedSide.Count;
+            var nextHero = herosInRedSide[nextHeroIndex];
+            transform.position = nextHero.transform.position;
+        }
+        else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
+        {
+           
+            //Debug.Log("count:"+herosInRedSide.Count);
+            var currentHeroIndex = 0;
+            for (int i = 0; i < herosInBlueSide.Count; i++)
+            {
+                Debug.Log($"Index: {i}, Value: {herosInBlueSide[i]}");
+                var hero = herosInBlueSide[i];
+                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
+
+                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+                {
+                    Debug.Log("current i :" + i);
+                    currentHeroIndex = i;
+                    break;
+                }
+            }
+            var nextHeroIndex = (currentHeroIndex + 1) % herosInBlueSide.Count;
+            var nextHero = herosInBlueSide[nextHeroIndex];
+            transform.position = nextHero.transform.position;
+        }
+    }
 
 }
