@@ -141,11 +141,13 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("current turn:" + currentTurn);
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            transform.position = herosInRedSide[0].transform.position;
+            //transform.position = herosInRedSide[0].transform.position;
+            transform.position = playerRedHero.transform.position;
         }
         else
         {
-            transform.position = herosInBlueSide[0].transform.position;
+            //transform.position = herosInBlueSide[0].transform.position;
+            transform.position = playerBlueHero.transform.position;
         }
     }
     private PlayerTurn GetCurrentPlayerTurn()
