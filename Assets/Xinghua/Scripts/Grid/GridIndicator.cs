@@ -39,12 +39,8 @@ public class GridIndicator : MonoBehaviour
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
-
-
-       
-
-
     }
+
     public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
