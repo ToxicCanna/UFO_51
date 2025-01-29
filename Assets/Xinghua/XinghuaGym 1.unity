@@ -710,10 +710,6 @@ PrefabInstance:
       propertyPath: playerBlueHero
       value: 
       objectReference: {fileID: 585028599}
-    - target: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
-      propertyPath: heroPocketManager
-      value: 
-      objectReference: {fileID: 1100082101}
     - target: {fileID: 8027587424801466491, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
       propertyPath: highlightPrefab
       value: 
@@ -5835,12 +5831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64270c3ecfd00da41b0d7ccdf63d505f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redSideHerosScene:
-  - {fileID: 250542783}
-  - {fileID: 2084673628}
-  blueSideHerosScne:
-  - {fileID: 585028599}
-  - {fileID: 348752649}
+  redSideHerosScene: []
+  blueSideHerosScne: []
 --- !u!4 &1807640481
 Transform:
   m_ObjectHideFlags: 0
