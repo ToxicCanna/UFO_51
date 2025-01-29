@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7971250241288245358}
+  - component: {fileID: 5153970084588831760}
   - component: {fileID: 6926083687056257255}
+  - component: {fileID: -4087598484406199446}
   - component: {fileID: -4972137676418968229}
   - component: {fileID: 3213497359716877039}
   - component: {fileID: 7254770284347359070}
@@ -35,6 +37,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5153970084588831760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965984199795220294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroMoveRule: {fileID: 0}
+  heroPathID: 0
 --- !u!114 &6926083687056257255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +77,19 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+--- !u!114 &-4087598484406199446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2965984199795220294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18d9b5c23e88944b8887dcd3c8e3b89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DiceRoller: {fileID: 0}
 --- !u!114 &-4972137676418968229
 MonoBehaviour:
   m_ObjectHideFlags: 0
