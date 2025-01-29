@@ -710,6 +710,10 @@ PrefabInstance:
       propertyPath: playerBlueHero
       value: 
       objectReference: {fileID: 585028599}
+    - target: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
+      propertyPath: heroPocketManager
+      value: 
+      objectReference: {fileID: 1100082101}
     - target: {fileID: 8027587424801466491, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
       propertyPath: highlightPrefab
       value: 
@@ -2603,6 +2607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1100082102}
   - component: {fileID: 1100082101}
+  - component: {fileID: 1100082103}
   m_Layer: 0
   m_Name: HeroPocketManager
   m_TagString: Untagged
@@ -2622,11 +2627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889a2bc0bc793ef44957e8638c8ddc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heros:
-  - {fileID: 250542783}
-  - {fileID: 585028599}
-  - {fileID: 2084673628}
-  - {fileID: 348752649}
 --- !u!4 &1100082102
 Transform:
   m_ObjectHideFlags: 0
@@ -2642,6 +2642,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1469706333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1100082103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100082100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca869691b09ac2458cee726cb9091b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heros:
+  - {fileID: 250542783}
+  - {fileID: 2084673628}
 --- !u!1 &1157735327
 GameObject:
   m_ObjectHideFlags: 0

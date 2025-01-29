@@ -6,6 +6,7 @@ public class HeroData : MonoBehaviour
     public HeroSO heroData;
 
     int maxHealth, currentHealth;
+    
 
     void Start()
     {
