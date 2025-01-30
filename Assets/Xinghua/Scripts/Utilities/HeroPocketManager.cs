@@ -73,8 +73,6 @@ public class HeroPocketManager : MonoBehaviour
     public List<GameObject> GetAllBlueSideHeroes()
     {
         List<GameObject> heroListBlueSide = new List<GameObject>(); // Create a new list
-        Debug.Log("blueSideHeroes in GetAllBlueSideHeroes" + blueSideHeroes);
-
         foreach (var hero in blueSideHeroes)
         {
             string heroName = hero.Key;
