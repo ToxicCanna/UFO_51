@@ -11,7 +11,14 @@ public class GridManager : MonoBehaviour
 
     //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
     //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
-
+    private void Start()
+    {
+        foreach(var hero in heros)
+        {
+            AddOccupiedGrid(hero.transform.position);
+        }
+        
+    }
     private void Awake()
     {
         if (Instance == null)

@@ -187,7 +187,8 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-
+        if(!isHeroSelected)return;
+       
         finishSelection?.Invoke();
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
