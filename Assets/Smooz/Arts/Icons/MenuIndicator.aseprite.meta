@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b635aae35d9b4a428f3f9a22642e75d
+guid: 796d44fa0de584a499189e68dab1c2fb
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638735967869591530
+  platformSettingsDirtyTick: 638738505911846833
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Blue_Ranged_Idle
+  - name: MenuIndicator
     originalName: 
-    pivot: {x: 0.5185185, y: 0.5}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,9 +132,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 27
-      height: 30
-    spriteID: cffe1f9de40a4154b826be0d3e28ba9e
+      width: 32
+      height: 32
+    spriteID: b76305faa55a9c340bbec95528f5ee4e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -143,144 +143,24 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-  - name: Frame_1
-    originalName: 
-    pivot: {x: 0.5185185, y: 0.51724136}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 39
-      y: 4
-      width: 27
-      height: 29
-    spriteID: 5d851a3724678dc438470334340624aa
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 39, y: 4}
-  - name: Frame_2
-    originalName: 
-    pivot: {x: 0.5185185, y: 0.51724136}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 39
-      y: 41
-      width: 27
-      height: 29
-    spriteID: ab10e4143c701ae4683cdf32aba6aeef
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 39, y: 41}
-  - name: Frame_3
-    originalName: 
-    pivot: {x: 0.5185185, y: 0.5}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 42
-      width: 27
-      height: 30
-    spriteID: 322d68ee7c7dcfa46a27a6b3144d98d2
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 42}
-  - name: Frame_4
-    originalName: 
-    pivot: {x: 0.5185185, y: 0.5}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 80
-      width: 27
-      height: 30
-    spriteID: 217232cd39e5ba2409e59f0f0f26b8d7
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 4, y: 80}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 371218189
-    name: Blue_Ranged_Idle
+    guid: 1875187218
+    name: MenuIndicator
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Frame_0
+    - name: MenuIndicator
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 18
-        y: 17
-        width: 27
-        height: 30
-      spriteId: cffe1f9de40a4154b826be0d3e28ba9e
-    - name: Frame_1
-      frameIndex: 1
-      additiveSortOrder: 0
-      cellRect:
-        x: 18
-        y: 17
-        width: 27
-        height: 29
-      spriteId: 5d851a3724678dc438470334340624aa
-    - name: Frame_2
-      frameIndex: 2
-      additiveSortOrder: 0
-      cellRect:
-        x: 18
-        y: 17
-        width: 27
-        height: 29
-      spriteId: ab10e4143c701ae4683cdf32aba6aeef
-    - name: Frame_3
-      frameIndex: 3
-      additiveSortOrder: 0
-      cellRect:
-        x: 18
-        y: 17
-        width: 27
-        height: 30
-      spriteId: 322d68ee7c7dcfa46a27a6b3144d98d2
-    - name: Frame_4
-      frameIndex: 4
-      additiveSortOrder: 0
-      cellRect:
-        x: 18
-        y: 17
-        width: 27
-        height: 30
-      spriteId: 217232cd39e5ba2409e59f0f0f26b8d7
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      spriteId: b76305faa55a9c340bbec95528f5ee4e
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -320,31 +200,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
-  - name: Android
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
   - name: WebGL
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Windows Store Apps
     overridden: 0
     ignorePlatformSupport: 0
     maxTextureSize: 2048
@@ -359,4 +215,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 64}
+  canvasSize: {x: 32, y: 32}
