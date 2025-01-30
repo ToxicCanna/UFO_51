@@ -1,8 +1,10 @@
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class GamePlayState : BaseState
 {
     private GridIndicator gridIndicator;
+    private PlayerControls currentControls;
 
     public GamePlayState(GridIndicator gridIndicator)
     {
@@ -18,12 +20,13 @@ public class GamePlayState : BaseState
     {
        // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
+        currentControls = controls;
         if (controls != null && gridIndicator != null)
         {
-            controls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
-            controls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
-            controls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
-            controls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
+            currentControls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
+            currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
+            currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
+            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
         }
         else
         {
@@ -34,6 +37,10 @@ public class GamePlayState : BaseState
     public override void ExitState()
     {
         Debug.Log("Exited Gameplay State");
+        currentControls.GamePlay.Move.performed -= ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
+        currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
+        currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
+        currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
     }
 
     public override void UpdateState()
