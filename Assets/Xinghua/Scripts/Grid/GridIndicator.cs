@@ -50,15 +50,15 @@ public class GridIndicator : MonoBehaviour
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;
     }
-    public bool IsWithinMoveDirection(Vector2Int oldPosition,Vector2Int newPosition)
+    public bool IsWithinMoveDirection(Vector2Int centerPosition,Vector2Int newPosition)
     {
         //old 
-        var oldX = oldPosition.x;
-        var oldY = oldPosition.y;
+        var oldX = centerPosition.x;
+        var oldY = centerPosition.y;
 
         var newX = newPosition.x;
         var newY = newPosition.y;
-        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1)
+        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1 )
         {
             return true;
         }
@@ -152,14 +152,13 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("move with range direction:" +direction);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-        //currentGridPosition = new Vector2Int((int)transform.position.x,(int)transform.position.y);
-        Vector2Int targetPosition = currentGridPosition + intDirection;
+        Vector2Int targetPosition = new Vector2Int( (int)transform.position.x ,(int)transform.position.y)+ intDirection;
         Debug.Log("move with range oldPosition:" + currentGridPosition);
         Debug.Log("move with range targetPosition:" + targetPosition);
-
+        var currentIndicatorPosition =new Vector2Int((int)transform.position.x,(int) transform.position.y);
         Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
         Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition,targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition ))
         {
 
             Debug.Log("move indicator!!!!!!!!");

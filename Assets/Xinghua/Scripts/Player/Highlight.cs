@@ -11,11 +11,11 @@ public class HighLight : MonoBehaviour
                                           //public List<Vector3> directions;
 
     Vector2Int[] neighbors;
-   [SerializeField] private GridIndicator gridIndicator;
+    [SerializeField] private GridIndicator gridIndicator;
     private List<GameObject> highlights = new List<GameObject>();
     void Start()
     {
-       
+
         if (currentRule != null)
         {
             SetHeroRule(currentRule[0]);
@@ -116,7 +116,12 @@ public class HighLight : MonoBehaviour
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
-                new Vector2Int(1, 0)
+                new Vector2Int(1, 0),
+
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
           };
 
         if (gridIndicator.GetHeroMoveIndex() == 0)
