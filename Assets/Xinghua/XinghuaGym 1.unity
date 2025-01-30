@@ -4609,7 +4609,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 646920146}
         m_TargetAssemblyTypeName: GridIndicator, Assembly-CSharp
-        m_MethodName: HandleSelectHero
+        m_MethodName: HandleSubmitHeroSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4810,6 +4810,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1807640481}
   - {fileID: 582040166}
   - {fileID: 1100082102}
   - {fileID: 1978772879}
@@ -7357,12 +7358,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807640479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.014434, y: -1.6260324, z: -0.10730409}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.8190527, y: -3.6642008, z: -0.0958426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1469706333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1857511158
 GameObject:
@@ -7939,7 +7940,6 @@ SceneRoots:
   - {fileID: 172201333}
   - {fileID: 475550081}
   - {fileID: 1090364836}
-  - {fileID: 1807640481}
   - {fileID: 1425988271}
   - {fileID: 925358860}
   - {fileID: 1469706333}

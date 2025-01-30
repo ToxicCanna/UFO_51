@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class HeroPocketManager : MonoBehaviour
 {
@@ -9,11 +8,7 @@ public class HeroPocketManager : MonoBehaviour
     private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
 
-    //this two list for swith hero ;and prepare for action 
-    //private List<GameObject> redSideHeroes = new List<GameObject>();
-    //private List<GameObject> blueSideHeroes = new List<GameObject>();
-
-    private List<GameObject> RedSideheros;
+    private List<GameObject> RedSideheros;//get from child gameobject
     private List<GameObject> BlueSideheros;
     private void Awake()
     {
@@ -34,9 +29,9 @@ public class HeroPocketManager : MonoBehaviour
         {
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
-            RegisterHero(key, hero,"red");
+            GridManager.Instance.AddHero(hero);
+            RegisterHero(key, hero, "red");
         }
-        GetAllRedSideHeroes();
 
         //GetHeroData("hero01");
         BlueSideheros = GetComponent<TwoSidesHero>().GetHerosBlue();
@@ -49,9 +44,10 @@ public class HeroPocketManager : MonoBehaviour
             RegisterHero(key, hero, "blue");
 
         }
-        GetAllBlueSideHeroes();
+        GetAllHeroes();
 
     }
+
 
     public List<GameObject> GetAllRedSideHeroes()
     {
@@ -61,9 +57,6 @@ public class HeroPocketManager : MonoBehaviour
         {
             string heroName = hero.Key;
             GameObject heroObject = hero.Value;
-
-            Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
-
             heroListRedSide.Add(heroObject); // Add to list
         }
 
@@ -78,7 +71,7 @@ public class HeroPocketManager : MonoBehaviour
             string heroName = hero.Key;
             GameObject heroObject = hero.Value;
 
-           // Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
+            // Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
 
             heroListBlueSide.Add(heroObject); // Add to list
         }
@@ -90,11 +83,20 @@ public class HeroPocketManager : MonoBehaviour
     public List<GameObject> GetAllHeroes()
     {
         List<GameObject> allHeroes = new List<GameObject>();
-        allHeroes.AddRange(GetAllRedSideHeroes()); 
-        allHeroes.AddRange(GetAllBlueSideHeroes()); 
+
+        foreach (var hero in GetAllBlueSideHeroes())
+        {
+            allHeroes.Add(hero);
+        }
+        foreach (var hero in GetAllRedSideHeroes())
+        {
+            allHeroes.Add(hero);
+        }
+        Debug.Log("allHero num" + allHeroes.Count);
         return allHeroes;
+
     }
-    public void RegisterHero(string heroId, GameObject hero,string heroColor)
+    public void RegisterHero(string heroId, GameObject hero, string heroColor)
     {
         if (heroColor == "red")
         {
@@ -110,10 +112,7 @@ public class HeroPocketManager : MonoBehaviour
                 blueSideHeroes.Add(heroId, hero);
             }
         }
-        
-        Debug.Log("hero have already" + redSideHeroes.Count);
     }
-
 
     public void GetHeroData(string heroId)
     {
@@ -121,16 +120,8 @@ public class HeroPocketManager : MonoBehaviour
         if (heroComponent != null)
         {
             int heroHealth = heroComponent.heroData.cost;
-            // Debug.Log("health" + heroHealth);
         }
-        // Debug.Log("heroData" + heroComponent);
     }
 
-    /*   public void RemoveHighlight(string heroId)
-       {
-           if (redSideHeroes.TryGetValue(heroId, out GameObject hero))
-           {
-               Debug.Log("hide highlight path");
-           }
-       }*/
+
 }
