@@ -1770,7 +1770,7 @@ PrefabInstance:
     - target: {fileID: 5595558672741437732, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -641661416736242478, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
+      objectReference: {fileID: -8773005042253750998, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
     - target: {fileID: 5595558672741437732, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -2339,7 +2339,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diceroller: {fileID: 309652334}
+  gen: {fileID: 0}
   currentHero: {fileID: 250542794}
+  targetHero: {fileID: 0}
 --- !u!224 &650441314
 RectTransform:
   m_ObjectHideFlags: 0
