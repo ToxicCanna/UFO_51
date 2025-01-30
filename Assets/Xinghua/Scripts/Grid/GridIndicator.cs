@@ -30,7 +30,7 @@ public class GridIndicator : MonoBehaviour
     private List<GameObject> herosInRedSide;
     private List<GameObject> herosInBlueSide;
     private List<GameObject> currentTurnHeros;
-
+    public HeroData submitHeroData;
     void Start()
     {
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -63,7 +63,7 @@ public class GridIndicator : MonoBehaviour
         {
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
-           
+
             transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
             Debug.Log("currentGridPosition after move" + currentGridPosition);
             //judge if this position have hero already
@@ -106,7 +106,7 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
-  
+
     public int GetHeroMoveIndex()
     {
         return heroPathID;
@@ -205,7 +205,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
         if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
         {
-            
+
             //Debug.Log("count:"+herosInRedSide.Count);
             var currentHeroIndex = 0;
             for (int i = 0; i < herosInRedSide.Count; i++)
@@ -227,7 +227,7 @@ public class GridIndicator : MonoBehaviour
         }
         else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
         {
-           
+
             //Debug.Log("count:"+herosInRedSide.Count);
             var currentHeroIndex = 0;
             for (int i = 0; i < herosInBlueSide.Count; i++)
@@ -249,4 +249,36 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
+
+    //Submit current selected hero
+    public void HandleSubmitHeroSelected()
+    {
+        Debug.Log("current hero submit");
+        var position = GetSubmitHeroPositon();
+        GetSubmitHero(position);
+        Debug.Log("submitHeroData"+ submitHeroData);
+    }
+    public Vector2 GetSubmitHeroPositon()
+    {
+        Debug.Log("hero submit position:" + transform.position);
+        //if is occupied
+        var positon = new Vector2(transform.position.x, transform.position.y);
+        return transform.position;
+
+    }
+    public HeroData GetSubmitHero(Vector2 position)
+    {
+        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+
+        foreach (var hero in allHerosInScene)
+        {
+            if (position.x == hero.transform.position.x && position.y ==hero.transform.position.y)
+            {
+                var heroData =hero.GetComponent<HeroData>();
+                submitHeroData=heroData;
+            }
+            
+        }
+        return submitHeroData;
+    }
 }
