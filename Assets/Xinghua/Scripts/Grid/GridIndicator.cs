@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 public class GridIndicator : MonoBehaviour
@@ -25,15 +24,19 @@ public class GridIndicator : MonoBehaviour
     public event Action rollingDice;//this is for the dic roll function
     public event Action activeShop;
 
+
     private Vector3 heroPosition;
+    //grid Occupied
     private Vector3 newIndicatorLocation;
+    private Vector3 oldIndicatorLocation;
+
     private Vector2Int currentGridPosition;
     private List<GameObject> herosInRedSide;
     private List<GameObject> herosInBlueSide;
     private List<GameObject> currentTurnHeros;
     public HeroData submitHeroData;
     private bool isHeroSelected = false;
-
+    private bool isHeroSubmit;
     private HashSet<Vector2Int> allowedPositions;
     void Start()
     {
@@ -45,12 +48,24 @@ public class GridIndicator : MonoBehaviour
         minJ = 0; maxJ = 7;
     }
 
+
+    private void Update()
+    {
+        var occupiedGrids = GridManager.Instance.GetOccupiedGrids();
+        Debug.Log("occupiedGrids" + occupiedGrids.Count);
+        foreach (var grid in occupiedGrids)
+        {
+            Debug.Log("occupied" + grid);
+
+        }
+
+    }
     public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;
     }
-    public bool IsWithinMoveDirection(Vector2Int centerPosition,Vector2Int newPosition)
+    public bool IsWithinMoveDirection(Vector2Int centerPosition, Vector2Int newPosition)
     {
         //old 
         var oldX = centerPosition.x;
@@ -58,7 +73,7 @@ public class GridIndicator : MonoBehaviour
 
         var newX = newPosition.x;
         var newY = newPosition.y;
-        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1 )
+        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1)
         {
             return true;
         }
@@ -146,24 +161,25 @@ public class GridIndicator : MonoBehaviour
 
         }
     }
-  
 
- 
+
+
     public void MoveIndicatorWithRange(Vector2 direction)
     {
-        Debug.Log("move with range direction:" +direction);
+       
+        Debug.Log("move with range direction:" + direction);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-        Vector2Int targetPosition = new Vector2Int( (int)transform.position.x ,(int)transform.position.y)+ intDirection;
+        Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
         Debug.Log("move with range oldPosition:" + currentGridPosition);
         Debug.Log("move with range targetPosition:" + targetPosition);
-        var currentIndicatorPosition =new Vector2Int((int)transform.position.x,(int) transform.position.y);
+        var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
-        Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition,targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition ))
+        Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
         {
 
             Debug.Log("move indicator!!!!!!!!");
-            transform.position = new Vector3(targetPosition.x,targetPosition.y);
+            transform.position = new Vector3(targetPosition.x, targetPosition.y);
         }
 
     }
@@ -188,12 +204,17 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-        if(!isHeroSelected)return;
-       
+        if (!isHeroSelected) return;
+
         finishSelection?.Invoke();
         //store the location that was occupied
-        GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
+
+        oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+        GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+
         submitHeroData.gameObject.transform.position = transform.position;
+        GridManager.Instance.AddOccupiedGrid(transform.position);
+
         UpdatePlayerTurn();
         UpdateIndicatorWhenTurnChange();
     }
@@ -230,6 +251,7 @@ public class GridIndicator : MonoBehaviour
     }
     private void UpdatePlayerTurn()
     {
+
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
             currentTurn = PlayerTurn.PlayerRedSide;
@@ -315,11 +337,11 @@ public class GridIndicator : MonoBehaviour
     public void HandleSubmitHeroSelected()
     {
         Debug.Log("current hero submit");
-        isHeroSelected =true;
+        isHeroSelected = true;
         var position = GetSubmitHeroPositon();
         GetSubmitHero(position);
         Debug.Log("submitHeroData" + submitHeroData);
-        
+
     }
     public Vector2 GetSubmitHeroPositon()
     {
