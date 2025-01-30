@@ -46,6 +46,8 @@ public class GridIndicator : MonoBehaviour
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
+
+        Debug.Log("Start current turn :"+ currentTurn);
     }
 
 
@@ -218,7 +220,7 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-        if (!isOnHeroPosition) return;
+        if (!isOnHeroPosition&& !isHeroSubmited) return;
 
         finishSelection?.Invoke();
         //store the location that was occupied
@@ -356,7 +358,7 @@ public class GridIndicator : MonoBehaviour
         var position = GetSubmitHeroPositon();
       
         GetSubmitHero(position);
-        Debug.Log("submitHeroData" + submitHeroData);
+        Debug.Log("submitHeroData" + submitHeroData.gameObject.name);
 
     }
     public Vector2 GetSubmitHeroPositon()
