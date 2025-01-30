@@ -31,6 +31,7 @@ public class GridIndicator : MonoBehaviour
     private List<GameObject> herosInBlueSide;
     private List<GameObject> currentTurnHeros;
     public HeroData submitHeroData;
+    private bool isHeroSelected =false;
     void Start()
     {
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -274,6 +275,7 @@ public class GridIndicator : MonoBehaviour
         {
             if (position.x == hero.transform.position.x && position.y ==hero.transform.position.y)
             {
+                isHeroSelected = true;
                 var heroData =hero.GetComponent<HeroData>();
                 submitHeroData=heroData;
             }
