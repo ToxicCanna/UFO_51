@@ -111,21 +111,22 @@ public class HighLight : MonoBehaviour
     public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-        Vector2Int[] directions = new Vector2Int[]
-          {
+       
+
+        if (gridIndicator.GetHeroMoveIndex() == 0)
+        {
+            Vector2Int[] directions = new Vector2Int[]
+         {
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
-                new Vector2Int(1, 1),
-                new Vector2Int(1, -1),
-                new Vector2Int(-1, 1),
-                new Vector2Int(-1, -1)
-          };
-
-        if (gridIndicator.GetHeroMoveIndex() == 0)
-        {
+             new Vector2Int(1, 1),
+             new Vector2Int(1, -1),
+             new Vector2Int(-1, 1),
+             new Vector2Int(-1, -1)
+         };
 
             foreach (var direction in directions)
             {
@@ -135,7 +136,18 @@ public class HighLight : MonoBehaviour
         }
         else if (gridIndicator.GetHeroMoveIndex() == 3)
         {
+            Vector2Int[] directions = new Vector2Int[]
+         {
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
 
+             //new Vector2Int(1, 1),
+             //new Vector2Int(1, -1),
+             //new Vector2Int(-1, 1),
+             //new Vector2Int(-1, -1)
+         };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);

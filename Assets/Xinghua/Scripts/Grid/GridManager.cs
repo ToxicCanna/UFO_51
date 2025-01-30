@@ -34,11 +34,6 @@ public class GridManager : MonoBehaviour
     public void AddOccupiedGrid(Vector2 gridPosition)
     {
         occupiedGrids.Add(gridPosition);
-       // Debug.Log("occupiedGrids" +occupiedGrids.Count);
-        //foreach (Vector2 grid in occupiedGrids)
-        //{
-        //    Debug.Log("Occupied Grid: " + grid);
-        //}
     }
 
     public void AddHero(GameObject hero)

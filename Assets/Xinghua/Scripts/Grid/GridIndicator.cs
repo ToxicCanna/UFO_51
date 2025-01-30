@@ -131,6 +131,7 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("heroData:" + heroPath);
                 heroPathID = heroPath.GetHeroMoveIndex();
                 Debug.Log("heroMoveIndex:" + heroPathID);
+                Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
                 // activeShop?.Invoke();
                 heroSelecting?.Invoke();//this if for path highlight to listen
             }
