@@ -78,7 +78,7 @@ public class HeroPocketManager : MonoBehaviour
             string heroName = hero.Key;
             GameObject heroObject = hero.Value;
 
-            Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
+           // Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
 
             heroListBlueSide.Add(heroObject); // Add to list
         }
