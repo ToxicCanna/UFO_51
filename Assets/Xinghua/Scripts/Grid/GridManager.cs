@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    private HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
+    //public HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
+
+    private List<Vector2> occupiedGrids = new List<Vector2>();
     private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
 
     //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
     //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
     private void Start()
     {
-        foreach(var hero in heros)
+        foreach (var hero in heros)
         {
             AddOccupiedGrid(hero.transform.position);
         }
-        
+
     }
     private void Awake()
     {
@@ -33,13 +34,15 @@ public class GridManager : MonoBehaviour
 
     public void AddOccupiedGrid(Vector2 gridPosition)
     {
+       // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
-       // Debug.Log("occupiedGrids" +occupiedGrids.Count);
-        //foreach (Vector2 grid in occupiedGrids)
-        //{
-        //    Debug.Log("Occupied Grid: " + grid);
-        //}
     }
+    public void RemoveOccupiedGrid(Vector2 gridPosition)
+    {
+        occupiedGrids.Remove(gridPosition);
+       // Debug.Log("remove :" + gridPosition);
+    }
+
 
     public void AddHero(GameObject hero)
     {
@@ -51,18 +54,20 @@ public class GridManager : MonoBehaviour
         return heros;
     }
 
-    public HashSet<Vector2> GetOccupiedGrids()
+    public List<Vector2> GetOccupiedGrids()
     {
         // print all the position been occupied by heros
-        Debug.Log("occupiedGrids " + occupiedGrids);
+        Debug.Log("occupiedGrids " + occupiedGrids.Count);
         return occupiedGrids;
     }
+    /*  public HashSet<Vector2> GetOccupiedGrids()
+      {
+          // print all the position been occupied by heros
+          Debug.Log("occupiedGrids " + occupiedGrids);
+          return occupiedGrids;
+      }*/
 
-    public void RemoveOccupiedGrid(Vector2 gridPosition)
-    {
-        occupiedGrids.Remove(gridPosition);
-    }
-
+ 
     public bool IsGridOccupied(Vector2 gridPosition)
     {
         return occupiedGrids.Contains(gridPosition);

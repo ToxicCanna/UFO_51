@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class HeroPath : MonoBehaviour
 {
+    public HeroPath heroPath;
     [SerializeField] HeroMovementRule heroMoveRule;
-    [SerializeField] public int heroPathID;
+    public int heroPathID;
+  
     public int GetHeroMoveIndex()
     {
-        return heroPathID;
+        return this.heroPathID;
     }
-  
 }

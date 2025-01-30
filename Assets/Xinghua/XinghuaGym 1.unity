@@ -570,6 +570,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4522574271350041929, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
+      propertyPath: heroPath
+      value: 
+      objectReference: {fileID: 585028606}
     - target: {fileID: 4105839272640533609, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -744,6 +748,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &250542800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5153970084588831760, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
+  m_PrefabInstance: {fileID: 1559695723}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250542783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &252701337
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,6 +884,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279703650}
   m_CullTransparentMesh: 1
+--- !u!114 &309652334 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4703557157713625399, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+  m_PrefabInstance: {fileID: 1747945178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e73cf3ca7a74084ebd3e9fa17921744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &314606904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1726,6 +1752,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4069307117878772952, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+      propertyPath: heroPath
+      value: 
+      objectReference: {fileID: 250542800}
+    - target: {fileID: 4069307117878772952, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
       propertyPath: heroPathID
       value: 3
       objectReference: {fileID: 0}
@@ -1904,6 +1934,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5112735674640118456, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
   m_PrefabInstance: {fileID: 159297859}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &585028606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -4522574271350041929, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
+  m_PrefabInstance: {fileID: 159297859}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585028599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &589361660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,7 +2166,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 582040165}
         m_TargetAssemblyTypeName: HighLight, Assembly-CSharp
-        m_MethodName: OnHeroSelecting
+        m_MethodName: ShowHeroPath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2297,8 +2338,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e468087e4825848816e3877c5f0d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceroller: {fileID: 0}
-  currentHero: {fileID: 0}
+  diceroller: {fileID: 309652334}
+  currentHero: {fileID: 250542794}
 --- !u!224 &650441314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6963,6 +7004,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1747945178
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088333343466245642, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246003427836422239, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
+      propertyPath: m_Name
+      value: '[DiceRoller]'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4684f7db69386d1468eb2829f13721fe, type: 3}
 --- !u!1 &1753717356
 GameObject:
   m_ObjectHideFlags: 0
@@ -7198,11 +7296,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 650441313}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: AttackAction
-        m_Mode: 1
+        m_MethodName: Attack
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 250542794}
+          m_ObjectArgumentAssemblyTypeName: HeroData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7951,3 +8049,4 @@ SceneRoots:
   - {fileID: 1157735331}
   - {fileID: 1249315549}
   - {fileID: 378180804}
+  - {fileID: 1747945178}
