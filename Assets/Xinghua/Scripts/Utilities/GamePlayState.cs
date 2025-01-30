@@ -20,9 +20,10 @@ public class GamePlayState : BaseState
         var controls = inputManager.GetControls();
         if (controls != null && gridIndicator != null)
         {
-            controls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+            controls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
             controls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
             controls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
+            controls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
         }
         else
         {
@@ -37,7 +38,7 @@ public class GamePlayState : BaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update Gameplay State");
+        //Debug.Log("Update Gameplay State");
         InputManager.Instance.SetInputMode(InputManager.InputMode.Gameplay);
     }
 }

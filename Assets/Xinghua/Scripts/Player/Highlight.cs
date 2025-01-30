@@ -8,11 +8,14 @@ public class HighLight : MonoBehaviour
     [SerializeField] private float tileSize = 1f;
 
     public HeroMovementRule[] currentRule;//this rule is for player move path generate
-    public List<Vector3> directions;
+                                          //public List<Vector3> directions;
+
+    Vector2Int[] neighbors;
     [SerializeField] private GridIndicator gridIndicator;
     private List<GameObject> highlights = new List<GameObject>();
     void Start()
     {
+
         if (currentRule != null)
         {
             SetHeroRule(currentRule[0]);
@@ -44,10 +47,10 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnHeroSelectionFinished;
             gridIndicator.heroSelecting -= OnHeroSelecting;
-            gridIndicator.heroUnselected += HideHightlight;
+            gridIndicator.heroUnselected -= HideHightlight;
         }
     }
-    private void OnHeroSelecting()
+    public void OnHeroSelecting()
     {
         //Debug.Log("show highlight path");
         Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
@@ -55,7 +58,7 @@ public class HighLight : MonoBehaviour
         //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
 
 
-        Vector2Int[] neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+        neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
         DisplayHightlight(neighbors);
 
     }
@@ -113,7 +116,12 @@ public class HighLight : MonoBehaviour
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
-                new Vector2Int(1, 0)
+                new Vector2Int(1, 0),
+
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
           };
 
         if (gridIndicator.GetHeroMoveIndex() == 0)
@@ -131,8 +139,8 @@ public class HighLight : MonoBehaviour
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
-                neighbors.Add(currentPosition + direction * 2);
-                neighbors.Add(currentPosition + direction * 3);
+                //neighbors.Add(currentPosition + direction * 2);
+                //neighbors.Add(currentPosition + direction * 3);
             }
         }
         return neighbors.ToArray();

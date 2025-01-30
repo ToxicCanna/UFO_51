@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class GridIndicator : MonoBehaviour
@@ -29,8 +30,11 @@ public class GridIndicator : MonoBehaviour
     private Vector2Int currentGridPosition;
     private List<GameObject> herosInRedSide;
     private List<GameObject> herosInBlueSide;
+    private List<GameObject> currentTurnHeros;
+    public HeroData submitHeroData;
+    private bool isHeroSelected = false;
 
-
+    private HashSet<Vector2Int> allowedPositions;
     void Start()
     {
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -39,25 +43,57 @@ public class GridIndicator : MonoBehaviour
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
-
-
-       
-
-
     }
+
     public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;
     }
+    public bool IsWithinMoveDirection(Vector2Int centerPosition,Vector2Int newPosition)
+    {
+        //old 
+        var oldX = centerPosition.x;
+        var oldY = centerPosition.y;
+
+        var newX = newPosition.x;
+        var newY = newPosition.y;
+        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1 )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
     //private void UpdateIndicatorToSelectedHero()
     //{
     //    var currentHeroPosition = heroSelect.GetSelectedHeroPosition();
     //}
 
+    public void HandleIndicatorMoveNew(Vector2 direction)
+    {
+        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
 
+        if (!isHeroSelected)
+        {
+            Debug.Log("move without range");
+            // only move indicator 
+            HandleIndicatorMove(intDirection);
+        }
+        else
+        {
+            //move the indicator with limit
+            Debug.Log("move with range");
+            MoveIndicatorWithRange(intDirection);
+        }
+    }
     public void HandleIndicatorMove(Vector2 direction)
     {
+
         //Debug.Log("currentPosition x:" + currentGridPosition.x + ",y:" + currentGridPosition.y);
         //Debug.Log("direction.x:" + direction.x+ ",direction.y:"+ direction.y);
 
@@ -67,16 +103,21 @@ public class GridIndicator : MonoBehaviour
         {
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
-           
+
             transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
             Debug.Log("currentGridPosition after move" + currentGridPosition);
             //judge if this position have hero already
-            var heros = GridManager.Instance.GetHeros();
+            //var heros = GridManager.Instance.GetHeros();
+
+
+
+
+            var heros = HeroPocketManager.Instance.GetAllHeroes();
             var isHeroOccupied = false;
 
             foreach (var hero in heros)
             {
-                Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
+                //Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
                 if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
                 {
                     isHeroOccupied = true;
@@ -104,6 +145,36 @@ public class GridIndicator : MonoBehaviour
 
         }
     }
+  
+
+ 
+    public void MoveIndicatorWithRange(Vector2 direction)
+    {
+        Debug.Log("move with range direction:" +direction);
+        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        Vector2Int targetPosition = new Vector2Int( (int)transform.position.x ,(int)transform.position.y)+ intDirection;
+        Debug.Log("move with range oldPosition:" + currentGridPosition);
+        Debug.Log("move with range targetPosition:" + targetPosition);
+        var currentIndicatorPosition =new Vector2Int((int)transform.position.x,(int) transform.position.y);
+        Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
+        Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition,targetPosition));
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition ))
+        {
+
+            Debug.Log("move indicator!!!!!!!!");
+            transform.position = new Vector3(targetPosition.x,targetPosition.y);
+        }
+
+    }
+    private bool isWithinMoveRange()
+    {
+        // check the target (I,J)value is in range
+        var isWithInMoveRange = false;
+
+        return isWithInMoveRange;
+    }
+
+
     public int GetHeroMoveIndex()
     {
         return heroPathID;
@@ -116,20 +187,12 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-
+        if(!isHeroSelected)return;
+       
         finishSelection?.Invoke();
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
-
-        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
-        {
-            playerBlueHero.transform.position = transform.position;//PlayerBlue Hero need Dynamic from array
-        }
-        else
-        {
-            playerRedHero.transform.position = transform.position;//PlayerRedHero need Dynamic
-        }
-
+        submitHeroData.gameObject.transform.position = transform.position;
         UpdatePlayerTurn();
         UpdateIndicatorWhenTurnChange();
     }
@@ -138,11 +201,13 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("current turn:" + currentTurn);
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            transform.position = herosInRedSide[0].transform.position;
+            //transform.position = herosInRedSide[0].transform.position;
+            transform.position = playerRedHero.transform.position;
         }
         else
         {
-            transform.position = herosInBlueSide[0].transform.position;
+            //transform.position = herosInBlueSide[0].transform.position;
+            transform.position = playerBlueHero.transform.position;
         }
     }
     private PlayerTurn GetCurrentPlayerTurn()
@@ -200,7 +265,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
         if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
         {
-            
+
             //Debug.Log("count:"+herosInRedSide.Count);
             var currentHeroIndex = 0;
             for (int i = 0; i < herosInRedSide.Count; i++)
@@ -222,7 +287,7 @@ public class GridIndicator : MonoBehaviour
         }
         else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
         {
-           
+
             //Debug.Log("count:"+herosInRedSide.Count);
             var currentHeroIndex = 0;
             for (int i = 0; i < herosInBlueSide.Count; i++)
@@ -244,4 +309,39 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
+
+    //Submit current selected hero
+    public void HandleSubmitHeroSelected()
+    {
+        Debug.Log("current hero submit");
+        isHeroSelected =true;
+        var position = GetSubmitHeroPositon();
+        GetSubmitHero(position);
+        Debug.Log("submitHeroData" + submitHeroData);
+        
+    }
+    public Vector2 GetSubmitHeroPositon()
+    {
+        Debug.Log("hero submit position:" + transform.position);
+        //if is occupied
+        var positon = new Vector2(transform.position.x, transform.position.y);
+        return transform.position;
+
+    }
+    public HeroData GetSubmitHero(Vector2 position)
+    {
+        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+
+        foreach (var hero in allHerosInScene)
+        {
+            if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
+            {
+                isHeroSelected = true;
+                var heroData = hero.GetComponent<HeroData>();
+                submitHeroData = heroData;
+            }
+
+        }
+        return submitHeroData;
+    }
 }

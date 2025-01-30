@@ -12,7 +12,7 @@ public class GrideGenerate : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
-        //SetCameraPosition();
+        SetCameraPosition();
     }
     private void GenerateGrid()
     {
@@ -30,12 +30,12 @@ public class GrideGenerate : MonoBehaviour
             }
         }
     }
-    /*private void SetCameraPosition()
+    private void SetCameraPosition()
     {
         cam.transform.position = new Vector3((float)gridWide / 2 - 0.5f, (float)gridHigh / 2 - 0.5f, -10);
     }
     //private Vector3 GetTilePosition()
     //{
     //    return tilePosition;
-    //}*/
+    //}
 }
