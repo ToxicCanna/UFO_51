@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,16 +8,13 @@ public class UISelectorManager : MonoBehaviour
     public Button[] buttons; // Assign buttons in order
     public RectTransform selector; // Assign the selector GameObject
     private int currentIndex = 0; // Tracks the currently selected button
-    private void Awake()
+
+    private IEnumerator FixSelectorPosition()
     {
-        if (Instance != null && Instance != this)
-        {
-            Debug.LogError("Multiple instances of InputManager detected. Destroying duplicate.");
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        yield return new WaitForEndOfFrame(); // Ensures UI layout is finalized
+        UpdateSelectorPosition();
     }
+
     private void Start()
     {
         if (buttons.Length == 0)
@@ -33,6 +31,7 @@ public class UISelectorManager : MonoBehaviour
 
         // Debug.Log("[UISelector] Script initialized. Starting at button index: " + currentIndex);
         UpdateSelectorPosition(); // Position the selector on the first button
+        StartCoroutine(FixSelectorPosition()); // Ensures it updates after UI layout settles
     }
 
     private void Update()

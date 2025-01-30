@@ -4,12 +4,21 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private DiceRoller diceroller;
+    [SerializeField] private VisualRollGen gen;
     public HeroData currentHero;
-    private HeroData targetHero;
+    [SerializeField] private HeroData targetHero;
     int damage;
     int clashDamage;
     bool poweredUp;
     bool ability = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Attack(targetHero);
+        }
+    }
 
     public void Heal(HeroData target)
     {
@@ -30,6 +39,8 @@ public class BattleManager : MonoBehaviour
 
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
+
+        gen.ShowRoll(atkValue);
 
         if (atkValue > defValue)
         {
@@ -56,6 +67,7 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"{currentHero.atk}");
             poweredUp = false;
         }
+        //start next turn
     }
     void Clash(HeroData target)
     {
