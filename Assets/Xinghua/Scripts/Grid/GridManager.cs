@@ -34,13 +34,13 @@ public class GridManager : MonoBehaviour
 
     public void AddOccupiedGrid(Vector2 gridPosition)
     {
-        Debug.Log("add :"+gridPosition);
+       // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
     }
     public void RemoveOccupiedGrid(Vector2 gridPosition)
     {
         occupiedGrids.Remove(gridPosition);
-        Debug.Log("remove :" + gridPosition);
+       // Debug.Log("remove :" + gridPosition);
     }
 
 

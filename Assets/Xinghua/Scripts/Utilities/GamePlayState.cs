@@ -11,12 +11,12 @@ public class GamePlayState : BaseState
 
     public override void EnterState()
     {
-        Debug.Log("Entered Gameplay State");
+        //Debug.Log("Entered Gameplay State");
     }
 
     public override void HandleInput(InputManager inputManager)
     {
-        Debug.Log("Handle GamePlay State");
+       // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
         if (controls != null && gridIndicator != null)
         {

@@ -19,7 +19,7 @@ public class GridIndicator : MonoBehaviour
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     private HeroSelect heroSelect;
     public event Action finishSelection;
-    public event Action heroSelecting;
+    public event Action onHeroPositon;
     public event Action heroUnselected;
     public event Action rollingDice;//this is for the dic roll function
     public event Action activeShop;
@@ -35,8 +35,8 @@ public class GridIndicator : MonoBehaviour
     private List<GameObject> herosInBlueSide;
     private List<GameObject> currentTurnHeros;
     public HeroData submitHeroData;
-    private bool isHeroSelected = false;
-    private bool isHeroSubmit;
+    private bool isOnHeroPosition = true;
+    private bool isHeroSubmited = false;
     private HashSet<Vector2Int> allowedPositions;
     void Start()
     {
@@ -51,14 +51,23 @@ public class GridIndicator : MonoBehaviour
 
     private void Update()
     {
-        var occupiedGrids = GridManager.Instance.GetOccupiedGrids();
+    /*    var occupiedGrids = GridManager.Instance.GetOccupiedGrids();
         Debug.Log("occupiedGrids" + occupiedGrids.Count);
         foreach (var grid in occupiedGrids)
         {
             Debug.Log("occupied" + grid);
-
-        }
-
+            if (grid.x == transform.position.x && grid.y == transform.position.y)
+            {
+                isOnHeroPosition = true;
+            }
+            else
+            {
+                isOnHeroPosition = false;
+            }
+        }*/
+       /* Debug.Log("isOnHeroPosition" + isOnHeroPosition);
+        Debug.Log("isHeroSubmited" + isHeroSubmited);*/
+      
     }
     public bool IsWithinBounds(Vector2Int position)
     {
@@ -91,19 +100,23 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMoveNew(Vector2 direction)
     {
+        Debug.Log("Handle move isOnHeroPosition" + isOnHeroPosition);
+        Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
 
-        if (!isHeroSelected)
+      
+        if (isHeroSubmited && isOnHeroPosition)
         {
-            Debug.Log("move without range");
-            // only move indicator 
-            HandleIndicatorMove(intDirection);
+            Debug.Log("move with range");
+            //move the indicator with limit
+            MoveIndicatorWithRange(intDirection);
         }
         else
         {
-            //move the indicator with limit
-            Debug.Log("move with range");
-            MoveIndicatorWithRange(intDirection);
+            
+            Debug.Log("move without range");
+            // only move indicator 
+            HandleIndicatorMove(intDirection);
         }
     }
     public void HandleIndicatorMove(Vector2 direction)
@@ -148,7 +161,8 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("heroMoveIndex:" + heroPathID);
                 Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
                 // activeShop?.Invoke();
-                heroSelecting?.Invoke();//this if for path highlight to listen
+                onHeroPositon?.Invoke();
+
             }
             else
             {
@@ -166,7 +180,7 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveIndicatorWithRange(Vector2 direction)
     {
-       
+
         Debug.Log("move with range direction:" + direction);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
@@ -204,7 +218,7 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         Debug.Log("MoveToTargetIndicator");
-        if (!isHeroSelected) return;
+        if (!isOnHeroPosition) return;
 
         finishSelection?.Invoke();
         //store the location that was occupied
@@ -277,6 +291,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleSelectHero()
     {
+       // onHeroPositon?.Invoke();//this if for path highlight to listen
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         Debug.Log("start hero in red side :" + herosInRedSide.Count);
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
@@ -337,7 +352,7 @@ public class GridIndicator : MonoBehaviour
     public void HandleSubmitHeroSelected()
     {
         Debug.Log("current hero submit");
-        isHeroSelected = true;
+        isOnHeroPosition = true;
         var position = GetSubmitHeroPositon();
         GetSubmitHero(position);
         Debug.Log("submitHeroData" + submitHeroData);
@@ -359,7 +374,7 @@ public class GridIndicator : MonoBehaviour
         {
             if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
             {
-                isHeroSelected = true;
+                isHeroSubmited = true;
                 var heroData = hero.GetComponent<HeroData>();
                 submitHeroData = heroData;
             }

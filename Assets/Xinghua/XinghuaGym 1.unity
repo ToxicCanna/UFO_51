@@ -2155,7 +2155,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 582040165}
         m_TargetAssemblyTypeName: HighLight, Assembly-CSharp
-        m_MethodName: OnHeroSelecting
+        m_MethodName: ShowHeroPath
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
