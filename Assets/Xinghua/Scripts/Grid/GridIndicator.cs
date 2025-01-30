@@ -186,11 +186,10 @@ public class GridIndicator : MonoBehaviour
         Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
         Debug.Log("move with range oldPosition:" + currentGridPosition);
         Debug.Log("move with range targetPosition:" + targetPosition);
-        //var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        var currentIndicatorPosition = new Vector2Int((int)GetSubmitHeroPositon().x, (int)GetSubmitHeroPositon().y);
+        var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
         Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentIndicatorPosition, targetPosition))
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
         {
 
             Debug.Log("move indicator!!!!!!!!");
