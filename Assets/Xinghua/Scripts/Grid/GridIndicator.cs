@@ -461,13 +461,30 @@ public class GridIndicator : MonoBehaviour
         return submitHeroData;
     }
 
+    public List<GameObject> GetOppositHerosInTheScene()
+    {
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            var heros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            return heros;
+        }
+        else
+        {
+            var heros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            return heros;
+        }
+    }
+
     public void SbumitedTarget()
     {
         Debug.Log("Submit target to attack");
         //attack each other
-        var heros = HeroPocketManager.Instance.GetAllHeroes();
-        foreach (var hero in heros)
+
+        var heros = GetOppositHerosInTheScene();
+        for (int i = 0; i < heros.Count; i++)
         {
+            //var currentHeroIndex = 0;
+            var hero = heros[i];
             if (transform.position.x == hero.transform.position.x || transform.position.y == hero.transform.position.y)
             {
                 var HeroData = hero.GetComponent<HeroData>();
