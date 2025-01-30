@@ -47,10 +47,10 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnHeroSelectionFinished;
             gridIndicator.heroSelecting -= OnHeroSelecting;
-            gridIndicator.heroUnselected += HideHightlight;
+            gridIndicator.heroUnselected -= HideHightlight;
         }
     }
-    private void OnHeroSelecting()
+    public void OnHeroSelecting()
     {
         //Debug.Log("show highlight path");
         Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 

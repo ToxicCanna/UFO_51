@@ -191,16 +191,7 @@ public class GridIndicator : MonoBehaviour
         finishSelection?.Invoke();
         //store the location that was occupied
         GridManager.Instance.AddOccupiedGrid(newIndicatorLocation);
-
-        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
-        {
-            playerBlueHero.transform.position = transform.position;//PlayerBlue Hero need Dynamic from array
-        }
-        else
-        {
-            playerRedHero.transform.position = transform.position;//PlayerRedHero need Dynamic
-        }
-
+        submitHeroData.gameObject.transform.position = transform.position;
         UpdatePlayerTurn();
         UpdateIndicatorWhenTurnChange();
     }
