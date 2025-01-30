@@ -186,10 +186,11 @@ public class GridIndicator : MonoBehaviour
         Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
         Debug.Log("move with range oldPosition:" + currentGridPosition);
         Debug.Log("move with range targetPosition:" + targetPosition);
-        var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        //var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        var currentIndicatorPosition = new Vector2Int((int)GetSubmitHeroPositon().x, (int)GetSubmitHeroPositon().y);
         Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
         Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentIndicatorPosition, targetPosition))
         {
 
             Debug.Log("move indicator!!!!!!!!");
@@ -354,6 +355,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("current hero submit");
         isOnHeroPosition = true;
         var position = GetSubmitHeroPositon();
+      
         GetSubmitHero(position);
         Debug.Log("submitHeroData" + submitHeroData);
 
@@ -362,8 +364,9 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("hero submit position:" + transform.position);
         //if is occupied
-        var positon = new Vector2(transform.position.x, transform.position.y);
-        return transform.position;
+        var position = new Vector2(transform.position.x, transform.position.y);
+        currentGridPosition =new Vector2Int((int)position.x,(int)position.y);
+        return position;
 
     }
     public HeroData GetSubmitHero(Vector2 position)

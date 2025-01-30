@@ -87,7 +87,7 @@ public class HighLight : MonoBehaviour
     private void DisplayHightlight(Vector2Int[] neighbors)
     {
         ClearHighlights();
-        Debug.Log("neighbor:" + neighbors);
+       // Debug.Log("neighbor:" + neighbors);
 
         foreach (var neighbor in neighbors)
         {
