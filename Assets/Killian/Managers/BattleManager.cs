@@ -78,13 +78,13 @@ public class BattleManager : MonoBehaviour
         {
             damage = clashAtkValue;
             //pure damage!!
-            target.currentHealth += damage;
+            target.UpdateHealth(damage);
         }
         else if (clashAtkValue < clashDefValue)
         {
             clashDamage = clashDefValue - clashAtkValue;
             //counter attack
-            currentHero.currentHealth -= clashDamage;
+            currentHero.UpdateHealth(clashDamage);
         }
         else
         {
