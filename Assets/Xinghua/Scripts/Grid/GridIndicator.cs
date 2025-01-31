@@ -291,6 +291,7 @@ public class GridIndicator : MonoBehaviour
 
         submitHeroData.gameObject.transform.position = transform.position;
         GridManager.Instance.AddOccupiedGrid(transform.position);
+        UpdatePlayerTurn();
         CheckAttackTargets();
         CheckAttackTargets();
 
