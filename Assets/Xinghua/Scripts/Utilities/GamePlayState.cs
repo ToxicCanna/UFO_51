@@ -24,8 +24,8 @@ public class GamePlayState : BaseState
         {
             currentControls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
             currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
-            currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
+            currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
         }
         else
         {
@@ -38,8 +38,8 @@ public class GamePlayState : BaseState
         Debug.Log("Exited Gameplay State");
         currentControls.GamePlay.Move.performed -= ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
         currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
-        currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
         currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
+        currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
     }
 
     public override void UpdateState()

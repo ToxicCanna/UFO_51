@@ -7,7 +7,7 @@ using UnityEngine;
 public class GridIndicator : MonoBehaviour
 {
     // [SerializeField] private List<ScriptableObject> items; 
-    public int minI = 0, maxI, minJ, maxJ = 7;
+    private int minI = 0, maxI, minJ, maxJ = 7;
     public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
@@ -18,14 +18,17 @@ public class GridIndicator : MonoBehaviour
     [SerializeField] private GameObject heroPrefab;
     // private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
+    [SerializeField] GameStateMachine gameStateMachine;
+
     private HeroSelect heroSelect;
     public event Action finishSelection;
     public event Action onHeroPositon;
     public event Action heroUnselected;
     public event Action targetSelecting;
     public event Action AttackHappenOneSpot;
-    //public event Action rollingDice;//this is for the dic roll function
     public event Action activeShop;
+    public event Action moveFinish;
+    //public event Action rollingDice;//this is for the dic roll function
 
 
 
@@ -65,17 +68,18 @@ public class GridIndicator : MonoBehaviour
        
     }
 
-
     private void Update()
     {
         playerText.text = currentTurn.ToString();
 
     }
+
     public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;
     }
+
     public bool IsWithinMoveDirection(Vector2Int centerPosition, Vector2Int newPosition)
     {
         //old 
@@ -95,35 +99,30 @@ public class GridIndicator : MonoBehaviour
 
     }
 
-    //private void UpdateIndicatorToSelectedHero()
-    //{
-    //    var currentHeroPosition = heroSelect.GetSelectedHeroPosition();
-    //}
-
     public void HandleIndicatorMoveNew(Vector2 direction)
     {
         Debug.Log("Handle move isOnHeroPosition" + isOnHeroPosition);
         Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        HandleIndicatorMove(intDirection);
 
+        /*    if (isHeroSubmited && isOnHeroPosition)
+            {
+                Debug.Log("move with range");
+                //move the indicator with limit
+                MoveIndicatorWithRange(intDirection);
+            }
+            *//*   else if (isCanChooseTarget)
+               {
+                   //switch to attack state
+               }*//*
+            else
+            {
 
-        if (isHeroSubmited && isOnHeroPosition)
-        {
-            Debug.Log("move with range");
-            //move the indicator with limit
-            MoveIndicatorWithRange(intDirection);
-        }
-        else if (isCanChooseTarget)
-        {
-            //switch to attack state
-        }
-        //else
-        //{
-
-        //    Debug.Log("move without range");
-        //    // only move indicator 
-        //    HandleIndicatorMove(intDirection);
-        //}
+                Debug.Log("move without range");
+                // only move indicator 
+                HandleIndicatorMove(intDirection);
+            }*/
     }
     private int currentIndex = 0;
     public void ChooseTargets(Vector2 direction)
@@ -237,8 +236,6 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
-
-
     public void MoveIndicatorWithRange(Vector2 direction)
     {
 
@@ -272,12 +269,10 @@ public class GridIndicator : MonoBehaviour
         return heroPathID;
     }
 
-    //private void UpdateHeroPosition()
-    //{
-    //    heroPosition = heroSelect.GetSelectedHeroPosition();
-    //}
+    
     public void MoveToTargetIndicator()
     {
+        moveFinish?.Invoke();
         GetCurrentPlayerTurn();
         currentGridPosition = WorldToGridPosition(transform.position);
         Debug.Log("MoveToTargetIndicator");

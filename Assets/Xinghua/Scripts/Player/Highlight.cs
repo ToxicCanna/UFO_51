@@ -1,39 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HighLight : MonoBehaviour
 {
     [SerializeField] private GameObject highlightPrefab;
+    [SerializeField] private GameObject abilityTangeTilePerfab;
     [SerializeField] private LayerMask gridLayer;
     [SerializeField] private float tileSize = 1f;
-
     public HeroMovementRule[] currentRule;//this rule is for player move path generate
-                                          //public List<Vector3> directions;
-
     Vector2Int[] neighbors;
+    Vector2Int[] neighborsForAbilityRange;
     [SerializeField] private GridIndicator gridIndicator;
     private List<GameObject> highlights = new List<GameObject>();
-    void Start()
-    {
-
-        if (currentRule != null)
-        {
-            SetHeroRule(currentRule[0]);
-        }
-        else
-        {
-            Debug.LogError("currentRule is not assigned in the Inspector!");
-        }
-
-    }
+    private List<GameObject> highlightsForAbilityRange = new List<GameObject>();
 
     private void OnEnable()
     {
         if (gridIndicator != null)
         {
             gridIndicator.finishSelection += OnHeroSelectionFinished;
-            gridIndicator.onHeroPositon += ShowHeroPath;
-            gridIndicator.heroUnselected += HideHightlight;
+            gridIndicator.onHeroPositon += ShowHeroPath;//this will show the targt path and ability range both ; in different color
+            gridIndicator.moveFinish += HideHightlight;
+
         }
         else
         {
@@ -47,9 +37,11 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnHeroSelectionFinished;
             gridIndicator.onHeroPositon -= ShowHeroPath;
-            gridIndicator.heroUnselected -= HideHightlight;
+            gridIndicator.moveFinish -= HideHightlight;
+
         }
     }
+
     public void ShowHeroPath()
     {
         var heros = HeroPocketManager.Instance.GetAllHeroes();
@@ -57,18 +49,67 @@ public class HighLight : MonoBehaviour
         {
             if (gridIndicator.transform.position == hero.transform.position)
             {
-                //Debug.Log("show highlight path");
                 Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
                 Debug.Log("gridIndicator:" + currentGridPosition);
-                //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
-
-
                 neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
                 DisplayHightlight(neighbors);
+                neighborsForAbilityRange = GetNeighborsForAbilityRange(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+                DisplayRangedAbility(neighborsForAbilityRange);
             }
         }
-
     }
+
+    private void ClearHighlights()
+    {
+        foreach (var highlight in highlights)
+        {
+            Destroy(highlight);
+        }
+        highlights.Clear();
+    }
+
+    private void ClearAbilityRangeDisplay()
+    {
+        foreach (var abilityTangeTile in highlightsForAbilityRange)
+        {
+            Destroy(abilityTangeTile);
+        }
+        highlights.Clear();
+    }
+
+    private void DisplayHightlight(Vector2Int[] neighbors)
+    {
+        ClearHighlights();
+        foreach (var neighbor in neighbors)
+        {
+            if (gridIndicator.IsWithinBounds(neighbor))
+            {
+                Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
+                GameObject highlight = Instantiate(highlightPrefab, neighborPosition, Quaternion.identity);
+                highlight.gameObject.SetActive(true);
+                highlights.Add(highlight);
+            }
+        }
+    }
+
+    private void DisplayRangedAbility(Vector2Int[] neighbors)
+    {
+        ClearAbilityRangeDisplay();
+        foreach (var neighbor in neighbors)
+        {
+            Debug.Log("show the range highlight");
+            Debug.Log(" range highlight:" + neighbors.Length);
+            if (gridIndicator.IsWithinBounds(neighbor))
+            {
+                Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
+                GameObject highlight = Instantiate(abilityTangeTilePerfab, neighborPosition, Quaternion.identity);
+                highlight.gameObject.SetActive(true);
+                highlightsForAbilityRange.Add(highlight);
+
+            }
+        }
+    }
+
     private void OnHeroSelectionFinished()
     {
         Debug.Log("show highlight path");
@@ -83,6 +124,10 @@ public class HighLight : MonoBehaviour
             hightlight.gameObject.SetActive(false);
 
         }
+        foreach (var highlightAbility in highlightsForAbilityRange)
+        {
+            highlightAbility.gameObject.SetActive(false);
+        }
     }
     private Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -91,30 +136,60 @@ public class HighLight : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
-    private void DisplayHightlight(Vector2Int[] neighbors)
+    public Vector2Int[] GetNeighborsForAbilityRange(Vector2Int currentPosition, int ID)
     {
-        ClearHighlights();
-        // Debug.Log("neighbor:" + neighbors);
-
-        foreach (var neighbor in neighbors)
+        List<Vector2Int> neighbors = new List<Vector2Int>();
+        int heroIndex = gridIndicator.GetHeroMoveIndex();
+        if (heroIndex == 0)
         {
-            if (gridIndicator.IsWithinBounds(neighbor))
+            return new Vector2Int[0]; ;
+        }
+        else if (heroIndex == 0)
+        {
+            Vector2Int[] directions = new Vector2Int[]
+         {
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
+
+             new Vector2Int(1, 1),
+             new Vector2Int(1, -1),
+             new Vector2Int(-1, 1),
+             new Vector2Int(-1, -1)
+         };
+
+            foreach (var direction in directions)
             {
-                Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
-                GameObject highlight = Instantiate(highlightPrefab, neighborPosition, Quaternion.identity);
-                highlight.gameObject.SetActive(true);
-                highlights.Add(highlight);
+                neighbors.Add(currentPosition + direction);
+
             }
         }
-    }
-    private void ClearHighlights()
-    {
-        foreach (var highlight in highlights)
+        else if (heroIndex == 3)
         {
-            Destroy(highlight);
+            Vector2Int[] directions = new Vector2Int[]
+         {
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
+
+             //new Vector2Int(1, 1),
+             //new Vector2Int(1, -1),
+             //new Vector2Int(-1, 1),
+             //new Vector2Int(-1, -1)
+         };
+            foreach (var direction in directions)
+            {
+                neighbors.Add(currentPosition + direction);
+                neighbors.Add(currentPosition + direction * 2);
+                neighbors.Add(currentPosition + direction * 3);
+            }
         }
-        highlights.Clear();
+        return neighbors.ToArray();
     }
+
+    //this is for the move
     public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
