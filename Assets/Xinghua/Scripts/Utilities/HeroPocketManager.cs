@@ -114,6 +114,27 @@ public class HeroPocketManager : MonoBehaviour
         }
     }
 
+
+    public void MoveHero(string heroId, string newSide)
+    {
+        if (redSideHeroes.TryGetValue(heroId, out GameObject heroToMove))
+        {
+            redSideHeroes.Remove(heroId);
+        }
+        else if (blueSideHeroes.TryGetValue(heroId, out heroToMove))
+        {
+            blueSideHeroes.Remove(heroId);
+        }
+        else
+        {
+            Debug.LogWarning("Hero ID not found: " + heroId);
+            return;
+        }
+
+        RegisterHero(heroId, heroToMove, newSide);
+        Debug.Log($"Hero {heroId} moved to {newSide} side.");
+    }
+
     public void GetHeroData(string heroId)
     {
         var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();

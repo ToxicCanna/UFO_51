@@ -12,7 +12,7 @@ public class GameStateMachine : BaseStateMachine
     private GamePlayState gameplayState;
     private UIState uiState;
     private AttackState attackState;
-
+    private WinState winState;
 
     private void Awake()
     {
@@ -26,6 +26,7 @@ public class GameStateMachine : BaseStateMachine
 
         gameplayState = new GamePlayState(_gridIndicator);
         attackState = new AttackState(_gridIndicator);
+        winState = new WinState(_gridIndicator);
     }
     private void Start()
     {
@@ -70,6 +71,10 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToAttackState()
     {
         SetState(attackState);
+    }
+    public void SwitchToWinState()
+    {
+        SetState(winState);
     }
 }
 
