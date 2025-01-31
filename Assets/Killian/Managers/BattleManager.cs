@@ -29,7 +29,7 @@ public class BattleManager : MonoBehaviour
 
     public void Attack(HeroData target)
     {
-        targetHero = target;
+        //targetHero = target;
         if (ability == true)
         {
             currentHero.PowerUp();
@@ -40,12 +40,12 @@ public class BattleManager : MonoBehaviour
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
 
-        gen.ShowRoll(atkValue);
+        //gen.ShowRoll(atkValue);
 
         if (atkValue > defValue)
         {
             damage = atkValue - defValue;
-            target.currentHealth -= damage;
+            target.UpdateHealth(damage);
         }
         else if (atkValue < defValue || (atkValue == defValue && currentHero.range > 1))
         {
