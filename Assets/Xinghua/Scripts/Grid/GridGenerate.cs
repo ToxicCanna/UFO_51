@@ -12,7 +12,7 @@ public class GrideGenerate : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
-        //SetCameraPosition();
+        SetCameraPosition();
     }
     private void GenerateGrid()
     {
