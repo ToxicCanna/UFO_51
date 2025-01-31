@@ -292,6 +292,7 @@ public class GridIndicator : MonoBehaviour
         submitHeroData.gameObject.transform.position = transform.position;
         GridManager.Instance.AddOccupiedGrid(transform.position);
         CheckAttackTargets();
+        CheckAttackTargets();
 
     }
     private void CheckAttackTargets()
@@ -313,10 +314,9 @@ public class GridIndicator : MonoBehaviour
         {
             herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
             Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
-
+        
         }
-
-        bool attackTriggered = false;
+        
 
         foreach (var hero in herosOpposite)
         {
@@ -332,7 +332,7 @@ public class GridIndicator : MonoBehaviour
                 //Attack opposite
                 if (submitHeroData.gameObject != hero)
                 {
-                Debug.Log(" attack happen");
+                    Debug.Log(" attack happen");
                     //set current hero
                     //set target hero
                     battleManager.targetHero = hero.GetComponent<HeroData>();
@@ -341,7 +341,6 @@ public class GridIndicator : MonoBehaviour
 
 
                     AttackHappenOneSpot?.Invoke();
-                    attackTriggered = true;
                 }
                 //else
                 //{
@@ -349,10 +348,6 @@ public class GridIndicator : MonoBehaviour
                 //    UpdateIndicatorWhenTurnChange();
                 //    Debug.Log("no attack condition");
                 //}
-                if (!attackTriggered)
-                {
-                    Debug.Log("No valid target found on the same square.");
-                }
             }
         }
     }

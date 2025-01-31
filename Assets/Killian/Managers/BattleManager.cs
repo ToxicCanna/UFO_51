@@ -75,7 +75,7 @@ public class BattleManager : MonoBehaviour
             damage = 0;
             //(atkValue = defValue)! Clash!
             Clash(targetHero);
-            Debug.Log($"Rolled {atkValue}atk against {defValue}def fto Clash!!!");
+            Debug.Log($"Rolled {atkValue}atk against {defValue}def to Clash!!!");
 
         }
 
@@ -97,21 +97,21 @@ public class BattleManager : MonoBehaviour
             damage = clashAtkValue;
             //pure damage!!
             target.UpdateHealth(damage);
-            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def for {damage} pure damage");
+            Debug.Log($"Rolled {clashAtkValue} Clash atk against {clashDefValue} Clash def for {damage} pure damage");
         }
         else if (clashAtkValue < clashDefValue)
         {
             clashDamage = clashDefValue - clashAtkValue;
             //counter attack
             currentHero.UpdateHealth(clashDamage);
-            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def for {clashDamage} counter damage");
+            Debug.Log($"Rolled {clashAtkValue} Clash atk against {clashDefValue} Clash def for {clashDamage} counter damage");
         }
         else
         {
             damage = 0;
             //(clashAtkValue = clashDefValue)! Clash!
             Clash(target);
-            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def to clash again!!!");
+            Debug.Log($"Rolled {clashAtkValue} Clash atk against {clashDefValue} Clash def to clash again!!!");
 
         }
     }
