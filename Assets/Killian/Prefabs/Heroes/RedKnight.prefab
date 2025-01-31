@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5472513217160041433}
   - component: {fileID: 1358485701911009353}
   - component: {fileID: 5077760521319232580}
+  - component: {fileID: -1203223320102262033}
   m_Layer: 0
   m_Name: RedKnight
   m_TagString: Untagged
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 0.8828125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5539500973995925803
@@ -136,7 +137,6 @@ MonoBehaviour:
   tileSize: 1
   currentRule:
   - {fileID: 11400000, guid: df42d637c7f478543a9fc996d8d5ce09, type: 2}
-  directions: []
   gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &1358485701911009353
 BoxCollider2D:
@@ -211,3 +211,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &-1203223320102262033
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996134876235478659}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
