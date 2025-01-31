@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1448581574537951956}
   - component: {fileID: -2725914680474764311}
   - component: {fileID: 8628699255205769909}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedThief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

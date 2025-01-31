@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4410382641169549210}
   - component: {fileID: -4607510962992324}
   - component: {fileID: 1474197947989475159}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BlueThief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

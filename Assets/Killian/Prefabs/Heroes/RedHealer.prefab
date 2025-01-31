@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6056250194065573593}
   - component: {fileID: 6192920740630649659}
   - component: {fileID: -990082924455694902}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedHealer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

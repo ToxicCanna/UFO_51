@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -4126598284948094956}
   - component: {fileID: 4069307117878772952}
   - component: {fileID: 5423341684253663465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

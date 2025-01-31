@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 7254770284347359070}
   - component: {fileID: 7168281781270687765}
   - component: {fileID: -2965049436962307961}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RedBasic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -240,7 +240,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &-2965049436962307961
 Animator:
   serializedVersion: 7

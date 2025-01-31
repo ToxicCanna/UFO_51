@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6260415601942046971}
   - component: {fileID: -3043958424282861366}
   - component: {fileID: -3080543736976497511}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BlueHealer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

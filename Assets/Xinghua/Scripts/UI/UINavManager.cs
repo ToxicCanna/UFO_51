@@ -30,7 +30,6 @@ public class UINavManager : MonoBehaviour
             Debug.LogWarning("[UISelector] Selector GameObject is not assigned!");
             return;
         }
-
         // Debug.Log("[UISelector] Script initialized. Starting at button index: " + currentIndex);
         UpdateSelectorPosition(); // Position the selector on the first button
     }
