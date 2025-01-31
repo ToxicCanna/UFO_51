@@ -62,20 +62,22 @@ public class BattleManager : MonoBehaviour
         {
             damage = atkValue - defValue;
             targetHero.UpdateHealth(damage);
+            Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
         }
         else if (atkValue < defValue || (atkValue == defValue && currentHero.range > 1))
         {
             damage = 0;
             //block attack
+            Debug.Log($"Rolled {atkValue}atk against {defValue}def, they blocked!");
         }
         else
         {
             damage = 0;
             //(atkValue = defValue)! Clash!
             Clash(targetHero);
-        }
+            Debug.Log($"Rolled {atkValue}atk against {defValue}def fto Clash!!!");
 
-        Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
+        }
 
         if (poweredUp == true)
         {
@@ -95,18 +97,22 @@ public class BattleManager : MonoBehaviour
             damage = clashAtkValue;
             //pure damage!!
             target.UpdateHealth(damage);
+            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def for {damage} pure damage");
         }
         else if (clashAtkValue < clashDefValue)
         {
             clashDamage = clashDefValue - clashAtkValue;
             //counter attack
             currentHero.UpdateHealth(clashDamage);
+            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def for {clashDamage} counter damage");
         }
         else
         {
             damage = 0;
             //(clashAtkValue = clashDefValue)! Clash!
             Clash(target);
+            Debug.Log($"Rolled {clashAtkValue}atk against {clashDefValue}def to clash again!!!");
+
         }
     }
 }
