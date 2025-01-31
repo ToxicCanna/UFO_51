@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Castle : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Castle : MonoBehaviour
 
     [SerializeField] private Image _image;
     [SerializeField] private Gradient _gradient;
+    public TMP_Text tMPro;
     private float _target;
 
     private void Awake()
