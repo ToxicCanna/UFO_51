@@ -296,51 +296,40 @@ public class GridIndicator : MonoBehaviour
     }
     private void CheckAttackTargets()
     {
-       //this just when two player in one spot attack each other
+        //this just when two player in one spot attack each other
+        var herosOpposite = new List<GameObject>();
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
-            var herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-            Debug.Log("heroOpposite hero count:" + herosOpposite);
-            foreach (var hero in herosOpposite)
-            {
-                Debug.Log("before attack pos:" + transform.position);
-                
-                if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
-                {
-                    //Attack opposite
-                    Debug.Log("oppp blue pos:" + transform.position);
-                    Debug.Log(" attack happen");
-                    AttackHappenOneSpot?.Invoke();
-                }
-                else
-                {
-                    UpdatePlayerTurn();
-                    UpdateIndicatorWhenTurnChange();
-                    Debug.Log("keep moving");
-                }
-            }
+            herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
         }
         else
         {
-            var herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
-            Debug.Log("heroOpposite hero count:" + herosOpposite);
-            foreach (var hero in herosOpposite)
-            {
-                Debug.Log("before attack pos:" + transform.position);
+            herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
 
-                if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
-                {
-                    Debug.Log("oppp blue pos:" + transform.position);
-                    //Attack opposite
-                    Debug.Log(" attack happen");
-                    AttackHappenOneSpot?.Invoke();
-                }
-                else
-                {
-                    UpdatePlayerTurn();
-                    UpdateIndicatorWhenTurnChange();
-                    Debug.Log("no attack condition");
-                }
+        }
+
+        foreach (var hero in herosOpposite)
+        {
+            Debug.Log("hero oppo" + hero.name);
+            Debug.Log("tranform positon:" + transform.position);
+            Debug.Log("hero.transform.position" + hero.transform.position);
+
+
+            //if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
+            if (transform.position == hero.transform.position)
+            {
+                Debug.Log("same pos:" + transform.position);
+                //Attack opposite
+                Debug.Log(" attack happen");
+                AttackHappenOneSpot?.Invoke();
+            }
+            else
+            {
+                UpdatePlayerTurn();
+                UpdateIndicatorWhenTurnChange();
+                Debug.Log("no attack condition");
             }
         }
     }
