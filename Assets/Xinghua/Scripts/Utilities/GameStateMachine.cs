@@ -13,6 +13,7 @@ public class GameStateMachine : BaseStateMachine
     private UIState uiState;
     private AttackState attackState;
 
+
     private void Awake()
     {
         uiState = new UIState();
@@ -24,9 +25,20 @@ public class GameStateMachine : BaseStateMachine
         }
 
         gameplayState = new GamePlayState(_gridIndicator);
-        attackState = new AttackState();
+        attackState = new AttackState(_gridIndicator);
     }
-
+    private void Start()
+    {
+        // Ensure a default state is set
+        if (gameplayState != null)
+        {
+            SetState(gameplayState); // Ensure the default state is set here
+        }
+        else
+        {
+            Debug.LogError("GameplayState is null! Ensure it is initialized.");
+        }
+    }
     private void OnEnable()
     {
         if (_gridIndicator != null)
@@ -43,18 +55,7 @@ public class GameStateMachine : BaseStateMachine
 
         }
     }
-    private void Start()
-    {
-        // Ensure a default state is set
-        if (gameplayState != null)
-        {
-            SetState(gameplayState); // Ensure the default state is set here
-        }
-        else
-        {
-            Debug.LogError("GameplayState is null! Ensure it is initialized.");
-        }
-    }
+
 
     public void SwitchToUIState()
     {
@@ -65,6 +66,10 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToGameplayState()
     {
         SetState(gameplayState);
+    }
+    public void SwitchToAttackState()
+    {
+        SetState(attackState);
     }
 }
 

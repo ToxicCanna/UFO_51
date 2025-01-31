@@ -81,12 +81,12 @@ SpriteRenderer:
   m_SortingLayerID: 1932192151
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: -641661416736242478, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
+  m_Sprite: {fileID: -8773005042253750998, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.90625, y: 0.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -137,7 +137,6 @@ MonoBehaviour:
   tileSize: 1
   currentRule:
   - {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
-  directions: []
   gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &8775971541676210871
 BoxCollider2D:
@@ -178,7 +177,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.51724136, y: 0.5}
     oldSize: {x: 0.90625, y: 0.9375}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.90625, y: 0.9375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -224,5 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heroPath: {fileID: 0}
   heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
   heroPathID: 3

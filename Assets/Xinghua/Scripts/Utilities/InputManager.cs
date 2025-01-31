@@ -21,10 +21,7 @@ public class InputManager : MonoBehaviour
         Instance = this;
 
         controls = new PlayerControls();
-        if (indicatorMove == null || heroSelect == null)
-        {
-            Debug.LogError("GridIndicator or HeroSelect is not assigned in the Inspector!");
-        }
+    
 
     }
     public void SetInputMode(InputMode mode)
