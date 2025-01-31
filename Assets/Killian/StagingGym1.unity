@@ -2347,6 +2347,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2036581278}
     - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
+      propertyPath: _HPBar
+      value: 
+      objectReference: {fileID: 1437816658}
+    - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
+      propertyPath: _image
+      value: 
+      objectReference: {fileID: 1437816658}
+    - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
       propertyPath: castleHP
       value: 1
       objectReference: {fileID: 0}
@@ -8337,6 +8345,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2361418835181565625, guid: 98988dd20280a5b4e95a0d0f97cd8d34, type: 3}
   m_PrefabInstance: {fileID: 2073631254}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1437816658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2841513180363514692, guid: 98988dd20280a5b4e95a0d0f97cd8d34, type: 3}
+  m_PrefabInstance: {fileID: 2073631254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1460514490
 GameObject:
   m_ObjectHideFlags: 0
@@ -11743,6 +11762,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eeee9b5bf4882994f87c46b441723c91, type: 3}
+--- !u!114 &2000913203 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7120725773083571832, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
+  m_PrefabInstance: {fileID: 2006279456}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2006279456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11834,6 +11864,10 @@ PrefabInstance:
     - target: {fileID: 2676611910038080047, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
       propertyPath: m_Name
       value: RedHP
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120725773083571832, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12276,6 +12310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueHP
       objectReference: {fileID: 0}
+    - target: {fileID: 4272425223892511677, guid: 98988dd20280a5b4e95a0d0f97cd8d34, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12306,6 +12344,14 @@ PrefabInstance:
       propertyPath: tMPro
       value: 
       objectReference: {fileID: 1887958264}
+    - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
+      propertyPath: _HPBar
+      value: 
+      objectReference: {fileID: 2000913203}
+    - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
+      propertyPath: _image
+      value: 
+      objectReference: {fileID: 2000913203}
     - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: castleHP
       value: 1

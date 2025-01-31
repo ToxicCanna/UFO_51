@@ -8,7 +8,7 @@ public class Castle : MonoBehaviour
     public float maxHP;
     public float castleHP;
 
-    [SerializeField] private Image _image;
+    [SerializeField] private Image _HPBar;
     [SerializeField] private Gradient _gradient;
     public TMP_Text tMPro;
     private float _target;
@@ -17,7 +17,7 @@ public class Castle : MonoBehaviour
     {
         castleHP = maxHP;
         _target = castleHP / maxHP;
-        _image.fillAmount = _target;
+        _HPBar.fillAmount = _target;
         CheckHealthBarGradientAmount();
     }
 
@@ -29,7 +29,7 @@ public class Castle : MonoBehaviour
         _target = castleHP/maxHP;
         Debug.Log($"HealthBar fill: {_target}");
 
-        _image.fillAmount = _target;
+        _HPBar.fillAmount = _target;
         CheckHealthBarGradientAmount();
         if (castleHP <= 0)
         {
@@ -38,7 +38,7 @@ public class Castle : MonoBehaviour
     }
     private void CheckHealthBarGradientAmount()
     {
-        _image.color = _gradient.Evaluate(_image.fillAmount);
+        _HPBar.color = _gradient.Evaluate(_HPBar.fillAmount);
     }
     public virtual void LoseGame()
     {

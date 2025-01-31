@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 10
   castleHP: 10
-  _image: {fileID: 7120725773083571832, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
+  _image: {fileID: 0}
   _gradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
@@ -79,6 +79,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  tMPro: {fileID: 0}
 --- !u!61 &7550204865896122744
 BoxCollider2D:
   m_ObjectHideFlags: 0
