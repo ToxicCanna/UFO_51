@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -24,6 +23,7 @@ public class GridIndicator : MonoBehaviour
     public event Action onHeroPositon;
     public event Action heroUnselected;
     public event Action targetSelecting;
+    public event Action AttackHappenOneSpot;
     //public event Action rollingDice;//this is for the dic roll function
     public event Action activeShop;
 
@@ -62,7 +62,7 @@ public class GridIndicator : MonoBehaviour
         minJ = 0; maxJ = 7;
 
         Debug.Log("Start current turn :" + currentTurn);
-       
+
     }
 
 
@@ -130,7 +130,7 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("move in opponent side hero list");
         var oppositHeros = GetOppositeHeroAsTarget();
-        
+
         Debug.Log("opposite heros count:" + GetOppositeHeroAsTarget().Count);
 
         var oppositeHeroCount = GetOppositeHeroAsTarget().Count;
@@ -162,7 +162,7 @@ public class GridIndicator : MonoBehaviour
         else
         {
             //S
-            nextIndex = (currentIndex -1+oppositeHeroCount) % oppositeHeroCount;
+            nextIndex = (currentIndex - 1 + oppositeHeroCount) % oppositeHeroCount;
         }
 
         transform.position = GetOppositeHeroAsTarget()[nextIndex].transform.position;
@@ -296,17 +296,55 @@ public class GridIndicator : MonoBehaviour
     }
     private void CheckAttackTargets()
     {
-
-        if (!isHaveTargets)
+       //this just when two player in one spot attack each other
+        if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
-            UpdatePlayerTurn();
-            UpdateIndicatorWhenTurnChange();
+            var herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            Debug.Log("heroOpposite hero count:" + herosOpposite);
+            foreach (var hero in herosOpposite)
+            {
+                Debug.Log("before attack pos:" + transform.position);
+                
+                if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
+                {
+                    //Attack opposite
+                    Debug.Log("oppp blue pos:" + transform.position);
+                    Debug.Log(" attack happen");
+                    AttackHappenOneSpot?.Invoke();
+                }
+                else
+                {
+                    UpdatePlayerTurn();
+                    UpdateIndicatorWhenTurnChange();
+                    Debug.Log("keep moving");
+                }
+            }
         }
         else
         {
-            Debug.Log("attack directionly");
+            var herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            Debug.Log("heroOpposite hero count:" + herosOpposite);
+            foreach (var hero in herosOpposite)
+            {
+                Debug.Log("before attack pos:" + transform.position);
+
+                if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
+                {
+                    Debug.Log("oppp blue pos:" + transform.position);
+                    //Attack opposite
+                    Debug.Log(" attack happen");
+                    AttackHappenOneSpot?.Invoke();
+                }
+                else
+                {
+                    UpdatePlayerTurn();
+                    UpdateIndicatorWhenTurnChange();
+                    Debug.Log("no attack condition");
+                }
+            }
         }
     }
+
     private void UpdateIndicatorWhenTurnChange()
     {
         Debug.Log("current turn:" + currentTurn);
@@ -323,7 +361,7 @@ public class GridIndicator : MonoBehaviour
     }
     private PlayerTurn GetCurrentPlayerTurn()
     {
-       
+
         return currentTurn;
     }
 
@@ -367,7 +405,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleSelectHero()
     {
-       
+
         // onHeroPositon?.Invoke();//this if for path highlight to listen
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         Debug.Log("start hero in red side :" + herosInRedSide.Count);
@@ -502,6 +540,6 @@ public class GridIndicator : MonoBehaviour
                 //end of Killians code
             }
         }
-        Debug.Log("kill him!!!!!!!"+ submitedTargetHero.name);
+        Debug.Log("kill him!!!!!!!" + submitedTargetHero.name);
     }
 }
