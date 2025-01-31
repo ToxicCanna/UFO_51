@@ -49,6 +49,9 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"{currentHero.atk}");
             poweredUp = true;
         }
+        Debug.Log($"current {currentHero.name}");
+        Debug.Log($"target {targetHero.name}");
+
 
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);

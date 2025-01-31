@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -24,6 +23,7 @@ public class GridIndicator : MonoBehaviour
     public event Action onHeroPositon;
     public event Action heroUnselected;
     public event Action targetSelecting;
+    public event Action AttackHappenOneSpot;
     //public event Action rollingDice;//this is for the dic roll function
     public event Action activeShop;
 
@@ -162,7 +162,7 @@ public class GridIndicator : MonoBehaviour
         else
         {
             //S
-            nextIndex = (currentIndex -1+oppositeHeroCount) % oppositeHeroCount;
+            nextIndex = (currentIndex - 1 + oppositeHeroCount) % oppositeHeroCount;
         }
 
         transform.position = GetOppositeHeroAsTarget()[nextIndex].transform.position;
@@ -296,17 +296,67 @@ public class GridIndicator : MonoBehaviour
     }
     private void CheckAttackTargets()
     {
-
+        battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
+        //this just when two player in one spot attack each other
+        var herosOpposite = new List<GameObject>();
         if (!isHaveTargets)
         {
             UpdatePlayerTurn();
             UpdateIndicatorWhenTurnChange();
         }
-        else
+        if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
-            Debug.Log("attack directionly");
+            herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
+        }
+        else if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
+
+        }
+
+        bool attackTriggered = false;
+
+        foreach (var hero in herosOpposite)
+        {
+            Debug.Log("hero oppo" + hero.name);
+            Debug.Log("tranform positon:" + transform.position);
+            Debug.Log("hero.transform.position" + hero.transform.position);
+
+
+            //if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
+            if (transform.position == hero.transform.position)
+            {
+                Debug.Log("same pos:" + transform.position);
+                //Attack opposite
+                if (submitHeroData.gameObject != hero)
+                {
+                Debug.Log(" attack happen");
+                    //set current hero
+                    //set target hero
+                    battleManager.targetHero = hero.GetComponent<HeroData>();
+                    //call attack after setting values
+                    battleManager.Attack();
+
+
+                    AttackHappenOneSpot?.Invoke();
+                    attackTriggered = true;
+                }
+                //else
+                //{
+                //    UpdatePlayerTurn();
+                //    UpdateIndicatorWhenTurnChange();
+                //    Debug.Log("no attack condition");
+                //}
+                if (!attackTriggered)
+                {
+                    Debug.Log("No valid target found on the same square.");
+                }
+            }
         }
     }
+
     private void UpdateIndicatorWhenTurnChange()
     {
         Debug.Log("current turn:" + currentTurn);
@@ -502,6 +552,6 @@ public class GridIndicator : MonoBehaviour
                 //end of Killians code
             }
         }
-        Debug.Log("kill him!!!!!!!"+ submitedTargetHero.name);
+        Debug.Log("kill him!!!!!!!" + submitedTargetHero.name);
     }
 }
