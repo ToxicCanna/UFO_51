@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -44,6 +45,8 @@ public class GridIndicator : MonoBehaviour
     private bool isCanChooseTarget = false;
     public HeroData submitedTargetHero;
 
+    [SerializeField] private TMP_Text playerText; 
+
     void Start()
     {
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -54,6 +57,7 @@ public class GridIndicator : MonoBehaviour
         minJ = 0; maxJ = 7;
 
         Debug.Log("Start current turn :" + currentTurn);
+       
     }
 
 
@@ -273,6 +277,7 @@ public class GridIndicator : MonoBehaviour
     //}
     public void MoveToTargetIndicator()
     {
+        GetCurrentPlayerTurn();
         currentGridPosition = WorldToGridPosition(transform.position);
         Debug.Log("MoveToTargetIndicator");
         if (!isOnHeroPosition && !isHeroSubmited) return;
@@ -317,6 +322,7 @@ public class GridIndicator : MonoBehaviour
     }
     private PlayerTurn GetCurrentPlayerTurn()
     {
+        playerText.text = currentTurn.ToString();
         return currentTurn;
     }
 

@@ -30,7 +30,7 @@ public class AttackState : BaseState
         if (currentControls != null && gridIndicator != null)
         {
             currentControls.GamePlay.Move.performed += ctx => gridIndicator?.ChooseTargets(ctx.ReadValue<Vector2>());
-            currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.SbumitedTarget();
+            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.SbumitedTarget();
         }
         else
         {
@@ -43,7 +43,7 @@ public class AttackState : BaseState
         if (currentControls != null && gridIndicator != null)
         {
             currentControls.GamePlay.Move.performed -=ctx => gridIndicator?.ChooseTargets(ctx.ReadValue<Vector2>());
-            currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.SbumitedTarget();
+            currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.SbumitedTarget();
         }
         else
         {
