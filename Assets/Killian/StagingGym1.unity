@@ -214,6 +214,7 @@ MonoBehaviour:
   - {fileID: 1675840435}
   - {fileID: 733353985}
   selector: {fileID: 260385017}
+  shopScript: {fileID: 604115212}
 --- !u!1 &122079037
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: spawn(1)
+          m_StringArgument: Spawn()
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &122079039
@@ -1715,7 +1716,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Spawn(0)
+          m_StringArgument: Spawn()
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &472623567
@@ -7078,10 +7079,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -4087598484406199446, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
-      propertyPath: DiceRoller
-      value: 
-      objectReference: {fileID: 453296907}
     - target: {fileID: 299199557036477060, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -8465,17 +8462,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
---- !u!114 &2006279457 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7120725773083571832, guid: 6020409dbd8774e488e700fe3318fbf8, type: 3}
-  m_PrefabInstance: {fileID: 2006279456}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2008033238
 GameObject:
   m_ObjectHideFlags: 0
@@ -8794,10 +8780,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedCastle
       objectReference: {fileID: 0}
-    - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
-      propertyPath: _image
-      value: 
-      objectReference: {fileID: 2006279457}
     - target: {fileID: 3266201478351129393, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1

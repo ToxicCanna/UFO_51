@@ -43,8 +43,4 @@ public class ShopScript : MonoBehaviour
             Instantiate(shopList[i], spawnLoc);
         }
     }
-    public void Spawn()
-    {
-        Debug.Log("button pressed!");
-    }
 }
