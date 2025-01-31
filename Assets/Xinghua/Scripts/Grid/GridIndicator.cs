@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -124,33 +125,44 @@ public class GridIndicator : MonoBehaviour
     public void ChooseTargets(Vector2 direction)
     {
         Debug.Log("move in opponent side hero list");
-        GetOppositeHeroAsTarget();
+        var oppositHeros = GetOppositeHeroAsTarget();
+        
         Debug.Log("opposite heros count:" + GetOppositeHeroAsTarget().Count);
+
+        var oppositeHeroCount = GetOppositeHeroAsTarget().Count;
+
         foreach (var pos in GetOppositeHeroAsTarget())
         {
             Debug.Log("opposite heros location:" + pos.transform.position);
         }
         // Determine new index based on direction
-        int moveDirection = 0;
-
-        if (direction.y > 0) moveDirection = 1;  // Move forward (W)
-        if (direction.y < 0) moveDirection = -1; // Move backward (S)
-
-        if (moveDirection != 0)
+        var x = transform.position.x;
+        var y = transform.position.y;
+        var nextIndex = 0;
+        for (int i = 0; i < oppositeHeroCount; i++)
         {
-            currentIndex = 0;
-            // Update current index
-            currentIndex += moveDirection;
+            var hero = oppositHeros[i];
+            if (x == hero.transform.position.x && y == hero.transform.position.y)
+            {
+                currentIndex = i;
+                break;
+            }
 
-            // Loop back when reaching the last/first item
-            if (currentIndex >= GetOppositeHeroAsTarget().Count) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = GetOppositeHeroAsTarget().Count - 1;
-
-            // Move the indicator to the new selected hero position
-            transform.position = GetOppositeHeroAsTarget()[currentIndex].transform.position;
-
-            Debug.Log("Indicator moved to: " + transform.position);
         }
+        if (direction.y > 0)
+        {
+            //W 
+            nextIndex = (currentIndex + 1) % oppositeHeroCount;
+
+        }
+        else
+        {
+            //S
+            nextIndex = (currentIndex -1+oppositeHeroCount) % oppositeHeroCount;
+        }
+
+        transform.position = GetOppositeHeroAsTarget()[nextIndex].transform.position;
+        Debug.Log("Indicator moved to: " + transform.position);
 
     }
 
