@@ -6,7 +6,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private DiceRoller diceroller;
     [SerializeField] private VisualRollGen gen;
     public HeroData currentHero;
-    [SerializeField] private HeroData targetHero;
+    public HeroData targetHero;
     int damage;
     int clashDamage;
     bool poweredUp;
@@ -16,7 +16,7 @@ public class BattleManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Attack(targetHero);
+            Attack();
         }
     }
 
@@ -27,9 +27,22 @@ public class BattleManager : MonoBehaviour
         target.currentHealth += healValue;
     }
 
-    public void Attack(HeroData target)
+    public void Attack()
     {
-        targetHero = target;
+        if(currentHero == null || targetHero == null)
+        {
+            if (currentHero == null)
+            {
+                Debug.Log("currenthero is null");
+            }
+            if (targetHero == null)
+            {
+                Debug.Log("targetHero is null");
+            }
+            return;
+        }
+
+        //targetHero = target;
         if (ability == true)
         {
             currentHero.PowerUp();
@@ -40,12 +53,12 @@ public class BattleManager : MonoBehaviour
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
 
-        gen.ShowRoll(atkValue);
+        //gen.ShowRoll(atkValue);
 
         if (atkValue > defValue)
         {
             damage = atkValue - defValue;
-            target.currentHealth -= damage;
+            targetHero.UpdateHealth(damage);
         }
         else if (atkValue < defValue || (atkValue == defValue && currentHero.range > 1))
         {
@@ -56,7 +69,7 @@ public class BattleManager : MonoBehaviour
         {
             damage = 0;
             //(atkValue = defValue)! Clash!
-            Clash(target);
+            Clash(targetHero);
         }
 
         Debug.Log($"Rolled {atkValue}atk against {defValue}def for {damage} Damage");
@@ -78,13 +91,13 @@ public class BattleManager : MonoBehaviour
         {
             damage = clashAtkValue;
             //pure damage!!
-            target.currentHealth += damage;
+            target.UpdateHealth(damage);
         }
         else if (clashAtkValue < clashDefValue)
         {
             clashDamage = clashDefValue - clashAtkValue;
             //counter attack
-            currentHero.currentHealth -= clashDamage;
+            currentHero.UpdateHealth(clashDamage);
         }
         else
         {

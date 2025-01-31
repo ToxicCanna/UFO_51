@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 8775971541676210871}
   - component: {fileID: -4126598284948094956}
   - component: {fileID: 4069307117878772952}
-  m_Layer: 0
+  - component: {fileID: 5423341684253663465}
+  m_Layer: 8
   m_Name: RedRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.90625, y: 0.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &4242525420612761904
@@ -154,7 +155,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -226,3 +227,25 @@ MonoBehaviour:
   heroPath: {fileID: 0}
   heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
   heroPathID: 3
+--- !u!95 &5423341684253663465
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7684743947540134915}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 5408532833977027237, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

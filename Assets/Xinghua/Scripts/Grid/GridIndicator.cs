@@ -46,7 +46,11 @@ public class GridIndicator : MonoBehaviour
     private bool isCanChooseTarget = false;
     public HeroData submitedTargetHero;
 
-    [SerializeField] private TMP_Text playerText; 
+    [SerializeField] private TMP_Text playerText;
+
+    //(Killian)
+    //Reference to BattleManager
+    [SerializeField] private BattleManager battleManager;
 
     void Start()
     {
@@ -486,7 +490,16 @@ public class GridIndicator : MonoBehaviour
             if (transform.position.x == hero.transform.position.x || transform.position.y == hero.transform.position.y)
             {
                 var HeroData = hero.GetComponent<HeroData>();
-                submitedTargetHero=HeroData;
+
+                //(Killian)
+                //set Target in BattleManager
+                battleManager.targetHero = HeroData;
+                //Set Current Hero in BattleManager using "GetSubmitHero()"
+                battleManager.currentHero = submitHeroData;
+
+                Debug.Log("Target hero selected: " + battleManager.targetHero.name);
+                Debug.Log("Attacking with hero: " + battleManager.currentHero.name);
+                //end of Killians code
             }
         }
         Debug.Log("kill him!!!!!!!"+ submitedTargetHero.name);
