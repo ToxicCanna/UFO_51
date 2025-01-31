@@ -52,14 +52,21 @@ public class HighLight : MonoBehaviour
     }
     public void ShowHeroPath()
     {
-        //Debug.Log("show highlight path");
-        Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
-        Debug.Log("gridIndicator:" + currentGridPosition);
-        //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
+        var heros = HeroPocketManager.Instance.GetAllHeroes();
+        foreach (var hero in heros)
+        {
+            if (gridIndicator.transform.position == hero.transform.position)
+            {
+                //Debug.Log("show highlight path");
+                Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
+                Debug.Log("gridIndicator:" + currentGridPosition);
+                //Debug.Log("current grid position in highlight"+currentGridPosition);//currentGridPosition is the indicator position
 
 
-        neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
-        DisplayHightlight(neighbors);
+                neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+                DisplayHightlight(neighbors);
+            }
+        }
 
     }
     private void OnHeroSelectionFinished()
@@ -87,7 +94,7 @@ public class HighLight : MonoBehaviour
     private void DisplayHightlight(Vector2Int[] neighbors)
     {
         ClearHighlights();
-       // Debug.Log("neighbor:" + neighbors);
+        // Debug.Log("neighbor:" + neighbors);
 
         foreach (var neighbor in neighbors)
         {
@@ -111,7 +118,7 @@ public class HighLight : MonoBehaviour
     public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-       
+
 
         if (gridIndicator.GetHeroMoveIndex() == 0)
         {
@@ -136,18 +143,18 @@ public class HighLight : MonoBehaviour
         }
         else if (gridIndicator.GetHeroMoveIndex() == 3)
         {
-             Vector2Int[] directions = new Vector2Int[]
-          {
+            Vector2Int[] directions = new Vector2Int[]
+         {
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
-                //new Vector2Int(1, 1),
-                //new Vector2Int(1, -1),
-                //new Vector2Int(-1, 1),
-                //new Vector2Int(-1, -1)
-          };
+             //new Vector2Int(1, 1),
+             //new Vector2Int(1, -1),
+             //new Vector2Int(-1, 1),
+             //new Vector2Int(-1, -1)
+         };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);

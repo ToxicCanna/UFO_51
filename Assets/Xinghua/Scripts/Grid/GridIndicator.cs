@@ -223,18 +223,12 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("heroMoveIndex:" + heroPathID);
                 Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
                 // activeShop?.Invoke();
-                onHeroPositon?.Invoke();
-
             }
             else
             {
                 heroUnselected?.Invoke();
             }
-
-
-
             newIndicatorLocation = transform.position;
-
         }
     }
 
@@ -426,7 +420,7 @@ public class GridIndicator : MonoBehaviour
     //Submit current selected hero
     public void HandleSubmitHeroSelected()
     {
-
+        onHeroPositon?.Invoke();
         Debug.Log("current hero submit");
         isOnHeroPosition = true;
         var position = GetSubmitHeroPositon();
