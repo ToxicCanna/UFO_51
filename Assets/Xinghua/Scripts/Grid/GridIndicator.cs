@@ -63,22 +63,7 @@ public class GridIndicator : MonoBehaviour
 
     private void Update()
     {
-        /*    var occupiedGrids = GridManager.Instance.GetOccupiedGrids();
-            Debug.Log("occupiedGrids" + occupiedGrids.Count);
-            foreach (var grid in occupiedGrids)
-            {
-                Debug.Log("occupied" + grid);
-                if (grid.x == transform.position.x && grid.y == transform.position.y)
-                {
-                    isOnHeroPosition = true;
-                }
-                else
-                {
-                    isOnHeroPosition = false;
-                }
-            }*/
-        /* Debug.Log("isOnHeroPosition" + isOnHeroPosition);
-         Debug.Log("isHeroSubmited" + isHeroSubmited);*/
+        playerText.text = currentTurn.ToString();
 
     }
     public bool IsWithinBounds(Vector2Int position)
@@ -322,7 +307,7 @@ public class GridIndicator : MonoBehaviour
     }
     private PlayerTurn GetCurrentPlayerTurn()
     {
-        playerText.text = currentTurn.ToString();
+       
         return currentTurn;
     }
 
@@ -366,6 +351,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleSelectHero()
     {
+       
         // onHeroPositon?.Invoke();//this if for path highlight to listen
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         Debug.Log("start hero in red side :" + herosInRedSide.Count);
