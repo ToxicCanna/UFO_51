@@ -11,9 +11,12 @@ public class HeroData : MonoBehaviour
     public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     private string abilityScore;
 
+    private TwoSidesHero twoSidesHero;
+
 
     void Start()
     {
+        twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
         SetStats();
     }
 
@@ -42,7 +45,28 @@ public class HeroData : MonoBehaviour
         if (currentHealth <= 0)
         {
             //die
+            RemoveFromHeroList();
             Destroy(gameObject);
+        }
+    }
+    private void RemoveFromHeroList()
+    {
+        // Determine which side the hero belongs to (assuming red or blue side)
+        if (twoSidesHero != null)
+        {
+            // Check the hero's affiliation, red or blue
+            if (this.CompareTag("RedHero"))
+            {
+                twoSidesHero.GetHerosRed().Remove(gameObject);
+            }
+            else if (this.CompareTag("BlueHero"))
+            {
+                twoSidesHero.GetHerosBlue().Remove(gameObject);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("TwoSidesHero reference not found.");
         }
     }
 

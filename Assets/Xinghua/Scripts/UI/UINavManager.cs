@@ -7,6 +7,8 @@ public class UINavManager : MonoBehaviour
     public Button[] buttons; // Assign buttons in order
     public RectTransform selector; // Assign the selector GameObject
     private int currentIndex = 0; // Tracks the currently selected button
+
+    [SerializeField] private ShopScript shopScript;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -37,7 +39,7 @@ public class UINavManager : MonoBehaviour
     private void Update()
     {
         // HandleNavigation(); // Move selector
-        // HandleSelection(); // Select the current button
+        HandleSelection(); // Select the current button
     }
 
     public void HandleNavigation(Vector2 direction)
@@ -86,10 +88,11 @@ public class UINavManager : MonoBehaviour
 
     private void HandleSelection()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.O))
         {
             Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
-            buttons[currentIndex].onClick.Invoke();
+            shopScript.Spawn(currentIndex);
+            //buttons[currentIndex].onClick.Invoke();
         }
     }
 }

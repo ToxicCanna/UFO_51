@@ -14,10 +14,10 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Attack();
-        }
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    Attack();
+        //}
     }
 
     public void Heal(HeroData target)

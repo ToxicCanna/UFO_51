@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4584135278845021629}
   m_Layer: 8
   m_Name: BlueKnight
-  m_TagString: Untagged
+  m_TagString: BlueHero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
