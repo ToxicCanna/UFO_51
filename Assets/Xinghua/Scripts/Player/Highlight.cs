@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HighLight : MonoBehaviour
@@ -23,7 +20,7 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection += OnMoveFinished;
             gridIndicator.onHeroPositon += ShowHeroPath;//this will show the targt path and ability range both ; in different color
-           // gridIndicator.moveFinish += HideHightlight;
+                                                        // gridIndicator.moveFinish += HideHightlight;
 
         }
         else
@@ -38,7 +35,7 @@ public class HighLight : MonoBehaviour
         {
             gridIndicator.finishSelection -= OnMoveFinished;
             gridIndicator.onHeroPositon -= ShowHeroPath;
-           // gridIndicator.moveFinish -= HideHightlight;
+            // gridIndicator.moveFinish -= HideHightlight;
 
         }
     }
@@ -50,16 +47,16 @@ public class HighLight : MonoBehaviour
         var heros = HeroPocketManager.Instance.GetAllHeroes();
         foreach (var hero in heros)
         {
-             var index = hero.gameObject.GetComponent<HeroPath>().GetHeroMoveIndex();
+            var index = hero.gameObject.GetComponent<HeroPath>().GetHeroMoveIndex();
             if (gridIndicator.transform.position == hero.transform.position)
             {
-                if(index == 0)
+                if (index == 0)
                 {
                     Debug.Log("gridIndicator:" + currentGridPosition);
                     neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
                     DisplayHightlight(neighbors);
                 }
-                else if (index ==3)
+                else if (index == 3)
                 {
                     neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
                     DisplayHightlight(neighbors);
@@ -74,8 +71,8 @@ public class HighLight : MonoBehaviour
     {
         foreach (var highlight in highlights)
         {
-           //highlight.SetActive(false);
-           Destroy(highlight.gameObject);
+            //highlight.SetActive(false);
+            Destroy(highlight.gameObject);
         }
         highlights.Clear();
     }
@@ -84,8 +81,8 @@ public class HighLight : MonoBehaviour
     {
         foreach (var abilityTangeTile in highlightsForAbilityRange)
         {
-           // abilityTangeTile.SetActive(false);
-           Destroy(abilityTangeTile.gameObject);
+            // abilityTangeTile.SetActive(false);
+            Destroy(abilityTangeTile.gameObject);
         }
         highlightsForAbilityRange.Clear();
     }
@@ -130,7 +127,7 @@ public class HighLight : MonoBehaviour
         HideHightlightForAbility();
     }
 
-  
+
 
     private void HideHightlight()
     {
@@ -162,24 +159,21 @@ public class HighLight : MonoBehaviour
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
         int heroIndex = gridIndicator.GetHeroMoveIndex();
+
         if (heroIndex == 0)
         {
-            return new Vector2Int[0]; ;
-        }
-        else if (heroIndex == 0)
-        {
             Vector2Int[] directions = new Vector2Int[]
-         {
+            {
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
-             new Vector2Int(1, 1),
-             new Vector2Int(1, -1),
-             new Vector2Int(-1, 1),
-             new Vector2Int(-1, -1)
-         };
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
+            };
 
             foreach (var direction in directions)
             {
@@ -190,17 +184,17 @@ public class HighLight : MonoBehaviour
         else if (heroIndex == 3)
         {
             Vector2Int[] directions = new Vector2Int[]
-         {
-                new Vector2Int(0, 1),
-                new Vector2Int(0, -1),
-                new Vector2Int(-1, 0),
-                new Vector2Int(1, 0),
+            {
+            new Vector2Int(0, 1),
+            new Vector2Int(0, -1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(1, 0),
 
              //new Vector2Int(1, 1),
              //new Vector2Int(1, -1),
              //new Vector2Int(-1, 1),
              //new Vector2Int(-1, -1)
-         };
+             };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
@@ -316,7 +310,7 @@ public class HighLight : MonoBehaviour
     }
 
 
- 
+
 
 
 
