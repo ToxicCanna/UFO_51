@@ -23,7 +23,7 @@ public class GamePlayState : BaseState
         if (controls != null && gridIndicator != null)
         {
             currentControls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
-            currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
+           // currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
             currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
         }
@@ -37,7 +37,7 @@ public class GamePlayState : BaseState
     {
         Debug.Log("Exited Gameplay State");
         currentControls.GamePlay.Move.performed -= ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
-        currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
+        //currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
         currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
         currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
     }

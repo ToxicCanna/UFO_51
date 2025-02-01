@@ -298,7 +298,7 @@ public class GridIndicator : MonoBehaviour
             GridManager.Instance.AddOccupiedGrid(transform.position);
             UpdatePlayerTurn();
             CheckAttackTargets();
-            CheckAttackTargets();
+
         }
         isHeroSubmited = false;
 
@@ -328,9 +328,9 @@ public class GridIndicator : MonoBehaviour
 
         foreach (var hero in herosOpposite)
         {
-            Debug.Log("hero oppo" + hero.name);
+         /*   Debug.Log("hero oppo" + hero.name);
             Debug.Log("tranform positon:" + transform.position);
-            Debug.Log("hero.transform.position" + hero.transform.position);
+            Debug.Log("hero.transform.position" + hero.transform.position);*/
 
 
             //if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
@@ -345,10 +345,11 @@ public class GridIndicator : MonoBehaviour
                     //set target hero
                     battleManager.targetHero = hero.GetComponent<HeroData>();
                     //call attack after setting values
-                    battleManager.Attack();
+                    battleManager.Attack();//for killian if when you attack destroy hero , you need remove the hero list . call the function of remove
 
+                    
 
-                    AttackHappenOneSpot?.Invoke();
+                   // AttackHappenOneSpot?.Invoke();
                 }
                 //else
                 //{
@@ -485,7 +486,7 @@ public class GridIndicator : MonoBehaviour
         var position = GetSubmitHeroPositon();
 
         GetSubmitHero(position);
-        Debug.Log("submitHeroData" + submitHeroData.gameObject.name);
+        Debug.Log("submitHeroData" + GetSubmitHeroPathIndex(position));
 
     }
     public Vector2 GetSubmitHeroPositon()
@@ -529,6 +530,7 @@ public class GridIndicator : MonoBehaviour
             }
 
         }
+       
         return 0;
     }
     public List<GameObject> GetOppositHerosInTheScene()
@@ -570,6 +572,6 @@ public class GridIndicator : MonoBehaviour
                 //end of Killians code
             }
         }
-        Debug.Log("kill him!!!!!!!" + submitedTargetHero.name);
+        Debug.Log("kill him!!!!!!!" );
     }
 }

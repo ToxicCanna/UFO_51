@@ -50,7 +50,7 @@ public class HighLight : MonoBehaviour
         var heros = HeroPocketManager.Instance.GetAllHeroes();
         foreach (var hero in heros)
         {
-             var index = hero.gameObject.GetComponent<HeroPath>().heroPathID;
+             var index = hero.gameObject.GetComponent<HeroPath>().GetHeroMoveIndex();
             if (gridIndicator.transform.position == hero.transform.position)
             {
                 if(index == 0)
