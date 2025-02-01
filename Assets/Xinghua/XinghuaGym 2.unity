@@ -1365,11 +1365,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4e31d3aade02d144a079e179088368e, type: 3}
---- !u!1 &348752649 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
-  m_PrefabInstance: {fileID: 314606904}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &402175855 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
@@ -3932,7 +3927,7 @@ MonoBehaviour:
   - {fileID: 2084673628}
   blueSideheros:
   - {fileID: 585028599}
-  - {fileID: 348752649}
+  - {fileID: 2084673628}
 --- !u!1 &1157735327
 GameObject:
   m_ObjectHideFlags: 0

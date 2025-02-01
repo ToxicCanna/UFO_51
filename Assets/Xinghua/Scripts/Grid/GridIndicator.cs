@@ -65,7 +65,10 @@ public class GridIndicator : MonoBehaviour
         minJ = 0; maxJ = 7;
 
         Debug.Log("Start current turn :" + currentTurn);
-       
+
+
+        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
+        herosInRedSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
     }
 
     private void Update()
@@ -354,12 +357,10 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("current turn:" + currentTurn);
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            //transform.position = herosInRedSide[0].transform.position;
             transform.position = playerRedHero.transform.position;
         }
         else
         {
-            //transform.position = herosInBlueSide[0].transform.position;
             transform.position = playerBlueHero.transform.position;
         }
     }
