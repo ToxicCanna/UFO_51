@@ -3925,8 +3925,14 @@ MonoBehaviour:
   redSideheros:
   - {fileID: 250542783}
   - {fileID: 2084673628}
+  - {fileID: 2084673628}
+  - {fileID: 2084673628}
+  - {fileID: 2084673628}
   blueSideheros:
   - {fileID: 585028599}
+  - {fileID: 2084673628}
+  - {fileID: 2084673628}
+  - {fileID: 2084673628}
   - {fileID: 2084673628}
 --- !u!1 &1157735327
 GameObject:

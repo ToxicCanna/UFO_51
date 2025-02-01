@@ -68,7 +68,8 @@ public class GridIndicator : MonoBehaviour
 
 
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
-        herosInRedSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+    
     }
 
     private void Update()
@@ -276,23 +277,30 @@ public class GridIndicator : MonoBehaviour
     
     public void MoveToTargetIndicator()
     {
-        moveFinish?.Invoke();
-        GetCurrentPlayerTurn();
-        currentGridPosition = WorldToGridPosition(transform.position);
-        Debug.Log("MoveToTargetIndicator");
-        if (!isOnHeroPosition && !isHeroSubmited) return;
+        if (isHeroSubmited)
+        {
+            moveFinish?.Invoke();
+            GetCurrentPlayerTurn();
+            currentGridPosition = WorldToGridPosition(transform.position);
+            Debug.Log("MoveToTargetIndicator");
+            if (!isOnHeroPosition && !isHeroSubmited) return;
 
-        finishSelection?.Invoke();
-        //store the location that was occupied
+            finishSelection?.Invoke();
+            //store the location that was occupied
 
-        oldIndicatorLocation = submitHeroData.gameObject.transform.position;
-        GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
 
-        submitHeroData.gameObject.transform.position = transform.position;
-        GridManager.Instance.AddOccupiedGrid(transform.position);
-        UpdatePlayerTurn();
-        CheckAttackTargets();
-        CheckAttackTargets();
+
+
+            oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+
+            submitHeroData.gameObject.transform.position = transform.position;
+            GridManager.Instance.AddOccupiedGrid(transform.position);
+            UpdatePlayerTurn();
+            CheckAttackTargets();
+            CheckAttackTargets();
+        }
+        isHeroSubmited = false;
 
     }
     private void CheckAttackTargets()
