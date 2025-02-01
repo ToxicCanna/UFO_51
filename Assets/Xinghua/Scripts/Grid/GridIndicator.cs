@@ -19,6 +19,7 @@ public class GridIndicator : MonoBehaviour
     // private Vector2 currentGridPosition;
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     [SerializeField] GameStateMachine gameStateMachine;
+    private HighLight highLight;
 
     private HeroSelect heroSelect;
     public event Action finishSelection;
@@ -48,6 +49,7 @@ public class GridIndicator : MonoBehaviour
     private bool isHaveTargets = false;
     private bool isCanChooseTarget = false;
     public HeroData submitedTargetHero;
+    public Vector2Int selectedHeroPosition;
 
     [SerializeField] private TMP_Text playerText;
 
@@ -69,7 +71,8 @@ public class GridIndicator : MonoBehaviour
 
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-    
+        highLight = FindAnyObjectByType<HighLight>();
+
     }
 
     private void Update()
@@ -84,6 +87,25 @@ public class GridIndicator : MonoBehaviour
                position.y >= minJ && position.y <= maxJ;
     }
 
+
+    public bool IsWithinMoveDirectionNew(Vector2Int centerPosition, Vector2Int newPosition)
+    {
+        //old 
+        var oldX = centerPosition.x;
+        var oldY = centerPosition.y;
+
+        var newX = newPosition.x;
+        var newY = newPosition.y;
+        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
     public bool IsWithinMoveDirection(Vector2Int centerPosition, Vector2Int newPosition)
     {
         //old 
@@ -110,30 +132,34 @@ public class GridIndicator : MonoBehaviour
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         HandleIndicatorMove(intDirection);
 
-        /*    if (isHeroSubmited && isOnHeroPosition)
+        if (isHeroSubmited)
+        {
+            Debug.Log("move with range");
+            //move the indicator with limit
+            //MoveIndicatorWithRange(intDirection);
+            MoveTargetPos(intDirection);
+        }
+        /* 
+         *//*   else if (isCanChooseTarget)
             {
-                Debug.Log("move with range");
-                //move the indicator with limit
-                MoveIndicatorWithRange(intDirection);
-            }
-            *//*   else if (isCanChooseTarget)
-               {
-                   //switch to attack state
-               }*//*
-            else
-            {
+                //switch to attack state
+            }*//*
+         else
+         {
 
-                Debug.Log("move without range");
-                // only move indicator 
-                HandleIndicatorMove(intDirection);
-            }*/
+             Debug.Log("move without range");
+             // only move indicator 
+             HandleIndicatorMove(intDirection);
+         }*/
     }
     private int currentIndex = 0;
+    private Vector3 submitHeroPosition;
+
     public void ChooseTargets(Vector2 direction)
     {
         Debug.Log("move in opponent side hero list");
         var oppositHeros = GetOppositeHeroAsTarget();
-        
+
         Debug.Log("opposite heros count:" + GetOppositeHeroAsTarget().Count);
 
         var oppositeHeroCount = GetOppositeHeroAsTarget().Count;
@@ -210,36 +236,58 @@ public class GridIndicator : MonoBehaviour
 
 
 
-          /*  var heros = HeroPocketManager.Instance.GetAllHeroes();
-            var isHeroOccupied = false;
+            /*  var heros = HeroPocketManager.Instance.GetAllHeroes();
+              var isHeroOccupied = false;
 
-            foreach (var hero in heros)
-            {
-                //Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
-                if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
-                {
-                    isHeroOccupied = true;
-                    Debug.Log("current position have hero");
-                    selectedHero = hero;
-                }
-            }
-            if (isHeroOccupied)
-            {
-                var heroPath = selectedHero.GetComponent<HeroPath>();
-                Debug.Log("heroData:" + heroPath);
-                heroPathID = heroPath.GetHeroMoveIndex();
-                Debug.Log("heroMoveIndex:" + heroPathID);
-                Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
-                // activeShop?.Invoke();
-            }
-            else
-            {
-                heroUnselected?.Invoke();
-            }
-            newIndicatorLocation = transform.position;*/
+              foreach (var hero in heros)
+              {
+                  //Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
+                  if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
+                  {
+                      isHeroOccupied = true;
+                      Debug.Log("current position have hero");
+                      selectedHero = hero;
+                  }
+              }
+              if (isHeroOccupied)
+              {
+                  var heroPath = selectedHero.GetComponent<HeroPath>();
+                  Debug.Log("heroData:" + heroPath);
+                  heroPathID = heroPath.GetHeroMoveIndex();
+                  Debug.Log("heroMoveIndex:" + heroPathID);
+                  Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
+                  // activeShop?.Invoke();
+              }
+              else
+              {
+                  heroUnselected?.Invoke();
+              }
+              newIndicatorLocation = transform.position;*/
         }
     }
 
+
+    public void MoveTargetPos(Vector2 direction)
+    {
+        Debug.Log("direction" + direction);
+        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
+
+       // var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        var ID = GetSubmitHeroPathIndex(selectedHeroPosition);
+        var validPos = highLight.GetNeighbors(GetSubmitHeroPositon(), ID);
+
+        Debug.Log("pos !!!! " + string.Join(",", validPos));
+        Debug.Log("ID!! " + ID);
+     
+        if (IsWithinBounds(targetPosition) && IsWithinMoveDirectionNew(currentGridPosition, targetPosition))
+        {
+
+            Debug.Log("move indicator!!!!!!!!");
+            transform.position = new Vector3(targetPosition.x, targetPosition.y);
+        }
+
+    }
     public void MoveIndicatorWithRange(Vector2 direction)
     {
 
@@ -274,7 +322,7 @@ public class GridIndicator : MonoBehaviour
         return heroPathID;
     }
 
-    
+
     public void MoveToTargetIndicator()
     {
         if (isHeroSubmited)
@@ -322,15 +370,15 @@ public class GridIndicator : MonoBehaviour
         {
             herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
             Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
-        
+
         }
-        
+
 
         foreach (var hero in herosOpposite)
         {
-         /*   Debug.Log("hero oppo" + hero.name);
-            Debug.Log("tranform positon:" + transform.position);
-            Debug.Log("hero.transform.position" + hero.transform.position);*/
+            /*   Debug.Log("hero oppo" + hero.name);
+               Debug.Log("tranform positon:" + transform.position);
+               Debug.Log("hero.transform.position" + hero.transform.position);*/
 
 
             //if (transform.position.x == hero.transform.position.x && transform.position.y == hero.transform.position.y)
@@ -347,9 +395,9 @@ public class GridIndicator : MonoBehaviour
                     //call attack after setting values
                     battleManager.Attack();//for killian if when you attack destroy hero , you need remove the hero list . call the function of remove
 
-                    
 
-                   // AttackHappenOneSpot?.Invoke();
+
+                    // AttackHappenOneSpot?.Invoke();
                 }
                 //else
                 //{
@@ -375,7 +423,7 @@ public class GridIndicator : MonoBehaviour
     }
     private PlayerTurn GetCurrentPlayerTurn()
     {
-       
+
         return currentTurn;
     }
 
@@ -419,7 +467,7 @@ public class GridIndicator : MonoBehaviour
     }
     public void HandleSelectHero()
     {
-       
+
         // onHeroPositon?.Invoke();//this if for path highlight to listen
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         Debug.Log("start hero in red side :" + herosInRedSide.Count);
@@ -484,16 +532,16 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("current hero submit");
         isOnHeroPosition = true;
         var position = GetSubmitHeroPositon();
-
+        selectedHeroPosition =new Vector2Int((int)transform.position.x,(int)transform.position.y);
         GetSubmitHero(position);
         Debug.Log("submitHeroData" + GetSubmitHeroPathIndex(position));
 
     }
-    public Vector2 GetSubmitHeroPositon()
+    public Vector2Int GetSubmitHeroPositon()
     {
         Debug.Log("hero submit position:" + transform.position);
         //if is occupied
-        var position = new Vector2(transform.position.x, transform.position.y);
+        var position = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         currentGridPosition = new Vector2Int((int)position.x, (int)position.y);
         return position;
 
@@ -530,7 +578,7 @@ public class GridIndicator : MonoBehaviour
             }
 
         }
-       
+
         return 0;
     }
     public List<GameObject> GetOppositHerosInTheScene()
@@ -572,6 +620,6 @@ public class GridIndicator : MonoBehaviour
                 //end of Killians code
             }
         }
-        Debug.Log("kill him!!!!!!!" );
+        Debug.Log("kill him!!!!!!!");
     }
 }
