@@ -21,9 +21,9 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection += OnHeroSelectionFinished;
+            gridIndicator.finishSelection += OnMoveFinished;
             gridIndicator.onHeroPositon += ShowHeroPath;//this will show the targt path and ability range both ; in different color
-            gridIndicator.moveFinish += HideHightlight;
+           // gridIndicator.moveFinish += HideHightlight;
 
         }
         else
@@ -36,26 +36,36 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection -= OnHeroSelectionFinished;
+            gridIndicator.finishSelection -= OnMoveFinished;
             gridIndicator.onHeroPositon -= ShowHeroPath;
-            gridIndicator.moveFinish -= HideHightlight;
+           // gridIndicator.moveFinish -= HideHightlight;
 
         }
     }
 
+
     public void ShowHeroPath()
     {
+        Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
         var heros = HeroPocketManager.Instance.GetAllHeroes();
         foreach (var hero in heros)
         {
+             var index = hero.gameObject.GetComponent<HeroPath>().heroPathID;
             if (gridIndicator.transform.position == hero.transform.position)
             {
-                Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
-                Debug.Log("gridIndicator:" + currentGridPosition);
-                neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
-                DisplayHightlight(neighbors);
-                neighborsForAbilityRange = GetNeighborsForAbilityRange(currentGridPosition, gridIndicator.GetHeroMoveIndex());
-                DisplayRangedAbility(neighborsForAbilityRange);
+                if(index == 0)
+                {
+                    Debug.Log("gridIndicator:" + currentGridPosition);
+                    neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+                    DisplayHightlight(neighbors);
+                }
+                else if (index ==3)
+                {
+                    neighbors = GetNeighbors(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+                    DisplayHightlight(neighbors);
+                    neighborsForAbilityRange = GetNeighborsForAbilityRange(currentGridPosition, gridIndicator.GetHeroMoveIndex());
+                    DisplayRangedAbility(neighborsForAbilityRange);
+                }
             }
         }
     }
@@ -64,7 +74,8 @@ public class HighLight : MonoBehaviour
     {
         foreach (var highlight in highlights)
         {
-            Destroy(highlight);
+           //highlight.SetActive(false);
+           Destroy(highlight.gameObject);
         }
         highlights.Clear();
     }
@@ -73,9 +84,10 @@ public class HighLight : MonoBehaviour
     {
         foreach (var abilityTangeTile in highlightsForAbilityRange)
         {
-            Destroy(abilityTangeTile);
+           // abilityTangeTile.SetActive(false);
+           Destroy(abilityTangeTile.gameObject);
         }
-        highlights.Clear();
+        highlightsForAbilityRange.Clear();
     }
 
     private void DisplayHightlight(Vector2Int[] neighbors)
@@ -111,32 +123,33 @@ public class HighLight : MonoBehaviour
         }
     }
 
-    private void OnHeroSelectionFinished()
+    private void OnMoveFinished()
     {
-        Debug.Log("show highlight path");
-
+        Debug.Log("hide highlight path");
         HideHightlight();//target
-       // HideHightlightForAbility();
-
+        HideHightlightForAbility();
     }
 
-    private void HideHightlightForAbility()
-    {
-        foreach (var hightlight in highlightsForAbilityRange)
-        {
-            hightlight.gameObject.SetActive(false);
-
-        }
-    }
+  
 
     private void HideHightlight()
     {
+        ClearHighlights();
         foreach (var hightlight in highlights)
         {
             hightlight.gameObject.SetActive(false);
 
         }
+    }
 
+    private void HideHightlightForAbility()
+    {
+        ClearAbilityRangeDisplay();
+        foreach (var hightlight in highlightsForAbilityRange)
+        {
+            hightlight.gameObject.SetActive(false);
+
+        }
     }
     private Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -213,10 +226,10 @@ public class HighLight : MonoBehaviour
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
-             new Vector2Int(1, 1),
-             new Vector2Int(1, -1),
-             new Vector2Int(-1, 1),
-             new Vector2Int(-1, -1)
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
          };
 
             foreach (var direction in directions)

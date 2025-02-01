@@ -266,6 +266,7 @@ public class GridIndicator : MonoBehaviour
 
     public int GetHeroMoveIndex()
     {
+        heroPathID = GetSubmitHeroPathIndex(transform.position);
         return heroPathID;
     }
 
@@ -504,6 +505,23 @@ public class GridIndicator : MonoBehaviour
         return submitHeroData;
     }
 
+    public int GetSubmitHeroPathIndex(Vector2 position)
+    {
+        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+
+        foreach (var hero in allHerosInScene)
+        {
+            if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
+            {
+                isHeroSubmited = true;
+                var heroPath = hero.GetComponent<HeroPath>();
+                var submitHeroPathIndex = heroPath.heroPathID;
+                return submitHeroPathIndex;
+            }
+
+        }
+        return 0;
+    }
     public List<GameObject> GetOppositHerosInTheScene()
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
