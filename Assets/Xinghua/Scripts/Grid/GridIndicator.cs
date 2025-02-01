@@ -195,7 +195,7 @@ public class GridIndicator : MonoBehaviour
         //Debug.Log("currentPosition x:" + currentGridPosition.x + ",y:" + currentGridPosition.y);
         //Debug.Log("direction.x:" + direction.x+ ",direction.y:"+ direction.y);
 
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt((int)direction.x), Mathf.RoundToInt((int)direction.y));
         Vector2Int targetPosition = currentGridPosition + intDirection;
         if (IsWithinBounds(targetPosition))
         {
