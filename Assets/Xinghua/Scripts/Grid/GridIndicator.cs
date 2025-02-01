@@ -210,7 +210,7 @@ public class GridIndicator : MonoBehaviour
 
 
 
-            var heros = HeroPocketManager.Instance.GetAllHeroes();
+          /*  var heros = HeroPocketManager.Instance.GetAllHeroes();
             var isHeroOccupied = false;
 
             foreach (var hero in heros)
@@ -236,7 +236,7 @@ public class GridIndicator : MonoBehaviour
             {
                 heroUnselected?.Invoke();
             }
-            newIndicatorLocation = transform.position;
+            newIndicatorLocation = transform.position;*/
         }
     }
 
