@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -114,9 +115,20 @@ public class HighLight : MonoBehaviour
     {
         Debug.Log("show highlight path");
 
-        HideHightlight();
+        HideHightlight();//target
+       // HideHightlightForAbility();
 
     }
+
+    private void HideHightlightForAbility()
+    {
+        foreach (var hightlight in highlightsForAbilityRange)
+        {
+            hightlight.gameObject.SetActive(false);
+
+        }
+    }
+
     private void HideHightlight()
     {
         foreach (var hightlight in highlights)
@@ -124,10 +136,7 @@ public class HighLight : MonoBehaviour
             hightlight.gameObject.SetActive(false);
 
         }
-        foreach (var highlightAbility in highlightsForAbilityRange)
-        {
-            highlightAbility.gameObject.SetActive(false);
-        }
+
     }
     private Vector2Int GetGridPosition(Vector3 worldPosition)
     {
@@ -292,6 +301,9 @@ public class HighLight : MonoBehaviour
             highlights.Add(highlight);
         }
     }
+
+
+ 
 
 
 
