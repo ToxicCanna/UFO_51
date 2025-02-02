@@ -298,11 +298,11 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    public int GetHeroMoveIndex()
-    {
-        heroPathID = GetSubmitHeroPathIndex(transform.position);
-        return heroPathID;
-    }
+    //public int GetHeroMoveIndex()
+    //{
+    //    heroPathID = GetSubmitHeroPathIndex(transform.position);
+    //    return heroPathID;
+    //}
 
     /*   public void MoveTargetPos(Vector2 direction)
        {
@@ -337,28 +337,47 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("currentGridPosition:" + currentGridPosition);
         //check the target is valid or not ,if valid move the hero to indicator current position
 
+        Debug.Log("submit heroposition " + GetSubmitHeroPositon());
+        Debug.Log("currentSelectedHeroId " + currentSelectedHeroId);
         var validPos = highLight.GetNeighbors(GetSubmitHeroPositon(), currentSelectedHeroId);
+
+
+
         Debug.Log("pos !!!! " + string.Join(",", validPos));
         Debug.Log("tiles count!! " + validPos.Length);
         Debug.Log("ID!! " + currentSelectedHeroId);
+        var canMove = false;
+        foreach (var pos in validPos)
+        {
+            if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
+            {
+                canMove = true;
 
+            }
+        }
+        if (!canMove)
+        {
+            Debug.Log("target is invalid");
+        }
+        else
+        {
 
+            //update the gride status ;if not occupied emputy it
+            oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
 
-        //update the gride status ;if not occupied emputy it
-        oldIndicatorLocation = submitHeroData.gameObject.transform.position;
-        GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+            submitHeroData.gameObject.transform.position = transform.position;//move the hero
+            GridManager.Instance.AddOccupiedGrid(transform.position);
 
-        submitHeroData.gameObject.transform.position = transform.position;//move the hero
-        GridManager.Instance.AddOccupiedGrid(transform.position);
+            UpdatePlayerTurn();
+            currentTurn = GetCurrentPlayerTurn();
+            Debug.Log("current Turn after move hero :" + currentTurn);
 
-        UpdatePlayerTurn();
-        currentTurn = GetCurrentPlayerTurn();
-        Debug.Log("current Turn after move hero :" + currentTurn);
+            CheckAttackTargets();
 
-        CheckAttackTargets();
-
-        finishSelection?.Invoke();//if finish move hide the highlight
-        isHeroSubmited = false;
+            finishSelection?.Invoke();//if finish move hide the highlight
+            isHeroSubmited = false;
+        }
 
     }
 
@@ -545,7 +564,7 @@ public class GridIndicator : MonoBehaviour
         //Debug.Log("current hero submit");
         isOnHeroPosition = true;
         isHeroSubmited = true;
-        var position = GetSubmitHeroPositon();
+        var position = GetIndicatorPositon();
         Debug.Log("hero submit position:" + position);
         //selectedHeroPosition =new Vector2Int((int)transform.position.x,(int)transform.position.y);
         SetSubmitHero(position);
@@ -554,12 +573,17 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("submitHeroID" + GetSubmitHeroPathIndex(position));
 
     }
+
+
     public Vector2Int GetSubmitHeroPositon()
+    {
+        return new Vector2Int((int)submitHeroData.transform.position.x, (int)submitHeroData.transform.position.y);
+    }
+    public Vector2Int GetIndicatorPositon()
     {
         //Debug.Log("hero submit position:" + transform.position);
         //if is occupied
         return new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        // currentGridPosition = new Vector2Int((int)position.x, (int)position.y);
     }
 
     public void SetSubmitHero(Vector2 position)
