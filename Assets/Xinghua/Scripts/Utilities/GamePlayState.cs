@@ -26,7 +26,7 @@ public class GamePlayState : BaseState
            // currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
 
-            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.ChooseHeroAction();
+            currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
             currentControls.GamePlay.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
             //currentControls.GamePlay.Cancle.performed += ctx => gridIndicator?.CancleSelected();
         }
@@ -43,8 +43,9 @@ public class GamePlayState : BaseState
         //currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
         currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
 
-        currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.ChooseHeroAction();
+        //currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.ChooseHeroAction();
         currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
+        currentControls.GamePlay.Shop.performed -= ctx => gridIndicator?.ActiveShopMenu();
     }
 
     public override void UpdateState()
