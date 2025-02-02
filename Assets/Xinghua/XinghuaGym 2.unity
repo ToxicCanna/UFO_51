@@ -215,6 +215,7 @@ MonoBehaviour:
   - {fileID: 733353985}
   selector: {fileID: 260385017}
   shopScript: {fileID: 604115212}
+  gameStateMachine: {fileID: 1978772880}
 --- !u!1 &122079037
 GameObject:
   m_ObjectHideFlags: 0

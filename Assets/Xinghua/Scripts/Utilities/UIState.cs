@@ -15,9 +15,8 @@ public class UIState : BaseState
         Debug.Log("Handle UI State");
         var controls = InputManager.Instance.GetControls();
 
-        // band UI action
         controls.UI.Navigate.performed += ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
-       // controls.UI.Navigate.performed += OnNavigate;
+        controls.UI.Cancel.performed += ctx => UINavManager.Instance.SwithToGamePlayState();
 
     }
 
@@ -26,11 +25,8 @@ public class UIState : BaseState
         var controls = InputManager.Instance.GetControls();
         Debug.Log("Exited UI State");
         controls.UI.Navigate.performed -= ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
+        controls.UI.Cancel.performed -= ctx => UINavManager.Instance.SwithToGamePlayState();
     }
-    //private void OnNavigate(InputAction.CallbackContext context)
-    //{
-    //    Debug.Log("UI Navigation");
-    //}
 
 
     public override void UpdateState()

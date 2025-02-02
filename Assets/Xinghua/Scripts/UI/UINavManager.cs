@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,10 @@ public class UINavManager : MonoBehaviour
     private int currentIndex = 0; // Tracks the currently selected button
 
     [SerializeField] private ShopScript shopScript;
+
+    //xinghua code
+    [SerializeField] GameStateMachine gameStateMachine;
+    //end
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -95,4 +100,14 @@ public class UINavManager : MonoBehaviour
             //buttons[currentIndex].onClick.Invoke();
         }
     }
+
+    //xinghua code for exit UI Input
+    internal void SwithToGamePlayState()
+    {
+        if(gameStateMachine !=null)
+        {
+            gameStateMachine.SwitchToGameplayState();
+        }
+    }
+    //xinghua code end
 }
