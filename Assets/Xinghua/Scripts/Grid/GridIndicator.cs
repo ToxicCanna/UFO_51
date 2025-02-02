@@ -560,7 +560,6 @@ public class GridIndicator : MonoBehaviour
     //Submit current selected hero
     public void HandleSubmitHeroSelected()
     {
-        onHeroPositon?.Invoke();//show the path
         //Debug.Log("current hero submit");
         isOnHeroPosition = true;
         isHeroSubmited = true;
@@ -571,6 +570,7 @@ public class GridIndicator : MonoBehaviour
 
         currentSelectedHeroId = GetSubmitHeroPathIndex(position);
         Debug.Log("submitHeroID" + GetSubmitHeroPathIndex(position));
+        onHeroPositon?.Invoke();//show the path
 
     }
 

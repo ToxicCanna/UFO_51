@@ -50,19 +50,25 @@ public class HighLight : MonoBehaviour
             var index = hero.gameObject.GetComponent<HeroPath>().GetHeroMoveIndex();
             if (gridIndicator.transform.position == hero.transform.position)
             {
-                if (index == 0)
+                neighbors = GetNeighbors(currentGridPosition, index);
+                DisplayHightlight(neighbors);
+
+                /*    if (index == 0 ||index ==1||index ==2)
+                    {
+                        Debug.Log("gridIndicator:" + currentGridPosition);
+                      *//*  neighbors = GetNeighbors(currentGridPosition, index);
+                        DisplayHightlight(neighbors);*//*
+                    }
+               */
+                if (index == 3 || index == 4)
                 {
-                    Debug.Log("gridIndicator:" + currentGridPosition);
-                    neighbors = GetNeighbors(currentGridPosition, index);
-                    DisplayHightlight(neighbors);
-                }
-                else if (index == 3)
-                {
-                    neighbors = GetNeighbors(currentGridPosition, index);
-                    DisplayHightlight(neighbors);
+                    /*neighbors = GetNeighbors(currentGridPosition, index);
+                    DisplayHightlight(neighbors);*/
                     neighborsForAbilityRange = GetNeighborsForAbilityRange(currentGridPosition, index);
                     DisplayRangedAbility(neighborsForAbilityRange);
                 }
+
+
             }
         }
     }
@@ -160,7 +166,7 @@ public class HighLight : MonoBehaviour
         List<Vector2Int> neighbors = new List<Vector2Int>();
         //int heroIndex = gridIndicator.GetHeroMoveIndex();
 
-        if (ID == 0)
+        if (ID == 4)
         {
             Vector2Int[] directions = new Vector2Int[]
             {
@@ -178,7 +184,15 @@ public class HighLight : MonoBehaviour
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
+                neighbors.Add(currentPosition + direction * 2);
 
+            }
+            for (int x = -2; x <= 2; x++)
+            {
+                for (int y = -2; y <= 2; y++)
+                {
+                    neighbors.Add(new Vector2Int(currentPosition.x + x, currentPosition.y + y));
+                }
             }
         }
         else if (ID == 3)
@@ -211,7 +225,7 @@ public class HighLight : MonoBehaviour
         List<Vector2Int> neighbors = new List<Vector2Int>();
 
 
-        if (ID== 0)
+        if (ID == 0 || ID ==4)
         {
             Vector2Int[] directions = new Vector2Int[]
          {
@@ -230,6 +244,44 @@ public class HighLight : MonoBehaviour
             {
                 neighbors.Add(currentPosition + direction);
 
+            }
+        }
+        if (ID == 1)
+        {
+            Vector2Int[] directions = new Vector2Int[]
+         {
+               // new Vector2Int(0, 1),
+               // new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
+
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
+         };
+
+            foreach (var direction in directions)
+            {
+                neighbors.Add(currentPosition + direction);
+
+            }
+        }
+        else if (ID == 2)
+        {
+            Vector2Int[] directions = new Vector2Int[]
+         {
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
+
+            
+         };
+            foreach (var direction in directions)
+            {
+                neighbors.Add(currentPosition + direction);
+                neighbors.Add(currentPosition + direction * 2);
             }
         }
         else if (ID == 3)
