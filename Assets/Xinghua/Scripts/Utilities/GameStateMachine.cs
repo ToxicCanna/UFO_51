@@ -39,23 +39,6 @@ public class GameStateMachine : BaseStateMachine
             Debug.LogError("GameplayState is null! Ensure it is initialized.");
         }
     }
-    private void OnEnable()
-    {
-        if (_gridIndicator != null)
-        {
-            _gridIndicator.activeShop += SwitchToUIState;
-
-        }
-    }
-    private void OnDisable()
-    {
-        if (_gridIndicator != null)
-        {
-            _gridIndicator.activeShop -= SwitchToUIState;
-
-        }
-    }
-
 
     public void SwitchToUIState()
     {

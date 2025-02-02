@@ -318,6 +318,8 @@ public class GridIndicator : MonoBehaviour
 
             finishSelection?.Invoke();//if finish move hide the highlight
             isHeroSubmited = false;
+            GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+
         }
 
     }
@@ -478,10 +480,10 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
-    /*public void ChooseHeroAction()
+    public void ChooseHeroAction()
     {
         gameStateMachine.SwitchToUIState();
-    }*/
+    }
     //Submit current selected hero
     public void HandleSubmitHeroSelected()
     {
@@ -498,6 +500,8 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("submitHeroID" + GetSubmitHeroPathIndex(position));
         onHeroPositon?.Invoke();//show the path
 
+        GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+        ChooseHeroAction();
     }
 
 

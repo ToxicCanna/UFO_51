@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,11 @@ public class UINavManager : MonoBehaviour
         Instance = this;
     }
 
+    private IEnumerator FixSelectorPosition()
+    {
+        yield return new WaitForEndOfFrame(); // Ensures UI layout is finalized
+        UpdateSelectorPosition();
+    }
     private void Start()
     {
         if (buttons.Length == 0)
@@ -39,25 +45,44 @@ public class UINavManager : MonoBehaviour
             return;
         }
 
-        UpdateSelectorPosition(); // Position the selector on the first button
-       
+        //UpdateSelectorPosition(); // Position the selector on the first button
+        StartCoroutine(FixSelectorPosition());
     }
 
   
 
     public void HandleNavigation(Vector2 direction)
     {
-        UpdateSelectorPositionInHeroActionsZone();
-        if (direction.x > 0)
+        Debug.Log("IsHeroSubmitted"+ GameManager.Instance.IsHeroSubmitted);
+        if (GameManager.Instance.IsHeroSubmitted)
         {
-            //MoveSelector(1); // Move to the next button
-            MoveSelectorWithHeroActions(1);
+            UpdateSelectorPositionInHeroActionsZone();
+            if (direction.x > 0)
+            {
+                //MoveSelector(1); // Move to the next button
+                MoveSelectorWithHeroActions(1);
+            }
+            else if (direction.x < 0)
+            {
+                MoveSelectorWithHeroActions(-1);
+                // MoveSelector(-1); // Move to the previous button
+            }
         }
-        else if (direction.x < 0)
+        else
         {
-            MoveSelectorWithHeroActions(-1);
-            // MoveSelector(-1); // Move to the previous button
+            if (direction.x > 0)
+            {
+                MoveSelector(1); // Move to the next button
+
+            }
+            else if (direction.x < 0)
+            {
+
+                MoveSelector(-1); // Move to the previous button
+            }
         }
+       
+     
     
     }
 
@@ -112,7 +137,7 @@ public class UINavManager : MonoBehaviour
     {
 
         Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
-        //buttons[currentIndex].onClick.Invoke();
+        buttons[currentIndex].onClick.Invoke();
 
     }
     public void HandleActionsSelection()
@@ -120,6 +145,7 @@ public class UINavManager : MonoBehaviour
 
         Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
         buttonsHeroActions[currentIndex].onClick.Invoke();
+        SwithToGamePlayState();
     }
 
     //xinghua code for exit UI Input
