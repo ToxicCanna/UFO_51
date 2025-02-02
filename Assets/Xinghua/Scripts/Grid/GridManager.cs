@@ -12,6 +12,7 @@ public class GridManager : MonoBehaviour
 
     //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
     //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
+    private Vector2 indicatorPos;
     private void Start()
     {
         foreach (var hero in heros)
@@ -34,15 +35,28 @@ public class GridManager : MonoBehaviour
 
     public void AddOccupiedGrid(Vector2 gridPosition)
     {
-       // Debug.Log("add :"+gridPosition);
+        // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
     }
     public void RemoveOccupiedGrid(Vector2 gridPosition)
     {
         occupiedGrids.Remove(gridPosition);
-       // Debug.Log("remove :" + gridPosition);
+        // Debug.Log("remove :" + gridPosition);
     }
 
+    public void CheckOccupiedHero(Vector2 position)
+    {
+
+        indicatorPos = position;
+        foreach (var indicatorPos in occupiedGrids)
+        {
+            if (!indicatorPos.Equals(position))
+            {
+                Debug.Log("hero here");
+            }
+        }
+
+    }
 
     public void AddHero(GameObject hero)
     {
@@ -67,7 +81,7 @@ public class GridManager : MonoBehaviour
           return occupiedGrids;
       }*/
 
- 
+
     public bool IsGridOccupied(Vector2 gridPosition)
     {
         return occupiedGrids.Contains(gridPosition);
