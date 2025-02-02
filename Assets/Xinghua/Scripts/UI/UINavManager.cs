@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +5,7 @@ public class UINavManager : MonoBehaviour
 {
     public static UINavManager Instance;
     public Button[] buttons; // Assign buttons in order
+    public Button[] buttonsHeroActions; // Assign buttons in order
     public RectTransform selector; // Assign the selector GameObject
     private int currentIndex = 0; // Tracks the currently selected button
 
@@ -24,6 +24,7 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
+
     private void Start()
     {
         if (buttons.Length == 0)
@@ -37,34 +38,27 @@ public class UINavManager : MonoBehaviour
             Debug.LogWarning("[UISelector] Selector GameObject is not assigned!");
             return;
         }
-        // Debug.Log("[UISelector] Script initialized. Starting at button index: " + currentIndex);
+
         UpdateSelectorPosition(); // Position the selector on the first button
+       
     }
 
-    private void Update()
-    {
-        // HandleNavigation(); // Move selector
-        HandleSelection(); // Select the current button
-    }
+  
 
     public void HandleNavigation(Vector2 direction)
     {
+        UpdateSelectorPositionInHeroActionsZone();
         if (direction.x > 0)
         {
-            MoveSelector(1); // Move to the next button
+            //MoveSelector(1); // Move to the next button
+            MoveSelectorWithHeroActions(1);
         }
         else if (direction.x < 0)
         {
-            MoveSelector(-1); // Move to the previous button
+            MoveSelectorWithHeroActions(-1);
+            // MoveSelector(-1); // Move to the previous button
         }
-        /* if (Input.GetKeyDown(KeyCode.RightArrow))
-         {
-             MoveSelector(1); // Move right
-         }
-         else if (Input.GetKeyDown(KeyCode.LeftArrow))
-         {
-             MoveSelector(-1); // Move left
-         }*/
+    
     }
 
     public void MoveSelector(int direction)
@@ -74,6 +68,29 @@ public class UINavManager : MonoBehaviour
         currentIndex = (currentIndex + direction + buttons.Length) % buttons.Length; // Wrap around
         // Debug.Log("[UISelector] Moved to button index: " + currentIndex + " (" + buttons[currentIndex].name + ")");
         UpdateSelectorPosition();
+    }
+
+    public void MoveSelectorWithHeroActions(int direction)
+    {
+        if (buttonsHeroActions.Length == 0) return;
+
+        currentIndex = (currentIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
+        Debug.Log("UpdateSelectorPositionInHeroActionsZone");
+        UpdateSelectorPositionInHeroActionsZone();
+    }
+    private void UpdateSelectorPositionInHeroActionsZone()
+    {
+        if (selector == null)
+        {
+            Debug.LogWarning("[UISelector] Selector is missing!");
+            return;
+        }
+
+        if (buttons.Length > 0)
+        {
+            selector.position = buttonsHeroActions[currentIndex].transform.position;
+            // Debug.Log("[UISelector] Selector moved to: " + selector.position);
+        }
     }
 
     private void UpdateSelectorPosition()
@@ -91,20 +108,24 @@ public class UINavManager : MonoBehaviour
         }
     }
 
-    private void HandleSelection()
+    public void HandleSelection()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
-            shopScript.Spawn(currentIndex);
-            //buttons[currentIndex].onClick.Invoke();
-        }
+
+        Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
+        //buttons[currentIndex].onClick.Invoke();
+
+    }
+    public void HandleActionsSelection()
+    {
+
+        Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
+        buttonsHeroActions[currentIndex].onClick.Invoke();
     }
 
     //xinghua code for exit UI Input
     internal void SwithToGamePlayState()
     {
-        if(gameStateMachine !=null)
+        if (gameStateMachine != null)
         {
             gameStateMachine.SwitchToGameplayState();
         }

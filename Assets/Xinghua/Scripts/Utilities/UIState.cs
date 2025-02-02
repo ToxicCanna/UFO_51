@@ -16,6 +16,7 @@ public class UIState : BaseState
         var controls = InputManager.Instance.GetControls();
 
         controls.UI.Navigate.performed += ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
+        controls.UI.Selected.performed += ctx => UINavManager.Instance.HandleActionsSelection();
         controls.UI.Cancel.performed += ctx => UINavManager.Instance.SwithToGamePlayState();
 
     }
@@ -25,6 +26,7 @@ public class UIState : BaseState
         var controls = InputManager.Instance.GetControls();
         Debug.Log("Exited UI State");
         controls.UI.Navigate.performed -= ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
+        controls.UI.Selected.performed -= ctx => UINavManager.Instance.HandleActionsSelection();
         controls.UI.Cancel.performed -= ctx => UINavManager.Instance.SwithToGamePlayState();
     }
 

@@ -218,7 +218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Submit"",
+                    ""name"": ""Selected"",
                     ""type"": ""Button"",
                     ""id"": ""14d7a490-2947-4a4f-8c80-8bc4eb8a5dbf"",
                     ""expectedControlType"": """",
@@ -231,11 +231,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eac27943-6c61-46be-816a-83155d244b12"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Gamepad;Touch;Joystick;XR"",
-                    ""action"": ""Submit"",
+                    ""action"": ""Selected"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -322,7 +322,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
-        m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
+        m_UI_Selected = m_UI.FindAction("Selected", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -478,14 +478,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Cancel;
-    private readonly InputAction m_UI_Submit;
+    private readonly InputAction m_UI_Selected;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
-        public InputAction @Submit => m_Wrapper.m_UI_Submit;
+        public InputAction @Selected => m_Wrapper.m_UI_Selected;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -501,9 +501,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
-            @Submit.started += instance.OnSubmit;
-            @Submit.performed += instance.OnSubmit;
-            @Submit.canceled += instance.OnSubmit;
+            @Selected.started += instance.OnSelected;
+            @Selected.performed += instance.OnSelected;
+            @Selected.canceled += instance.OnSelected;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -514,9 +514,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
-            @Submit.started -= instance.OnSubmit;
-            @Submit.performed -= instance.OnSubmit;
-            @Submit.canceled -= instance.OnSubmit;
+            @Selected.started -= instance.OnSelected;
+            @Selected.performed -= instance.OnSelected;
+            @Selected.canceled -= instance.OnSelected;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -547,6 +547,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnNavigate(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
-        void OnSubmit(InputAction.CallbackContext context);
+        void OnSelected(InputAction.CallbackContext context);
     }
 }

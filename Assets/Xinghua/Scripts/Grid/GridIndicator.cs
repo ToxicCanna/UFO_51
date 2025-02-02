@@ -478,7 +478,10 @@ public class GridIndicator : MonoBehaviour
         }
     }
 
-
+    public void ChooseHeroAction()
+    {
+        gameStateMachine.SwitchToUIState();
+    }
     //Submit current selected hero
     public void HandleSubmitHeroSelected()
     {

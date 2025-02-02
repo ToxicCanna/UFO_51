@@ -196,7 +196,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Submit",
+                    "name": "Selected",
                     "type": "Button",
                     "id": "14d7a490-2947-4a4f-8c80-8bc4eb8a5dbf",
                     "expectedControlType": "",
@@ -209,11 +209,11 @@
                 {
                     "name": "",
                     "id": "eac27943-6c61-46be-816a-83155d244b12",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
-                    "action": "Submit",
+                    "action": "Selected",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
