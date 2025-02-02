@@ -18,9 +18,8 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection += OnMoveFinished;
+            gridIndicator.finishSelection += HideAllHightlights;
             gridIndicator.onHeroPositon += ShowHeroPath;//this will show the targt path and ability range both ; in different color
-                                                        // gridIndicator.moveFinish += HideHightlight;
 
         }
         else
@@ -33,13 +32,11 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection -= OnMoveFinished;
+            gridIndicator.finishSelection -= HideAllHightlights;
             gridIndicator.onHeroPositon -= ShowHeroPath;
-            // gridIndicator.moveFinish -= HideHightlight;
 
         }
     }
-
 
     public void ShowHeroPath()
     {
@@ -53,22 +50,11 @@ public class HighLight : MonoBehaviour
                 neighbors = GetNeighbors(currentGridPosition, index);
                 DisplayHightlight(neighbors);
 
-                /*    if (index == 0 ||index ==1||index ==2)
-                    {
-                        Debug.Log("gridIndicator:" + currentGridPosition);
-                      *//*  neighbors = GetNeighbors(currentGridPosition, index);
-                        DisplayHightlight(neighbors);*//*
-                    }
-               */
                 if (index == 3 || index == 4)
                 {
-                    /*neighbors = GetNeighbors(currentGridPosition, index);
-                    DisplayHightlight(neighbors);*/
                     neighborsForAbilityRange = GetNeighborsForAbilityRange(currentGridPosition, index);
                     DisplayRangedAbility(neighborsForAbilityRange);
                 }
-
-
             }
         }
     }
@@ -126,16 +112,13 @@ public class HighLight : MonoBehaviour
         }
     }
 
-    private void OnMoveFinished()
+    private void HideAllHightlights()
     {
-        Debug.Log("hide highlight path");
-        HideHightlight();//target
+        HideHightlightMovePath();
         HideHightlightForAbility();
     }
 
-
-
-    private void HideHightlight()
+    private void HideHightlightMovePath()
     {
         ClearHighlights();
         foreach (var hightlight in highlights)
@@ -144,7 +127,6 @@ public class HighLight : MonoBehaviour
 
         }
     }
-
     private void HideHightlightForAbility()
     {
         ClearAbilityRangeDisplay();
@@ -164,8 +146,6 @@ public class HighLight : MonoBehaviour
     public Vector2Int[] GetNeighborsForAbilityRange(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-        //int heroIndex = gridIndicator.GetHeroMoveIndex();
-
         if (ID == 4)
         {
             Vector2Int[] directions = new Vector2Int[]
@@ -199,15 +179,10 @@ public class HighLight : MonoBehaviour
         {
             Vector2Int[] directions = new Vector2Int[]
             {
-            new Vector2Int(0, 1),
-            new Vector2Int(0, -1),
-            new Vector2Int(-1, 0),
-            new Vector2Int(1, 0),
-
-             //new Vector2Int(1, 1),
-             //new Vector2Int(1, -1),
-             //new Vector2Int(-1, 1),
-             //new Vector2Int(-1, -1)
+                new Vector2Int(0, 1),
+                new Vector2Int(0, -1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(1, 0),
              };
             foreach (var direction in directions)
             {
@@ -225,7 +200,7 @@ public class HighLight : MonoBehaviour
         List<Vector2Int> neighbors = new List<Vector2Int>();
 
 
-        if (ID == 0 || ID ==4)
+        if (ID == 0 || ID == 4)
         {
             Vector2Int[] directions = new Vector2Int[]
          {
@@ -249,9 +224,7 @@ public class HighLight : MonoBehaviour
         if (ID == 1)
         {
             Vector2Int[] directions = new Vector2Int[]
-         {
-               // new Vector2Int(0, 1),
-               // new Vector2Int(0, -1),
+             {
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
@@ -259,7 +232,7 @@ public class HighLight : MonoBehaviour
                 new Vector2Int(1, -1),
                 new Vector2Int(-1, 1),
                 new Vector2Int(-1, -1)
-         };
+             };
 
             foreach (var direction in directions)
             {
@@ -270,14 +243,14 @@ public class HighLight : MonoBehaviour
         else if (ID == 2)
         {
             Vector2Int[] directions = new Vector2Int[]
-         {
+            {
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
 
-            
-         };
+
+            };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
@@ -287,22 +260,15 @@ public class HighLight : MonoBehaviour
         else if (ID == 3)
         {
             Vector2Int[] directions = new Vector2Int[]
-         {
+            {
                 new Vector2Int(0, 1),
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
-
-             //new Vector2Int(1, 1),
-             //new Vector2Int(1, -1),
-             //new Vector2Int(-1, 1),
-             //new Vector2Int(-1, -1)
-         };
+            };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
-                //neighbors.Add(currentPosition + direction * 2);
-                //neighbors.Add(currentPosition + direction * 3);
             }
         }
         return neighbors.ToArray();
@@ -329,9 +295,9 @@ public class HighLight : MonoBehaviour
             highlights[i].SetActive(false);
         }
     }
-    void DisplayNeighbors(Vector2Int currentGridPosition )
+    void DisplayNeighbors(Vector2Int currentGridPosition)
     {
-        var id =gridIndicator.GetSubmitHeroPathIndex(currentGridPosition);
+        var id = gridIndicator.GetSubmitHeroPathIndex(currentGridPosition);
         Vector2Int[] neighbors = GetNeighbors(currentGridPosition, id);
 
         foreach (var neighbor in neighbors)
@@ -346,28 +312,5 @@ public class HighLight : MonoBehaviour
             indicator.transform.localScale = Vector3.one;
         }
     }
-
-    private void UpdateHighlight()
-    {
-        ClearHighlights();
-
-        Vector2Int currentGridPosition = GetGridPosition(transform.position);
-        var id = gridIndicator.GetSubmitHeroPathIndex(currentGridPosition);
-        Vector2Int[] neighbors = GetNeighbors(currentGridPosition, id);
-
-        foreach (var neighbor in neighbors)
-        {
-            Vector3 neighborPosition = AlignToGrid(new Vector3(neighbor.x, neighbor.y, 0));
-            GameObject highlight = Instantiate(highlightPrefab, neighborPosition, Quaternion.identity);
-            highlights.Add(highlight);
-        }
-    }
-
-
-
-
-
-
-
 
 }

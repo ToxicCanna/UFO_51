@@ -7,7 +7,7 @@ using UnityEngine;
 public class GridIndicator : MonoBehaviour
 {
     // [SerializeField] private List<ScriptableObject> items; 
-    private int minI = 0, maxI, minJ, maxJ = 7;
+    private int minI, maxI, minJ, maxJ;
     public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
@@ -133,29 +133,8 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         HandleIndicatorMove(intDirection);
-
-        /* if (isHeroSubmited)
-         {
-             Debug.Log("move with range");
-             //move the indicator with limit
-             //MoveIndicatorWithRange(intDirection);
-             MoveTargetPos(intDirection);
-         }*/
-        /* 
-         *//*   else if (isCanChooseTarget)
-            {
-                //switch to attack state
-            }*//*
-         else
-         {
-
-             Debug.Log("move without range");
-             // only move indicator 
-             HandleIndicatorMove(intDirection);
-         }*/
     }
     private int currentIndex = 0;
-
 
     public void ChooseTargets(Vector2 direction)
     {
@@ -298,61 +277,22 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    //public int GetHeroMoveIndex()
-    //{
-    //    heroPathID = GetSubmitHeroPathIndex(transform.position);
-    //    return heroPathID;
-    //}
-
-    /*   public void MoveTargetPos(Vector2 direction)
-       {
-           Debug.Log("direction" + direction);
-           Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-           Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
-           Debug.Log("targetPosition " + targetPosition);
-           // var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
-           
-
-           Debug.Log("pos !!!! " + string.Join(",", validPos));
-           Debug.Log("ID!! " + currentSelectedHeroId);
-
-           if (IsWithinBounds(targetPosition))
-           {
-
-
-           }
-
-       }*/
-
     public void MoveToTargetIndicator()
     {
-        Debug.Log("is hero selected :" + isHeroSubmited);
-
         if (!isOnHeroPosition || !isHeroSubmited) return;
-        //moveFinish?.Invoke();
         var currentTurn = GetCurrentPlayerTurn();
-        Debug.Log("current Turn :" + currentTurn);
+
         currentGridPosition = WorldToGridPosition(transform.position);
-        Debug.Log("currentGridPosition:" + currentGridPosition);
+
+
         //check the target is valid or not ,if valid move the hero to indicator current position
-
-        Debug.Log("submit heroposition " + GetSubmitHeroPositon());
-        Debug.Log("currentSelectedHeroId " + currentSelectedHeroId);
         var validPos = highLight.GetNeighbors(GetSubmitHeroPositon(), currentSelectedHeroId);
-
-
-
-        Debug.Log("pos !!!! " + string.Join(",", validPos));
-        Debug.Log("tiles count!! " + validPos.Length);
-        Debug.Log("ID!! " + currentSelectedHeroId);
         var canMove = false;
         foreach (var pos in validPos)
         {
             if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
             {
                 canMove = true;
-
             }
         }
         if (!canMove)
@@ -361,7 +301,6 @@ public class GridIndicator : MonoBehaviour
         }
         else
         {
-
             //update the gride status ;if not occupied emputy it
             oldIndicatorLocation = submitHeroData.gameObject.transform.position;
             GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
@@ -371,7 +310,6 @@ public class GridIndicator : MonoBehaviour
 
             UpdatePlayerTurn();
             currentTurn = GetCurrentPlayerTurn();
-            Debug.Log("current Turn after move hero :" + currentTurn);
 
             CheckAttackTargets();
 
@@ -560,6 +498,7 @@ public class GridIndicator : MonoBehaviour
     //Submit current selected hero
     public void HandleSubmitHeroSelected()
     {
+        if(isHeroSubmited)return;
         //Debug.Log("current hero submit");
         isOnHeroPosition = true;
         isHeroSubmited = true;
