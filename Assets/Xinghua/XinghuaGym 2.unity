@@ -2547,6 +2547,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Current Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4438168636472374736, guid: 18f9d4a1ca114324889b52477ab59c40, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6465252985427286699, guid: 18f9d4a1ca114324889b52477ab59c40, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9229,7 +9233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1425988271
 Transform:
   m_ObjectHideFlags: 0
@@ -13584,10 +13588,10 @@ SceneRoots:
   - {fileID: 1233961764}
   - {fileID: 1559695723}
   - {fileID: 543077745}
-  - {fileID: 314606904}
   - {fileID: 4141694432243778534}
   - {fileID: 1210438430}
   - {fileID: 159297859}
+  - {fileID: 314606904}
   - {fileID: 1843827120}
   - {fileID: 204719035}
   - {fileID: 1460514491}

@@ -92,7 +92,7 @@ public class HeroPocketManager : MonoBehaviour
         {
             allHeroes.Add(hero);
         }
-        Debug.Log("allHero num" + allHeroes.Count);
+        //Debug.Log("allHero num" + allHeroes.Count);
         return allHeroes;
 
     }

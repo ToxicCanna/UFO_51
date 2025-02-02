@@ -61,9 +61,12 @@ public class GridIndicator : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("trans" + transform.position);
         currentGridPosition = WorldToGridPosition(transform.position);
-        transform.position = GridToWorldPosition(currentGridPosition);
+        Debug.Log("currentGridPosition" + currentGridPosition);
 
+        transform.position = GridToWorldPosition(currentGridPosition);
+        Debug.Log("transform.position" + transform.position);
         currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
@@ -74,13 +77,11 @@ public class GridIndicator : MonoBehaviour
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
         highLight = FindAnyObjectByType<HighLight>();
-
     }
 
     private void Update()
     {
         playerText.text = currentTurn.ToString();
-
     }
 
     public bool IsWithinBounds(Vector2Int position)
@@ -129,8 +130,8 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMoveNew(Vector2 direction)
     {
-        Debug.Log("Handle move isOnHeroPosition" + isOnHeroPosition);
-        Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);
+        /*Debug.Log("Handle move isOnHeroPosition" + isOnHeroPosition);
+        Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);*/
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         HandleIndicatorMove(intDirection);
     }
@@ -139,13 +140,13 @@ public class GridIndicator : MonoBehaviour
     public void ChooseTargets(Vector2 direction)
     {
         Debug.Log("move in opponent side hero list");
-        var oppositHeros = GetOppositeHeroAsTarget();
+        var oppositHeros = GetOppositeHeros();
 
-        Debug.Log("opposite heros count:" + GetOppositeHeroAsTarget().Count);
+        Debug.Log("opposite heros count:" + GetOppositeHeros().Count);
 
-        var oppositeHeroCount = GetOppositeHeroAsTarget().Count;
+        var oppositeHeroCount = GetOppositeHeros().Count;
 
-        foreach (var pos in GetOppositeHeroAsTarget())
+        foreach (var pos in GetOppositeHeros())
         {
             Debug.Log("opposite heros location:" + pos.transform.position);
         }
@@ -175,12 +176,12 @@ public class GridIndicator : MonoBehaviour
             nextIndex = (currentIndex - 1 + oppositeHeroCount) % oppositeHeroCount;
         }
 
-        transform.position = GetOppositeHeroAsTarget()[nextIndex].transform.position;
+        transform.position = GetOppositeHeros()[nextIndex].transform.position;
         Debug.Log("Indicator moved to: " + transform.position);
 
     }
 
-    private List<GameObject> GetOppositeHeroAsTarget()
+    private List<GameObject> GetOppositeHeros()
     {
         List<GameObject> opponiteHeros = new List<GameObject>();
         if (currentTurn == PlayerTurn.PlayerRedSide)
@@ -208,8 +209,8 @@ public class GridIndicator : MonoBehaviour
         {
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
-
-            transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
+            transform.position = GridToWorldPosition(currentGridPosition);
+            // transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
             Debug.Log("currentGridPosition will move" + currentGridPosition);
             //judge if this position have hero already
             //var heros = GridManager.Instance.GetHeros();
@@ -280,8 +281,8 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         if (!isOnHeroPosition || !isHeroSubmited) return;
-        var currentTurn = GetCurrentPlayerTurn();
-
+        //var currentTurn = GetCurrentPlayerTurn();
+        //Debug.Log("turn!!!"+currentTurn);
         currentGridPosition = WorldToGridPosition(transform.position);
 
 
@@ -306,12 +307,14 @@ public class GridIndicator : MonoBehaviour
             GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
 
             submitHeroData.gameObject.transform.position = transform.position;//move the hero
+            currentGridPosition = WorldToGridPosition(transform.position); 
             GridManager.Instance.AddOccupiedGrid(transform.position);
 
             UpdatePlayerTurn();
-            currentTurn = GetCurrentPlayerTurn();
-
-            CheckAttackTargets();
+            SetIndicatorWhenTurnChange();
+            /*  UpdatePlayerTurn();
+              SetIndicatorWhenTurnChange();
+              CheckAttackTargets();*/
 
             finishSelection?.Invoke();//if finish move hide the highlight
             isHeroSubmited = false;
@@ -326,20 +329,20 @@ public class GridIndicator : MonoBehaviour
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
         //this just when two player in one spot attack each other
         var herosOpposite = new List<GameObject>();
-        if (!isHaveTargets)
+     /*   if (!isHaveTargets)
         {
-            UpdatePlayerTurn();
-            UpdateIndicatorWhenTurnChange();
-        }
+            //UpdateIndicatorWhenTurnChange();
+            SetIndicatorWhenTurnChange();
+        }*/
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
-            Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
+           // Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
         }
         else if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-            Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
+           // Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
 
         }
 
@@ -372,32 +375,26 @@ public class GridIndicator : MonoBehaviour
                 //else
                 //{
                 //    UpdatePlayerTurn();
-                //    UpdateIndicatorWhenTurnChange();
+                //    
                 //    Debug.Log("no attack condition");
                 //}
             }
         }
     }
 
-    private void UpdateIndicatorWhenTurnChange()
+    private void SetIndicatorWhenTurnChange()
     {
-        Debug.Log("current turn:" + currentTurn);
-        if (currentTurn == PlayerTurn.PlayerRedSide)
-        {
-            transform.position = playerRedHero.transform.position;
-        }
-        else
-        {
-            transform.position = playerBlueHero.transform.position;
-        }
+        var heros = GetOppositeHeros();
+        transform.position = heros[0].transform.position;
+        currentGridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }
+
     private PlayerTurn GetCurrentPlayerTurn()
     {
-
         return currentTurn;
     }
 
-    private PlayerTurn GetNextPlayerTurn()
+    private void UpdatePlayerTurn()
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
@@ -406,26 +403,13 @@ public class GridIndicator : MonoBehaviour
         else
         {
             currentTurn = PlayerTurn.PlayerRedSide;
-        }
-        return currentTurn;
-    }
-    private void UpdatePlayerTurn()
-    {
-
-        if (currentTurn == PlayerTurn.PlayerBlueSide)
-        {
-            currentTurn = PlayerTurn.PlayerRedSide;
-        }
-        else
-        {
-            currentTurn = PlayerTurn.PlayerBlueSide;
         }
     }
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
-        int i = Mathf.RoundToInt(worldPosition.x);
-        int j = Mathf.RoundToInt(worldPosition.y);
+        int i = Mathf.FloorToInt(worldPosition.x);
+        int j = Mathf.FloorToInt(worldPosition.y);
         return new Vector2Int(i, j);
     }
 
