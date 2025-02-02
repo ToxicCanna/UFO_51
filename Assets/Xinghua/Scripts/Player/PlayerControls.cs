@@ -62,6 +62,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shop"",
+                    ""type"": ""Button"",
+                    ""id"": ""76c6949b-0a89-476b-afc6-ecc653b51142"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancle"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9ed2f94-7a25-4c72-8e28-151c06234279"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +168,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bb627fe-666f-448c-a344-19e6e20ae4a0"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc31a9ae-dacc-4e36-b3b8-88e1c8302ef6"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -276,6 +316,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_GamePlay_Confirm = m_GamePlay.FindAction("Confirm", throwIfNotFound: true);
         m_GamePlay_Switch = m_GamePlay.FindAction("Switch", throwIfNotFound: true);
         m_GamePlay_Submit = m_GamePlay.FindAction("Submit", throwIfNotFound: true);
+        m_GamePlay_Shop = m_GamePlay.FindAction("Shop", throwIfNotFound: true);
+        m_GamePlay_Cancle = m_GamePlay.FindAction("Cancle", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -352,6 +394,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Confirm;
     private readonly InputAction m_GamePlay_Switch;
     private readonly InputAction m_GamePlay_Submit;
+    private readonly InputAction m_GamePlay_Shop;
+    private readonly InputAction m_GamePlay_Cancle;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -360,6 +404,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Confirm => m_Wrapper.m_GamePlay_Confirm;
         public InputAction @Switch => m_Wrapper.m_GamePlay_Switch;
         public InputAction @Submit => m_Wrapper.m_GamePlay_Submit;
+        public InputAction @Shop => m_Wrapper.m_GamePlay_Shop;
+        public InputAction @Cancle => m_Wrapper.m_GamePlay_Cancle;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -381,6 +427,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Submit.started += instance.OnSubmit;
             @Submit.performed += instance.OnSubmit;
             @Submit.canceled += instance.OnSubmit;
+            @Shop.started += instance.OnShop;
+            @Shop.performed += instance.OnShop;
+            @Shop.canceled += instance.OnShop;
+            @Cancle.started += instance.OnCancle;
+            @Cancle.performed += instance.OnCancle;
+            @Cancle.canceled += instance.OnCancle;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -397,6 +449,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Submit.started -= instance.OnSubmit;
             @Submit.performed -= instance.OnSubmit;
             @Submit.canceled -= instance.OnSubmit;
+            @Shop.started -= instance.OnShop;
+            @Shop.performed -= instance.OnShop;
+            @Shop.canceled -= instance.OnShop;
+            @Cancle.started -= instance.OnCancle;
+            @Cancle.performed -= instance.OnCancle;
+            @Cancle.canceled -= instance.OnCancle;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -482,6 +540,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnConfirm(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
+        void OnShop(InputAction.CallbackContext context);
+        void OnCancle(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

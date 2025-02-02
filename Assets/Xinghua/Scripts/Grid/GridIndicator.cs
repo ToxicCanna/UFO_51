@@ -591,4 +591,9 @@ public class GridIndicator : MonoBehaviour
         }
         Debug.Log("kill him!!!!!!!");
     }
+
+    internal void ActiveShopMenu()
+    {
+        gameStateMachine.SwitchToUIState();
+    }
 }
