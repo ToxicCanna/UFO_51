@@ -31,7 +31,9 @@ public class AttackState : BaseState
         {
             currentControls.GamePlay.Move.performed += ctx => gridIndicator?.ChooseTargets(ctx.ReadValue<Vector2>());
             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.SbumitedTarget();
-        }
+            currentControls.GamePlay.Cancle.performed += ctx => ExitState();
+    
+            }
         else
         {
             Debug.Log("gridIndicator is null");

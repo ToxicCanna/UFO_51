@@ -140,11 +140,10 @@ public class GridIndicator : MonoBehaviour
 
     public void ChooseTargets(Vector2 direction)
     {
-        Debug.Log("move in opponent side hero list");
+        if (direction.x != 0)return;
+       // Debug.Log("move in opponent side hero list");
         var oppositHeros = GetOppositeHeros();
-
         Debug.Log("opposite heros count:" + GetOppositeHeros().Count);
-
         var oppositeHeroCount = GetOppositeHeros().Count;
 
         foreach (var pos in GetOppositeHeros())
@@ -154,6 +153,7 @@ public class GridIndicator : MonoBehaviour
         // Determine new index based on direction
         var x = transform.position.x;
         var y = transform.position.y;
+        
         var nextIndex = 0;
         for (int i = 0; i < oppositeHeroCount; i++)
         {
@@ -171,10 +171,14 @@ public class GridIndicator : MonoBehaviour
             nextIndex = (currentIndex + 1) % oppositeHeroCount;
 
         }
-        else
+        else if (direction.y < 0)
         {
             //S
             nextIndex = (currentIndex - 1 + oppositeHeroCount) % oppositeHeroCount;
+        }
+        else
+        {
+            return;
         }
 
         transform.position = GetOppositeHeros()[nextIndex].transform.position;

@@ -10,6 +10,8 @@ public class UINavManager : MonoBehaviour
     public RectTransform selector; // Assign the selector GameObject
     private int currentIndex = 0; // Tracks the currently selected button
 
+    private string selectedButtonName;
+
     [SerializeField] private ShopScript shopScript;
 
     //xinghua code
@@ -103,6 +105,7 @@ public class UINavManager : MonoBehaviour
         Debug.Log("UpdateSelectorPositionInHeroActionsZone");
         UpdateSelectorPositionInHeroActionsZone();
     }
+
     private void UpdateSelectorPositionInHeroActionsZone()
     {
         if (selector == null)
@@ -143,9 +146,17 @@ public class UINavManager : MonoBehaviour
     public void HandleActionsSelection()
     {
 
-        Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
+        Debug.Log("[UISelector] Selected button: " + buttonsHeroActions[currentIndex].name);
+        string firstTwoLetters = buttonsHeroActions[currentIndex].name.Substring(0, 2);
+        Debug.Log("firstTwoLetters " + firstTwoLetters);
+        selectedButtonName = firstTwoLetters;
         buttonsHeroActions[currentIndex].onClick.Invoke();
-        SwithToGamePlayState();
+        if (firstTwoLetters=="At")
+        {
+            gameStateMachine.SwitchToAttackState();
+        }
+        gameStateMachine.SwitchToGameplayState();
+
     }
 
     //xinghua code for exit UI Input
