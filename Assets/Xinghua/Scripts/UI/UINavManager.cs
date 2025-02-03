@@ -16,6 +16,8 @@ public class UINavManager : MonoBehaviour
 
     //xinghua code
     [SerializeField] GameStateMachine gameStateMachine;
+    private bool isGamePlayStateActive = false;
+
     //end
     private void Awake()
     {
@@ -51,11 +53,11 @@ public class UINavManager : MonoBehaviour
         StartCoroutine(FixSelectorPosition());
     }
 
-  
+
 
     public void HandleNavigation(Vector2 direction)
     {
-        Debug.Log("IsHeroSubmitted"+ GameManager.Instance.IsHeroSubmitted);
+        Debug.Log("IsHeroSubmitted" + GameManager.Instance.IsHeroSubmitted);
         if (GameManager.Instance.IsHeroSubmitted)
         {
             UpdateSelectorPositionInHeroActionsZone();
@@ -83,9 +85,6 @@ public class UINavManager : MonoBehaviour
                 MoveSelector(-1); // Move to the previous button
             }
         }
-       
-     
-    
     }
 
     public void MoveSelector(int direction)
@@ -135,37 +134,83 @@ public class UINavManager : MonoBehaviour
             // Debug.Log("[UISelector] Selector moved to: " + selector.position);
         }
     }
-
-    public void HandleSelection()
+    public void HandleButtonsSelection()
     {
+        if (GameManager.Instance.IsHeroSubmitted)
+        {
 
-        Debug.Log("[UISelector] Selected button: " + buttons[currentIndex].name);
-        buttons[currentIndex].onClick.Invoke();
+            HandleActionsSelection();
+        }
+        else
+        {
+            HandleHeroShopSelection();
 
+        }
+        
     }
+
+    public void HandleHeroShopSelection()
+    {
+        string firstTwoLetters = buttons[currentIndex].name.Substring(0, 2);
+        selectedButtonName = firstTwoLetters;
+        ProcessHeroShopSelected();
+        buttons[currentIndex].onClick.Invoke();
+    }
+
     public void HandleActionsSelection()
     {
-
-        Debug.Log("[UISelector] Selected button: " + buttonsHeroActions[currentIndex].name);
         string firstTwoLetters = buttonsHeroActions[currentIndex].name.Substring(0, 2);
-        Debug.Log("firstTwoLetters " + firstTwoLetters);
         selectedButtonName = firstTwoLetters;
         buttonsHeroActions[currentIndex].onClick.Invoke();
-        if (firstTwoLetters=="At")
+        ProcessActionSelected();
+    }
+
+
+    private void ProcessHeroShopSelected()
+    {
+        if (selectedButtonName == "Ba")//attack button selected
+        {
+            Debug.Log("spawn Basic hero in the scene ");
+        }
+        else if (selectedButtonName == "He")//healbutton selected
+        {
+
+            Debug.Log("spawn Healer hero in the scene ");
+        }
+        SwithToGamePlayState();
+
+    }
+    private void ProcessActionSelected()
+    {
+        Debug.Log(" selectedButtonName" + selectedButtonName);
+        if (selectedButtonName == "At")//attack button selected
         {
             gameStateMachine.SwitchToAttackState();
         }
-        gameStateMachine.SwitchToGameplayState();
+        else if (selectedButtonName == "He")//healbutton selected
+        {
+            // hero begin heal ;before use this function need check selectes is heal or not
+            //active button should have 2 state, if selected hero is not heal , the button should disable
+            Debug.Log("heal function called");//but function do not write here
+            SwithToGamePlayState();
+        }
+        else
+        {
+            SwithToGamePlayState();
+        }
 
     }
 
-    //xinghua code for exit UI Input
+
     internal void SwithToGamePlayState()
     {
+        if (isGamePlayStateActive) return;
+
         if (gameStateMachine != null)
         {
             gameStateMachine.SwitchToGameplayState();
         }
+
     }
-    //xinghua code end
+
 }
