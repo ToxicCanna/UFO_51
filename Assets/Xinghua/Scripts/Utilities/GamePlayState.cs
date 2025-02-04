@@ -27,7 +27,7 @@ public class GamePlayState : BaseState
             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
             currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
             currentControls.GamePlay.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
-            //currentControls.GamePlay.Cancle.performed += ctx => gridIndicator?.CancleSelected();
+            currentControls.GamePlay.Cancle.performed += ctx => gridIndicator?.CancleSelected();
         }
         else
         {
@@ -43,6 +43,7 @@ public class GamePlayState : BaseState
         currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
 
         currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
+        currentControls.GamePlay.Cancle.performed -= ctx => gridIndicator?.CancleSelected();
         currentControls.GamePlay.Shop.performed -= ctx => gridIndicator?.ActiveShopMenu();
     }
 

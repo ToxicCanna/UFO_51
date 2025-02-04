@@ -17,6 +17,7 @@ public class UIState : BaseState
 
         controls.UI.Navigate.performed += ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
         controls.UI.Selected.performed += ctx => UINavManager.Instance.HandleButtonsSelection();
+        controls.UI.Cancle.performed += ctx => UINavManager.Instance.CancleSelected();
     }
 
     public override void ExitState()
@@ -25,6 +26,7 @@ public class UIState : BaseState
         Debug.Log("Exited UI State");
         controls.UI.Navigate.performed -= ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
         controls.UI.Selected.performed -= ctx => UINavManager.Instance.HandleButtonsSelection();
+        controls.UI.Cancle.performed -= ctx => UINavManager.Instance.CancleSelected();
 
     }
 

@@ -29,6 +29,7 @@ public class GridIndicator : MonoBehaviour
     public event Action AttackHappenOneSpot;
     public event Action activeShop;
     public event Action moveFinish;
+
     //public event Action rollingDice;//this is for the dic roll function
 
 
@@ -52,8 +53,10 @@ public class GridIndicator : MonoBehaviour
     public Vector2Int selectedHeroPosition;
     private Vector3 submitHeroPosition;
     private int currentSelectedHeroId;
-    private bool isAtOppositeHeroPos =false;
+    private bool isAtOppositeHeroPos = false;
+    private bool isCancleSelected = false;
     [SerializeField] private TMP_Text playerText;
+
 
     //(Killian)
     //Reference to BattleManager
@@ -136,12 +139,12 @@ public class GridIndicator : MonoBehaviour
         HandleIndicatorMove(intDirection);
     }
     private int currentIndex = 0;
-   
+
 
     public void ChooseTargets(Vector2 direction)
     {
-        if (direction.x != 0)return;
-       // Debug.Log("move in opponent side hero list");
+        if (direction.x != 0) return;
+        // Debug.Log("move in opponent side hero list");
         var oppositHeros = GetOppositeHeros();
         Debug.Log("opposite heros count:" + GetOppositeHeros().Count);
         var oppositeHeroCount = GetOppositeHeros().Count;
@@ -153,7 +156,7 @@ public class GridIndicator : MonoBehaviour
         // Determine new index based on direction
         var x = transform.position.x;
         var y = transform.position.y;
-        
+
         var nextIndex = 0;
         for (int i = 0; i < oppositeHeroCount; i++)
         {
@@ -300,7 +303,7 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveToTargetIndicator()
     {
-        if (!isOnHeroPosition ) return;
+        if (!isOnHeroPosition|| isCancleSelected) return;
         //var currentTurn = GetCurrentPlayerTurn();
         //Debug.Log("turn!!!"+currentTurn);
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -327,7 +330,7 @@ public class GridIndicator : MonoBehaviour
 
 
             GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
-          
+
 
             GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
             submitHeroData.gameObject.transform.position = transform.position;//move the hero
@@ -344,6 +347,8 @@ public class GridIndicator : MonoBehaviour
             isHeroSubmited = false;
             GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
 
+
+            isCancleSelected = false;
         }
 
     }
@@ -355,20 +360,20 @@ public class GridIndicator : MonoBehaviour
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
         //this just when two player in one spot attack each other
         var herosOpposite = new List<GameObject>();
-     /*   if (!isHaveTargets)
-        {
-            //UpdateIndicatorWhenTurnChange();
-            SetIndicatorWhenTurnChange();
-        }*/
+        /*   if (!isHaveTargets)
+           {
+               //UpdateIndicatorWhenTurnChange();
+               SetIndicatorWhenTurnChange();
+           }*/
         if (currentTurn == PlayerTurn.PlayerBlueSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
-           // Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
+            // Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
         }
         else if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-           // Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
+            // Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
 
         }
 
@@ -527,8 +532,8 @@ public class GridIndicator : MonoBehaviour
 
             return true;
         }
-        else if(currentTurn == PlayerTurn.PlayerRedSide && teamInfo == "blue")
-        { 
+        else if (currentTurn == PlayerTurn.PlayerRedSide && teamInfo == "blue")
+        {
             return true;
         }
         return false;
@@ -536,13 +541,13 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleSubmitHeroSelected()
     {
+        Debug.Log("HandleSubmitHeroSelected" );
+        var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
 
-        var indicatorPosition = new Vector2Int((int)transform.position.x,(int)transform.position.y);
-        //IsOppsiteHeroHere(indicatorPosition);
-        if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition)) )return;
-        
         isOnHeroPosition = true;
         isHeroSubmited = true;
+        isCancleSelected = false;
         var position = GetIndicatorPositon();
         Debug.Log("hero submit position:" + position);
         //selectedHeroPosition =new Vector2Int((int)transform.position.x,(int)transform.position.y);
@@ -570,20 +575,24 @@ public class GridIndicator : MonoBehaviour
 
     public void SetSubmitHero(Vector2 position)
     {
-        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
-
-        foreach (var hero in allHerosInScene)
+        if (isCancleSelected) submitHeroData = null;
+        else
         {
-            if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
-            {
+            var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
 
-                //isHeroSubmited = true;
-                var heroData = hero.GetComponent<HeroData>();
-                submitHeroData = heroData;
+            foreach (var hero in allHerosInScene)
+            {
+                if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
+                {
+
+                    //isHeroSubmited = true;
+                    var heroData = hero.GetComponent<HeroData>();
+                    submitHeroData = heroData;
+                }
+
             }
 
         }
-        return;
     }
 
 
@@ -654,5 +663,15 @@ public class GridIndicator : MonoBehaviour
     internal void ActiveShopMenu()
     {
         gameStateMachine.SwitchToUIState();
+    }
+
+    internal void CancleSelected()
+    {
+        Debug.Log("cancle selected");
+        isCancleSelected = true;
+        finishSelection?.Invoke();
+        var position = GetIndicatorPositon();
+        SetSubmitHero(position);
+        isHeroSubmited = false; 
     }
 }

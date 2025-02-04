@@ -112,8 +112,9 @@ public class HighLight : MonoBehaviour
         }
     }
 
-    private void HideAllHightlights()
+    public void HideAllHightlights()
     {
+        Debug.Log("hide highlights");
         HideHightlightMovePath();
         HideHightlightForAbility();
     }
