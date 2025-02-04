@@ -17,7 +17,7 @@ public class GameStateMachine : BaseStateMachine
 
     private void Awake()
     {
-        uiState = new UIState();
+        uiState = new UIState(_gridIndicator);
 
         if (_gridIndicator == null)
         {

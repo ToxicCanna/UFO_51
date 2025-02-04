@@ -55,7 +55,8 @@ public class GridIndicator : MonoBehaviour
     private int currentSelectedHeroId;
     private bool isAtOppositeHeroPos = false;
     private bool isCancleSelected = false;
-    [SerializeField] private TMP_Text playerText;
+    //[SerializeField] private TMP_Text playerText;
+    public TMP_Text controlHintText;
 
 
     //(Killian)
@@ -80,11 +81,12 @@ public class GridIndicator : MonoBehaviour
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
         highLight = FindAnyObjectByType<HighLight>();
+        controlHintText.text = "WASD to move";
     }
 
     private void Update()
     {
-        playerText.text = currentTurn.ToString();
+       // playerText.text = currentTurn.ToString();
     }
 
     public bool IsWithinBounds(Vector2Int position)
@@ -303,7 +305,7 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveToTargetIndicator()
     {
-        if (!isOnHeroPosition|| isCancleSelected) return;
+        if (!isOnHeroPosition || isCancleSelected) return;
         //var currentTurn = GetCurrentPlayerTurn();
         //Debug.Log("turn!!!"+currentTurn);
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -541,7 +543,7 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleSubmitHeroSelected()
     {
-        Debug.Log("HandleSubmitHeroSelected" );
+        Debug.Log("HandleSubmitHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
 
@@ -559,7 +561,7 @@ public class GridIndicator : MonoBehaviour
 
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         ChooseHeroAction();
-       
+
     }
 
 
@@ -673,6 +675,6 @@ public class GridIndicator : MonoBehaviour
         finishSelection?.Invoke();
         var position = GetIndicatorPositon();
         SetSubmitHero(position);
-        isHeroSubmited = false; 
+        isHeroSubmited = false;
     }
 }

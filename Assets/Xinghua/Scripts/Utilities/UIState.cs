@@ -4,12 +4,18 @@ using UnityEngine.InputSystem;
 
 public class UIState : BaseState
 {
+    private GridIndicator gridIndicator;
     public override void EnterState()
     {
         Debug.Log("Enter UI State");
+        gridIndicator.controlHintText.text ="W and D to select, Enter key to submit";
+ 
+    }
+    public UIState(GridIndicator gridIndicator)
+    {
+        this.gridIndicator = gridIndicator;
     }
 
-  
     public override void HandleInput(InputManager inputManager)
     {
         Debug.Log("Handle UI State");
