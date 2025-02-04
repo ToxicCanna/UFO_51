@@ -324,11 +324,16 @@ public class GridIndicator : MonoBehaviour
         {
             //update the gride status ;if not occupied emputy it
             oldIndicatorLocation = submitHeroData.gameObject.transform.position;
-            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
 
+
+            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+          
+
+            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
             submitHeroData.gameObject.transform.position = transform.position;//move the hero
-            currentGridPosition = WorldToGridPosition(transform.position); 
-            GridManager.Instance.AddOccupiedGrid(transform.position);
+            currentGridPosition = WorldToGridPosition(transform.position);
+            // GridManager.Instance.AddOccupiedGrid(transform.position);
+            GridManager.Instance.AddHeroWithTeamInfo(submitHeroData.gameObject);
 
             UpdatePlayerTurn();
             SetIndicatorInCurrentHeroPos();
@@ -512,14 +517,28 @@ public class GridIndicator : MonoBehaviour
     {
         gameStateMachine.SwitchToUIState();
     }
-    //Submit current selected hero
 
- 
+    private bool IsOppsiteHeroHere(Vector2Int indicatorPosition)
+    {
+        var teamInfo = GridManager.Instance.GetHeroTeamAtPosition(indicatorPosition);
+        if (currentTurn == PlayerTurn.PlayerBlueSide && teamInfo == "red")
+        {
+
+            return true;
+        }
+        else if(currentTurn == PlayerTurn.PlayerRedSide && teamInfo == "blue")
+        { 
+            return true;
+        }
+        return false;
+    }
+
     public void HandleSubmitHeroSelected()
     {
-        GridManager.Instance.CheckOccupiedHero(transform.position);
-        Debug.Log("isAtOppositeHeroPos" + isAtOppositeHeroPos);
-        if (isHeroSubmited || isAtOppositeHeroPos)return;
+
+        var indicatorPosition = new Vector2Int((int)transform.position.x,(int)transform.position.y);
+        //IsOppsiteHeroHere(indicatorPosition);
+        if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition)) )return;
         
         isOnHeroPosition = true;
         isHeroSubmited = true;

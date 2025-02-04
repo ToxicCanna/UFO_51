@@ -8,6 +8,9 @@ public class HeroPocketManager : MonoBehaviour
     private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
 
+
+   
+
     private List<GameObject> RedSideheros;//get from child gameobject
     private List<GameObject> BlueSideheros;
     private void Awake()
@@ -96,6 +99,34 @@ public class HeroPocketManager : MonoBehaviour
         return allHeroes;
 
     }
+
+    private GameObject GetHeroAtPosition(Vector2Int position)
+    {
+        foreach (var hero in GetAllHeroes())
+        {
+            Vector2Int heroPos =new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+
+            if (heroPos == position)
+            {
+                return hero;
+            }
+        }
+        return null;
+    }
+
+    public string GetHeroTeamByName(string heroName)
+    {
+        if (redSideHeroes.ContainsKey(heroName))
+        {
+            return "red";
+        }
+        else if (blueSideHeroes.ContainsKey(heroName))
+        {
+            return "blue";
+        }
+        return "none"; 
+    }
+
     public void RegisterHero(string heroId, GameObject hero, string heroColor)
     {
         if (heroColor == "red")

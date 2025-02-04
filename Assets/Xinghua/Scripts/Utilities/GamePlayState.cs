@@ -17,15 +17,14 @@ public class GamePlayState : BaseState
 
     public override void HandleInput(InputManager inputManager)
     {
-       // Debug.Log("Handle GamePlay State");
+        // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
         currentControls = controls;
         if (controls != null && gridIndicator != null)
         {
             currentControls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
             // currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
-             currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
-           // currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.ChooseHeroAction();
+            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleSubmitHeroSelected();
             currentControls.GamePlay.Confirm.performed += ctx => gridIndicator?.MoveToTargetIndicator();
             currentControls.GamePlay.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
             //currentControls.GamePlay.Cancle.performed += ctx => gridIndicator?.CancleSelected();
@@ -42,8 +41,7 @@ public class GamePlayState : BaseState
         currentControls.GamePlay.Move.performed -= ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
         //currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
         currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleSubmitHeroSelected();
-        //currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.ChooseHeroAction();
-        //currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.ChooseHeroAction();
+
         currentControls.GamePlay.Confirm.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
         currentControls.GamePlay.Shop.performed -= ctx => gridIndicator?.ActiveShopMenu();
     }

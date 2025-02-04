@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
 
     private List<Vector2> occupiedGrids = new List<Vector2>();
     private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
-
+    private Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
     //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
     //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
     private Vector2 indicatorPos;
@@ -33,16 +33,45 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void AddHeroWithTeamInfo(GameObject hero)
+    {
+        heros.Add(hero);
+        Vector2 heroPosition = hero.transform.position;
+        string heroTeam = HeroPocketManager.Instance.GetHeroTeamByName(hero.name); 
+        occupiedGrids.Add(heroPosition);
+        occupiedGridTeams[heroPosition] = heroTeam; 
+        Debug.Log($"Hero {hero.name} added at {heroPosition}, Team: {heroTeam}");
+    }
+
+
+
+    public void RemoveOccupiedGrid(Vector2 gridPosition)
+    {
+        occupiedGrids.Remove(gridPosition);
+        occupiedGridTeams.Remove(gridPosition); 
+        Debug.Log($"Removed occupation at {gridPosition}");
+    }
+
     public void AddOccupiedGrid(Vector2 gridPosition)
     {
         // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
     }
-    public void RemoveOccupiedGrid(Vector2 gridPosition)
+    public string GetHeroTeamAtPosition(Vector2 position)
     {
-        occupiedGrids.Remove(gridPosition);
-        // Debug.Log("remove :" + gridPosition);
+        if (occupiedGridTeams.TryGetValue(position, out string team))
+        {
+            return team;
+        }
+        return "none"; // 该位置无英雄
     }
+
+
+    /*    public void RemoveOccupiedGrid(Vector2 gridPosition)
+        {
+            occupiedGrids.Remove(gridPosition);
+            // Debug.Log("remove :" + gridPosition);
+        }*/
 
     public void CheckOccupiedHero(Vector2 position)
     {
