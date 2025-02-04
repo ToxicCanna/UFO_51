@@ -8,9 +8,6 @@ public class HeroPocketManager : MonoBehaviour
     private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
     private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
 
-
-   
-
     private List<GameObject> RedSideheros;//get from child gameobject
     private List<GameObject> BlueSideheros;
     private void Awake()
@@ -33,6 +30,8 @@ public class HeroPocketManager : MonoBehaviour
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
             GridManager.Instance.AddHero(hero);
+            var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
+            GridManager.Instance.occupiedGridTeams.Add(heroPos, "red");
             RegisterHero(key, hero, "red");
         }
 
@@ -43,6 +42,8 @@ public class HeroPocketManager : MonoBehaviour
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
             //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
+            GridManager.Instance.occupiedGridTeams.Add(heroPos, "blue");
             GridManager.Instance.AddHero(hero);
             RegisterHero(key, hero, "blue");
 

@@ -521,6 +521,7 @@ public class GridIndicator : MonoBehaviour
     private bool IsOppsiteHeroHere(Vector2Int indicatorPosition)
     {
         var teamInfo = GridManager.Instance.GetHeroTeamAtPosition(indicatorPosition);
+        Debug.Log("team" + teamInfo);
         if (currentTurn == PlayerTurn.PlayerBlueSide && teamInfo == "red")
         {
 

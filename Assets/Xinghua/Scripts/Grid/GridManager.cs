@@ -5,22 +5,14 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
 
-    //public HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
+
 
     private List<Vector2> occupiedGrids = new List<Vector2>();
     private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
-    private Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
-    //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
-    //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
-    private Vector2 indicatorPos;
-    private void Start()
-    {
-        foreach (var hero in heros)
-        {
-            AddOccupiedGrid(hero.transform.position);
-        }
+    public Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
 
-    }
+    private Vector2 indicatorPos;
+
     private void Awake()
     {
         if (Instance == null)
@@ -61,17 +53,13 @@ public class GridManager : MonoBehaviour
     {
         if (occupiedGridTeams.TryGetValue(position, out string team))
         {
+           
             return team;
         }
-        return "none"; // 该位置无英雄
+        return "none"; 
     }
 
 
-    /*    public void RemoveOccupiedGrid(Vector2 gridPosition)
-        {
-            occupiedGrids.Remove(gridPosition);
-            // Debug.Log("remove :" + gridPosition);
-        }*/
 
     public void CheckOccupiedHero(Vector2 position)
     {
@@ -103,12 +91,7 @@ public class GridManager : MonoBehaviour
         Debug.Log("occupiedGrids " + occupiedGrids.Count);
         return occupiedGrids;
     }
-    /*  public HashSet<Vector2> GetOccupiedGrids()
-      {
-          // print all the position been occupied by heros
-          Debug.Log("occupiedGrids " + occupiedGrids);
-          return occupiedGrids;
-      }*/
+
 
 
     public bool IsGridOccupied(Vector2 gridPosition)
