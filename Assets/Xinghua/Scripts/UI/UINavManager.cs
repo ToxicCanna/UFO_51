@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -147,7 +146,7 @@ public class UINavManager : MonoBehaviour
             HandleHeroShopSelection();
 
         }
-        
+
     }
 
     public void HandleHeroShopSelection()
@@ -187,6 +186,10 @@ public class UINavManager : MonoBehaviour
         if (selectedButtonName == "At")//attack button selected
         {
             gameStateMachine.SwitchToAttackState();
+        }
+        else if (selectedButtonName == "Mo")//healbutton selected
+        {
+            gameStateMachine.SwitchToMoveHeroState();
         }
         else if (selectedButtonName == "He")//healbutton selected
         {

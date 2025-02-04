@@ -559,6 +559,7 @@ public class GridIndicator : MonoBehaviour
 
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         ChooseHeroAction();
+       
     }
 
 
