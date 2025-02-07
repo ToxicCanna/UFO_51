@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public int coinCountBlue = 3;
     public TMP_Text coinText;
     public TMP_Text currentTurnText;
-
+    public TMP_Text BasicHeroText;
+    public int BasicHeroCount = 0;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,11 +33,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        coinCountRed = 3;
+        coinCountRed = 4;
         coinCountBlue = 3;
         coinText.text = coinCountRed.ToString();
         UpdateCoinCount();
-
+        BasicHeroOwned();
     }
 
     public void UpdateHeroSubmissionState(bool state)
@@ -53,11 +54,26 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            coinCount = coinCountBlue;
             coinCountBlue++;
         }
-       
         coinText.text = "Coin:" +""+ coinCount.ToString();   
     }
+    public void DecreaseCoinCount( int value)
+    {
+        var coinCount = coinCountRed;
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            coinCount -= value;
+        }
+        else
+        {
+            coinCount = coinCountBlue;
+            coinCountBlue++;
+        }
+        coinText.text = "Coin:" + "" + coinCount.ToString();
+    }
+
 
     public void UpdatePlayerTurn()
     {
@@ -72,6 +88,10 @@ public class GameManager : MonoBehaviour
        
     }
 
+    public void BasicHeroOwned()
+    {
+        BasicHeroText.text = "Basic (" + BasicHeroCount.ToString() +"/4)";
+    }
 }
 
 

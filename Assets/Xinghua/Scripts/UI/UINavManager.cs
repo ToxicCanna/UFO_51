@@ -172,6 +172,7 @@ public class UINavManager : MonoBehaviour
         if (selectedButtonName == "Ba")//attack button selected
         {
             spawnHero.SpawnNew(0);
+            
         }
         else if (selectedButtonName == "Kn")
         {
