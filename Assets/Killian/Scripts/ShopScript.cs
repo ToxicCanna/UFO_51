@@ -18,7 +18,7 @@ public class ShopScript : MonoBehaviour
         twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
     }
 
-    private void Update()
+  /*  private void Update()
     {
         ShopSetup(gridIndicator.currentTurn);
     }
@@ -55,5 +55,5 @@ public class ShopScript : MonoBehaviour
             spawnedHero = Instantiate(shopList[i], spawnLoc.position, Quaternion.identity);
             twoSidesHero.GetHerosBlue().Add(spawnedHero);
         }
-    }
+    }*/
 }

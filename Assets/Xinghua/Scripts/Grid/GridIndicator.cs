@@ -8,8 +8,6 @@ public class GridIndicator : MonoBehaviour
 {
     // [SerializeField] private List<ScriptableObject> items; 
     private int minI, maxI, minJ, maxJ;
-    public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
-    public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
@@ -55,7 +53,7 @@ public class GridIndicator : MonoBehaviour
     private int currentSelectedHeroId;
     private bool isAtOppositeHeroPos = false;
     private bool isCancleSelected = false;
-    //[SerializeField] private TMP_Text playerText;
+
     public TMP_Text controlHintText;
 
 
@@ -71,11 +69,11 @@ public class GridIndicator : MonoBehaviour
 
         transform.position = GridToWorldPosition(currentGridPosition);
         Debug.Log("transform.position" + transform.position);
-        currentTurn = PlayerTurn.PlayerRedSide;
+       // currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
 
-        Debug.Log("Start current turn :" + currentTurn);
+        //Debug.Log("Start current turn :" + currentTurn);
 
 
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
@@ -194,7 +192,7 @@ public class GridIndicator : MonoBehaviour
     private List<GameObject> GetCurrentTurnPlayerHeros()
     {
         List<GameObject> opponiteHeros = new List<GameObject>();
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             opponiteHeros = HeroPocketManager.Instance.GetAllRedSideHeroes();
 
@@ -209,7 +207,7 @@ public class GridIndicator : MonoBehaviour
     private List<GameObject> GetOppositeHeros()
     {
         List<GameObject> opponiteHeros = new List<GameObject>();
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             opponiteHeros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
 
@@ -306,8 +304,6 @@ public class GridIndicator : MonoBehaviour
     public void MoveToTargetIndicator()
     {
         if (!isOnHeroPosition || isCancleSelected) return;
-        //var currentTurn = GetCurrentPlayerTurn();
-        //Debug.Log("turn!!!"+currentTurn);
         currentGridPosition = WorldToGridPosition(transform.position);
 
 
@@ -367,12 +363,12 @@ public class GridIndicator : MonoBehaviour
                //UpdateIndicatorWhenTurnChange();
                SetIndicatorWhenTurnChange();
            }*/
-        if (currentTurn == PlayerTurn.PlayerBlueSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllRedSideHeroes();
             // Debug.Log("heroOpposite Redhero count:" + herosOpposite.Count);
         }
-        else if (currentTurn == PlayerTurn.PlayerRedSide)
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             herosOpposite = HeroPocketManager.Instance.GetAllBlueSideHeroes();
             // Debug.Log("heroOpposite Bluehero count:" + herosOpposite.Count);
@@ -431,21 +427,19 @@ public class GridIndicator : MonoBehaviour
         currentGridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }
 
-    private PlayerTurn GetCurrentPlayerTurn()
-    {
-        return currentTurn;
-    }
 
     private void UpdatePlayerTurn()
     {
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            currentTurn = PlayerTurn.PlayerBlueSide;
+            GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerBlueSide;
+        
         }
         else
         {
-            currentTurn = PlayerTurn.PlayerRedSide;
+            GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerRedSide;
         }
+        GameManager.Instance.UpdateCoinCount();
     }
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
@@ -471,10 +465,10 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("start hero in blue side :" + herosInBlueSide.Count);
         Debug.Log("use X key to switch");
         //Debug.Log("current indicator position" + transform.position);
-        Debug.Log("current turn" + GetCurrentPlayerTurn());
+
         Debug.Log("red hero coun when select :" + herosInRedSide.Count);
         Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
-        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn ==GameManager.PlayerTurn.PlayerRedSide)
         {
 
             //Debug.Log("count:"+herosInRedSide.Count);
@@ -496,7 +490,7 @@ public class GridIndicator : MonoBehaviour
             var nextHero = herosInRedSide[nextHeroIndex];
             transform.position = nextHero.transform.position;
         }
-        else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
         {
 
             //Debug.Log("count:"+herosInRedSide.Count);
@@ -529,12 +523,12 @@ public class GridIndicator : MonoBehaviour
     {
         var teamInfo = GridManager.Instance.GetHeroTeamAtPosition(indicatorPosition);
         Debug.Log("team" + teamInfo);
-        if (currentTurn == PlayerTurn.PlayerBlueSide && teamInfo == "red")
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide && teamInfo == "red")
         {
 
             return true;
         }
-        else if (currentTurn == PlayerTurn.PlayerRedSide && teamInfo == "blue")
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide && teamInfo == "blue")
         {
             return true;
         }
@@ -623,7 +617,7 @@ public class GridIndicator : MonoBehaviour
     }
     public List<GameObject> GetOppositHerosInTheScene()
     {
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             var heros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
             return heros;

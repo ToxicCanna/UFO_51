@@ -17,7 +17,7 @@ public class SpawnHero : MonoBehaviour
 
 
 
-    private void Update()
+/*    private void Update()
     {
         ShopSetup(gridIndicator.currentTurn);
     }
@@ -36,7 +36,7 @@ public class SpawnHero : MonoBehaviour
             spawnLoc = blueSpawn;
             shopList = blueHeroPrefab;
         }
-    }
+    }*/
 
 /*    public void Spawn(int i)
     {
