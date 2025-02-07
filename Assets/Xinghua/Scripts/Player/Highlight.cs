@@ -249,13 +249,20 @@ public class HighLight : MonoBehaviour
                 new Vector2Int(0, -1),
                 new Vector2Int(-1, 0),
                 new Vector2Int(1, 0),
+                 new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, 1),
+                new Vector2Int(-1, -1)
 
 
             };
             foreach (var direction in directions)
             {
                 neighbors.Add(currentPosition + direction);
-                neighbors.Add(currentPosition + direction * 2);
+                if (direction.x == 0 || direction.y == 0)
+                {
+                    neighbors.Add(currentPosition + direction * 2);
+                }
             }
         }
         else if (ID == 3)
