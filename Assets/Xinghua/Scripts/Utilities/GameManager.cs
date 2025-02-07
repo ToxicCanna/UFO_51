@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+
     public bool IsHeroSubmitted { get; private set; }
     public int coinCount;
     public TMP_Text coinText;

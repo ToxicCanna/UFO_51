@@ -12,10 +12,11 @@ public class UINavManager : MonoBehaviour
 
     private string selectedButtonName;
 
-    [SerializeField] private ShopScript shopScript;
+    //[SerializeField] private ShopScript shopScript;
 
     //xinghua code
     [SerializeField] GameStateMachine gameStateMachine;
+    [SerializeField] SpawnHero spawnHero;
     private bool isGamePlayStateActive = false;
 
     //end
@@ -170,12 +171,23 @@ public class UINavManager : MonoBehaviour
     {
         if (selectedButtonName == "Ba")//attack button selected
         {
-            Debug.Log("spawn Basic hero in the scene ");
+            spawnHero.SpawnNew(0);
         }
-        else if (selectedButtonName == "He")//healbutton selected
+        else if (selectedButtonName == "Kn")
         {
-
-            Debug.Log("spawn Healer hero in the scene ");
+            spawnHero.SpawnNew(1);
+        }
+        else if (selectedButtonName == "Th")
+        {
+            spawnHero.SpawnNew(2);
+        }
+        else if (selectedButtonName == "Ra")
+        {
+            spawnHero.SpawnNew(3);
+        }
+        else if (selectedButtonName == "He")
+        {
+            spawnHero.SpawnNew(4);
         }
         SwithToGamePlayState();
 

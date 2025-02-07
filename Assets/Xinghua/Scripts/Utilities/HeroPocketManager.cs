@@ -52,7 +52,7 @@ public class HeroPocketManager : MonoBehaviour
 
     }
 
-
+ 
     public List<GameObject> GetAllRedSideHeroes()
     {
         List<GameObject> heroListRedSide = new List<GameObject>(); // Create a new list
@@ -128,6 +128,7 @@ public class HeroPocketManager : MonoBehaviour
         return "none"; 
     }
 
+    // if player buy hero in the shop should also register and update this data
     public void RegisterHero(string heroId, GameObject hero, string heroColor)
     {
         if (heroColor == "red")

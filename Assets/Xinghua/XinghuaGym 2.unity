@@ -220,8 +220,9 @@ MonoBehaviour:
   - {fileID: 1972607170}
   - {fileID: 311960701}
   selector: {fileID: 260385017}
-  shopScript: {fileID: 604115212}
+  shopScript: {fileID: 0}
   gameStateMachine: {fileID: 1978772880}
+  spawnHero: {fileID: 394367767}
 --- !u!1 &122079037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,6 +1642,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375114694}
   m_CullTransparentMesh: 1
+--- !u!1 &394367765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394367766}
+  - component: {fileID: 394367767}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &394367766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394367765}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469706333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &394367767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394367765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e302e9a66fde5984d9985d5b7a5612aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redSpawn: {fileID: 1752793970}
+  redCastle: {fileID: 984942918}
+  blueSpawn: {fileID: 1460514491}
+  blueCastle: {fileID: 582163117}
+  gridIndicator: {fileID: 646920146}
+  redHeroPrefab:
+  - {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
+  - {fileID: 7040964495117261246, guid: ad62126eb983da349b8b868a241296b8, type: 3}
+  - {fileID: 1996134876235478659, guid: e36d04e2029315044962f279980cffa5, type: 3}
+  - {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
+  - {fileID: 7761257565495430790, guid: 3c5982fecd03d8649be7d07fb73b104a, type: 3}
+  blueHeroPrefab:
+  - {fileID: 5112735674640118456, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
+  - {fileID: 3657800514934027367, guid: 230532ffbc6c4d54182e95f5743bb862, type: 3}
+  - {fileID: 839373168696774799, guid: b0ea2ada3f016a84684d0669421ab57f, type: 3}
+  - {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
+  - {fileID: 7546586726400149654, guid: bc1db8b15c2901b45b8648674317d840, type: 3}
+  redBasicHeroPrefab: {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
+  redAHeroPrefab: {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
 --- !u!1 &402175855 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
@@ -2787,67 +2851,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5112735674640118456, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
   m_PrefabInstance: {fileID: 159297859}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &604115210
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 604115211}
-  - component: {fileID: 604115212}
-  m_Layer: 0
-  m_Name: ShopManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &604115211
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604115210}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1469706333}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &604115212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604115210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf410355fec8e848b679a522fdc36ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  redSpawn: {fileID: 1752793970}
-  redCastle: {fileID: 984942918}
-  blueSpawn: {fileID: 1460514491}
-  blueCastle: {fileID: 582163117}
-  gridIndicator: {fileID: 646920146}
-  redHeroPrefab:
-  - {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
-  - {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
-  - {fileID: 7761257565495430790, guid: 3c5982fecd03d8649be7d07fb73b104a, type: 3}
-  - {fileID: 1996134876235478659, guid: e36d04e2029315044962f279980cffa5, type: 3}
-  - {fileID: 7040964495117261246, guid: ad62126eb983da349b8b868a241296b8, type: 3}
-  blueHeroPrefab:
-  - {fileID: 5112735674640118456, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
-  - {fileID: 6542879086375700594, guid: a4e31d3aade02d144a079e179088368e, type: 3}
-  - {fileID: 7546586726400149654, guid: bc1db8b15c2901b45b8648674317d840, type: 3}
-  - {fileID: 839373168696774799, guid: b0ea2ada3f016a84684d0669421ab57f, type: 3}
-  - {fileID: 3657800514934027367, guid: 230532ffbc6c4d54182e95f5743bb862, type: 3}
 --- !u!1001 &616027040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10103,8 +10106,8 @@ Transform:
   - {fileID: 1978772879}
   - {fileID: 311191596}
   - {fileID: 1930196823}
-  - {fileID: 604115211}
   - {fileID: 493133082}
+  - {fileID: 394367766}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1474987416
