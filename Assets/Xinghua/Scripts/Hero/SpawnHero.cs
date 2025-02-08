@@ -60,7 +60,7 @@ public class SpawnHero : MonoBehaviour
         SetSpawnPrefab(buttonName);
       
         GameObject spawnedHero = Instantiate(SpawnPrefab,spawnLoc.position, Quaternion.identity);
-        Debug.Log(" spawnedHero" + spawnedHero);
+     
         HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, "red");
         GameManager.Instance.DecreaseCoinCount(2);
     }

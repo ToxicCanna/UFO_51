@@ -13,6 +13,7 @@ public class GameStateMachine : BaseStateMachine
     private UIState uiState;
     private AttackState attackState;
     private MoveHeroState moveState;
+    private ShopHeroState shopState;
 
 
     private void Awake()
@@ -28,6 +29,7 @@ public class GameStateMachine : BaseStateMachine
         gameplayState = new GamePlayState(_gridIndicator);
         attackState = new AttackState(_gridIndicator);
         moveState = new MoveHeroState(_gridIndicator);
+        shopState = new ShopHeroState(_gridIndicator);
     }
     private void Start()
     {
@@ -41,12 +43,22 @@ public class GameStateMachine : BaseStateMachine
             Debug.LogError("GameplayState is null! Ensure it is initialized.");
         }
     }
+    public void SetGameState(BaseState value)
+    {
+        SetState(value);
+    }
 
     public void SwitchToUIState()
     {
 
         SetState(uiState);
     }
+    public void SwitchToShopState()
+    {
+
+        SetState(shopState);
+    }
+
 
     public void SwitchToGameplayState()
     {

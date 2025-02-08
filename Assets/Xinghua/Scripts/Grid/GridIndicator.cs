@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -248,10 +249,15 @@ public class GridIndicator : MonoBehaviour
         currentGridPosition = WorldToGridPosition(transform.position);
 
         //check the target is valid or not ,if valid move the hero to indicator current position
-        var validPos = highLight.GetNeighbors(GetSubmitHeroPositon(), currentSelectedHeroId);
+
+        var validTargetPositions = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
+        Debug.Log("selected hero" + submitHeroData.name);
+        Debug.Log("validTargetPositions base pos" + GetSelectedHeroPositon());
+        Debug.Log("currentIndicatorGridPosition" + GetSelectedHeroPositon());
         canMove = false;
-        foreach (var pos in validPos)
+        foreach (var pos in validTargetPositions)
         {
+            Debug.Log("validpos" + pos.x+pos.y);
             if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
             {
                 canMove = true;
@@ -302,13 +308,10 @@ public class GridIndicator : MonoBehaviour
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
         //this just when two player in one spot attack each other
         var herosOpposite = GetOppositeHeros();
-        Debug.Log("herosOpposite " + herosOpposite.Count);
+
 
         foreach (var hero in herosOpposite)
         {
-            Debug.Log("hero oppo" + hero.name);
-            Debug.Log("target positon:" + currentGridPosition);
-            Debug.Log("hero.transform.position" + hero.transform.position);
 
 
             //if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
@@ -486,12 +489,9 @@ public class GridIndicator : MonoBehaviour
         return false;
     }
 
-    public void HandleSubmitHeroSelected()
+    public void HandleHeroSelected()
     {
-
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
-
         if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
 
         isOnHeroPosition = true;
@@ -499,7 +499,7 @@ public class GridIndicator : MonoBehaviour
         isCancleSelected = false;
         var position = GetIndicatorPositon();
 
-        SetSubmitHero(position);
+        SetSelectedHero(position);
 
         currentSelectedHeroId = GetSubmitHeroPathIndex(position);
 
@@ -510,9 +510,13 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    public Vector2Int GetSubmitHeroPositon()
+    public Vector2Int GetSelectedHeroPositon()
     {
-        return new Vector2Int((int)submitHeroData.transform.position.x, (int)submitHeroData.transform.position.y);
+        if (submitHeroData != null)
+        {
+            return new Vector2Int((int)submitHeroData.transform.position.x, (int)submitHeroData.transform.position.y);
+        }
+        return Vector2Int.zero;
     }
 
     public Vector2Int GetIndicatorPositon()
@@ -521,8 +525,9 @@ public class GridIndicator : MonoBehaviour
         return new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }
 
-    public void SetSubmitHero(Vector2 position)
+    public void SetSelectedHero(Vector2 position)
     {
+       
         if (isCancleSelected) submitHeroData = null;
         else
         {
@@ -536,11 +541,13 @@ public class GridIndicator : MonoBehaviour
                     //isHeroSubmited = true;
                     var heroData = hero.GetComponent<HeroData>();
                     submitHeroData = heroData;
+                    Debug.Log("Set selected hero" + heroData.name);
                 }
 
             }
 
         }
+       
     }
 
 
@@ -624,7 +631,8 @@ public class GridIndicator : MonoBehaviour
 
     internal void ActiveShopMenu()
     {
-        gameStateMachine.SwitchToUIState();
+         gameStateMachine.SwitchToShopState();
+      
     }
 
     internal void CancleSelected()
@@ -633,7 +641,7 @@ public class GridIndicator : MonoBehaviour
         isCancleSelected = true;
         finishSelection?.Invoke();
         var position = GetIndicatorPositon();
-        SetSubmitHero(position);
+        SetSelectedHero(position);
         isHeroSubmited = false;
     }
 }

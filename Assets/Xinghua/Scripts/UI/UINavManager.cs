@@ -5,18 +5,19 @@ using UnityEngine.UI;
 public class UINavManager : MonoBehaviour
 {
     public static UINavManager Instance;
-    public Button[] buttons; // Assign buttons in order
-    public Button[] buttonsHeroActions; // Assign buttons in order
+    public Button[] buttons;
+    public Button[] buttonsHeroActions;
     public RectTransform selector; // Assign the selector GameObject
-    private int currentIndex = 0; // Tracks the currently selected button
+  
+    private int shopIndex = 0; 
+    private int actionIndex = 0; 
+
 
     private string selectedButtonName;
 
-
-
     [SerializeField] GameStateMachine gameStateMachine;
     [SerializeField] SpawnHero spawnHero;
-    private bool isGamePlayStateActive = false;
+
 
     //end
     private void Awake()
@@ -33,8 +34,9 @@ public class UINavManager : MonoBehaviour
     private IEnumerator FixSelectorPosition()
     {
         yield return new WaitForEndOfFrame(); // Ensures UI layout is finalized
-        UpdateSelectorPosition();
+        UpdateSelectorPositionShop();
     }
+
     private void Start()
     {
         if (buttons.Length == 0)
@@ -55,54 +57,33 @@ public class UINavManager : MonoBehaviour
 
 
 
-    public void HandleNavigation(Vector2 direction)
+    public void HandleNavigationInActionsZone(Vector2 direction)
     {
-        Debug.Log("IsHeroSubmitted" + GameManager.Instance.IsHeroSubmitted);
-        if (GameManager.Instance.IsHeroSubmitted)
-        {
-            UpdateSelectorPositionInHeroActionsZone();
-            if (direction.x > 0)
-            {
-                //MoveSelector(1); // Move to the next button
-                MoveSelectorWithHeroActions(1);
-            }
-            else if (direction.x < 0)
-            {
-                MoveSelectorWithHeroActions(-1);
-                // MoveSelector(-1); // Move to the previous button
-            }
-        }
-        else
-        {
-            if (direction.x > 0)
-            {
-                MoveSelector(1); // Move to the next button
-
-            }
-            else if (direction.x < 0)
-            {
-
-                MoveSelector(-1); // Move to the previous button
-            }
-        }
+        MoveSelectorWithHeroActions((int)direction.x);
     }
 
-    public void MoveSelector(int direction)
+    public void HandleNavigationInShopZone(Vector2 direction)
+    {
+
+        MoveSelectorInShop((int)direction.x);
+    }
+
+    public void MoveSelectorInShop(int direction)
     {
         if (buttons.Length == 0) return;
+        Debug.Log("buttons.Length"+ buttons.Length);
 
-        currentIndex = (currentIndex + direction + buttons.Length) % buttons.Length; // Wrap around
-        // Debug.Log("[UISelector] Moved to button index: " + currentIndex + " (" + buttons[currentIndex].name + ")");
-        UpdateSelectorPosition();
+        shopIndex = (shopIndex + direction + buttons.Length) % buttons.Length; // Wrap around
+        Debug.Log($"After move: currentIndex = {shopIndex}");
+        UpdateSelectorPositionShop();
     }
 
     public void MoveSelectorWithHeroActions(int direction)
     {
         if (buttonsHeroActions.Length == 0) return;
 
-        currentIndex = (currentIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
-        Debug.Log("UpdateSelectorPositionInHeroActionsZone");
-        UpdateSelectorPositionInHeroActionsZone();
+        actionIndex = (actionIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
+        UpdateSelectorPositionAction();
     }
 
     private void UpdateSelectorPositionInHeroActionsZone()
@@ -113,14 +94,26 @@ public class UINavManager : MonoBehaviour
             return;
         }
 
+      /*  if (buttonsHeroActions == null || buttonsHeroActions.Length == 0)
+        {
+            Debug.LogWarning("[UISelector] buttonsHeroActions array is empty or null!");
+            return;
+        }
+
+        if (currentIndex < 0 || currentIndex >= buttonsHeroActions.Length)
+        {
+            Debug.LogWarning($"[UISelector] currentIndex ({currentIndex}) is out of range! Valid range: 0 - {buttonsHeroActions.Length - 1}");
+            return;
+        }
+*/
         if (buttons.Length > 0)
         {
-            selector.position = buttonsHeroActions[currentIndex].transform.position;
+            selector.position = buttonsHeroActions[actionIndex].transform.position;
             // Debug.Log("[UISelector] Selector moved to: " + selector.position);
         }
     }
 
-    private void UpdateSelectorPosition()
+    public void UpdateSelectorPositionShop()
     {
         if (selector == null)
         {
@@ -130,46 +123,47 @@ public class UINavManager : MonoBehaviour
 
         if (buttons.Length > 0)
         {
-            selector.position = buttons[currentIndex].transform.position;
+            selector.position = buttons[shopIndex].transform.position;
             // Debug.Log("[UISelector] Selector moved to: " + selector.position);
         }
     }
-    public void HandleButtonsSelection()
+
+    public void UpdateSelectorPositionAction()
     {
-        if (GameManager.Instance.IsHeroSubmitted)
+        if (selector == null)
         {
-
-            HandleActionsSelection();
-        }
-        else
-        {
-            HandleHeroShopSelection();
-
+            Debug.LogWarning("[UISelector] Selector is missing!");
+            return;
         }
 
+        if (buttonsHeroActions.Length > 0)
+        {
+            selector.position = buttonsHeroActions[actionIndex].transform.position;
+            // Debug.Log("[UISelector] Selector moved to: " + selector.position);
+        }
     }
-
     public void HandleHeroShopSelection()
     {
-        string firstTwoLetters = buttons[currentIndex].name.Substring(0, 2);
+        string firstTwoLetters = buttons[shopIndex].name.Substring(0, 2);
         selectedButtonName = firstTwoLetters;
         ProcessHeroShopSelected();
-        buttons[currentIndex].onClick.Invoke();
+        buttons[shopIndex].onClick.Invoke();
     }
 
     public void HandleActionsSelection()
     {
-        string firstTwoLetters = buttonsHeroActions[currentIndex].name.Substring(0, 2);
+        string firstTwoLetters = buttonsHeroActions[actionIndex].name.Substring(0, 2);
         selectedButtonName = firstTwoLetters;
-        buttonsHeroActions[currentIndex].onClick.Invoke();
         ProcessActionSelected();
+        buttonsHeroActions[actionIndex].onClick.Invoke();
     }
 
 
     private void ProcessHeroShopSelected()
     {
+        Debug.Log("spawn hero");
         spawnHero.SpawnNew(selectedButtonName);
-   
+
         SwithToGamePlayState();
     }
 
@@ -201,8 +195,6 @@ public class UINavManager : MonoBehaviour
 
     internal void SwithToGamePlayState()
     {
-        if (isGamePlayStateActive) return;
-
         if (gameStateMachine != null)
         {
             gameStateMachine.SwitchToGameplayState();
