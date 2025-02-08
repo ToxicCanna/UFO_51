@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6192920740630649659}
   - component: {fileID: -990082924455694902}
   - component: {fileID: 6573546338633851706}
+  - component: {fileID: -4141696867866245603}
   m_Layer: 8
   m_Name: RedHealer
   m_TagString: RedHero
@@ -246,4 +247,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPathID: 4
+--- !u!114 &-4141696867866245603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040964495117261246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

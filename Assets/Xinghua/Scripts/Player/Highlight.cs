@@ -44,7 +44,7 @@ public class HighLight : MonoBehaviour
         var heros = HeroPocketManager.Instance.GetAllHeroes();
         foreach (var hero in heros)
         {
-            var index = hero.gameObject.GetComponent<HeroPath>().GetHeroMoveIndex();
+            var index = hero.gameObject.GetComponent<HeroPath>().heroPathID;
             if (gridIndicator.transform.position == hero.transform.position)
             {
                 neighbors = GetNeighbors(currentGridPosition, index);

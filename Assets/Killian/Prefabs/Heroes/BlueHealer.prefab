@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6260415601942046971}
   - component: {fileID: -3043958424282861366}
   - component: {fileID: -3080543736976497511}
+  - component: {fileID: 6701347646590852020}
   m_Layer: 8
   m_Name: BlueHealer
   m_TagString: BlueHero
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -232,3 +234,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6701347646590852020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657800514934027367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

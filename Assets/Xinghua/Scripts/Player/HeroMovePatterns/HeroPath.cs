@@ -2,12 +2,45 @@ using UnityEngine;
 
 public class HeroPath : MonoBehaviour
 {
-   // public HeroPath heroPath;
-   // [SerializeField] HeroMovementRule heroMoveRule;
-    public int heroPathID;
-  
-    public int GetHeroMoveIndex()
+    public int heroPathID { get; private set; }
+
+    private void Start()
     {
-        return this.heroPathID;
+
+        SetHeroPathID();
+
+        Debug.Log("move id " + heroPathID);
     }
+    private void SetHeroPathID()
+    {
+        Debug.Log("move id " + this.name);
+        string firstTwoLetters = this.name.Substring(0, 2);
+        Debug.Log("firstTwoLetters" + firstTwoLetters);
+        if (this.name.Contains("Basic")) 
+        {
+            heroPathID = 0;
+        }
+        else if (this.name.Contains("Knight"))
+        {
+            heroPathID = 1;
+        }
+        else if (this.name.Contains("Thief"))
+        {
+            heroPathID = 2;
+        }
+        else if (this.name.Contains("Ra"))
+        {
+            heroPathID = 3;
+        }
+        else if (this.name.Contains("Healer"))
+        {
+            heroPathID = 4;
+        }
+        else
+        {
+            heroPathID = -1; 
+        }
+
+    }
+
 }
