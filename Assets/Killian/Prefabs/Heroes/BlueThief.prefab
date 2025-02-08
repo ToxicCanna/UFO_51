@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4410382641169549210}
   - component: {fileID: -4607510962992324}
   - component: {fileID: 1474197947989475159}
+  - component: {fileID: 6985038099439431998}
   m_Layer: 8
   m_Name: BlueThief
   m_TagString: BlueHero
@@ -233,3 +234,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6985038099439431998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7546586726400149654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroPathID: 2

@@ -24,6 +24,7 @@ public class UIState : BaseState
         controls.UI.Navigate.performed += ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
         controls.UI.Selected.performed += ctx => UINavManager.Instance.HandleButtonsSelection();
         controls.UI.Cancle.performed += ctx => UINavManager.Instance.CancleSelected();
+        controls.UI.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
     }
 
     public override void ExitState()
@@ -33,6 +34,7 @@ public class UIState : BaseState
         controls.UI.Navigate.performed -= ctx => UINavManager.Instance.HandleNavigation(ctx.ReadValue<Vector2>());
         controls.UI.Selected.performed -= ctx => UINavManager.Instance.HandleButtonsSelection();
         controls.UI.Cancle.performed -= ctx => UINavManager.Instance.CancleSelected();
+        controls.UI.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
 
     }
 

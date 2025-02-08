@@ -209,6 +209,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Shop"",
+                    ""type"": ""Button"",
+                    ""id"": ""598096f5-7cdb-4c54-ac17-3ac32e2096ef"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Cancle"",
                     ""type"": ""Button"",
                     ""id"": ""5c90251b-d813-4189-8efd-732616143760"",
@@ -305,6 +314,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""2e708063-de22-4013-a863-dfd7cc5fdddb"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""36ea6486-aa0c-46ac-8775-c52b36b88f6e"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -341,6 +361,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
+        m_UI_Shop = m_UI.FindAction("Shop", throwIfNotFound: true);
         m_UI_Cancle = m_UI.FindAction("Cancle", throwIfNotFound: true);
         m_UI_Cancel = m_UI.FindAction("Cancel", throwIfNotFound: true);
         m_UI_Selected = m_UI.FindAction("Selected", throwIfNotFound: true);
@@ -498,6 +519,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Navigate;
+    private readonly InputAction m_UI_Shop;
     private readonly InputAction m_UI_Cancle;
     private readonly InputAction m_UI_Cancel;
     private readonly InputAction m_UI_Selected;
@@ -506,6 +528,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
+        public InputAction @Shop => m_Wrapper.m_UI_Shop;
         public InputAction @Cancle => m_Wrapper.m_UI_Cancle;
         public InputAction @Cancel => m_Wrapper.m_UI_Cancel;
         public InputAction @Selected => m_Wrapper.m_UI_Selected;
@@ -521,6 +544,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Navigate.started += instance.OnNavigate;
             @Navigate.performed += instance.OnNavigate;
             @Navigate.canceled += instance.OnNavigate;
+            @Shop.started += instance.OnShop;
+            @Shop.performed += instance.OnShop;
+            @Shop.canceled += instance.OnShop;
             @Cancle.started += instance.OnCancle;
             @Cancle.performed += instance.OnCancle;
             @Cancle.canceled += instance.OnCancle;
@@ -537,6 +563,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Navigate.started -= instance.OnNavigate;
             @Navigate.performed -= instance.OnNavigate;
             @Navigate.canceled -= instance.OnNavigate;
+            @Shop.started -= instance.OnShop;
+            @Shop.performed -= instance.OnShop;
+            @Shop.canceled -= instance.OnShop;
             @Cancle.started -= instance.OnCancle;
             @Cancle.performed -= instance.OnCancle;
             @Cancle.canceled -= instance.OnCancle;
@@ -575,6 +604,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnNavigate(InputAction.CallbackContext context);
+        void OnShop(InputAction.CallbackContext context);
         void OnCancle(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
         void OnSelected(InputAction.CallbackContext context);

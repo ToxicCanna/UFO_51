@@ -187,6 +187,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Shop",
+                    "type": "Button",
+                    "id": "598096f5-7cdb-4c54-ac17-3ac32e2096ef",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cancle",
                     "type": "Button",
                     "id": "5c90251b-d813-4189-8efd-732616143760",
@@ -280,6 +289,17 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2e708063-de22-4013-a863-dfd7cc5fdddb",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
