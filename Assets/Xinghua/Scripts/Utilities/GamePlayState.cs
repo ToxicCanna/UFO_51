@@ -18,7 +18,7 @@ public class GamePlayState : BaseState
 
     public override void HandleInput(InputManager inputManager)
     {
-        // Debug.Log("Handle GamePlay State");
+         Debug.Log("Handle GamePlay Input");
         var controls = inputManager.GetControls();
         currentControls = controls;
         if (controls != null && gridIndicator != null)

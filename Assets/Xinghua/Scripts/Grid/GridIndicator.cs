@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -134,12 +135,13 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMoveNew(Vector2 direction)
     {
+        Debug.Log("game play state HandleIndicatorMoveNew:" );
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
         HandleIndicatorMove(intDirection);
     }
 
     private int currentIndex = 0;
-  
+    private bool canMove;
 
     public void ChooseTargets(Vector2 direction)
     {
@@ -303,12 +305,13 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveToTargetIndicator()
     {
+        Debug.Log("MoveToTargetIndicator");
         if (!isOnHeroPosition || isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
 
         //check the target is valid or not ,if valid move the hero to indicator current position
         var validPos = highLight.GetNeighbors(GetSubmitHeroPositon(), currentSelectedHeroId);
-        var canMove = false;
+        canMove = false;
         foreach (var pos in validPos)
         {
             if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
@@ -417,6 +420,8 @@ public class GridIndicator : MonoBehaviour
             animator.SetBool("IsDmg", true);
         }
         isAttackEnd = true;
+        gameStateMachine.SwitchToGameplayState();
+        isHeroSubmited = false;
     }
 
     private void SetIndicatorInCurrentHeroPos()
@@ -547,8 +552,11 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("HandleSubmitHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
 
+        Debug.Log("isHeroSubmited"+ isHeroSubmited);
+        Debug.Log("IsOppsiteHeroHere"+ IsOppsiteHeroHere(indicatorPosition));
+        // if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
+        if (isHeroSubmited )return;
         isOnHeroPosition = true;
         isHeroSubmited = true;
         isCancleSelected = false;
@@ -558,6 +566,7 @@ public class GridIndicator : MonoBehaviour
         SetSubmitHero(position);
 
         currentSelectedHeroId = GetSubmitHeroPathIndex(position);
+        Debug.Log("submitHero" + submitHeroData.name);
         Debug.Log("submitHeroID" + GetSubmitHeroPathIndex(position));
         onHeroPositon?.Invoke();//show the path
 
@@ -583,7 +592,7 @@ public class GridIndicator : MonoBehaviour
         if (isCancleSelected) submitHeroData = null;
         else
         {
-            var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+            var allHerosInScene = GetSameSideHerosInTheScene();
 
             foreach (var hero in allHerosInScene)
             {
@@ -633,6 +642,20 @@ public class GridIndicator : MonoBehaviour
         else
         {
             var heros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            return heros;
+        }
+    }
+
+    public List<GameObject> GetSameSideHerosInTheScene()
+    {
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            var heros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            return heros;
+        }
+        else
+        {
+            var heros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
             return heros;
         }
     }
