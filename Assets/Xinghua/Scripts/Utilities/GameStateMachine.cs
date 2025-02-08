@@ -15,7 +15,7 @@ public class GameStateMachine : BaseStateMachine
     private MoveHeroState moveState;
     private ShopHeroState shopState;
 
-
+    public string currentState;
     private void Awake()
     {
         uiState = new UIState(_gridIndicator);
@@ -63,6 +63,7 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToGameplayState()
     {
         SetState(gameplayState);
+        currentState = "gameplay";
     }
     public void SwitchToAttackState()
     {
@@ -71,6 +72,7 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToMoveHeroState()
     {
         SetState(moveState);
+        currentState = "MoveHero";
     }
 }
 

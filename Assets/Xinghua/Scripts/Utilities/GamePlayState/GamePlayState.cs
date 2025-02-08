@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GamePlayState : BaseState
 {
     private GridIndicator gridIndicator;
     private PlayerControls currentControls;
-
+    private System.Action<InputAction.CallbackContext> moveAction;
+    private System.Action<InputAction.CallbackContext> submitAction;
+    private System.Action<InputAction.CallbackContext> shopAction;
+    private System.Action<InputAction.CallbackContext> cancelAction;
     public GamePlayState(GridIndicator gridIndicator)
     {
         this.gridIndicator = gridIndicator;
@@ -20,31 +24,45 @@ public class GamePlayState : BaseState
     {
          Debug.Log("Handle GamePlay Input");
         var controls = inputManager.GetControls();
+        ExitState();
+
         currentControls = controls;
+       
+
         if (controls != null && gridIndicator != null)
         {
-            currentControls.GamePlay.Move.performed += ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
-            // currentControls.GamePlay.Switch.performed += ctx => gridIndicator?.HandleSelectHero();
-            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.HandleHeroSelected();
- 
-            currentControls.GamePlay.Shop.performed += ctx => gridIndicator?.ActiveShopMenu();
-            currentControls.GamePlay.Cancle.performed += ctx => gridIndicator?.CancleSelected();
-        }
-        else
-        {
-            Debug.Log("gridIndicator is null");
+          
+            moveAction = ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+            submitAction = ctx => gridIndicator?.HandleHeroSelected();
+            shopAction = ctx => gridIndicator?.ActiveShopMenu();
+            cancelAction = ctx => gridIndicator?.CancleSelected();
+
+      
+            currentControls.GamePlay.Move.performed += moveAction;
+            currentControls.GamePlay.Submit.performed += submitAction;
+            currentControls.GamePlay.Shop.performed += shopAction;
+            currentControls.GamePlay.Cancle.performed += cancelAction;
         }
     }
 
     public override void ExitState()
     {
         Debug.Log("Exited Gameplay State");
-        currentControls.GamePlay.Move.performed -= ctx => gridIndicator?.HandleIndicatorMoveNew(ctx.ReadValue<Vector2>());
-        //currentControls.GamePlay.Switch.performed -= ctx => gridIndicator?.HandleSelectHero();
-        currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.HandleHeroSelected();
+        if (currentControls == null)
+        {
 
-        currentControls.GamePlay.Cancle.performed -= ctx => gridIndicator?.CancleSelected();
-        currentControls.GamePlay.Shop.performed -= ctx => gridIndicator?.ActiveShopMenu();
+            currentControls = InputManager.Instance.GetControls();
+        }
+        if (moveAction != null) currentControls.GamePlay.Move.performed -= moveAction;
+        if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
+        if (shopAction != null) currentControls.GamePlay.Shop.performed -= shopAction;
+        if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
+
+
+        moveAction = null;
+        submitAction = null;
+        shopAction = null;
+        cancelAction = null;
     }
 
     public override void UpdateState()

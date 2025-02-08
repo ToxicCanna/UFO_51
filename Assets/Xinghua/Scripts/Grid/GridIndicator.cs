@@ -126,15 +126,8 @@ public class GridIndicator : MonoBehaviour
         {
             return false;
         }
-
     }
 
-    public void HandleIndicatorMoveNew(Vector2 direction)
-    {
-        Debug.Log("game play state HandleIndicatorMoveNew:");
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-        HandleIndicatorMove(intDirection);
-    }
 
     private int currentIndex = 0;
     private bool canMove;
@@ -242,22 +235,19 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    public void MoveToTargetIndicator()
+    public void MoveHeroToTargetPosition()
     {
-        Debug.Log("MoveToTargetIndicator");
-        if (!isOnHeroPosition || isCancleSelected) return;
+        Debug.Log("Move To Target");
+        // if (!isOnHeroPosition || isCancleSelected) return;
+       if(isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
 
-        //check the target is valid or not ,if valid move the hero to indicator current position
+        //Debug.Log("selected hero" + submitHeroData.name);
+        Debug.Log("validTargetPositions base pos" + validTargetPos.Length);
 
-        var validTargetPositions = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
-        Debug.Log("selected hero" + submitHeroData.name);
-        Debug.Log("validTargetPositions base pos" + GetSelectedHeroPositon());
-        Debug.Log("currentIndicatorGridPosition" + GetSelectedHeroPositon());
         canMove = false;
-        foreach (var pos in validTargetPositions)
+        foreach (var pos in validTargetPos)
         {
-            Debug.Log("validpos" + pos.x+pos.y);
             if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
             {
                 canMove = true;
@@ -297,7 +287,7 @@ public class GridIndicator : MonoBehaviour
 
             isCancleSelected = false;
         }
-
+        gameStateMachine.SwitchToGameplayState();//this is very important
     }
 
 
@@ -473,37 +463,39 @@ public class GridIndicator : MonoBehaviour
         gameStateMachine.SwitchToUIState();
     }
 
-    private bool IsOppsiteHeroHere(Vector2Int indicatorPosition)
+    private bool IsIndicatorOnCurrentHero(Vector2Int indicatorPosition)
     {
+        var ssIndicatorOnCurrentHero = false;
         var teamInfo = GridManager.Instance.GetHeroTeamAtPosition(indicatorPosition);
-        Debug.Log("team" + teamInfo);
-        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide && teamInfo == "red")
+        
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide && teamInfo == "blue")
         {
+            ssIndicatorOnCurrentHero = true;
+            return ssIndicatorOnCurrentHero;
+        }
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide && teamInfo == "red")
+        {
+            ssIndicatorOnCurrentHero = true;
+            return ssIndicatorOnCurrentHero;
+        }
 
-            return true;
-        }
-        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide && teamInfo == "blue")
-        {
-            return true;
-        }
         return false;
     }
-
+    Vector2Int[] validTargetPos;
     public void HandleHeroSelected()
     {
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        if (isHeroSubmited || (IsOppsiteHeroHere(indicatorPosition))) return;
-
+        if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
+       
+        SetSelectedHero(transform.position);
         isOnHeroPosition = true;
         isHeroSubmited = true;
         isCancleSelected = false;
         var position = GetIndicatorPositon();
-
-        SetSelectedHero(position);
-
         currentSelectedHeroId = GetSubmitHeroPathIndex(position);
 
         onHeroPositon?.Invoke();//show the path
+        validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         ChooseHeroAction();
 

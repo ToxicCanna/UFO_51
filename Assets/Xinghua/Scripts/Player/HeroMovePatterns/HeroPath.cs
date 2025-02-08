@@ -13,9 +13,9 @@ public class HeroPath : MonoBehaviour
     }
     private void SetHeroPathID()
     {
-        Debug.Log("move id " + this.name);
+
         string firstTwoLetters = this.name.Substring(0, 2);
-        Debug.Log("firstTwoLetters" + firstTwoLetters);
+        
         if (this.name.Contains("Basic")) 
         {
             heroPathID = 0;

@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class MoveHeroState : BaseState
 {
     private GridIndicator gridIndicator;
     private PlayerControls currentControls;
-
+    private System.Action<InputAction.CallbackContext> submitAction;
+    private System.Action<InputAction.CallbackContext> moveAction;
     public MoveHeroState(GridIndicator gridIndicator)
     {
         this.gridIndicator = gridIndicator;
@@ -21,24 +23,42 @@ public class MoveHeroState : BaseState
     {
         // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
+      
+        ExitState();
         currentControls = controls;
+     
         if (controls != null && gridIndicator != null)
         {
-          
-            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.MoveToTargetIndicator();
-      
+            moveAction = ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+            currentControls.GamePlay.Move.performed += moveAction;
+
+            submitAction = ctx => gridIndicator?.MoveHeroToTargetPosition();
+            currentControls.GamePlay.Submit.performed += submitAction;
         }
         else
         {
-            Debug.Log("gridIndicator is null");
+            Debug.LogWarning("MoveHeroState: gridIndicator or controls is null!");
         }
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exited Gameplay State");
-      
-        currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.MoveToTargetIndicator();
+        Debug.Log("Exited move Hero State");
+        if (currentControls == null)
+        {
+            currentControls = InputManager.Instance.GetControls(); 
+        }
+        if (moveAction != null)
+        {
+            currentControls.GamePlay.Move.performed -= moveAction;
+            moveAction = null;
+        }
+
+        if (submitAction != null)
+        {
+            currentControls.GamePlay.Submit.performed -= submitAction;
+            submitAction = null;
+        }
 
     }
 
