@@ -39,8 +39,6 @@ public class InputManager : MonoBehaviour
             controls.UI.Enable();
         }
       
-
-        //Debug.Log($"Input mode switched to: {mode}");
     }
 
     private void HandleUINavigation(Vector2 vector2)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -156,5 +157,32 @@ public class HeroPocketManager : MonoBehaviour
         }
     }
 
+    public void RemoveHero(GameObject hero)
+    {
+        string heroName = hero.name.Replace("(Clone)", "").Trim(); 
+
+        if (redSideHeroes.ContainsKey(heroName))
+        {
+            redSideHeroes.Remove(heroName);
+            Debug.Log($"Removed {heroName} from RedSideHeroes.");
+        }
+        else if (blueSideHeroes.ContainsKey(heroName))
+        {
+            blueSideHeroes.Remove(heroName);
+            Debug.Log($"Removed {heroName} from BlueSideHeroes.");
+        }
+        else
+        {
+            Debug.LogWarning($"Hero {heroName} not found in any list.");
+        }
+
+     
+        Vector2 heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
+        if (GridManager.Instance.occupiedGridTeams.ContainsKey(heroPos))
+        {
+            GridManager.Instance.occupiedGridTeams.Remove(heroPos);
+            Debug.Log($"Removed {heroName} from occupied grid at {heroPos}");
+        }
+    }
 
 }

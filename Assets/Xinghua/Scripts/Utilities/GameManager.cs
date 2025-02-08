@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     public bool IsHeroSubmitted { get; private set; }
-    public int coinCountRed =3;
-    public int coinCountBlue = 3;
+    private int coinCountRed =3;
+    private int coinCountBlue = 3;
     public TMP_Text coinText;
     public TMP_Text currentTurnText;
     public TMP_Text BasicHeroText;

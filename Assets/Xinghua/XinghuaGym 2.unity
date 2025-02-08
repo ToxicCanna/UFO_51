@@ -2252,8 +2252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTurn: 0
-  coinCountRed: 3
-  coinCountBlue: 3
   coinText: {fileID: 1514948384}
   currentTurnText: {fileID: 789427797140152679}
   BasicHeroText: {fileID: 1289670754}
@@ -4798,6 +4796,7 @@ MonoBehaviour:
   - {fileID: 585028599}
   - {fileID: 1660780984}
   - {fileID: 348752649}
+  - {fileID: 2078879033}
 --- !u!1 &1157735327
 GameObject:
   m_ObjectHideFlags: 0
@@ -14617,6 +14616,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98988dd20280a5b4e95a0d0f97cd8d34, type: 3}
+--- !u!1 &2078879033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7546586726400149654, guid: bc1db8b15c2901b45b8648674317d840, type: 3}
+  m_PrefabInstance: {fileID: 4923586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2084673628 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
