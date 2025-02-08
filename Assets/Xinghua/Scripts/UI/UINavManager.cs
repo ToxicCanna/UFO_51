@@ -85,7 +85,23 @@ public class UINavManager : MonoBehaviour
         actionIndex = (actionIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
         UpdateSelectorPositionAction();
     }
+    public void InitSelectorPositionInHeroActionsZone()
+    {
+        if (buttons.Length > 0)
+        {
+            selector.position = buttonsHeroActions[0].transform.position;
 
+        }
+    }
+
+    public void InitSelectorPositionInHeroShopZone()
+    {
+        if (buttons.Length > 0)
+        {
+            selector.position = buttons[0].transform.position;
+
+        }
+    }
     private void UpdateSelectorPositionInHeroActionsZone()
     {
         if (selector == null)
@@ -94,26 +110,14 @@ public class UINavManager : MonoBehaviour
             return;
         }
 
-      /*  if (buttonsHeroActions == null || buttonsHeroActions.Length == 0)
-        {
-            Debug.LogWarning("[UISelector] buttonsHeroActions array is empty or null!");
-            return;
-        }
-
-        if (currentIndex < 0 || currentIndex >= buttonsHeroActions.Length)
-        {
-            Debug.LogWarning($"[UISelector] currentIndex ({currentIndex}) is out of range! Valid range: 0 - {buttonsHeroActions.Length - 1}");
-            return;
-        }
-*/
         if (buttons.Length > 0)
         {
             selector.position = buttonsHeroActions[actionIndex].transform.position;
-            // Debug.Log("[UISelector] Selector moved to: " + selector.position);
+
         }
     }
 
-    public void UpdateSelectorPositionShop()
+    private void UpdateSelectorPositionShop()
     {
         if (selector == null)
         {
@@ -124,7 +128,6 @@ public class UINavManager : MonoBehaviour
         if (buttons.Length > 0)
         {
             selector.position = buttons[shopIndex].transform.position;
-            // Debug.Log("[UISelector] Selector moved to: " + selector.position);
         }
     }
 

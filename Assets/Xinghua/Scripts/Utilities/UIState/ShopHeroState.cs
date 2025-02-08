@@ -12,7 +12,7 @@ public class ShopHeroState : BaseState
     {
         Debug.Log("Enter shop State");
         gridIndicator.controlHintText.text = "W and D to select, Enter key to submit";
-
+        UINavManager.Instance.InitSelectorPositionInHeroShopZone();
     }
     public ShopHeroState(GridIndicator gridIndicator)
     {

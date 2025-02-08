@@ -11,7 +11,8 @@ public class UIState : BaseState
     public override void EnterState()
     {
         Debug.Log("Enter UIAction State");
-        gridIndicator.controlHintText.text ="W and D to select, Enter key to submit";
+        gridIndicator.controlHintText.text ="Choose Action";
+        UINavManager.Instance.InitSelectorPositionInHeroActionsZone();
     }
     public UIState(GridIndicator gridIndicator)
     {

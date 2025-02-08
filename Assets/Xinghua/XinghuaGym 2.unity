@@ -2871,6 +2871,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1474987417}
     m_Modifications:
+    - target: {fileID: 1542613941962792753, guid: 18f9d4a1ca114324889b52477ab59c40, type: 3}
+      propertyPath: m_fontSize
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1542613941962792753, guid: 18f9d4a1ca114324889b52477ab59c40, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 4438168636472374736, guid: 18f9d4a1ca114324889b52477ab59c40, type: 3}
       propertyPath: m_Name
       value: Current Player
@@ -13771,6 +13779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridIndicator: {fileID: 646920146}
+  currentState: 
 --- !u!1 &1984248235
 GameObject:
   m_ObjectHideFlags: 0
