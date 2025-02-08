@@ -83,10 +83,8 @@ public class GridIndicator : MonoBehaviour
         controlHintText.text = "WASD to move";
     }
 
-    private void Update()
-    {
-        // playerText.text = currentTurn.ToString();
-    }
+ 
+
 
     public bool IsWithinBounds(Vector2Int position)
     {
@@ -370,8 +368,8 @@ public class GridIndicator : MonoBehaviour
             Debug.Log("hero.transform.position" + hero.transform.position);
 
 
-            if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
-            // if (transform.position == hero.transform.position)
+            //if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
+             if (transform.position == hero.transform.position)
             {
 
                 Debug.Log("same pos:" + transform.position);
@@ -402,9 +400,11 @@ public class GridIndicator : MonoBehaviour
         yield return new WaitForSeconds(5);
         Debug.Log("give damage");
         battleManager.Attack();
-        if (targetHero != null)
+        if (targetHero != null&& submitHeroData)
         {
+            Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
             Animator animator = targetHero.gameObject.GetComponent<Animator>();
+            animatorSelected.SetBool("IsAtk", true);
             animator.SetBool("IsDmg", true);
         }
         isAttackEnd = true;
