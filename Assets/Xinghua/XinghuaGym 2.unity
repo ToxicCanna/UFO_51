@@ -1690,13 +1690,13 @@ MonoBehaviour:
   blueSpawn: {fileID: 1460514491}
   blueCastle: {fileID: 582163117}
   gridIndicator: {fileID: 646920146}
-  redHeroPrefab:
+  redHeroPrefabs:
   - {fileID: 2965984199795220294, guid: 26191d17985d4e040a6beb0f7a812db6, type: 3}
   - {fileID: 7040964495117261246, guid: ad62126eb983da349b8b868a241296b8, type: 3}
   - {fileID: 1996134876235478659, guid: e36d04e2029315044962f279980cffa5, type: 3}
   - {fileID: 7684743947540134915, guid: 78441ef49e0add1419a90b8ccfe68b28, type: 3}
   - {fileID: 7761257565495430790, guid: 3c5982fecd03d8649be7d07fb73b104a, type: 3}
-  blueHeroPrefab:
+  blueHeroPrefabs:
   - {fileID: 5112735674640118456, guid: bb66733c149e8a342bc5512f1589cf92, type: 3}
   - {fileID: 3657800514934027367, guid: 230532ffbc6c4d54182e95f5743bb862, type: 3}
   - {fileID: 839373168696774799, guid: b0ea2ada3f016a84684d0669421ab57f, type: 3}
@@ -1910,7 +1910,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hero Shop
+  m_text: Hero Shop (B key)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1975,7 +1975,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -171.9975, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

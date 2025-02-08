@@ -169,30 +169,11 @@ public class UINavManager : MonoBehaviour
 
     private void ProcessHeroShopSelected()
     {
-        if (selectedButtonName == "Ba")//attack button selected
-        {
-            spawnHero.SpawnNew(0);
-            
-        }
-        else if (selectedButtonName == "Kn")
-        {
-            spawnHero.SpawnNew(1);
-        }
-        else if (selectedButtonName == "Th")
-        {
-            spawnHero.SpawnNew(2);
-        }
-        else if (selectedButtonName == "Ra")
-        {
-            spawnHero.SpawnNew(3);
-        }
-        else if (selectedButtonName == "He")
-        {
-            spawnHero.SpawnNew(4);
-        }
+        spawnHero.SpawnNew(selectedButtonName);
+   
         SwithToGamePlayState();
-
     }
+
     private void ProcessActionSelected()
     {
         Debug.Log(" selectedButtonName" + selectedButtonName);

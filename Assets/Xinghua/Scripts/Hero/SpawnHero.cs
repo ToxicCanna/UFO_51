@@ -1,5 +1,4 @@
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnHero : MonoBehaviour
@@ -7,74 +6,63 @@ public class SpawnHero : MonoBehaviour
 
     [SerializeField] public Transform redSpawn, redCastle, blueSpawn, blueCastle;
     [SerializeField] GridIndicator gridIndicator;
-    [SerializeField] GameObject[] redHeroPrefab;
-    [SerializeField] GameObject[] blueHeroPrefab;
-    [SerializeField] GameObject redBasicHeroPrefab;
-    [SerializeField] GameObject redAHeroPrefab;
-    private GameObject[] shopList;
+    [SerializeField] GameObject[] redHeroPrefabs;
+    [SerializeField] GameObject[] blueHeroPrefabs;
 
+    private GameObject SpawnPrefab;
     private Transform spawnLoc;
-
 
 
     private void Update()
     {
-        ShopSetup();
+        SpawnLocationSetup();
     }
 
 
-    public void ShopSetup()
+    public void SpawnLocationSetup()
     {
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             spawnLoc = redSpawn;
-            shopList = redHeroPrefab;
         }
 
         else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
         {
             spawnLoc = blueSpawn;
-            shopList = blueHeroPrefab;
         }
     }
 
-    /*    public void Spawn(int i)
-        {
-            Debug.Log("Spawn");
-
-            GameObject spawnedHero = null;
-
-            if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerRedSide)
-            {
-                spawnedHero = Instantiate(shopList[i], spawnLoc.position, Quaternion.identity);
-                twoSidesHero.GetHerosRed().Add(spawnedHero);
-            }
-            else if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerBlueSide)
-            {
-                spawnedHero = Instantiate(shopList[i], spawnLoc.position, Quaternion.identity);
-                twoSidesHero.GetHerosBlue().Add(spawnedHero);
-            }
-        }*/
-    public void SpawnNew(int i)
+    private void SetSpawnPrefab(string buttonName)
     {
-        
-        GameObject spawnedHero = null;
-        if (i == 0)//basic
+        GameObject[] heroArray;
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            spawnedHero = Instantiate(redBasicHeroPrefab, spawnLoc.position, Quaternion.identity);
-            Debug.Log("Spawn");
-            HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, "red");
-            GameManager.Instance.DecreaseCoinCount(2);
-
-
+            heroArray = redHeroPrefabs;
         }
-        if (i == 3)//knight
+        else
         {
-            spawnedHero = Instantiate(redAHeroPrefab, spawnLoc.position, Quaternion.identity);
-
-            HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, "red");
+            heroArray = blueHeroPrefabs;
         }
-        //Debug.Log("Spawn + " + i);
+        Debug.Log("hero length" + heroArray.Length);
+        foreach (GameObject hero in heroArray)
+        {
+            if (hero.name.Contains(buttonName))
+            {
+
+                SpawnPrefab = hero;
+            }
+        }
+
+    }
+
+    public void SpawnNew(string buttonName)
+    {
+        SetSpawnPrefab(buttonName);
+      
+        GameObject spawnedHero = Instantiate(SpawnPrefab,spawnLoc.position, Quaternion.identity);
+        Debug.Log(" spawnedHero" + spawnedHero);
+        HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, "red");
+        GameManager.Instance.DecreaseCoinCount(2);
     }
 }
 

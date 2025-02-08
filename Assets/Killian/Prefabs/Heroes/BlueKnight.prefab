@@ -81,15 +81,15 @@ SpriteRenderer:
   m_SortingLayerID: 1932192151
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: -3821832788237264379, guid: ec90d9f0b6b16e7458da6fad244dd059, type: 3}
+  m_Sprite: {fileID: 4501476814284082236, guid: ec90d9f0b6b16e7458da6fad244dd059, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.8828125}
+  m_Size: {x: 0.78125, y: 0.96875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6606908326436873289
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -177,7 +178,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.52, y: 0.48387095}
     oldSize: {x: 0.78125, y: 0.96875}
-    newSize: {x: 1, y: 0.8828125}
+    newSize: {x: 0.78125, y: 0.96875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
