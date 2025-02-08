@@ -51,6 +51,7 @@ public class GridManager : MonoBehaviour
     }
     public string GetHeroTeamAtPosition(Vector2 position)
     {
+        
         if (occupiedGridTeams.TryGetValue(position, out string team))
         {
            

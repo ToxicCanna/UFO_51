@@ -10,12 +10,12 @@ public class GameManager : MonoBehaviour
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
 
     public bool IsHeroSubmitted { get; private set; }
-    private int coinCountRed =3;
+    private int coinCountRed;
     private int coinCountBlue = 3;
     public TMP_Text coinText;
     public TMP_Text currentTurnText;
-    public TMP_Text BasicHeroText;
-    public int BasicHeroCount = 0;
+    public TMP_Text owenedHeroText;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,15 +29,16 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdatePlayerTurn();
+        HeroOwned();
     }
 
     private void Start()
     {
         coinCountRed = 4;
-        coinCountBlue = 3;
+        coinCountBlue = 4;
         coinText.text = coinCountRed.ToString();
-        UpdateCoinCount();
-        BasicHeroOwned();
+        AddCoinCount();
+        HeroOwned();
     }
 
     public void UpdateHeroSubmissionState(bool state)
@@ -45,11 +46,13 @@ public class GameManager : MonoBehaviour
         IsHeroSubmitted = state;
     }
 
-    public void UpdateCoinCount()
+    public void AddCoinCount()
     {
         var coinCount = coinCountRed;
+
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
+             coinCount = coinCountRed;
             coinCountRed++;
         }
         else
@@ -61,17 +64,19 @@ public class GameManager : MonoBehaviour
     }
     public void DecreaseCoinCount( int value)
     {
-        var coinCount = coinCountRed;
+        Debug.Log("cost is " + value);
+     
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            coinCount -= value;
+            coinCountRed -= value;
+            coinText.text = "Coin:" + "" + coinCountRed.ToString();
         }
         else
         {
-            coinCount = coinCountBlue;
-            coinCountBlue++;
+            coinCountBlue -= value;
+            coinText.text = "Coin:" + "" + coinCountBlue.ToString();
         }
-        coinText.text = "Coin:" + "" + coinCount.ToString();
+       
     }
 
 
@@ -87,10 +92,23 @@ public class GameManager : MonoBehaviour
         }
        
     }
-
-    public void BasicHeroOwned()
+    public int GetHeroCount()
     {
-        BasicHeroText.text = "Basic (" + BasicHeroCount.ToString() +"/4)";
+
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            return HeroPocketManager.Instance.redSideHeroes.Count;
+        }
+        else
+        {
+            return HeroPocketManager.Instance.blueSideHeroes.Count;
+        }
+
+    }
+
+    public void HeroOwned()
+    { 
+        owenedHeroText.text = "Own Hero:" + GetHeroCount() ;
     }
 }
 

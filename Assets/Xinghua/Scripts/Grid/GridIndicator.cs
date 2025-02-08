@@ -383,7 +383,7 @@ public class GridIndicator : MonoBehaviour
         {
             GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerRedSide;
         }
-        GameManager.Instance.UpdateCoinCount();
+        GameManager.Instance.AddCoinCount();
     }
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
@@ -484,6 +484,7 @@ public class GridIndicator : MonoBehaviour
     Vector2Int[] validTargetPos;
     public void HandleHeroSelected()
     {
+        Debug.Log("HandleHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
         if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
        

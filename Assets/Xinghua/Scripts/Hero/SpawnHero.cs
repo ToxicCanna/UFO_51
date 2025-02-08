@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class SpawnHero : MonoBehaviour
     [SerializeField] GridIndicator gridIndicator;
     [SerializeField] GameObject[] redHeroPrefabs;
     [SerializeField] GameObject[] blueHeroPrefabs;
+    private string spawnHeroColor;
 
     private GameObject SpawnPrefab;
     private Transform spawnLoc;
@@ -35,13 +37,16 @@ public class SpawnHero : MonoBehaviour
     private void SetSpawnPrefab(string buttonName)
     {
         GameObject[] heroArray;
+         spawnHeroColor = "";
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             heroArray = redHeroPrefabs;
+            spawnHeroColor = "red";
         }
         else
         {
             heroArray = blueHeroPrefabs;
+            spawnHeroColor = "blue";
         }
         Debug.Log("hero length" + heroArray.Length);
         foreach (GameObject hero in heroArray)
@@ -60,9 +65,17 @@ public class SpawnHero : MonoBehaviour
         SetSpawnPrefab(buttonName);
       
         GameObject spawnedHero = Instantiate(SpawnPrefab,spawnLoc.position, Quaternion.identity);
-     
-        HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, "red");
-        GameManager.Instance.DecreaseCoinCount(2);
+        HeroPocketManager.Instance.RegisterHero(spawnedHero.name, spawnedHero, spawnHeroColor);
+        StartCoroutine(WaitForHeroData(spawnedHero));
+    }
+
+    private IEnumerator WaitForHeroData(GameObject hero)
+    {
+        yield return new WaitForEndOfFrame();
+
+        var heroData = hero.GetComponent<HeroData>();
+        GameManager.Instance.DecreaseCoinCount(heroData.cost);
+       
     }
 }
 

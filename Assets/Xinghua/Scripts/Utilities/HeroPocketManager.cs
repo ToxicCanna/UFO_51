@@ -6,8 +6,8 @@ public class HeroPocketManager : MonoBehaviour
 {
     public static HeroPocketManager Instance;
     //this is hero in the scene
-    private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
-    private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
 
     private List<GameObject> RedSideheros;//get from child gameobject
     private List<GameObject> BlueSideheros;
@@ -137,13 +137,17 @@ public class HeroPocketManager : MonoBehaviour
             if (!redSideHeroes.ContainsKey(heroId))
             {
                 redSideHeroes.Add(heroId, hero);
+
+                
             }
+           
         }
         else
         {
             if (!blueSideHeroes.ContainsKey(heroId))
             {
                 blueSideHeroes.Add(heroId, hero);
+
             }
         }
     }

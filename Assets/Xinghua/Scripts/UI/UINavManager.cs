@@ -166,7 +166,6 @@ public class UINavManager : MonoBehaviour
     {
         Debug.Log("spawn hero");
         spawnHero.SpawnNew(selectedButtonName);
-
         SwithToGamePlayState();
     }
 
