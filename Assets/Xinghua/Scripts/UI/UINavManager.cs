@@ -12,9 +12,8 @@ public class UINavManager : MonoBehaviour
 
     private string selectedButtonName;
 
-    //[SerializeField] private ShopScript shopScript;
 
-    //xinghua code
+
     [SerializeField] GameStateMachine gameStateMachine;
     [SerializeField] SpawnHero spawnHero;
     private bool isGamePlayStateActive = false;

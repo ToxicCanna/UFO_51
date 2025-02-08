@@ -63,7 +63,6 @@ public class HighLight : MonoBehaviour
     {
         foreach (var highlight in highlights)
         {
-            //highlight.SetActive(false);
             Destroy(highlight.gameObject);
         }
         highlights.Clear();
@@ -73,7 +72,6 @@ public class HighLight : MonoBehaviour
     {
         foreach (var abilityTangeTile in highlightsForAbilityRange)
         {
-            // abilityTangeTile.SetActive(false);
             Destroy(abilityTangeTile.gameObject);
         }
         highlightsForAbilityRange.Clear();

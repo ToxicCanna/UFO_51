@@ -37,15 +37,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Confirm"",
-                    ""type"": ""Button"",
-                    ""id"": ""98663c07-4f09-4100-86dd-afbbd67f47cf"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Switch"",
                     ""type"": ""Button"",
                     ""id"": ""8667e805-61e1-405b-a98c-a5e8f830cec5"",
@@ -137,17 +128,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a5e59dbd-3c91-47d5-8197-32d6424ebc48"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Confirm"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -353,7 +333,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // GamePlay
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
-        m_GamePlay_Confirm = m_GamePlay.FindAction("Confirm", throwIfNotFound: true);
         m_GamePlay_Switch = m_GamePlay.FindAction("Switch", throwIfNotFound: true);
         m_GamePlay_Submit = m_GamePlay.FindAction("Submit", throwIfNotFound: true);
         m_GamePlay_Shop = m_GamePlay.FindAction("Shop", throwIfNotFound: true);
@@ -433,7 +412,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_GamePlay;
     private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
     private readonly InputAction m_GamePlay_Move;
-    private readonly InputAction m_GamePlay_Confirm;
     private readonly InputAction m_GamePlay_Switch;
     private readonly InputAction m_GamePlay_Submit;
     private readonly InputAction m_GamePlay_Shop;
@@ -443,7 +421,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public GamePlayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_GamePlay_Move;
-        public InputAction @Confirm => m_Wrapper.m_GamePlay_Confirm;
         public InputAction @Switch => m_Wrapper.m_GamePlay_Switch;
         public InputAction @Submit => m_Wrapper.m_GamePlay_Submit;
         public InputAction @Shop => m_Wrapper.m_GamePlay_Shop;
@@ -460,9 +437,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Confirm.started += instance.OnConfirm;
-            @Confirm.performed += instance.OnConfirm;
-            @Confirm.canceled += instance.OnConfirm;
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
@@ -482,9 +456,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Confirm.started -= instance.OnConfirm;
-            @Confirm.performed -= instance.OnConfirm;
-            @Confirm.canceled -= instance.OnConfirm;
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
@@ -595,7 +566,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IGamePlayActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnConfirm(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnShop(InputAction.CallbackContext context);
