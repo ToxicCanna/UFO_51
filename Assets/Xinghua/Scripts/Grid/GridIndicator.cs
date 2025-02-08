@@ -18,6 +18,7 @@ public class GridIndicator : MonoBehaviour
 
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     [SerializeField] GameStateMachine gameStateMachine;
+    [SerializeField] Effect effect;
     private HighLight highLight;
 
     private HeroSelect heroSelect;
@@ -56,6 +57,7 @@ public class GridIndicator : MonoBehaviour
     private bool isCancleSelected = false;
     private bool isAttackEnd =false;
     public TMP_Text controlHintText;
+
 
 
     //(Killian)
@@ -391,13 +393,20 @@ public class GridIndicator : MonoBehaviour
 
     private IEnumerator RollDiceAndApplyDamage(HeroData targetHero)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         Debug.Log("Roll dice");
+      
 
+        Effect.Instance.PlayAttackEffect(targetHero.transform.position);
+
+      
         battleManager.targetHero = targetHero.GetComponent<HeroData>();
 
         //call attack after setting values
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
+        Effect.Instance.HideAttackEffect();
+
+        yield return new WaitForSeconds(2);
         Debug.Log("give damage");
         battleManager.Attack();
         if (targetHero != null&& submitHeroData)
