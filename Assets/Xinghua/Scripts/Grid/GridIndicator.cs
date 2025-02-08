@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -53,7 +54,7 @@ public class GridIndicator : MonoBehaviour
     private int currentSelectedHeroId;
     private bool isAtOppositeHeroPos = false;
     private bool isCancleSelected = false;
-
+    private bool isAttackEnd =false;
     public TMP_Text controlHintText;
 
 
@@ -63,13 +64,13 @@ public class GridIndicator : MonoBehaviour
 
     void Start()
     {
-       // Debug.Log("trans" + transform.position);
+        // Debug.Log("trans" + transform.position);
         currentGridPosition = WorldToGridPosition(transform.position);
         //Debug.Log("currentGridPosition" + currentGridPosition);
 
         transform.position = GridToWorldPosition(currentGridPosition);
         //Debug.Log("transform.position" + transform.position);
-       // currentTurn = PlayerTurn.PlayerRedSide;
+        // currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
 
@@ -84,7 +85,7 @@ public class GridIndicator : MonoBehaviour
 
     private void Update()
     {
-       // playerText.text = currentTurn.ToString();
+        // playerText.text = currentTurn.ToString();
     }
 
     public bool IsWithinBounds(Vector2Int position)
@@ -138,6 +139,8 @@ public class GridIndicator : MonoBehaviour
     }
 
     private int currentIndex = 0;
+  
+
     public void ChooseTargets(Vector2 direction)
     {
         if (direction.x != 0) return;
@@ -206,8 +209,8 @@ public class GridIndicator : MonoBehaviour
         List<GameObject> opponiteHeros = new List<GameObject>();
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-             opponiteHeros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-           
+            opponiteHeros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+
         }
         else
         {
@@ -231,7 +234,7 @@ public class GridIndicator : MonoBehaviour
             currentGridPosition = targetPosition;
             transform.position = GridToWorldPosition(currentGridPosition);
             // transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
-           // Debug.Log("currentGridPosition will move" + currentGridPosition);
+            // Debug.Log("currentGridPosition will move" + currentGridPosition);
             //judge if this position have hero already
             //var heros = GridManager.Instance.GetHeros();
 
@@ -269,26 +272,26 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-/*
-    public void MoveIndicatorWithRange(Vector2 direction)
-    {
-
-        Debug.Log("move with range direction:" + direction);
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-        Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
-        Debug.Log("move with range oldPosition:" + currentGridPosition);
-        Debug.Log("move with range targetPosition:" + targetPosition);
-        var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
-        Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
+    /*
+        public void MoveIndicatorWithRange(Vector2 direction)
         {
 
-            Debug.Log("move indicator!!!!!!!!");
-            transform.position = new Vector3(targetPosition.x, targetPosition.y);
-        }
+            Debug.Log("move with range direction:" + direction);
+            Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+            Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
+            Debug.Log("move with range oldPosition:" + currentGridPosition);
+            Debug.Log("move with range targetPosition:" + targetPosition);
+            var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+            Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
+            Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
+            if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
+            {
 
-    }*/
+                Debug.Log("move indicator!!!!!!!!");
+                transform.position = new Vector3(targetPosition.x, targetPosition.y);
+            }
+
+        }*/
     private bool isWithinMoveRange()
     {
         // check the target (I,J)value is in range
@@ -339,7 +342,11 @@ public class GridIndicator : MonoBehaviour
             isHeroSubmited = false;
             GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
             UpdatePlayerTurn();
-            SetIndicatorInCurrentHeroPos();
+            if (isAttackEnd = true)
+            {
+                SetIndicatorInCurrentHeroPos();
+            }
+            
 
             isCancleSelected = false;
         }
@@ -353,7 +360,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("CheckAttackTargets");
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
         //this just when two player in one spot attack each other
-        var herosOpposite  = GetOppositeHeros();
+        var herosOpposite = GetOppositeHeros();
         Debug.Log("herosOpposite " + herosOpposite.Count);
 
         foreach (var hero in herosOpposite)
@@ -363,30 +370,40 @@ public class GridIndicator : MonoBehaviour
             Debug.Log("hero.transform.position" + hero.transform.position);
 
 
-           if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
-           // if (transform.position == hero.transform.position)
+            if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
+            // if (transform.position == hero.transform.position)
             {
+
                 Debug.Log("same pos:" + transform.position);
-                 Debug.Log("targetHero"+ hero.name);
+                Debug.Log("targetHero" + hero.name);
                 //Attack opposite
                 if (submitHeroData.gameObject != hero)
                 {
                     Debug.Log(" attack happen");
-                    //set current hero
                     //set target hero
-                    battleManager.targetHero = hero.GetComponent<HeroData>();
-                   
-                    //call attack after setting values
-                    battleManager.Attack();//for killian if when you attack destroy hero , you need remove the hero list . call the function of remove
-
-
-
+                    var targetHero = hero.GetComponent<HeroData>();
+                    StartCoroutine(RollDiceAndApplyDamage(targetHero));
                     // AttackHappenOneSpot?.Invoke();
                 }
-           
+
             }
         }
-        
+
+    }
+
+    private IEnumerator RollDiceAndApplyDamage(HeroData targetHero)
+    {
+        yield return new WaitForSeconds(5);
+        Debug.Log("Roll dice");
+
+        battleManager.targetHero = targetHero.GetComponent<HeroData>();
+
+        //call attack after setting values
+        yield return new WaitForSeconds(5);
+        Debug.Log("give damage");
+        battleManager.Attack();
+
+        isAttackEnd = true;
     }
 
     private void SetIndicatorInCurrentHeroPos()
@@ -411,7 +428,7 @@ public class GridIndicator : MonoBehaviour
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerBlueSide;
-        
+
         }
         else
         {
@@ -446,7 +463,7 @@ public class GridIndicator : MonoBehaviour
 
         Debug.Log("red hero coun when select :" + herosInRedSide.Count);
         Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
-        if (GameManager.Instance.currentTurn ==GameManager.PlayerTurn.PlayerRedSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
 
             //Debug.Log("count:"+herosInRedSide.Count);
