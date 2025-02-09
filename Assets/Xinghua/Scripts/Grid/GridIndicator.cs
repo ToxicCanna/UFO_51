@@ -325,10 +325,8 @@ public class GridIndicator : MonoBehaviour
 
     private IEnumerator RollDiceAndApplyDamage(HeroData targetHero)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Roll dice");
-
-
         Effect.Instance.PlayAttackEffect(targetHero.transform.position);
 
 
@@ -338,10 +336,10 @@ public class GridIndicator : MonoBehaviour
         yield return new WaitForSeconds(2);
         Effect.Instance.HideAttackEffect();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         Debug.Log("give damage");
         battleManager.Attack();
-        if (targetHero != null && submitHeroData)
+        if (targetHero != null && submitHeroData !=null)
         {
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
             Animator animator = targetHero.gameObject.GetComponent<Animator>();
@@ -357,11 +355,10 @@ public class GridIndicator : MonoBehaviour
 
             animatorSelected.SetBool("IsAtk", false);
             animator.SetBool("IsDmg", false);
-           /* Debug.Log("6666"+ GameManager.Instance.diceResult);
-            controlHintText.text = GameManager.Instance.diceResult;*/
+            UpdatePlayerTurn();
+            SetIndicatorInCurrentHeroPos();
+            gameStateMachine.SwitchToGameplayState();
         }
-       
-        
     }
 
     private void SetIndicatorInCurrentHeroPos()
@@ -587,26 +584,26 @@ public class GridIndicator : MonoBehaviour
 
     internal void CheckAttackRange()
     {
-        Debug.Log("CheckAttackRange");
-        Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);
+       /* Debug.Log("CheckAttackRange");
+        Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);*/
         currentGridPosition = WorldToGridPosition(transform.position);
         Vector2Int[] validAttackRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), currentSelectedHeroId);
-        
+     /*   
         Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
-
-        Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));
+        Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));*/
         List<GameObject> heroesOpposite = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
-        Debug.Log("occupied count" + heroesOpposite.Count);
+        //Debug.Log("occupied count" + heroesOpposite.Count);
         foreach (var hero in heroesOpposite)
         {
            
             if (validAttackRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
-                Debug.Log("enemy there");
-                Debug.Log(" attack happen");
+             /*   Debug.Log("enemy there");
+                Debug.Log(" attack happen");*/
                 //set target hero
                 finishSelection?.Invoke();//hide the high light
                 var targetHero = hero.GetComponent<HeroData>();
+                var currentHero = submitHeroData;
                 StartCoroutine(RollDiceAndApplyDamage(targetHero));
             }
             else
