@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
     public TMP_Text KillPointText;
+    public string diceResult;
 
     private void Awake()
     {

@@ -240,8 +240,6 @@ public class GridIndicator : MonoBehaviour
     {
 
         if (!isOnHeroPosition || isCancleSelected) return;
-        if (isCancleSelected) return;
-
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnCurrentHero(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
         foreach (var pos in validTargetPos)
@@ -359,6 +357,8 @@ public class GridIndicator : MonoBehaviour
 
             animatorSelected.SetBool("IsAtk", false);
             animator.SetBool("IsDmg", false);
+           /* Debug.Log("6666"+ GameManager.Instance.diceResult);
+            controlHintText.text = GameManager.Instance.diceResult;*/
         }
        
         
