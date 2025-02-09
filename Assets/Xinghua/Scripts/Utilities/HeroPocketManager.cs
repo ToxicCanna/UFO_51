@@ -31,10 +31,10 @@ public class HeroPocketManager : MonoBehaviour
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
             
-            var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
+            var heroPos = new Vector2Int((int)hero.transform.position.x,(int)hero.transform.position.y);
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "red");
             RegisterHero(key, hero, "red");
-            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            GridManager.Instance.AddHeroWithTeamInfo(heroPos);
         }
 
         //GetHeroData("hero01");
@@ -43,12 +43,11 @@ public class HeroPocketManager : MonoBehaviour
         {
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
-            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
-            var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
+            var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "blue");
            
             RegisterHero(key, hero, "blue");
-            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
+            GridManager.Instance.AddOccupiedGrid(heroPos);
         }
 
         GetAllHeroes();
