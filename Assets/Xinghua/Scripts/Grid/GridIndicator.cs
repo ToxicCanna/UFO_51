@@ -349,10 +349,19 @@ public class GridIndicator : MonoBehaviour
             Animator animator = targetHero.gameObject.GetComponent<Animator>();
             animatorSelected.SetBool("IsAtk", true);
             animator.SetBool("IsDmg", true);
+
+            yield return new WaitForSeconds(1);
+            isAttackEnd = true;
+            gameStateMachine.SwitchToGameplayState();
+            isHeroSubmited = false;
+
+            yield return new WaitForSeconds(0.5f);
+
+            animatorSelected.SetBool("IsAtk", false);
+            animator.SetBool("IsDmg", false);
         }
-        isAttackEnd = true;
-        gameStateMachine.SwitchToGameplayState();
-        isHeroSubmited = false;
+       
+        
     }
 
     private void SetIndicatorInCurrentHeroPos()
@@ -586,8 +595,9 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
 
         Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));
-        List<GameObject> heroesInRange = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
-        foreach (var hero in heroesInRange)
+        List<GameObject> heroesOpposite = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
+        Debug.Log("occupied count" + heroesOpposite.Count);
+        foreach (var hero in heroesOpposite)
         {
            
             if (validAttackRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
@@ -595,12 +605,14 @@ public class GridIndicator : MonoBehaviour
                 Debug.Log("enemy there");
                 Debug.Log(" attack happen");
                 //set target hero
+                finishSelection?.Invoke();//hide the high light
                 var targetHero = hero.GetComponent<HeroData>();
                 StartCoroutine(RollDiceAndApplyDamage(targetHero));
             }
             else
             {
                 Debug.Log("clear");
+              
                 gameStateMachine.SwitchToMoveHeroState();
             }
         }

@@ -47,9 +47,11 @@ public class HeroPocketManager : MonoBehaviour
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "blue");
            
             RegisterHero(key, hero, "blue");
-            GridManager.Instance.AddOccupiedGrid(heroPos);
+            GridManager.Instance.AddHeroWithTeamInfo(heroPos);
+            
         }
-
+        Debug.Log("redSideHeroes count" + redSideHeroes.Count);
+        Debug.Log("blueSideHeroes count" + blueSideHeroes.Count);
         GetAllHeroes();
 
     }

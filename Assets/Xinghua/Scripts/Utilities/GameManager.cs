@@ -12,9 +12,13 @@ public class GameManager : MonoBehaviour
     public bool IsHeroSubmitted { get; private set; }
     private int coinCountRed;
     private int coinCountBlue = 3;
+
+    private int pointCountRed;
+    private int pointCountBlue;
     public TMP_Text coinText;
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
+    public TMP_Text KillPointText;
 
     private void Awake()
     {
@@ -30,6 +34,8 @@ public class GameManager : MonoBehaviour
     {
         UpdatePlayerTurn();
         HeroOwned();
+
+        KillPointText.text = "Kill Point:" + pointCountRed.ToString()+ "/10";
     }
 
     private void Start()
@@ -44,6 +50,23 @@ public class GameManager : MonoBehaviour
     public void UpdateHeroSubmissionState(bool state)
     {
         IsHeroSubmitted = state;
+    }
+
+    public void AddPointCount()
+    {
+        var pointCount = coinCountRed;
+
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            pointCount = pointCountRed;
+            pointCountRed++;
+        }
+        else
+        {
+            pointCount = pointCountBlue;
+            pointCountBlue++;
+        }
+        coinText.text = "Coin:" + "" + pointCount.ToString();
     }
 
     public void AddCoinCount()
@@ -78,7 +101,6 @@ public class GameManager : MonoBehaviour
         }
        
     }
-
 
     public void UpdatePlayerTurn()
     {
