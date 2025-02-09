@@ -296,18 +296,12 @@ public class GridIndicator : MonoBehaviour
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
         //this just when two player in one spot attack each other
         var herosOpposite = GetOppositeHeros();
-
-
         foreach (var hero in herosOpposite)
         {
-
-
-            //if (currentGridPosition.x == hero.transform.position.x && currentGridPosition.y == hero.transform.position.y)
-            if (transform.position == hero.transform.position)
+            if(WorldToGridPosition(transform.position) == WorldToGridPosition(hero.transform.position))
             {
-
-                Debug.Log("same pos:" + transform.position);
-                Debug.Log("targetHero" + hero.name);
+               /* Debug.Log("same pos:" + transform.position);
+                Debug.Log("targetHero" + hero.name);*/
                 //Attack opposite
                 if (submitHeroData.gameObject != hero)
                 {
