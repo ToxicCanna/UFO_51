@@ -49,7 +49,7 @@ public class GridManager : MonoBehaviour
         // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
     }
-    public string GetHeroTeamAtPosition(Vector2 position)
+/*    public string GetHeroTeamAtPosition(Vector2 position)
     {
         
         if (occupiedGridTeams.TryGetValue(position, out string team))
@@ -59,7 +59,7 @@ public class GridManager : MonoBehaviour
         }
         return "none"; 
     }
-
+*/
 
 
     public void CheckOccupiedHero(Vector2 position)

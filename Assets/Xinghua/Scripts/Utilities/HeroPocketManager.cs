@@ -49,6 +49,7 @@ public class HeroPocketManager : MonoBehaviour
             RegisterHero(key, hero, "blue");
 
         }
+
         GetAllHeroes();
 
     }
@@ -64,7 +65,6 @@ public class HeroPocketManager : MonoBehaviour
             GameObject heroObject = hero.Value;
             heroListRedSide.Add(heroObject); // Add to list
         }
-
 
         return heroListRedSide; // Return the list
     }
@@ -137,8 +137,6 @@ public class HeroPocketManager : MonoBehaviour
             if (!redSideHeroes.ContainsKey(heroId))
             {
                 redSideHeroes.Add(heroId, hero);
-
-                
             }
            
         }

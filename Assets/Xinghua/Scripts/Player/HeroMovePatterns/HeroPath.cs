@@ -9,7 +9,6 @@ public class HeroPath : MonoBehaviour
 
         SetHeroPathID();
 
-        Debug.Log("move id " + heroPathID);
     }
     private void SetHeroPathID()
     {

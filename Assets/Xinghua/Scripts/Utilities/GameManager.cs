@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     public void DecreaseCoinCount( int value)
     {
-        Debug.Log("cost is " + value);
+       // Debug.Log("cost is " + value);
      
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {

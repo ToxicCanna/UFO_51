@@ -465,27 +465,27 @@ public class GridIndicator : MonoBehaviour
 
     private bool IsIndicatorOnCurrentHero(Vector2Int indicatorPosition)
     {
-        var ssIndicatorOnCurrentHero = false;
-        var teamInfo = GridManager.Instance.GetHeroTeamAtPosition(indicatorPosition);
+        var isIndicatorOnCurrentHero = false;
+        var heros = GetSameSideHerosInTheScene();
+        foreach(var hero in heros) 
+        {
+            if(transform.position ==hero.transform.position)
+            {
+                isIndicatorOnCurrentHero =true;
+            }
+        }
         
-        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide && teamInfo == "blue")
-        {
-            ssIndicatorOnCurrentHero = true;
-            return ssIndicatorOnCurrentHero;
-        }
-        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide && teamInfo == "red")
-        {
-            ssIndicatorOnCurrentHero = true;
-            return ssIndicatorOnCurrentHero;
-        }
 
-        return false;
+        return isIndicatorOnCurrentHero;
     }
     Vector2Int[] validTargetPos;
     public void HandleHeroSelected()
     {
         Debug.Log("HandleHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+
+        Debug.Log("isHeroSubmited"+ isHeroSubmited);
+        Debug.Log("IsIndicatorOnCurrentHero(indicatorPosition)" + IsIndicatorOnCurrentHero(indicatorPosition));
         if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
        
         SetSelectedHero(transform.position);
@@ -499,7 +499,6 @@ public class GridIndicator : MonoBehaviour
         validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         ChooseHeroAction();
-
     }
 
 

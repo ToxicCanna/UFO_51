@@ -48,7 +48,7 @@ public class SpawnHero : MonoBehaviour
             heroArray = blueHeroPrefabs;
             spawnHeroColor = "blue";
         }
-        Debug.Log("hero length" + heroArray.Length);
+
         foreach (GameObject hero in heroArray)
         {
             if (hero.name.Contains(buttonName))
