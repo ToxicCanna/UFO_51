@@ -185,7 +185,7 @@ public class UINavManager : MonoBehaviour
             // hero begin heal ;before use this function need check selectes is heal or not
             //active button should have 2 state, if selected hero is not heal , the button should disable
             Debug.Log("heal function called");//but function do not write here
-            SwithToGamePlayState();
+            gameStateMachine.SwitchToHealState();
         }
         else
         {

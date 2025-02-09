@@ -14,6 +14,7 @@ public class GameStateMachine : BaseStateMachine
     private AttackState attackState;
     private MoveHeroState moveState;
     private ShopHeroState shopState;
+    private HealingState healState;
 
     public string currentState;
     private void Awake()
@@ -30,6 +31,7 @@ public class GameStateMachine : BaseStateMachine
         attackState = new AttackState(_gridIndicator);
         moveState = new MoveHeroState(_gridIndicator);
         shopState = new ShopHeroState(_gridIndicator);
+        healState = new HealingState(_gridIndicator);
     }
     private void Start()
     {
@@ -63,7 +65,7 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToGameplayState()
     {
         SetState(gameplayState);
-        currentState = "gameplay";
+       
     }
     public void SwitchToAttackState()
     {
@@ -72,7 +74,12 @@ public class GameStateMachine : BaseStateMachine
     public void SwitchToMoveHeroState()
     {
         SetState(moveState);
-        currentState = "MoveHero";
+    
+    }
+    public void SwitchToHealState()
+    {
+        SetState(healState);
+     
     }
 }
 

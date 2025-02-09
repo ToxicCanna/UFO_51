@@ -605,18 +605,12 @@ public class GridIndicator : MonoBehaviour
             }
         }
        
-        /* foreach (var pos in validAttackRangePositions)
-         {
-             if (GridManager.Instance.IsGridOccupied(pos))
-             {
-
-
-             }
-
-
-         }*/
-
+   
     }
 
+    public void CheckHealRange()
+    {
+        Debug.Log("hero My hero");
+    }
 
 }
