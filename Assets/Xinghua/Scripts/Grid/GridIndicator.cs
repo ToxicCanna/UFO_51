@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -585,22 +586,35 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
 
         Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));
-        List<GameObject> heroesInRange = new List<GameObject>();
-
-        foreach (var pos in validAttackRangePositions)
+        List<GameObject> heroesInRange = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
+        foreach (var hero in heroesInRange)
         {
-            List<GameObject> obj =new List<GameObject>();
-            if (GridManager.Instance.IsGridOccupied(pos))
+           
+            if (validAttackRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
-                obj.Add(HeroPocketManager.Instance.GetHeroByPosition(pos));
-              
-                Debug.Log("enemy  name ^^^^^"+ obj[0].name);
+                Debug.Log("enemy there");
+                Debug.Log(" attack happen");
+                //set target hero
+                var targetHero = hero.GetComponent<HeroData>();
+                StartCoroutine(RollDiceAndApplyDamage(targetHero));
             }
             else
             {
                 Debug.Log("clear");
+                gameStateMachine.SwitchToMoveHeroState();
             }
         }
+       
+        /* foreach (var pos in validAttackRangePositions)
+         {
+             if (GridManager.Instance.IsGridOccupied(pos))
+             {
+
+
+             }
+
+
+         }*/
 
     }
 
