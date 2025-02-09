@@ -241,51 +241,51 @@ public class GridIndicator : MonoBehaviour
         // if (!isOnHeroPosition || isCancleSelected) return;
         if(isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
-       // Debug.Log("validTargetPositions base pos" + validTargetPos.Length);
+        Debug.Log("currentGridPosition " + currentGridPosition);
         Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
-        canMove = false;
+        
         foreach (var pos in validTargetPos)
         {
-            if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
+            Debug.Log("currentGridPosition befor move " + currentGridPosition);
+            if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y ==(int)currentGridPosition.y)
             {
                 Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
-                canMove = true;
+              
+                //update the gride status ;if not occupied empty it
+                oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+
+
+                GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+
+
+                GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+                submitHeroData.gameObject.transform.position = transform.position;//move the hero
+                currentGridPosition = WorldToGridPosition(transform.position);
+                // GridManager.Instance.AddOccupiedGrid(transform.position);
+                GridManager.Instance.AddHeroWithTeamInfo(submitHeroData.gameObject);
+
+                CheckAttackTargets();
+
+                finishSelection?.Invoke();//if finish move hide the highlight
+                isHeroSubmited = false;
+                GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+                UpdatePlayerTurn();
+                if (isAttackEnd = true)
+                {
+                    SetIndicatorInCurrentHeroPos();
+                }
+
+
+                isCancleSelected = false;
             }
-        }
-
-        if (!canMove)
-        {
-            Debug.Log("target is invalid");
-        }
-        else
-        {
-            //update the gride status ;if not occupied empty it
-            oldIndicatorLocation = submitHeroData.gameObject.transform.position;
-
-
-            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
-
-
-            GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
-            submitHeroData.gameObject.transform.position = transform.position;//move the hero
-            currentGridPosition = WorldToGridPosition(transform.position);
-            // GridManager.Instance.AddOccupiedGrid(transform.position);
-            GridManager.Instance.AddHeroWithTeamInfo(submitHeroData.gameObject);
-
-            CheckAttackTargets();
-
-            finishSelection?.Invoke();//if finish move hide the highlight
-            isHeroSubmited = false;
-            GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
-            UpdatePlayerTurn();
-            if (isAttackEnd = true)
+            else
             {
-                SetIndicatorInCurrentHeroPos();
+                Debug.Log("target is invalid");
             }
-
-
-            isCancleSelected = false;
         }
+
+       
+
         gameStateMachine.SwitchToGameplayState();//this is very important
     }
 
@@ -387,8 +387,8 @@ public class GridIndicator : MonoBehaviour
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
-        int i = Mathf.FloorToInt(worldPosition.x);
-        int j = Mathf.FloorToInt(worldPosition.y);
+        int i = Mathf.RoundToInt(worldPosition.x); 
+        int j = Mathf.RoundToInt(worldPosition.y);
         return new Vector2Int(i, j);
     }
 
@@ -435,6 +435,7 @@ public class GridIndicator : MonoBehaviour
         validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         gameStateMachine.SwitchToUIState();//UI state for choose action
+        Debug.Log("Valid Target Positions when selected: " + string.Join(", ", validTargetPos) + currentSelectedHeroId);
     }
 
 
@@ -442,7 +443,8 @@ public class GridIndicator : MonoBehaviour
     {
         if (submitHeroData != null)
         {
-            return new Vector2Int((int)submitHeroData.transform.position.x, (int)submitHeroData.transform.position.y);
+            Vector2Int gridPos = WorldToGridPosition(submitHeroData.transform.position);
+            return gridPos;
         }
         return Vector2Int.zero;
     }
