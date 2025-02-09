@@ -239,17 +239,16 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("Move To Target");
         // if (!isOnHeroPosition || isCancleSelected) return;
-       if(isCancleSelected) return;
+        if(isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
-
-        //Debug.Log("selected hero" + submitHeroData.name);
-        Debug.Log("validTargetPositions base pos" + validTargetPos.Length);
-
+       // Debug.Log("validTargetPositions base pos" + validTargetPos.Length);
+        Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
         canMove = false;
         foreach (var pos in validTargetPos)
         {
             if (pos.x == currentGridPosition.x && pos.y == currentGridPosition.y)
             {
+                Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
                 canMove = true;
             }
         }
@@ -399,69 +398,7 @@ public class GridIndicator : MonoBehaviour
         float y = gridPosition.y;
         return new Vector3(x, y, 0);
     }
-    public void HandleSelectHero()
-    {
-
-        // onHeroPositon?.Invoke();//this if for path highlight to listen
-        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
-        Debug.Log("start hero in red side :" + herosInRedSide.Count);
-        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-        Debug.Log("start hero in blue side :" + herosInBlueSide.Count);
-        Debug.Log("use X key to switch");
-        //Debug.Log("current indicator position" + transform.position);
-
-        Debug.Log("red hero coun when select :" + herosInRedSide.Count);
-        Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
-        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
-        {
-
-            //Debug.Log("count:"+herosInRedSide.Count);
-            var currentHeroIndex = 0;
-            for (int i = 0; i < herosInRedSide.Count; i++)
-            {
-                Debug.Log($"Index: {i}, Value: {herosInRedSide[i]}");
-                var hero = herosInRedSide[i];
-                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
-
-                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
-                {
-                    Debug.Log("current i :" + i);
-                    currentHeroIndex = i;
-                    break;
-                }
-            }
-            var nextHeroIndex = (currentHeroIndex + 1) % herosInRedSide.Count;
-            var nextHero = herosInRedSide[nextHeroIndex];
-            transform.position = nextHero.transform.position;
-        }
-        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
-        {
-
-            //Debug.Log("count:"+herosInRedSide.Count);
-            var currentHeroIndex = 0;
-            for (int i = 0; i < herosInBlueSide.Count; i++)
-            {
-                Debug.Log($"Index: {i}, Value: {herosInBlueSide[i]}");
-                var hero = herosInBlueSide[i];
-                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
-
-                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
-                {
-                    Debug.Log("current i :" + i);
-                    currentHeroIndex = i;
-                    break;
-                }
-            }
-            var nextHeroIndex = (currentHeroIndex + 1) % herosInBlueSide.Count;
-            var nextHero = herosInBlueSide[nextHeroIndex];
-            transform.position = nextHero.transform.position;
-        }
-    }
-
-    public void ChooseHeroAction()
-    {
-        gameStateMachine.SwitchToUIState();
-    }
+   
 
     private bool IsIndicatorOnCurrentHero(Vector2Int indicatorPosition)
     {
@@ -474,10 +411,9 @@ public class GridIndicator : MonoBehaviour
                 isIndicatorOnCurrentHero =true;
             }
         }
-        
-
         return isIndicatorOnCurrentHero;
     }
+
     Vector2Int[] validTargetPos;
     public void HandleHeroSelected()
     {
@@ -486,8 +422,8 @@ public class GridIndicator : MonoBehaviour
 
         Debug.Log("isHeroSubmited"+ isHeroSubmited);
         Debug.Log("IsIndicatorOnCurrentHero(indicatorPosition)" + IsIndicatorOnCurrentHero(indicatorPosition));
-        if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
-       
+        //if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
+        if (isHeroSubmited) return;
         SetSelectedHero(transform.position);
         isOnHeroPosition = true;
         isHeroSubmited = true;
@@ -498,7 +434,7 @@ public class GridIndicator : MonoBehaviour
         onHeroPositon?.Invoke();//show the path
         validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
-        ChooseHeroAction();
+        gameStateMachine.SwitchToUIState();//UI state for choose action
     }
 
 
