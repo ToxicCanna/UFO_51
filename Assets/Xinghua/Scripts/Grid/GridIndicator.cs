@@ -237,16 +237,15 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveHeroToTargetPosition()
     {
-        Debug.Log("Move To Target");
-        // if (!isOnHeroPosition || isCancleSelected) return;
+      
+        if (!isOnHeroPosition || isCancleSelected) return;
         if(isCancleSelected) return;
+       
         currentGridPosition = WorldToGridPosition(transform.position);
-        Debug.Log("currentGridPosition " + currentGridPosition);
-        Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
-        
+        if (IsIndicatorOnCurrentHero(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
         foreach (var pos in validTargetPos)
         {
-            Debug.Log("currentGridPosition befor move " + currentGridPosition);
+      
             if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y ==(int)currentGridPosition.y)
             {
                 Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
@@ -260,6 +259,7 @@ public class GridIndicator : MonoBehaviour
 
                 GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
                 submitHeroData.gameObject.transform.position = transform.position;//move the hero
+
                 currentGridPosition = WorldToGridPosition(transform.position);
                 // GridManager.Instance.AddOccupiedGrid(transform.position);
                 GridManager.Instance.AddHeroWithTeamInfo(submitHeroData.gameObject);
@@ -422,8 +422,8 @@ public class GridIndicator : MonoBehaviour
 
         Debug.Log("isHeroSubmited"+ isHeroSubmited);
         Debug.Log("IsIndicatorOnCurrentHero(indicatorPosition)" + IsIndicatorOnCurrentHero(indicatorPosition));
-        //if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
-        if (isHeroSubmited) return;
+        if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
+        //if (isHeroSubmited) return;
         SetSelectedHero(transform.position);
         isOnHeroPosition = true;
         isHeroSubmited = true;

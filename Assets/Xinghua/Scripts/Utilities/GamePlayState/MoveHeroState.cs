@@ -16,7 +16,7 @@ public class MoveHeroState : BaseState
     public override void EnterState()
     {
         Debug.Log("Entered move Hero State");
-        gridIndicator.controlHintText.text = "Move Hero ";
+        gridIndicator.controlHintText.text = "Choose target positon ";
     }
 
     public override void HandleInput(InputManager inputManager)
