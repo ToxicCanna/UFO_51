@@ -12,7 +12,8 @@ public class AttackState : BaseState
     public override void EnterState()
     {
         Debug.Log("enter attack state");
-        gridIndicator.controlHintText.text = "W  s to choose target; Enter key to submit ";
+        gridIndicator.controlHintText.text = "Check if have enemy with range";
+        gridIndicator.CheckAttackRange();
     }
 
     public override void UpdateState()

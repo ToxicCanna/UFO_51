@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 
 public class GridIndicator : MonoBehaviour
@@ -237,33 +237,33 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveHeroToTargetPosition()
     {
-      
+
         if (!isOnHeroPosition || isCancleSelected) return;
-        if(isCancleSelected) return;
-       
+        if (isCancleSelected) return;
+
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnCurrentHero(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
         foreach (var pos in validTargetPos)
         {
-      
-            if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y ==(int)currentGridPosition.y)
+
+            if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y == (int)currentGridPosition.y)
             {
                 Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
-              
+
                 //update the gride status ;if not occupied empty it
                 oldIndicatorLocation = submitHeroData.gameObject.transform.position;
 
 
-                GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+                GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(oldIndicatorLocation));
 
 
-                GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
+               
                 submitHeroData.gameObject.transform.position = transform.position;//move the hero
 
                 currentGridPosition = WorldToGridPosition(transform.position);
                 // GridManager.Instance.AddOccupiedGrid(transform.position);
-                GridManager.Instance.AddHeroWithTeamInfo(submitHeroData.gameObject);
-
+                GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position));
+               
                 CheckAttackTargets();
 
                 finishSelection?.Invoke();//if finish move hide the highlight
@@ -284,7 +284,7 @@ public class GridIndicator : MonoBehaviour
             }
         }
 
-       
+
 
         gameStateMachine.SwitchToGameplayState();//this is very important
     }
@@ -387,7 +387,7 @@ public class GridIndicator : MonoBehaviour
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
-        int i = Mathf.RoundToInt(worldPosition.x); 
+        int i = Mathf.RoundToInt(worldPosition.x);
         int j = Mathf.RoundToInt(worldPosition.y);
         return new Vector2Int(i, j);
     }
@@ -398,17 +398,17 @@ public class GridIndicator : MonoBehaviour
         float y = gridPosition.y;
         return new Vector3(x, y, 0);
     }
-   
+
 
     private bool IsIndicatorOnCurrentHero(Vector2Int indicatorPosition)
     {
         var isIndicatorOnCurrentHero = false;
         var heros = GetSameSideHerosInTheScene();
-        foreach(var hero in heros) 
+        foreach (var hero in heros)
         {
-            if(transform.position ==hero.transform.position)
+            if (transform.position == hero.transform.position)
             {
-                isIndicatorOnCurrentHero =true;
+                isIndicatorOnCurrentHero = true;
             }
         }
         return isIndicatorOnCurrentHero;
@@ -420,9 +420,9 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("HandleHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
-        Debug.Log("isHeroSubmited"+ isHeroSubmited);
+        Debug.Log("isHeroSubmited" + isHeroSubmited);
         Debug.Log("IsIndicatorOnCurrentHero(indicatorPosition)" + IsIndicatorOnCurrentHero(indicatorPosition));
-        if (isHeroSubmited ||!IsIndicatorOnCurrentHero(indicatorPosition)) return;
+        if (isHeroSubmited || !IsIndicatorOnCurrentHero(indicatorPosition)) return;
         //if (isHeroSubmited) return;
         SetSelectedHero(transform.position);
         isOnHeroPosition = true;
@@ -457,7 +457,7 @@ public class GridIndicator : MonoBehaviour
 
     public void SetSelectedHero(Vector2 position)
     {
-       
+
         if (isCancleSelected) submitHeroData = null;
         else
         {
@@ -477,7 +477,7 @@ public class GridIndicator : MonoBehaviour
             }
 
         }
-       
+
     }
 
 
@@ -561,8 +561,8 @@ public class GridIndicator : MonoBehaviour
 
     internal void ActiveShopMenu()
     {
-         gameStateMachine.SwitchToShopState();
-      
+        gameStateMachine.SwitchToShopState();
+
     }
 
     internal void CancleSelected()
@@ -574,4 +574,35 @@ public class GridIndicator : MonoBehaviour
         SetSelectedHero(position);
         isHeroSubmited = false;
     }
+
+    internal void CheckAttackRange()
+    {
+        Debug.Log("CheckAttackRange");
+        Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);
+        currentGridPosition = WorldToGridPosition(transform.position);
+        Vector2Int[] validAttackRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), currentSelectedHeroId);
+        
+        Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
+
+        Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));
+        List<GameObject> heroesInRange = new List<GameObject>();
+
+        foreach (var pos in validAttackRangePositions)
+        {
+            List<GameObject> obj =new List<GameObject>();
+            if (GridManager.Instance.IsGridOccupied(pos))
+            {
+                obj.Add(HeroPocketManager.Instance.GetHeroByPosition(pos));
+              
+                Debug.Log("enemy  name ^^^^^"+ obj[0].name);
+            }
+            else
+            {
+                Debug.Log("clear");
+            }
+        }
+
+    }
+
+
 }

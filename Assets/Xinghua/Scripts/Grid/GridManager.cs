@@ -7,8 +7,9 @@ public class GridManager : MonoBehaviour
 
 
 
-    private List<Vector2> occupiedGrids = new List<Vector2>();
-    private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
+    public List<Vector2> occupiedGrids = new List<Vector2>();
+    public List<Vector2Int> occupiedGrid = new List<Vector2Int>();
+   // private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
     public Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
 
     private Vector2 indicatorPos;
@@ -25,22 +26,18 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void AddHeroWithTeamInfo(GameObject hero)
+    //use this to add 
+    public void AddHeroWithTeamInfo(Vector2Int position)
     {
-        heros.Add(hero);
-        Vector2 heroPosition = hero.transform.position;
-        string heroTeam = HeroPocketManager.Instance.GetHeroTeamByName(hero.name); 
-        occupiedGrids.Add(heroPosition);
-        occupiedGridTeams[heroPosition] = heroTeam; 
-        Debug.Log($"Hero {hero.name} added at {heroPosition}, Team: {heroTeam}");
+        occupiedGrid.Add(position);
+
     }
 
 
-
-    public void RemoveOccupiedGrid(Vector2 gridPosition)
+    //use this to remove
+    public void RemoveOccupiedGrid(Vector2Int gridPosition)
     {
-        occupiedGrids.Remove(gridPosition);
-        occupiedGridTeams.Remove(gridPosition); 
+        occupiedGrid.Remove(gridPosition);
         Debug.Log($"Removed occupation at {gridPosition}");
     }
 
@@ -49,6 +46,8 @@ public class GridManager : MonoBehaviour
         // Debug.Log("add :"+gridPosition);
         occupiedGrids.Add(gridPosition);
     }
+
+
 /*    public string GetHeroTeamAtPosition(Vector2 position)
     {
         
@@ -76,16 +75,16 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public void AddHero(GameObject hero)
+ /*   public void AddHero(GameObject hero)
     {
         heros.Add(hero);
     }
-
-    public List<GameObject> GetHeros()
+*/
+/*    public List<GameObject> GetHeros()
     {
         return heros;
     }
-
+*/
     public List<Vector2> GetOccupiedGrids()
     {
         // print all the position been occupied by heros

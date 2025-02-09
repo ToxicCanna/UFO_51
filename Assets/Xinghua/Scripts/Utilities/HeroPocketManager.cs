@@ -30,10 +30,11 @@ public class HeroPocketManager : MonoBehaviour
         {
             var heroData = hero.GetComponent<HeroData>();
             var key = hero.name;
-            GridManager.Instance.AddHero(hero);
+            
             var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "red");
             RegisterHero(key, hero, "red");
+            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
         }
 
         //GetHeroData("hero01");
@@ -45,9 +46,9 @@ public class HeroPocketManager : MonoBehaviour
             //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
             var heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "blue");
-            GridManager.Instance.AddHero(hero);
+           
             RegisterHero(key, hero, "blue");
-
+            GridManager.Instance.AddOccupiedGrid(hero.transform.position);
         }
 
         GetAllHeroes();
@@ -102,7 +103,7 @@ public class HeroPocketManager : MonoBehaviour
 
     }
 
-    private GameObject GetHeroAtPosition(Vector2Int position)
+    public GameObject GetHeroByPosition(Vector2Int position)
     {
         foreach (var hero in GetAllHeroes())
         {
@@ -116,7 +117,7 @@ public class HeroPocketManager : MonoBehaviour
         return null;
     }
 
-    public string GetHeroTeamByName(string heroName)
+/*    public string GetHeroTeamByName(string heroName)
     {
         if (redSideHeroes.ContainsKey(heroName))
         {
@@ -127,7 +128,7 @@ public class HeroPocketManager : MonoBehaviour
             return "blue";
         }
         return "none"; 
-    }
+    }*/
 
     // if player buy hero in the shop should also register and update this data
     public void RegisterHero(string heroId, GameObject hero, string heroColor)
@@ -150,14 +151,14 @@ public class HeroPocketManager : MonoBehaviour
         }
     }
 
-    public void GetHeroData(string heroId)
+/*    public void GetHeroData(string heroId)
     {
         var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();
         if (heroComponent != null)
         {
             int heroHealth = heroComponent.heroData.cost;
         }
-    }
+    }*/
 
     public void RemoveHero(GameObject hero)
     {
