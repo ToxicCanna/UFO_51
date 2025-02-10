@@ -54,12 +54,14 @@ public class HeroData : MonoBehaviour
            // RemoveFromHeroList();
             //Xinghua add here befor you destroy need update data
             HeroPocketManager.Instance.RemoveHero(heroData.side, gameObject);
-            GameManager.Instance.AddbattleBonus(this.gameObject,heroData.cost);//this for the battle kill point add
+           
             var intPostiont = new Vector2Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y);
             GridManager.Instance.RemoveOccupiedGrid(intPostiont, gameObject,heroData.side);
-            Debug.Log("destroy:"+gameObject.name);
-            //xinghua code end
             Destroy(gameObject);
+            Debug.Log("destroy:" + gameObject.name);
+            GameManager.Instance.AddbattleBonus(heroData.side, heroData.cost);//this for the battle kill point add
+            GameManager.Instance.isBattling = false;
+             //xinghua code end
         }
     }
 /*    private void RemoveFromHeroList()

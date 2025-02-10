@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
         UpdatePlayerTurn();
         HeroOwned();
 
-        battleBonusTextR.text = "Point:" + battleBonusRed.ToString() + "/10";
-        battleBonusTextB.text = "Point:" + battleBonusBlue.ToString() + "/10";
+        battleBonusTextR.text = "Point1:" + battleBonusRed.ToString() + "/10";
+        battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString() + "/10";
 
     }
 
@@ -140,31 +140,30 @@ public class GameManager : MonoBehaviour
 
     int battleBonusRed = 0;
     int battleBonusBlue = 0;
-    public void AddbattleBonus(GameObject destroyedObj, int value)
+    internal bool isBattling =true;
+
+    public void AddbattleBonus(string side, int value)
     {
-        if (destroyedObj != null)
+        if (side == null) return;
+
+        Debug.Log("(destroy.side" + side);
+        Debug.Log("(obj.bonus" + value);
+        if (side == "Red")
         {
-          /*  Debug.Log("(obj.name" + destroyedObj.name);
-            Debug.Log("(obj.bonus" + value);*/
-            var color = HeroPocketManager.Instance.GetTeamByHeroObj(destroyedObj);
-           // Debug.Log("(color%%%" + color);
-            if (color == null) return;
-            if (color == "red")
-            {
-                Debug.Log("add bonus to blue" + value);
-                battleBonusRed += value;
-                battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString();
-               
-            }
-            else if (color == "blue")
-            {
-                Debug.Log("add bonus to red" + value);
-                battleBonusBlue += value;
-                battleBonusTextR.text = "Point1:" + battleBonusRed.ToString();
-            }
-            
+            Debug.Log("add bonus to blue" + value);
+            battleBonusBlue += value;
+            battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString();
 
         }
+        else if (side == "Blue")
+        {
+            Debug.Log("add bonus to red" + value);
+            battleBonusRed += value;
+            battleBonusTextR.text = "Point1:" + battleBonusRed.ToString();
+        }
+
+
+
     }
 
     public void CheckGameWin()

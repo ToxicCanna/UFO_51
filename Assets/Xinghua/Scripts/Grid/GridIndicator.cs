@@ -355,6 +355,7 @@ public class GridIndicator : MonoBehaviour
                 if (submitHeroData.gameObject != hero)
                 {
                     Debug.Log(" attack happen");
+                    GameManager.Instance.isBattling = true;
                     hideHighlight?.Invoke();
                     //set target hero
                     var targetHero = hero.GetComponent<HeroData>();
@@ -406,10 +407,11 @@ public class GridIndicator : MonoBehaviour
             {
                 animatorTarget.SetBool("IsDmg", false);
             }
-            yield return new WaitForSeconds(4f);
-            UpdatePlayerTurn();
-            SetIndicatorInCurrentHeroPos();
-            gameStateMachine.SwitchToGameplayState();
+          
+                UpdatePlayerTurn();
+                SetIndicatorInCurrentHeroPos();
+                gameStateMachine.SwitchToGameplayState();
+            
         }
     }
 
