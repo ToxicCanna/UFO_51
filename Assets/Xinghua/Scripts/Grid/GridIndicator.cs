@@ -415,7 +415,10 @@ public class GridIndicator : MonoBehaviour
     private void SetIndicatorInCurrentHeroPos()
     {
         var heros = GetCurrentTurnPlayerHeros();
-        transform.position = heros[0].transform.position;
+        if (heros != null)
+        {
+            transform.position = heros[0].transform.position;
+        }
         //Debug.Log("oppsite hero name:" + heros[0].name);
         currentGridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
     }

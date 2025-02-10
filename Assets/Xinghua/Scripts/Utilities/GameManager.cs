@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
 
-    public TMP_Text battleBonusText;
+    public TMP_Text battleBonusTextR;
     public TMP_Text battleBonusTextB;
     public int battleBonus { get; private set; }
 
@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
         UpdatePlayerTurn();
         HeroOwned();
 
-        battleBonusText.text = "Battle Bonus:" + battleBonusRed.ToString() + "/10";
-        battleBonusTextB.text = "Battle Bonus:" + battleBonusBlue.ToString() + "/10";
+        battleBonusTextR.text = "Point:" + battleBonusRed.ToString() + "/10";
+        battleBonusTextB.text = "Point:" + battleBonusBlue.ToString() + "/10";
 
     }
 
@@ -140,24 +140,27 @@ public class GameManager : MonoBehaviour
 
     int battleBonusRed = 0;
     int battleBonusBlue = 0;
-    public void AddbattleBonus(GameObject obj, int value)
+    public void AddbattleBonus(GameObject destroyedObj, int value)
     {
-        if (obj != null)
+        if (destroyedObj != null)
         {
-            Debug.Log("(obj.name" + obj.name);
+            Debug.Log("(obj.name" + destroyedObj.name);
             Debug.Log("(obj.bonus" + value);
-            var color = HeroPocketManager.Instance.GetTeamByHeroObj(obj);
+            var color = HeroPocketManager.Instance.GetTeamByHeroObj(destroyedObj);
             Debug.Log("(color%%%" + color);
             if (color == null) return;
             if (color == "red")
             {
+                Debug.Log("add bonus to blue" + value);
                 battleBonusRed += value;
-                battleBonusText.text = "BattleBR:" + battleBonusRed.ToString();
+                battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString();
+               
             }
             else if (color == "blue")
             {
+                Debug.Log("add bonus to red" + value);
                 battleBonusBlue += value;
-                battleBonusText.text = "BattleBB:" + battleBonusBlue.ToString();
+                battleBonusTextR.text = "Point1:" + battleBonusRed.ToString();
             }
             
 

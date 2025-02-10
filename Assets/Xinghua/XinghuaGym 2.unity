@@ -2206,7 +2206,7 @@ MonoBehaviour:
   coinText: {fileID: 1514948384}
   currentTurnText: {fileID: 789427797140152679}
   owenedHeroText: {fileID: 1289670754}
-  battleBonusText: {fileID: 917760639}
+  battleBonusTextR: {fileID: 917760639}
   battleBonusTextB: {fileID: 979673659}
   diceResult: 
 --- !u!1 &508454186
