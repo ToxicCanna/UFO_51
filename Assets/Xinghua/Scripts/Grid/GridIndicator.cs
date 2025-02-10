@@ -386,10 +386,12 @@ public class GridIndicator : MonoBehaviour
             gameStateMachine.SwitchToGameplayState();
             isHeroSubmited = false;
 
-            yield return new WaitForSeconds(0.5f);
 
-            animatorSelected.SetBool("IsAtk", false);
-            animator.SetBool("IsDmg", false);
+            if (animatorSelected != null || animator != null)//must check null ,cause sometime destroyed hero die
+            {
+                animatorSelected?.SetBool("IsAtk", false);
+                animator?.SetBool("IsDmg", false);
+            }
             UpdatePlayerTurn();
             SetIndicatorInCurrentHeroPos();
             gameStateMachine.SwitchToGameplayState();
