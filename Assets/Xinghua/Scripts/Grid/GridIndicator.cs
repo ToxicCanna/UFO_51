@@ -323,17 +323,20 @@ public class GridIndicator : MonoBehaviour
 
     private IEnumerator MoveHeroToPointAndUpdatIndicator(Vector2 destination, float speed)
     {
-        while ((Vector2)submitHeroData.transform.position != destination)
-        {
-            submitHeroData.transform.position = Vector2.MoveTowards(
-                submitHeroData.transform.position,
-                destination,
-                speed * Time.deltaTime
-            );
+       
+            while ((Vector2)submitHeroData.transform.position != destination)
+            {
+                submitHeroData.transform.position = Vector2.MoveTowards(
+                    submitHeroData.transform.position,
+                    destination,
+                    speed * Time.deltaTime
+                );
 
-            yield return null;
-        }
+                yield return null;
+            }
+        
     }
+
     bool isAutoAttack = false;
     private void CheckAutoAttack()
     {

@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Security.Cryptography;
 
 public class Castle : MonoBehaviour
 {
@@ -20,7 +21,14 @@ public class Castle : MonoBehaviour
         _HPBar.fillAmount = _target;
         CheckHealthBarGradientAmount();
     }
-
+    //debug xinghua
+    private void Start()
+    {
+      
+        Debug.Log("start maxHP:"+ this.maxHP);
+        Debug.Log("start castleHP:" + this.castleHP);
+    }
+    //Debug end
     public void TakeDamage(int damage)
     {
         castleHP -= damage;
