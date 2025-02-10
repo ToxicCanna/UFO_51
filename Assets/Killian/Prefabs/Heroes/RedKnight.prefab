@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: 1c3aac3c9fab36142a7251ee9ccf65e3, type: 2}
+  heroData: {fileID: 11400000, guid: d22748c0af1bf5c4bbfac7cf374d4948, type: 2}
   mySprite: {fileID: -3259216722051950545, guid: e8b5b1fc871281b4fa268581ac76a3a0, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &5472513217160041433
 MonoBehaviour:
   m_ObjectHideFlags: 0

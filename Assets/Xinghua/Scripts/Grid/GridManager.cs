@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
@@ -10,7 +11,21 @@ public class GridManager : MonoBehaviour
 
     public List<Vector2Int> occupiedGrids = new List<Vector2Int>();
 
-    public Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
+    //public Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
+    // 使用 Dictionary<Vector2Int, List<HeroInfo>> 来支持多个英雄
+    public Dictionary<Vector2Int, List<HeroInfo>> occupiedGridTeams = new Dictionary<Vector2Int, List<HeroInfo>>();
+
+    public class HeroInfo
+    {
+        public GameObject heroObj;
+        public string side; 
+
+        public HeroInfo(GameObject hero, string side)
+        {
+            this.heroObj = hero;
+            this.side = side;
+        }
+    }
 
     private Vector2 indicatorPos;
 
@@ -27,26 +42,23 @@ public class GridManager : MonoBehaviour
     }
 
     //use this to add 
-    public void AddHeroWithTeamInfo(Vector2Int position)
+    public void AddHeroWithTeamInfo(Vector2Int position,GameObject hero,string colorSide)
     {
-        occupiedGrids.Add(position);
-
+        if (!occupiedGridTeams.ContainsKey(position))
+        {
+            occupiedGridTeams[position] = new List<HeroInfo>();//init
+        }
+        occupiedGridTeams[position].Add(new HeroInfo(hero, colorSide));
+        Debug.Log($"Added {hero.name} to {position} from side {colorSide}");
     }
 
 
     //use this to remove
-    public void RemoveOccupiedGrid(Vector2Int gridPosition)
+    public void RemoveOccupiedGrid(Vector2Int position, GameObject hero, string colorSide)
     {
-        occupiedGrids.Remove(gridPosition);
-        Debug.Log($"Removed occupation at {gridPosition}");
+        occupiedGridTeams[position].Remove(new HeroInfo(hero, colorSide));
+        Debug.Log($"Remove {hero.name} to {position} from Side {colorSide}");
     }
-
-    public void AddOccupiedGrid(Vector2Int gridPosition)
-    {
-        // Debug.Log("add :"+gridPosition);
-        occupiedGrids.Add(gridPosition);
-    }
-
 
 
 
@@ -65,14 +77,14 @@ public class GridManager : MonoBehaviour
     }
 
 
-    public List<Vector2Int> GetOccupiedGrids()
+/*    public List<Vector2Int> GetOccupiedGrids()
     {
         // print all the position been occupied by heros
         Debug.Log("occupiedGrids " + occupiedGrids.Count);
         return occupiedGrids;
     }
 
-
+*/
 
     public bool IsGridOccupied(Vector2Int gridPosition)
     {

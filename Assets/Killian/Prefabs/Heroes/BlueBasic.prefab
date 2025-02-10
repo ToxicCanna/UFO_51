@@ -51,9 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPath: {fileID: 0}
-  heroMoveRule: {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
-  heroPathID: 0
 --- !u!114 &5403572045712488463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: 2baaa0d285709764f87b30a6ecb59dc3, type: 2}
+  heroData: {fileID: 11400000, guid: 666ff242d9d58fe43b012ac1c0cdc45b, type: 2}
   mySprite: {fileID: 8476291759544491924, guid: 7fa1bdbf72cb7df4285dfbfdf8598e67, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -80,6 +77,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &9002317770488668507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64

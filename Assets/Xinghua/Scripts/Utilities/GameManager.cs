@@ -144,10 +144,10 @@ public class GameManager : MonoBehaviour
     {
         if (destroyedObj != null)
         {
-            Debug.Log("(obj.name" + destroyedObj.name);
-            Debug.Log("(obj.bonus" + value);
+          /*  Debug.Log("(obj.name" + destroyedObj.name);
+            Debug.Log("(obj.bonus" + value);*/
             var color = HeroPocketManager.Instance.GetTeamByHeroObj(destroyedObj);
-            Debug.Log("(color%%%" + color);
+           // Debug.Log("(color%%%" + color);
             if (color == null) return;
             if (color == "red")
             {
@@ -165,6 +165,11 @@ public class GameManager : MonoBehaviour
             
 
         }
+    }
+
+    public void CheckGameWin()
+    {
+        //if one of the player point reach 10,the player can win
     }
 
 }

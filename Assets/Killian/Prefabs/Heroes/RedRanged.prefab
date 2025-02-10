@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: a3a52699da14d624580d05c04588f405, type: 2}
+  heroData: {fileID: 11400000, guid: 269335322d4fd634d8c677e5d4ecc6f1, type: 2}
   mySprite: {fileID: -641661416736242478, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &6992957559215821083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.48387095}
-    oldSize: {x: 0.2, y: 0.31}
+    oldSize: {x: 0.625, y: 0.96875}
     newSize: {x: 0.625, y: 0.875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -225,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPathID: 3
 --- !u!95 &5423341684253663465
 Animator:
   serializedVersion: 7

@@ -1,4 +1,5 @@
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HeroData : MonoBehaviour
@@ -9,7 +10,9 @@ public class HeroData : MonoBehaviour
 
     public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     private string abilityScore;
-
+    //xinghua add
+    public string side;
+    //add end
     private TwoSidesHero twoSidesHero;
 
 
@@ -36,6 +39,10 @@ public class HeroData : MonoBehaviour
         ability = heroData.ability;
 
         abilityScore = heroData.abilityScore;
+
+        //xinghua add
+        side = heroData.side;
+        //end
     }
 
     public void UpdateHealth(int amount)
@@ -44,15 +51,18 @@ public class HeroData : MonoBehaviour
         if (currentHealth <= 0)
         {
             //die
-            RemoveFromHeroList();
+           // RemoveFromHeroList();
             //Xinghua add here befor you destroy need update data
-            HeroPocketManager.Instance.RemoveHero(gameObject);
-            GameManager.Instance.AddbattleBonus(this.gameObject,heroData.cost);
+            HeroPocketManager.Instance.RemoveHero(heroData.side, gameObject);
+            GameManager.Instance.AddbattleBonus(this.gameObject,heroData.cost);//this for the battle kill point add
+            var intPostiont = new Vector2Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y);
+            GridManager.Instance.RemoveOccupiedGrid(intPostiont, gameObject,heroData.side);
+            Debug.Log("destroy:"+gameObject.name);
             //xinghua code end
             Destroy(gameObject);
         }
     }
-    private void RemoveFromHeroList()
+/*    private void RemoveFromHeroList()
     {
         // Determine which side the hero belongs to (assuming red or blue side)
         if (twoSidesHero != null)
@@ -71,7 +81,7 @@ public class HeroData : MonoBehaviour
         {
             Debug.LogWarning("TwoSidesHero reference not found.");
         }
-    }
+    }*/
 
     /*public void UpgradeUnit()
     {

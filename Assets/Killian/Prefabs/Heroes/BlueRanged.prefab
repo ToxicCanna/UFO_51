@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: a3a52699da14d624580d05c04588f405, type: 2}
+  heroData: {fileID: 11400000, guid: 23802ca103786c844b2ea2f15934148c, type: 2}
   mySprite: {fileID: 1429496714160037500, guid: 1b635aae35d9b4a428f3f9a22642e75d, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &9189664414710383191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -224,9 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPath: {fileID: 0}
-  heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
-  heroPathID: 3
 --- !u!95 &555778197574573750
 Animator:
   serializedVersion: 7

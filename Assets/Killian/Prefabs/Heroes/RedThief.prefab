@@ -90,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.625, y: 0.875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8510720407421504220
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: 50a72fc97c3cf81469cd85ec94e67b72, type: 2}
+  heroData: {fileID: 11400000, guid: de9cfac1e36b71e488202b631f2e57c9, type: 2}
   mySprite: {fileID: -641661416736242478, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &5669093604162091037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,4 +247,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPathID: 2
