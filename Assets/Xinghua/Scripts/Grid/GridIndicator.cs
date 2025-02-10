@@ -624,8 +624,8 @@ public class GridIndicator : MonoBehaviour
                 //Set Current Hero in BattleManager using "GetSubmitHero()"
                 battleManager.currentHero = submitHeroData;
 
-                Debug.Log("Target hero selected: " + battleManager.targetHero.name);
-                Debug.Log("Attacking with hero: " + battleManager.currentHero.name);
+/*                Debug.Log("Target hero selected: " + battleManager.targetHero.name);
+                Debug.Log("Attacking with hero: " + battleManager.currentHero.name);*/
                 //end of Killians code
             }
         }
@@ -648,7 +648,7 @@ public class GridIndicator : MonoBehaviour
         isHeroSubmited = false;
     }
 
-    internal void CheckAttackRange()
+    internal void HandleAttack()
     {
         CheckAutoAttack();
         if(isAutoAttack)return;

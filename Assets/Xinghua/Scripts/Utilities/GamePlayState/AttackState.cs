@@ -13,7 +13,7 @@ public class AttackState : BaseState
     {
         Debug.Log("enter attack state");
         gridIndicator.controlHintText.text = "Check if have enemy with range\nKill hero get point, Reach 10 will win";
-        gridIndicator.CheckAttackRange();
+        gridIndicator.HandleAttack();
     }
 
     public override void UpdateState()

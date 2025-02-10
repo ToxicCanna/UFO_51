@@ -1,7 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +18,9 @@ public class GameManager : MonoBehaviour
     public TMP_Text owenedHeroText;
 
     public TMP_Text battleBonusText;
-    public int battleBonus =0;
+    public TMP_Text battleBonusTextB;
+    public int battleBonus { get; private set; }
+
     public string diceResult;
 
     private void Awake()
@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
         UpdatePlayerTurn();
         HeroOwned();
 
-        battleBonusText.text = "Battle Bonus:" + battleBonus.ToString()+ "/10";
+        battleBonusText.text = "Battle Bonus:" + battleBonusRed.ToString() + "/10";
+        battleBonusTextB.text = "Battle Bonus:" + battleBonusBlue.ToString() + "/10";
+
     }
 
     private void Start()
@@ -78,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-             coinCount = coinCountRed;
+            coinCount = coinCountRed;
             coinCountRed++;
         }
         else
@@ -86,12 +88,12 @@ public class GameManager : MonoBehaviour
             coinCount = coinCountBlue;
             coinCountBlue++;
         }
-        coinText.text = "Coin:" +""+ coinCount.ToString();   
+        coinText.text = "Coin:" + "" + coinCount.ToString();
     }
-    public void DecreaseCoinCount( int value)
+    public void DecreaseCoinCount(int value)
     {
-       // Debug.Log("cost is " + value);
-     
+        // Debug.Log("cost is " + value);
+
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             coinCountRed -= value;
@@ -102,12 +104,12 @@ public class GameManager : MonoBehaviour
             coinCountBlue -= value;
             coinText.text = "Coin:" + "" + coinCountBlue.ToString();
         }
-       
+
     }
 
     public void UpdatePlayerTurn()
     {
-        if(currentTurn== PlayerTurn.PlayerRedSide)
+        if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             currentTurnText.text = "Player1";
         }
@@ -115,32 +117,53 @@ public class GameManager : MonoBehaviour
         {
             currentTurnText.text = "Player2";
         }
-       
+
     }
     public int GetHeroCount()
     {
 
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            return HeroPocketManager.Instance.redSideHeroes.Count;
+            return HeroPocketManager.Instance.GetAllRedSideHeroes().Count;
         }
         else
         {
-            return HeroPocketManager.Instance.blueSideHeroes.Count;
+            return HeroPocketManager.Instance.GetAllBlueSideHeroes().Count;
         }
 
     }
 
     public void HeroOwned()
-    { 
-        owenedHeroText.text = "Own Hero:" + GetHeroCount() ;
-    }
-    public void AddbattleBonus(int value)
     {
-        Debug.Log("update the battle bonus text");
-        battleBonus += value;
-        battleBonusText.text = "Battle Bonus:" + battleBonus.ToString();
+        owenedHeroText.text = "Own Hero:" + GetHeroCount();
     }
+
+    int battleBonusRed = 0;
+    int battleBonusBlue = 0;
+    public void AddbattleBonus(GameObject obj, int value)
+    {
+        if (obj != null)
+        {
+            Debug.Log("(obj.name" + obj.name);
+            Debug.Log("(obj.bonus" + value);
+            var color = HeroPocketManager.Instance.GetTeamByHeroObj(obj);
+            Debug.Log("(color%%%" + color);
+            if (color == null) return;
+            if (color == "red")
+            {
+                battleBonusRed += value;
+                battleBonusText.text = "BattleBR:" + battleBonusRed.ToString();
+            }
+            else if (color == "blue")
+            {
+                battleBonusBlue += value;
+                battleBonusText.text = "BattleBB:" + battleBonusBlue.ToString();
+            }
+            
+
+        }
+    }
+
 }
 
 

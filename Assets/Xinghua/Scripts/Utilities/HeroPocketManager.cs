@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +5,14 @@ public class HeroPocketManager : MonoBehaviour
 {
     public static HeroPocketManager Instance;
     //this is hero in the scene
-    public Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
-    public Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
+    private List<GameObject> redSideHeroes;
+    private List<GameObject> blueSideHeroes;
+    private Dictionary<string, List<GameObject>> heroTeams = new Dictionary<string, List<GameObject>>()
+    {
+        { "red", new List<GameObject>() },
+        { "blue", new List<GameObject>() }
+    };
+
 
     private List<GameObject> RedSideheros;//get from child gameobject
     private List<GameObject> BlueSideheros;
@@ -29,11 +34,11 @@ public class HeroPocketManager : MonoBehaviour
         foreach (var hero in RedSideheros)
         {
             var heroData = hero.GetComponent<HeroData>();
-            var key = hero.name;
-            
-            var heroPos = new Vector2Int((int)hero.transform.position.x,(int)hero.transform.position.y);
+            var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "red");
-            RegisterHero(key, hero, "red");
+
+            RegisterHero("red", hero);
             GridManager.Instance.AddHeroWithTeamInfo(heroPos);
         }
 
@@ -45,46 +50,44 @@ public class HeroPocketManager : MonoBehaviour
             var key = hero.name;
             var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
             GridManager.Instance.occupiedGridTeams.Add(heroPos, "blue");
-           
-            RegisterHero(key, hero, "blue");
+
+            RegisterHero("blue", hero);
             GridManager.Instance.AddHeroWithTeamInfo(heroPos);
-            
+
         }
+        GetAllBlueSideHeroes();
+        GetAllRedSideHeroes();
         Debug.Log("redSideHeroes count" + redSideHeroes.Count);
         Debug.Log("blueSideHeroes count" + blueSideHeroes.Count);
         GetAllHeroes();
 
     }
-
- 
-    public List<GameObject> GetAllRedSideHeroes()
+    public string GetTeamByHeroObj(GameObject obj)
     {
-        List<GameObject> heroListRedSide = new List<GameObject>(); // Create a new list
-
-        foreach (var hero in redSideHeroes)
+        foreach (var team in heroTeams)
         {
-            string heroName = hero.Key;
-            GameObject heroObject = hero.Value;
-            heroListRedSide.Add(heroObject); // Add to list
+            foreach (var heroData in team.Value)
+            {
+                if (heroData.gameObject == obj)
+                {
+                    return team.Key; 
+                }
+            }
         }
 
-        return heroListRedSide; // Return the list
+        return "none"; 
+    }
+
+    public List<GameObject> GetAllRedSideHeroes()
+    {
+        redSideHeroes = heroTeams["red"];
+        return redSideHeroes;
     }
     public List<GameObject> GetAllBlueSideHeroes()
     {
-        List<GameObject> heroListBlueSide = new List<GameObject>(); // Create a new list
-        foreach (var hero in blueSideHeroes)
-        {
-            string heroName = hero.Key;
-            GameObject heroObject = hero.Value;
-
-            // Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
-
-            heroListBlueSide.Add(heroObject); // Add to list
-        }
-
-
-        return heroListBlueSide; // Return the list
+        blueSideHeroes = heroTeams["blue"];
+        return blueSideHeroes;
+      
     }
 
     public List<GameObject> GetAllHeroes()
@@ -108,7 +111,7 @@ public class HeroPocketManager : MonoBehaviour
     {
         foreach (var hero in GetAllHeroes())
         {
-            Vector2Int heroPos =new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+            Vector2Int heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
 
             if (heroPos == position)
             {
@@ -129,10 +132,10 @@ public class HeroPocketManager : MonoBehaviour
             return GetAllRedSideHeroes();
         }
     }
-      
+
     public GameObject GetOppositeHerosByPosition(Vector2Int position)
     {
-        
+
         foreach (var hero in GetOppositeHeros())
         {
             Vector2Int heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
@@ -145,54 +148,26 @@ public class HeroPocketManager : MonoBehaviour
         return null;
     }
 
-    /*    public string GetHeroTeamByName(string heroName)
-        {
-            if (redSideHeroes.ContainsKey(heroName))
-            {
-                return "red";
-            }
-            else if (blueSideHeroes.ContainsKey(heroName))
-            {
-                return "blue";
-            }
-            return "none"; 
-        }*/
+
 
     // if player buy hero in the shop should also register and update this data
-    public void RegisterHero(string heroId, GameObject hero, string heroColor)
-    {
-        if (heroColor == "red")
-        {
-            if (!redSideHeroes.ContainsKey(heroId))
-            {
-                redSideHeroes.Add(heroId, hero);
-            }
-           
-        }
-        else
-        {
-            if (!blueSideHeroes.ContainsKey(heroId))
-            {
-                blueSideHeroes.Add(heroId, hero);
 
-            }
+
+
+
+    public void RegisterHero(string key, GameObject hero)
+    {
+        if (heroTeams.ContainsKey(key))
+        {
+            heroTeams[key].Add(hero);
         }
     }
 
-/*    public void GetHeroData(string heroId)
-    {
-        var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();
-        if (heroComponent != null)
-        {
-            int heroHealth = heroComponent.heroData.cost;
-        }
-    }*/
-
     public void RemoveHero(GameObject hero)
     {
-        string heroName = hero.name.Replace("(Clone)", "").Trim(); 
+        string heroName = hero.name.Replace("(Clone)", "").Trim();
 
-        if (redSideHeroes.ContainsKey(heroName))
+        /*if (redSideHeroes.ContainsKey(heroName))
         {
             redSideHeroes.Remove(heroName);
             Debug.Log($"Removed {heroName} from RedSideHeroes.");
@@ -206,8 +181,8 @@ public class HeroPocketManager : MonoBehaviour
         {
             Debug.LogWarning($"Hero {heroName} not found in any list.");
         }
+*/
 
-     
         Vector2 heroPos = new Vector2(hero.transform.position.x, hero.transform.position.y);
         if (GridManager.Instance.occupiedGridTeams.ContainsKey(heroPos))
         {
