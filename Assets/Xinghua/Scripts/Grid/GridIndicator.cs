@@ -390,8 +390,17 @@ public class GridIndicator : MonoBehaviour
         if (targetHero != null && submitHeroData != null)
         {
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+            if (isAutoAttack)
+            {
+               
+                animatorSelected.SetBool("IsAtk", true);
+            }
+            else
+            {
+                animatorSelected.SetBool("IsAtk", false);
+            }
             Animator animatorTarget = targetHero.gameObject.GetComponent<Animator>();
-            animatorSelected.SetBool("IsAtk", true);
+         
             animatorTarget.SetBool("IsDmg", true);
 
             yield return new WaitForSeconds(1);
