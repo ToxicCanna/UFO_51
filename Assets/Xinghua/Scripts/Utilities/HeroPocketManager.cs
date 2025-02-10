@@ -165,11 +165,11 @@ public class HeroPocketManager : MonoBehaviour
             if (heroTeams[side].Contains(hero)) 
             {
                 heroTeams[side].Remove(hero);
-                Debug.Log($"Removed {hero.name} from {side} team.");
+                Debug.Log($"Pocket Removed {hero.name} from {side} team.");
             }
             else
             {
-                Debug.LogWarning($"Hero {hero.name} not found in {side} team.");
+                Debug.LogWarning($"Pocket Hero {hero.name} not found in {side} team.");
             }
         }
         else

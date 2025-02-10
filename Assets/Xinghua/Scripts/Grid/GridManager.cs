@@ -49,7 +49,7 @@ public class GridManager : MonoBehaviour
             occupiedGridTeams[position] = new List<HeroInfo>();//init
         }
         occupiedGridTeams[position].Add(new HeroInfo(hero, colorSide));
-        Debug.Log($"Added {hero.name} to {position} from side {colorSide}");
+        Debug.Log($"Grid Added {hero.name} to {position} from side {colorSide}");
     }
 
 
@@ -57,7 +57,7 @@ public class GridManager : MonoBehaviour
     public void RemoveOccupiedGrid(Vector2Int position, GameObject hero, string colorSide)
     {
         occupiedGridTeams[position].Remove(new HeroInfo(hero, colorSide));
-        Debug.Log($"Remove {hero.name} to {position} from Side {colorSide}");
+        Debug.Log($"Grid Remove {hero.name} to {position} from Side {colorSide}");
     }
 
 
