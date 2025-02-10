@@ -285,39 +285,38 @@ public class GridIndicator : MonoBehaviour
 
         if (needTurn)
         {
-     
+
             Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
             yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(intermediatePosition, speed));
 
-     
+
             yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
         }
         else
         {
-           
+
             yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
         }
         currentGridPosition = WorldToGridPosition(transform.position);
         // GridManager.Instance.AddOccupiedGrid(transform.position);
         GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position));
 
-        CheckAttackTargets();
+        CheckAutoAttack();
 
-       
-        isHeroSubmited = false;
-        GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
-        UpdatePlayerTurn();
-        if (isAttackEnd = true)
+        if (!isAutoAttack)
         {
+            isHeroSubmited = false;
+            GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+            UpdatePlayerTurn();
+
             SetIndicatorInCurrentHeroPos();
+            isCancleSelected = false;
+
+            animatorSelected.SetBool("IsRun", false);
         }
-
-
-        isCancleSelected = false;
-        animatorSelected.SetBool("IsRun", false);
     }
 
-  
+
     private IEnumerator MoveHeroToPointAndUpdatIndicator(Vector2 destination, float speed)
     {
         while ((Vector2)submitHeroData.transform.position != destination)
@@ -331,7 +330,8 @@ public class GridIndicator : MonoBehaviour
             yield return null;
         }
     }
-    private void CheckAttackTargets()
+    bool isAutoAttack = false;
+    private void CheckAutoAttack()
     {
         Debug.Log("CheckAttackTargets");
         battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
@@ -341,6 +341,7 @@ public class GridIndicator : MonoBehaviour
         {
             if (WorldToGridPosition(transform.position) == WorldToGridPosition(hero.transform.position))
             {
+                isAutoAttack = true;
                 /* Debug.Log("same pos:" + transform.position);
                  Debug.Log("targetHero" + hero.name);*/
                 //Attack opposite
@@ -377,9 +378,9 @@ public class GridIndicator : MonoBehaviour
         if (targetHero != null && submitHeroData != null)
         {
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
-            Animator animator = targetHero.gameObject.GetComponent<Animator>();
+            Animator animatorTarget = targetHero.gameObject.GetComponent<Animator>();
             animatorSelected.SetBool("IsAtk", true);
-            animator.SetBool("IsDmg", true);
+            animatorTarget.SetBool("IsDmg", true);
 
             yield return new WaitForSeconds(1);
             isAttackEnd = true;
@@ -387,10 +388,15 @@ public class GridIndicator : MonoBehaviour
             isHeroSubmited = false;
 
 
-            if (animatorSelected != null || animator != null)//must check null ,cause sometime destroyed hero die
+            //must check null ,cause sometime destroyed hero die
+            if (animatorSelected != null && animatorSelected.gameObject != null)
             {
-                animatorSelected?.SetBool("IsAtk", false);
-                animator?.SetBool("IsDmg", false);
+                animatorSelected.SetBool("IsAtk", false);
+            }
+
+            if (animatorTarget != null && animatorTarget.gameObject != null)
+            {
+                animatorTarget.SetBool("IsDmg", false);
             }
             UpdatePlayerTurn();
             SetIndicatorInCurrentHeroPos();
