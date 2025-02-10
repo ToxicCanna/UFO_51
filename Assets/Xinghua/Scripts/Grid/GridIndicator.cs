@@ -237,13 +237,17 @@ public class GridIndicator : MonoBehaviour
 
     public void MoveHeroToTargetPosition()
     {
+        Debug.Log("!isOnHeroPosition" + !isOnHeroPosition);
+        Debug.Log("isCancleSelected" + isCancleSelected);
 
         if (!isOnHeroPosition || isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
-        if (IsIndicatorOnCurrentHero(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
+        if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
+        Debug.Log("move hero");
         foreach (var pos in validTargetPos)
         {
-
+            Debug.Log("currentGridPosition" + currentGridPosition);
+            Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
             if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y == (int)currentGridPosition.y)
             {
                 Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
@@ -450,7 +454,7 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    private bool IsIndicatorOnCurrentHero(Vector2Int indicatorPosition)
+    private bool IsIndicatorOnOriginalPosition(Vector2Int indicatorPosition)
     {
         var isIndicatorOnCurrentHero = false;
         var heros = GetSameSideHerosInTheScene();
@@ -463,6 +467,19 @@ public class GridIndicator : MonoBehaviour
         }
         return isIndicatorOnCurrentHero;
     }
+    private bool IsIndicatorOnSameSideHeroPosition(Vector2Int indicatorPosition)
+    {
+        var IsIndicatorOnSameSideHeroPosition = false;
+        var heros = GetSameSideHerosInTheScene();
+        foreach (var hero in heros)
+        {
+            if (transform.position == hero.transform.position)
+            {
+                IsIndicatorOnSameSideHeroPosition = true;
+            }
+        }
+        return IsIndicatorOnSameSideHeroPosition;
+    }
 
     Vector2Int[] validTargetPos;
     public void HandleHeroSelected()
@@ -471,10 +488,12 @@ public class GridIndicator : MonoBehaviour
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
         Debug.Log("isHeroSubmited" + isHeroSubmited);
-        Debug.Log("IsIndicatorOnCurrentHero(indicatorPosition)" + IsIndicatorOnCurrentHero(indicatorPosition));
-        if (isHeroSubmited || !IsIndicatorOnCurrentHero(indicatorPosition)) return;
-        //if (isHeroSubmited) return;
+        Debug.Log("!IsIndicatorOnSameSideHeroPosition(indicatorPosition)" + !IsIndicatorOnSameSideHeroPosition(indicatorPosition));
+        // if (isHeroSubmited || !IsIndicatorOnOriginalPosition(indicatorPosition)) return;
+        // if (isHeroSubmited) return;
+        if (isHeroSubmited || !IsIndicatorOnSameSideHeroPosition(indicatorPosition)) return;
         SetSelectedHero(transform.position);
+
         isOnHeroPosition = true;
         isHeroSubmited = true;
         isCancleSelected = false;
@@ -538,8 +557,8 @@ public class GridIndicator : MonoBehaviour
 
     public int GetSubmitHeroPathIndex(Vector2 position)
     {
-        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
-
+        //var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+        var allHerosInScene = GetSameSideHerosInTheScene();
         foreach (var hero in allHerosInScene)
         {
             if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)

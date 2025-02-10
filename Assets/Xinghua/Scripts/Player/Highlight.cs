@@ -40,8 +40,9 @@ public class HighLight : MonoBehaviour
 
     public void ShowHeroPath()
     {
+       
         Vector2Int currentGridPosition = GetGridPosition(gridIndicator.transform.position);//this position need been hero selected 
-        var heros = HeroPocketManager.Instance.GetAllHeroes();
+        var heros = gridIndicator.GetSameSideHerosInTheScene();
         foreach (var hero in heros)
         {
             var index = hero.gameObject.GetComponent<HeroPath>().heroPathID;
@@ -197,7 +198,7 @@ public class HighLight : MonoBehaviour
     public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-
+        Debug.Log("9999ID"+ID);
 
         if (ID == 0 || ID == 4)
         {
