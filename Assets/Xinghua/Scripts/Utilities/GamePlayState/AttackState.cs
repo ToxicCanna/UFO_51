@@ -12,7 +12,7 @@ public class AttackState : BaseState
     public override void EnterState()
     {
         Debug.Log("enter attack state");
-        gridIndicator.controlHintText.text = "Check if have enemy with range";
+        gridIndicator.controlHintText.text = "Check if have enemy with range\nKill hero get point, Reach 10 will win";
         gridIndicator.CheckAttackRange();
     }
 

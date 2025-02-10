@@ -17,7 +17,7 @@ public class GamePlayState : BaseState
     public override void EnterState()
     {
         Debug.Log("Entered Gameplay State");
-        gridIndicator.controlHintText.text = "Move Indicator to choose Hero";
+        gridIndicator.controlHintText.text = "Move Indicator to choose Hero\n \n B_Buy Heros";
     }
 
     public override void HandleInput(InputManager inputManager)

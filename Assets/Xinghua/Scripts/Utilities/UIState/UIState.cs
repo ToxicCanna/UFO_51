@@ -11,7 +11,7 @@ public class UIState : BaseState
     public override void EnterState()
     {
         Debug.Log("Enter UIAction State");
-        gridIndicator.controlHintText.text ="Choose Action";
+        gridIndicator.controlHintText.text = "Choose Action\n\nKill hero get point, Reach 10 will win\n\nmove hero in same spot will auto attack";
         UINavManager.Instance.InitSelectorPositionInHeroActionsZone();
     }
     public UIState(GridIndicator gridIndicator)

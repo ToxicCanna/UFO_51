@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 
 public class GridIndicator : MonoBehaviour
@@ -80,7 +79,7 @@ public class GridIndicator : MonoBehaviour
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
         highLight = FindAnyObjectByType<HighLight>();
-        controlHintText.text = "WASD to move";
+        controlHintText.text = "WASD_move;Enter_submit ;Q_cancle";
     }
 
 
@@ -256,13 +255,16 @@ public class GridIndicator : MonoBehaviour
                 GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(oldIndicatorLocation));
 
 
-               
-                submitHeroData.gameObject.transform.position = transform.position;//move the hero
+
+                // submitHeroData.gameObject.transform.position = transform.position;//move the hero
+                StartCoroutine(MoveHeroToPosition(transform.position, 1f));
+
+
 
                 currentGridPosition = WorldToGridPosition(transform.position);
                 // GridManager.Instance.AddOccupiedGrid(transform.position);
                 GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position));
-               
+
                 CheckAttackTargets();
 
                 finishSelection?.Invoke();//if finish move hide the highlight
@@ -289,7 +291,49 @@ public class GridIndicator : MonoBehaviour
     }
 
 
+    private IEnumerator MoveHeroToPosition(Vector2 targetPosition, float speed)
+    {
+        Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+        Vector2 startPosition = (Vector2)submitHeroData.transform.position;
+        Vector2 direction = targetPosition - startPosition;
 
+
+        bool needTurn = Mathf.Abs(direction.x) > 0 && Mathf.Abs(direction.y) > 0;
+
+        animatorSelected.SetBool("IsRun", true);
+
+        if (needTurn)
+        {
+     
+            Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
+            yield return StartCoroutine(MoveToPoint(intermediatePosition, speed));
+
+     
+            yield return StartCoroutine(MoveToPoint(targetPosition, speed));
+        }
+        else
+        {
+           
+            yield return StartCoroutine(MoveToPoint(targetPosition, speed));
+        }
+
+        animatorSelected.SetBool("IsRun", false);
+    }
+
+  
+    private IEnumerator MoveToPoint(Vector2 destination, float speed)
+    {
+        while ((Vector2)submitHeroData.transform.position != destination)
+        {
+            submitHeroData.transform.position = Vector2.MoveTowards(
+                submitHeroData.transform.position,
+                destination,
+                speed * Time.deltaTime
+            );
+
+            yield return null;
+        }
+    }
     private void CheckAttackTargets()
     {
         Debug.Log("CheckAttackTargets");
@@ -298,10 +342,10 @@ public class GridIndicator : MonoBehaviour
         var herosOpposite = GetOppositeHeros();
         foreach (var hero in herosOpposite)
         {
-            if(WorldToGridPosition(transform.position) == WorldToGridPosition(hero.transform.position))
+            if (WorldToGridPosition(transform.position) == WorldToGridPosition(hero.transform.position))
             {
-               /* Debug.Log("same pos:" + transform.position);
-                Debug.Log("targetHero" + hero.name);*/
+                /* Debug.Log("same pos:" + transform.position);
+                 Debug.Log("targetHero" + hero.name);*/
                 //Attack opposite
                 if (submitHeroData.gameObject != hero)
                 {
@@ -333,7 +377,7 @@ public class GridIndicator : MonoBehaviour
         yield return new WaitForSeconds(1);
         Debug.Log("give damage");
         battleManager.Attack();
-        if (targetHero != null && submitHeroData !=null)
+        if (targetHero != null && submitHeroData != null)
         {
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
             Animator animator = targetHero.gameObject.GetComponent<Animator>();
@@ -578,22 +622,22 @@ public class GridIndicator : MonoBehaviour
 
     internal void CheckAttackRange()
     {
-       /* Debug.Log("CheckAttackRange");
-        Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);*/
+        /* Debug.Log("CheckAttackRange");
+         Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);*/
         currentGridPosition = WorldToGridPosition(transform.position);
         Vector2Int[] validAttackRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), currentSelectedHeroId);
-     /*   
-        Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
-        Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));*/
+        /*   
+           Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
+           Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));*/
         List<GameObject> heroesOpposite = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
         //Debug.Log("occupied count" + heroesOpposite.Count);
         foreach (var hero in heroesOpposite)
         {
-           
+
             if (validAttackRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
-             /*   Debug.Log("enemy there");
-                Debug.Log(" attack happen");*/
+                /*   Debug.Log("enemy there");
+                   Debug.Log(" attack happen");*/
                 //set target hero
                 finishSelection?.Invoke();//hide the high light
                 var targetHero = hero.GetComponent<HeroData>();
@@ -603,12 +647,12 @@ public class GridIndicator : MonoBehaviour
             else
             {
                 Debug.Log("clear");
-              
+
                 gameStateMachine.SwitchToMoveHeroState();
             }
         }
-       
-   
+
+
     }
 
     public void CheckHealRange()
