@@ -18,7 +18,7 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection += HideAllHightlights;
+            gridIndicator.hideHighlight += HideAllHightlights;
             gridIndicator.onHeroPositon += ShowHeroPath;//this will show the targt path and ability range both ; in different color
 
         }
@@ -32,7 +32,7 @@ public class HighLight : MonoBehaviour
     {
         if (gridIndicator != null)
         {
-            gridIndicator.finishSelection -= HideAllHightlights;
+            gridIndicator.hideHighlight -= HideAllHightlights;
             gridIndicator.onHeroPositon -= ShowHeroPath;
 
         }

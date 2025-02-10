@@ -47,6 +47,7 @@ public class HeroData : MonoBehaviour
             RemoveFromHeroList();
             //Xinghua add here befor you destroy need update data
             HeroPocketManager.Instance.RemoveHero(gameObject);
+            GameManager.Instance.AddbattleBonus(2);
             //xinghua code end
             Destroy(gameObject);
         }

@@ -2206,7 +2206,8 @@ MonoBehaviour:
   coinText: {fileID: 1514948384}
   currentTurnText: {fileID: 789427797140152679}
   owenedHeroText: {fileID: 1289670754}
-  KillPointText: {fileID: 917760639}
+  battleBonusText: {fileID: 917760639}
+  battleBonus: 0
   diceResult: 
 --- !u!1 &508454186
 GameObject:
@@ -4114,7 +4115,7 @@ GameObject:
   - component: {fileID: 917760640}
   - component: {fileID: 917760639}
   m_Layer: 5
-  m_Name: KillHero
+  m_Name: battleBonusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4159,7 +4160,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Kill Heros Point:'
+  m_text: 'Battle bonus:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4224,7 +4225,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -26.200195, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

@@ -23,7 +23,7 @@ public class GridIndicator : MonoBehaviour
     private HighLight highLight;
 
     private HeroSelect heroSelect;
-    public event Action finishSelection;
+    public event Action hideHighlight;
     public event Action onHeroPositon;
     public event Action heroUnselected;
     public event Action targetSelecting;
@@ -262,7 +262,7 @@ public class GridIndicator : MonoBehaviour
 
                 // submitHeroData.gameObject.transform.position = transform.position;//move the hero
                 StartCoroutine(MoveHeroToPosition(transform.position, 1f));
-                finishSelection?.Invoke();//if finish move hide the highlight
+                hideHighlight?.Invoke();//if finish move hide the highlight
             }
             else
             {
@@ -352,6 +352,7 @@ public class GridIndicator : MonoBehaviour
                 if (submitHeroData.gameObject != hero)
                 {
                     Debug.Log(" attack happen");
+                    hideHighlight?.Invoke();
                     //set target hero
                     var targetHero = hero.GetComponent<HeroData>();
                     StartCoroutine(RollDiceAndApplyDamage(targetHero));
@@ -638,7 +639,7 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("cancle selected");
         isCancleSelected = true;
-        finishSelection?.Invoke();
+        hideHighlight?.Invoke();
         var position = GetIndicatorPositon();
         SetSelectedHero(position);
         isHeroSubmited = false;
@@ -646,6 +647,8 @@ public class GridIndicator : MonoBehaviour
 
     internal void CheckAttackRange()
     {
+        CheckAutoAttack();
+        if(isAutoAttack)return;
         /* Debug.Log("CheckAttackRange");
          Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);*/
         currentGridPosition = WorldToGridPosition(transform.position);
@@ -663,7 +666,7 @@ public class GridIndicator : MonoBehaviour
                 /*   Debug.Log("enemy there");
                    Debug.Log(" attack happen");*/
                 //set target hero
-                finishSelection?.Invoke();//hide the high light
+                hideHighlight?.Invoke();//hide the high light
                 var targetHero = hero.GetComponent<HeroData>();
                 var currentHero = submitHeroData;
                 StartCoroutine(RollDiceAndApplyDamage(targetHero));

@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour
     public TMP_Text coinText;
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
-    public TMP_Text KillPointText;
+
+    public TMP_Text battleBonusText;
+    public int battleBonus =0;
     public string diceResult;
 
     private void Awake()
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviour
         UpdatePlayerTurn();
         HeroOwned();
 
-        KillPointText.text = "Kill Point:" + pointCountRed.ToString()+ "/10";
+        battleBonusText.text = "Battle Bonus:" + battleBonus.ToString()+ "/10";
     }
 
     private void Start()
@@ -132,6 +134,12 @@ public class GameManager : MonoBehaviour
     public void HeroOwned()
     { 
         owenedHeroText.text = "Own Hero:" + GetHeroCount() ;
+    }
+    public void AddbattleBonus(int value)
+    {
+        Debug.Log("update the battle bonus text");
+        battleBonus += value;
+        battleBonusText.text = "Battle Bonus:" + battleBonus.ToString();
     }
 }
 
