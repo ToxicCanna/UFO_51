@@ -258,26 +258,7 @@ public class GridIndicator : MonoBehaviour
 
                 // submitHeroData.gameObject.transform.position = transform.position;//move the hero
                 StartCoroutine(MoveHeroToPosition(transform.position, 1f));
-
-
-
-                currentGridPosition = WorldToGridPosition(transform.position);
-                // GridManager.Instance.AddOccupiedGrid(transform.position);
-                GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position));
-
-                CheckAttackTargets();
-
                 finishSelection?.Invoke();//if finish move hide the highlight
-                isHeroSubmited = false;
-                GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
-                UpdatePlayerTurn();
-                if (isAttackEnd = true)
-                {
-                    SetIndicatorInCurrentHeroPos();
-                }
-
-
-                isCancleSelected = false;
             }
             else
             {
@@ -306,22 +287,38 @@ public class GridIndicator : MonoBehaviour
         {
      
             Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
-            yield return StartCoroutine(MoveToPoint(intermediatePosition, speed));
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(intermediatePosition, speed));
 
      
-            yield return StartCoroutine(MoveToPoint(targetPosition, speed));
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
         }
         else
         {
            
-            yield return StartCoroutine(MoveToPoint(targetPosition, speed));
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
+        }
+        currentGridPosition = WorldToGridPosition(transform.position);
+        // GridManager.Instance.AddOccupiedGrid(transform.position);
+        GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position));
+
+        CheckAttackTargets();
+
+       
+        isHeroSubmited = false;
+        GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+        UpdatePlayerTurn();
+        if (isAttackEnd = true)
+        {
+            SetIndicatorInCurrentHeroPos();
         }
 
+
+        isCancleSelected = false;
         animatorSelected.SetBool("IsRun", false);
     }
 
   
-    private IEnumerator MoveToPoint(Vector2 destination, float speed)
+    private IEnumerator MoveHeroToPointAndUpdatIndicator(Vector2 destination, float speed)
     {
         while ((Vector2)submitHeroData.transform.position != destination)
         {
