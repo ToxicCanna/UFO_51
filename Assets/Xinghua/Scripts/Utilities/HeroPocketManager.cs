@@ -14,8 +14,8 @@ public class HeroPocketManager : MonoBehaviour
     };
 
 
-    private List<GameObject> RedSideheros;//get from child gameobject
-    private List<GameObject> BlueSideheros;
+    private List<GameObject> startHeros;//get from child gameobject
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,33 +30,17 @@ public class HeroPocketManager : MonoBehaviour
 
     private void Start()
     {
-        RedSideheros = GetComponent<TwoSidesHero>().GetHerosRed();
+        startHeros = GetComponent<TwoSidesHero>().GetStartHeros();
         HeroData heroData;
-        foreach (var hero in RedSideheros)
+        foreach (var hero in startHeros)
         {
             heroData = hero.GetComponent<HeroData>();
             var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
             GridManager.Instance.AddHeroWithTeamInfo(heroPos, hero, heroData.side);
-
-
             RegisterHero(heroData.side, hero);
            
         }
-        BlueSideheros = GetComponent<TwoSidesHero>().GetHerosBlue();
-        foreach (var hero in BlueSideheros)
-        {
-            heroData = hero.GetComponent<HeroData>();
-            var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
-            GridManager.Instance.AddHeroWithTeamInfo(heroPos, hero, heroData.side);
-
-            RegisterHero(heroData.side, hero);
-
-
-        }
-        GetAllBlueSideHeroes();
-        GetAllRedSideHeroes();
-        Debug.Log("redSideHeroes count" + redSideHeroes.Count);
-        Debug.Log("blueSideHeroes count" + blueSideHeroes.Count);
+ 
         
     }
     public string GetTeamByHeroObj(GameObject obj)
@@ -79,13 +63,13 @@ public class HeroPocketManager : MonoBehaviour
     {
         redSideHeroes = heroTeams["Red"];
         return redSideHeroes;
-      //  return heroTeams["red"];
+        
     }
     public List<GameObject> GetAllBlueSideHeroes()
     {
         blueSideHeroes = heroTeams["Blue"];
         return blueSideHeroes;
-       //return heroTeams["Blue"];
+     
 
     }
 
