@@ -239,8 +239,12 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("!isOnHeroPosition" + !isOnHeroPosition);
         Debug.Log("isCancleSelected" + isCancleSelected);
-
-        if (!isOnHeroPosition || isCancleSelected) return;
+        if (!isOnHeroPosition)
+        {
+            //GameManager.Instance.DisplayControlText( " can not choose opposite side hero");
+            return;
+        }
+        if ( isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
         Debug.Log("move hero");
@@ -312,7 +316,6 @@ public class GridIndicator : MonoBehaviour
             isHeroSubmited = false;
             GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
             UpdatePlayerTurn();
-
             SetIndicatorInCurrentHeroPos();
             isCancleSelected = false;
 
@@ -504,7 +507,12 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("!IsIndicatorOnSameSideHeroPosition(indicatorPosition)" + !IsIndicatorOnSameSideHeroPosition(indicatorPosition));
         // if (isHeroSubmited || !IsIndicatorOnOriginalPosition(indicatorPosition)) return;
         // if (isHeroSubmited) return;
-        if (isHeroSubmited || !IsIndicatorOnSameSideHeroPosition(indicatorPosition)) return;
+        if (!IsIndicatorOnSameSideHeroPosition(indicatorPosition))
+        {
+            GameManager.Instance.DisplayControlText(" can not choose opposite side hero");
+            return;
+        }
+        if (isHeroSubmited) return;
         SetSelectedHero(transform.position);
 
         isOnHeroPosition = true;

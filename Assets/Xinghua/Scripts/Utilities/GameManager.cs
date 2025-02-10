@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text battleBonusTextR;
     public TMP_Text battleBonusTextB;
+    public TMP_Text controlText;
+    public string controlTextValue;
     public int battleBonus { get; private set; }
 
     public string diceResult;
@@ -33,6 +36,18 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+
+
+
+    private void Start()
+    {
+        coinCountRed = 4;
+        coinCountBlue = 4;
+        coinText.text = coinCountRed.ToString();
+        AddCoinCount();
+        HeroOwned();
+        battleBonusTextB.text = "";
+    }
     private void Update()
     {
         UpdatePlayerTurn();
@@ -42,14 +57,19 @@ public class GameManager : MonoBehaviour
         battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString() + "/10";
 
     }
-
-    private void Start()
+    public void DisplayControlText(string value)
     {
-        coinCountRed = 4;
-        coinCountBlue = 4;
-        coinText.text = coinCountRed.ToString();
-        AddCoinCount();
-        HeroOwned();
+        controlText.text = controlTextValue;
+        Debug.Log("8888" + value);
+        controlText.text = value;
+        StartCoroutine(ClearTextAfterDelay(5f));
+    }
+
+    private IEnumerator ClearTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        controlText.text = ""; 
+        Debug.Log("Text cleared after " + delay + " seconds");
     }
 
     public void UpdateHeroSubmissionState(bool state)
@@ -140,7 +160,7 @@ public class GameManager : MonoBehaviour
 
     int battleBonusRed = 0;
     int battleBonusBlue = 0;
-    internal bool isBattling =true;
+    internal bool isBattling = true;
 
     public void AddbattleBonus(string side, int value)
     {
