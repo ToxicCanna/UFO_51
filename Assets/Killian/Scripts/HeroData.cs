@@ -19,7 +19,7 @@ public class HeroData : MonoBehaviour
         {
             side = gameObject.name.Contains("Red") ? "Red" : "Blue";//this is very import for the data manager
         }
-        Debug.Log(this.name + " HeroData Awake, side: " + side);
+        //Debug.Log(this.name + " HeroData Awake, side: " + side);
     }
     //add end
    
