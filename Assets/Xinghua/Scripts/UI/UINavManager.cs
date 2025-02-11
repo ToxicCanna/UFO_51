@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,9 @@ public class UINavManager : MonoBehaviour
     public Button[] buttons;
     public Button[] buttonsHeroActions;
     public RectTransform selector; // Assign the selector GameObject
-  
-    private int shopIndex = 0; 
-    private int actionIndex = 0; 
+
+    private int shopIndex = 0;
+    private int actionIndex = 0;
 
 
     private string selectedButtonName;
@@ -18,8 +19,17 @@ public class UINavManager : MonoBehaviour
     [SerializeField] GameStateMachine gameStateMachine;
     [SerializeField] SpawnHero spawnHero;
 
+    private Dictionary<string, List<string>> heroActionsMapping = new Dictionary<string, List<string>>
+    {
+        { "Basic", new List<string> { "Move", "Attack"} },
+        { "Knight", new List<string> {  "Move", "Attack"} },
+        { "Thieft", new List<string> { "Move", "Attack"} },
+        { "Range", new List<string> { "Move", "Attack"} },
+        { "Healer", new List<string> { "Move", "Attack","Heal"} }
+    };
 
-    //end
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -30,6 +40,47 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
+
+    public void UpdateHeroActions(HeroPath heroPath)
+    {
+        if (heroPath == null) return;
+
+        string heroType = heroPath.heroType;
+        if (!heroActionsMapping.TryGetValue(heroType, out List<string> availableActions))
+        {
+            Debug.LogWarning($"Hero type {heroType} not found in action mapping.");
+            return;
+        }
+        Debug.Log("availableActions" + availableActions.Count);
+
+        for (int i = 0; i < buttonsHeroActions.Length; i++)
+        {
+            string actionName = buttonsHeroActions[i].name;
+
+            if (availableActions.Contains(actionName))
+            {
+                buttonsHeroActions[i].interactable = true;
+                SetButtonColor(buttonsHeroActions[i], true);
+            }
+            else
+            {
+                buttonsHeroActions[i].interactable = false;
+                SetButtonColor(buttonsHeroActions[i], false);
+            }
+        }
+
+    }
+    private void SetButtonColor(Button button, bool isActive)
+    {
+        Color targetColor = isActive ? Color.white : Color.gray;
+
+        Image buttonImage = button.GetComponent<Image>();
+        if (buttonImage != null)
+        {
+            buttonImage.color = targetColor;
+        }
+    }
+
 
     private IEnumerator FixSelectorPosition()
     {
@@ -71,7 +122,7 @@ public class UINavManager : MonoBehaviour
     public void MoveSelectorInShop(int direction)
     {
         if (buttons.Length == 0) return;
-        Debug.Log("buttons.Length"+ buttons.Length);
+        Debug.Log("buttons.Length" + buttons.Length);
 
         shopIndex = (shopIndex + direction + buttons.Length) % buttons.Length; // Wrap around
         Debug.Log($"After move: currentIndex = {shopIndex}");
@@ -87,6 +138,7 @@ public class UINavManager : MonoBehaviour
     }
     public void InitSelectorPositionInHeroActionsZone()
     {
+
         if (buttons.Length > 0)
         {
             selector.position = buttonsHeroActions[0].transform.position;
@@ -155,6 +207,13 @@ public class UINavManager : MonoBehaviour
 
     public void HandleActionsSelection()
     {
+        Button selectedButton = buttonsHeroActions[actionIndex];
+        if (!selectedButton.interactable)
+        {
+            Debug.Log("Cannot select this action, button is disabled.");
+            return; 
+        }
+
         string firstTwoLetters = buttonsHeroActions[actionIndex].name.Substring(0, 2);
         selectedButtonName = firstTwoLetters;
         ProcessActionSelected();

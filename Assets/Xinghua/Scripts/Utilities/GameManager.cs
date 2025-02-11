@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
-
+    public HeroPath heroPath;
     public bool IsHeroSubmitted { get; private set; }
     private int coinCountRed;
     private int coinCountBlue = 3;
@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
     }
-
 
 
 

@@ -5,6 +5,7 @@ public class HeroPath : MonoBehaviour
 {
     public int heroPathID { get; private set; }
     HeroData heroData;
+    public string heroType { get; private set; }
     private void Awake()
     {
         heroData = GetComponent<HeroData>();
@@ -13,7 +14,7 @@ public class HeroPath : MonoBehaviour
     private void Start()
     {
 
-        SetHeroPathID();
+        SetHeroAttributes();
         heroData = GetComponent<HeroData>();
         StartCoroutine(WaitForSide());
       
@@ -45,7 +46,7 @@ public class HeroPath : MonoBehaviour
         {
             heroPathID = 2;
         }
-        else if (this.name.Contains("Ra"))
+        else if (this.name.Contains("Range"))
         {
             heroPathID = 3;
         }
@@ -58,6 +59,36 @@ public class HeroPath : MonoBehaviour
             heroPathID = -1; 
         }
 
+    }
+    private void SetHeroAttributes()
+    {
+        switch (name)
+        {
+            case string n when n.Contains("Basic"):
+                heroPathID = 0;
+                heroType = "Basic";
+                break;
+            case string n when n.Contains("Knight"):
+                heroPathID = 1;
+                heroType = "Knight";
+                break;
+            case string n when n.Contains("Thief"):
+                heroPathID = 2;
+                heroType = "Thief";
+                break;
+            case string n when n.Contains("Ra"):
+                heroPathID = 3;
+                heroType = "Ra";
+                break;
+            case string n when n.Contains("Healer"):
+                heroPathID = 4;
+                heroType = "Healer";
+                break;
+            default:
+                heroPathID = -1;
+                heroType = "";
+                break;
+        }
     }
 
 }

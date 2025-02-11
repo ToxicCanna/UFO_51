@@ -19,6 +19,8 @@ public class GridIndicator : MonoBehaviour
 
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
     [SerializeField] GameStateMachine gameStateMachine;
+    public HeroData submitedTargetHero;
+    public HeroPath submitedHeroPath;
     [SerializeField] Effect effect;
     private HighLight highLight;
 
@@ -50,7 +52,7 @@ public class GridIndicator : MonoBehaviour
     private HashSet<Vector2Int> allowedPositions;
     private bool isHaveTargets = false;
     private bool isCanChooseTarget = false;
-    public HeroData submitedTargetHero;
+  
     public Vector2Int selectedHeroPosition;
     private Vector3 submitHeroPosition;
     private int currentSelectedHeroId;
@@ -530,6 +532,7 @@ public class GridIndicator : MonoBehaviour
         var position = GetIndicatorPositon();
         currentSelectedHeroId = GetSubmitHeroPathIndex(position);
 
+       
         onHeroPositon?.Invoke();//show the path
         validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
@@ -569,8 +572,12 @@ public class GridIndicator : MonoBehaviour
 
                     //isHeroSubmited = true;
                     var heroData = hero.GetComponent<HeroData>();
+                    var heroPath = hero.GetComponent<HeroPath>();
+
+                    UINavManager.Instance.UpdateHeroActions(heroPath);
                     submitHeroData = heroData;
                     Debug.Log("Set selected hero" + heroData.name);
+                    Debug.Log("Set selected hero" + heroPath.name);
                 }
 
             }
@@ -582,6 +589,8 @@ public class GridIndicator : MonoBehaviour
 
     public HeroData GetSubmitHero(Vector2 position)
     {
+        
+        
         return submitHeroData;
     }
 
@@ -594,8 +603,8 @@ public class GridIndicator : MonoBehaviour
             if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
             {
                 //isHeroSubmited = true;
-                var heroPath = hero.GetComponent<HeroPath>();
-                var submitHeroPathID = heroPath.heroPathID;
+                submitedHeroPath = hero.GetComponent<HeroPath>();
+                var submitHeroPathID = submitedHeroPath.heroPathID;
                 return submitHeroPathID;
             }
         }
