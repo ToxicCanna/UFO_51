@@ -10,10 +10,19 @@ public class HeroData : MonoBehaviour
 
     public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     private string abilityScore;
+    private TwoSidesHero twoSidesHero;
     //xinghua add
     public string side;
+    private void Awake()
+    {
+        if (string.IsNullOrEmpty(side))
+        {
+            side = gameObject.name.Contains("Red") ? "Red" : "Blue";//this is very import for the data manager
+        }
+        Debug.Log(this.name + " HeroData Awake, side: " + side);
+    }
     //add end
-    private TwoSidesHero twoSidesHero;
+   
 
 
     void Start()

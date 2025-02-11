@@ -1,14 +1,32 @@
+using System.Collections;
 using UnityEngine;
 
 public class HeroPath : MonoBehaviour
 {
     public int heroPathID { get; private set; }
-
+    HeroData heroData;
+    private void Awake()
+    {
+        heroData = GetComponent<HeroData>();
+       
+    }
     private void Start()
     {
 
         SetHeroPathID();
+        heroData = GetComponent<HeroData>();
+        StartCoroutine(WaitForSide());
+      
 
+      
+    }
+    private IEnumerator WaitForSide()
+    {
+        while (string.IsNullOrEmpty(heroData.side))
+        {
+            yield return null; 
+        }
+        Debug.Log(this.name + " side after wait: " + heroData.side);
     }
     private void SetHeroPathID()
     {
