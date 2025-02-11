@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 122079039}
   - component: {fileID: 122079038}
   m_Layer: 5
-  m_Name: Ranged_Button
+  m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2004,7 +2004,7 @@ GameObject:
   - component: {fileID: 472623567}
   - component: {fileID: 472623566}
   m_Layer: 5
-  m_Name: Basic_Button
+  m_Name: Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3596,7 +3596,7 @@ GameObject:
   - component: {fileID: 733353986}
   - component: {fileID: 733353985}
   m_Layer: 5
-  m_Name: Healer_Button
+  m_Name: Healer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5292,7 +5292,7 @@ GameObject:
   - component: {fileID: 1158118880}
   - component: {fileID: 1158118879}
   m_Layer: 5
-  m_Name: Thief_Button
+  m_Name: Thief
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11355,7 +11355,7 @@ GameObject:
   - component: {fileID: 1675840436}
   - component: {fileID: 1675840435}
   m_Layer: 5
-  m_Name: Knight_Button
+  m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

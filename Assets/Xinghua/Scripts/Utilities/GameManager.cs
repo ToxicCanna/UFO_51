@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        coinCountRed = 4;
+        coinCountRed = 3;
         coinCountBlue = 4;
         coinText.text = coinCountRed.ToString();
         AddCoinCount();
@@ -125,6 +126,22 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    public int GetCurrentTurnCoin()
+    {
+        if (currentTurn == PlayerTurn.PlayerRedSide)
+        {
+            return coinCountRed;
+           
+        }
+        else
+        {
+            return coinCountBlue;
+        }
+
+       
+    }
+        
+
 
     public void UpdatePlayerTurn()
     {

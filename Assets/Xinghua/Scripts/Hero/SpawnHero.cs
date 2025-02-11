@@ -59,24 +59,26 @@ public class SpawnHero : MonoBehaviour
 
     }
 
-    public void SpawnNew(string buttonName)
+    public void SpawnNew(string buttonName,int cost)
     {
         SetSpawnPrefab(buttonName);
-
         GameObject spawnedHero = Instantiate(SpawnPrefab, spawnLoc.position, Quaternion.identity);
-    
+
+
+
+
         HeroPocketManager.Instance.RegisterHero(spawnHeroColor, spawnedHero);
-        var pos=new Vector2Int((int)spawnedHero.transform.position.x, (int)spawnedHero.transform.position.y);
-        GridManager.Instance.AddHeroWithTeamInfo(pos, spawnedHero,spawnHeroColor);
-        StartCoroutine(WaitForHeroData(spawnedHero));
+        var pos = new Vector2Int((int)spawnedHero.transform.position.x, (int)spawnedHero.transform.position.y);
+        GridManager.Instance.AddHeroWithTeamInfo(pos, spawnedHero, spawnHeroColor);
+        StartCoroutine(WaitForHeroData(spawnedHero,cost));
     }
 
-    private IEnumerator WaitForHeroData(GameObject hero)
+    private IEnumerator WaitForHeroData(GameObject hero,int cost)
     {
         yield return new WaitForEndOfFrame();
 
         var heroData = hero.GetComponent<HeroData>();
-        GameManager.Instance.DecreaseCoinCount(heroData.cost);
+        GameManager.Instance.DecreaseCoinCount(cost);
 
     }
 }

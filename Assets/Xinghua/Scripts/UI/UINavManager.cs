@@ -21,13 +21,20 @@ public class UINavManager : MonoBehaviour
 
     private Dictionary<string, List<string>> heroActionsMapping = new Dictionary<string, List<string>>
     {
-        { "Basic", new List<string> { "Move", "Attack"} },
+        { "Basic", new List<string> { "Move" } },
         { "Knight", new List<string> {  "Move", "Attack"} },
         { "Thieft", new List<string> { "Move", "Attack"} },
         { "Range", new List<string> { "Move", "Attack"} },
         { "Healer", new List<string> { "Move", "Attack","Heal"} }
     };
-
+    private Dictionary<string, int> heroCostMapping = new Dictionary<string, int>
+    {
+        { "Ba", 1 },
+        { "Kn", 4 },
+        { "Th", 3 },
+        { "Ra", 2 },
+        { "He", 3 }
+    };
 
 
     private void Awake()
@@ -52,6 +59,13 @@ public class UINavManager : MonoBehaviour
             return;
         }
         Debug.Log("availableActions" + availableActions.Count);
+        for (int i = 0; i < buttonsHeroActions.Length; i++)
+        {
+            buttonsHeroActions[i].gameObject.SetActive(true); 
+            buttonsHeroActions[i].interactable = false;       
+            SetButtonColor(buttonsHeroActions[i], false);   
+        }
+
 
         for (int i = 0; i < buttonsHeroActions.Length; i++)
         {
@@ -201,7 +215,7 @@ public class UINavManager : MonoBehaviour
     {
         string firstTwoLetters = buttons[shopIndex].name.Substring(0, 2);
         selectedButtonName = firstTwoLetters;
-        ProcessHeroShopSelected();
+        ProcessHeroShopSelected(selectedButtonName);
         buttons[shopIndex].onClick.Invoke();
     }
 
@@ -218,14 +232,6 @@ public class UINavManager : MonoBehaviour
         selectedButtonName = firstTwoLetters;
         ProcessActionSelected();
         buttonsHeroActions[actionIndex].onClick.Invoke();
-    }
-
-
-    private void ProcessHeroShopSelected()
-    {
-        Debug.Log("spawn hero");
-        spawnHero.SpawnNew(selectedButtonName);
-        SwithToGamePlayState();
     }
 
     private void ProcessActionSelected()
@@ -267,4 +273,42 @@ public class UINavManager : MonoBehaviour
     {
         gameStateMachine.SwitchToGameplayState();
     }
+
+    int cost;
+    private void ProcessHeroShopSelected(string button)
+    {
+        //check the coin number
+        Debug.Log("ProcessHeroShopSelected nnnnnname" +button);
+        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
+        Debug.Log("Bufffff" + CanPurchaseHero(button));
+
+        if (CanPurchaseHero(button))//0 should be the hero cost ,here shoul check whith button
+        {
+           
+            spawnHero.SpawnNew(selectedButtonName,cost);
+        }
+     
+        SwithToGamePlayState();
+    }
+   
+    public bool CanPurchaseHero(string heroName)
+    {
+        if (!heroCostMapping.TryGetValue(heroName, out int heroCost))
+        {
+
+            Debug.LogWarning($"Hero {heroName} not found in cost mapping.");
+            return false;
+        }
+        cost = heroCost;
+        Debug.Log("ProcessHeroShopSelected costtttttt" + heroCost);
+        Debug.Log("my money" + GameManager.Instance.GetCurrentTurnCoin());
+        if (GameManager.Instance.GetCurrentTurnCoin()< heroCost)
+        {
+            Debug.Log("Not enough coins to purchase " + heroName);
+            return false;
+        }
+
+        return true;
+    }
+
 }

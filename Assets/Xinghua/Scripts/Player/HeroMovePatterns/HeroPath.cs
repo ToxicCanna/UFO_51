@@ -16,10 +16,7 @@ public class HeroPath : MonoBehaviour
 
         SetHeroAttributes();
         heroData = GetComponent<HeroData>();
-        StartCoroutine(WaitForSide());
-      
-
-      
+        StartCoroutine(WaitForSide());  
     }
     private IEnumerator WaitForSide()
     {
@@ -29,37 +26,7 @@ public class HeroPath : MonoBehaviour
         }
         Debug.Log(this.name + " side after wait: " + heroData.side);
     }
-    private void SetHeroPathID()
-    {
-
-        string firstTwoLetters = this.name.Substring(0, 2);
-        
-        if (this.name.Contains("Basic")) 
-        {
-            heroPathID = 0;
-        }
-        else if (this.name.Contains("Knight"))
-        {
-            heroPathID = 1;
-        }
-        else if (this.name.Contains("Thief"))
-        {
-            heroPathID = 2;
-        }
-        else if (this.name.Contains("Range"))
-        {
-            heroPathID = 3;
-        }
-        else if (this.name.Contains("Healer"))
-        {
-            heroPathID = 4;
-        }
-        else
-        {
-            heroPathID = -1; 
-        }
-
-    }
+   
     private void SetHeroAttributes()
     {
         switch (name)
@@ -76,9 +43,9 @@ public class HeroPath : MonoBehaviour
                 heroPathID = 2;
                 heroType = "Thief";
                 break;
-            case string n when n.Contains("Ra"):
+            case string n when n.Contains("Range"):
                 heroPathID = 3;
-                heroType = "Ra";
+                heroType = "Range";
                 break;
             case string n when n.Contains("Healer"):
                 heroPathID = 4;
