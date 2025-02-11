@@ -5,14 +5,7 @@ using UnityEngine.UIElements;
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
-
-
-
-
     public List<Vector2Int> occupiedGrids = new List<Vector2Int>();
-
-    //public Dictionary<Vector2, string> occupiedGridTeams = new Dictionary<Vector2, string>();
-    // 使用 Dictionary<Vector2Int, List<HeroInfo>> 来支持多个英雄
     public Dictionary<Vector2Int, List<HeroInfo>> occupiedGridTeams = new Dictionary<Vector2Int, List<HeroInfo>>();
 
     public class HeroInfo
@@ -62,7 +55,7 @@ public class GridManager : MonoBehaviour
 
 
 
-    public void CheckOccupiedHero(Vector2 position)
+/*    public void CheckOccupiedHero(Vector2 position)
     {
 
         indicatorPos = position;
@@ -77,17 +70,17 @@ public class GridManager : MonoBehaviour
     }
 
 
-/*    public List<Vector2Int> GetOccupiedGrids()
+*//*    public List<Vector2Int> GetOccupiedGrids()
     {
         // print all the position been occupied by heros
         Debug.Log("occupiedGrids " + occupiedGrids.Count);
         return occupiedGrids;
     }
 
-*/
+*//*
 
     public bool IsGridOccupied(Vector2Int gridPosition)
     {
         return occupiedGrids.Contains(gridPosition);
-    }
+    }*/
 }
