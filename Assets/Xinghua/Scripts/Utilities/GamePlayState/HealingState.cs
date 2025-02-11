@@ -14,7 +14,7 @@ public class HealingState : BaseState
     {
         Debug.Log("enter Heal state");
         gridIndicator.controlHintText.text = "Check if have enemy with range";
-        gridIndicator.CheckHealRange();
+        gridIndicator.HandleHeal();
     }
 
     public override void UpdateState()

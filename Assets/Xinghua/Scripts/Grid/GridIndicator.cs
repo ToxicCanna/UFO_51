@@ -244,7 +244,7 @@ public class GridIndicator : MonoBehaviour
             //GameManager.Instance.DisplayControlText( " can not choose opposite side hero");
             return;
         }
-        if ( isCancleSelected) return;
+        if (isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
         Debug.Log("move hero");
@@ -392,7 +392,7 @@ public class GridIndicator : MonoBehaviour
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
             if (isAutoAttack)
             {
-               
+
                 animatorSelected.SetBool("IsAtk", true);
             }
             else
@@ -400,7 +400,7 @@ public class GridIndicator : MonoBehaviour
                 animatorSelected.SetBool("IsAtk", false);
             }
             Animator animatorTarget = targetHero.gameObject.GetComponent<Animator>();
-         
+
             animatorTarget.SetBool("IsDmg", true);
 
             yield return new WaitForSeconds(1);
@@ -419,11 +419,11 @@ public class GridIndicator : MonoBehaviour
             {
                 animatorTarget.SetBool("IsDmg", false);
             }
-          
-                UpdatePlayerTurn();
-                SetIndicatorInCurrentHeroPos();
-                gameStateMachine.SwitchToGameplayState();
-            
+
+            UpdatePlayerTurn();
+            SetIndicatorInCurrentHeroPos();
+            gameStateMachine.SwitchToGameplayState();
+
         }
     }
 
@@ -710,10 +710,40 @@ public class GridIndicator : MonoBehaviour
 
 
     }
-
+    public void HandleHeal()
+    {
+        Debug.Log("HandleHeal");
+        CheckHealRange();
+    }
     public void CheckHealRange()
     {
-        Debug.Log("hero My hero");
-    }
+        Debug.Log("CheckHealRange");
+        var herosSameSide = GetSameSideHerosInTheScene();
+        var validHealRangePositions = highLight.GetNeighborsForAbilityRange(WorldToGridPosition(submitHeroPosition), heroPathID);
+        foreach (var hero in herosSameSide)
+        {
 
+            if (validHealRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
+            {
+                //Heal hero
+                Debug.Log("Heal hero");
+                hideHighlight?.Invoke();//hide the high light
+                var targetHero = hero.GetComponent<HeroData>();
+                var currentHero = submitHeroData;
+                StartCoroutine(HealMyHeros(targetHero));
+            }
+            else
+            {
+                Debug.Log("clear");
+
+                gameStateMachine.SwitchToMoveHeroState();
+            }
+        }
+       
+
+    }
+    public IEnumerator HealMyHeros(HeroData target)
+    {
+        yield return new WaitForEndOfFrame();
+    }
 }
