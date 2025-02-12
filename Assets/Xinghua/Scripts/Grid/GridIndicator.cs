@@ -386,7 +386,8 @@ public class GridIndicator : MonoBehaviour
                     hideHighlight?.Invoke();
                     //set target hero
                     var targetHero = hero.GetComponent<HeroData>();
-                    StartCoroutine(RollDiceAndApplyDamage(targetHero));
+                    PlayEffect();
+                    StartCoroutine(ApplyDamage(targetHero));
                     // AttackHappenOneSpot?.Invoke();
                 }
 
@@ -395,19 +396,23 @@ public class GridIndicator : MonoBehaviour
 
     }
 
-    private IEnumerator RollDiceAndApplyDamage(HeroData targetHero)
+    private void PlayEffect()
     {
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log("Roll dice");
-        Effect.Instance.PlayAttackEffect(targetHero.transform.position);
+        Debug.Log("PlayEffect");
+        Effect.Instance.PlayAttackEffect(transform.position);
+        // Effect.Instance.HideAttackEffect();
 
-
-        battleManager.targetHero = targetHero.GetComponent<HeroData>();
-
-        //call attack after setting values
-        yield return new WaitForSeconds(2);
+    }
+    private void HideAttacjEffect()
+    {
+        Debug.Log("PlayEffect");
         Effect.Instance.HideAttackEffect();
 
+    }
+
+    private IEnumerator ApplyDamage(HeroData targetHero)
+    {
+        battleManager.targetHero = targetHero.GetComponent<HeroData>();
         yield return new WaitForSeconds(1);
         Debug.Log("give damage");
         battleManager.Attack();
@@ -431,7 +436,7 @@ public class GridIndicator : MonoBehaviour
             isAttackEnd = true;
             gameStateMachine.SwitchToGameplayState();
             isHeroSubmited = false;
-
+            HideAttacjEffect();
 
             //must check null ,cause sometime destroyed hero die
             if (animatorSelected != null && animatorSelected.gameObject != null)
@@ -729,7 +734,7 @@ public class GridIndicator : MonoBehaviour
                 hideHighlight?.Invoke();//hide the high light
                 var targetHero = hero.GetComponent<HeroData>();
                 var currentHero = submitHeroData;
-                StartCoroutine(RollDiceAndApplyDamage(targetHero));
+                StartCoroutine(ApplyDamage(targetHero));
             }
             else
             {
