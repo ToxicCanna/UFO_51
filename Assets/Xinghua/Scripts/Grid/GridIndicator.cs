@@ -460,7 +460,7 @@ public class GridIndicator : MonoBehaviour
         {
             GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerRedSide;
         }
-      
+        GameManager.Instance.AddCoinCount();
     }
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)

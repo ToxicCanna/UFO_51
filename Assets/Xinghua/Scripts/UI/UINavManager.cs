@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,11 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
- 
+    private void Update()
+    {
+        UpdateShopButtons();
+    }
+
     public void UpdateHeroActions(HeroPath heroPath)
     {
         if (heroPath == null) return;
@@ -120,10 +125,10 @@ public class UINavManager : MonoBehaviour
 
         //UpdateSelectorPosition(); // Position the selector on the first button
         StartCoroutine(FixSelectorPosition());
-        StartCoroutine(UpdateShopButtons());
+        //StartCoroutine(UpdateShopButtons());
     }
 
-
+  
 
     public void HandleNavigationInActionsZone(Vector2 direction)
     {
@@ -133,15 +138,10 @@ public class UINavManager : MonoBehaviour
     public void HandleNavigationInShopZone(Vector2 direction)
     {
 
-        MoveSelectorInShop((int)direction.x);
-    }
-
-    public void MoveSelectorInShop(int direction)
-    {
         if (buttons.Length == 0) return;
         Debug.Log("buttons.Length" + buttons.Length);
 
-        shopIndex = (shopIndex + direction + buttons.Length) % buttons.Length; // Wrap around
+        shopIndex = (shopIndex +(int) direction.x + buttons.Length) % buttons.Length; // Wrap around
         Debug.Log($"After move: currentIndex = {shopIndex}");
         UpdateSelectorPositionShop();
     }
@@ -214,13 +214,6 @@ public class UINavManager : MonoBehaviour
             // Debug.Log("[UISelector] Selector moved to: " + selector.position);
         }
     }
-    public void HandleHeroShopSelection()
-    {
-      /*  string firstTwoLetters = buttons[shopIndex].name.Substring(0, 2);
-        selectedButtonName = firstTwoLetters;*/
-        ProcessHeroShopSelected(buttons[shopIndex].name);
-        buttons[shopIndex].onClick.Invoke();
-    }
 
     public void HandleActionsSelection()
     {
@@ -276,24 +269,7 @@ public class UINavManager : MonoBehaviour
     {
         gameStateMachine.SwitchToGameplayState();
     }
-
     int cost;
-    private void ProcessHeroShopSelected(string button)
-    {
-        //check the coin number
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("Bufffff" + CanPurchaseHero(button));
-
-        if (CanPurchaseHero(button))//0 should be the hero cost ,here shoul check whith button
-        {
-
-            spawnHero.SpawnNew(button, cost);
-           // UpdateShopButtons();    
-        }
-
-        SwithToGamePlayState();
-    }
 
     public bool CanPurchaseHero(string heroName)
     {
@@ -315,12 +291,12 @@ public class UINavManager : MonoBehaviour
         return true;
     }
 
-    public IEnumerator UpdateShopButtons()
+    public void UpdateShopButtons()
     {
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
         Debug.Log("UpdateShopButtons ");
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
-       
+      
         Debug.Log("playerCoin "+ playerCoin);
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -333,12 +309,13 @@ public class UINavManager : MonoBehaviour
                 if (playerCoin >= 3)
                 {
                     canAfford = true;
+
                 }
-                else if (playerCoin == 2 && (heroName == "Ra" || heroName == "Ba"))
+                else if (playerCoin >= 2 && (heroName == "Ranged" || heroName == "Basic"))
                 {
                     canAfford = true;
                 }
-                else if (playerCoin == 1 && heroName == "Ba")
+                else if (playerCoin == 1 && heroName == "Basic")
                 {
                     canAfford = true;
                 }
@@ -355,8 +332,34 @@ public class UINavManager : MonoBehaviour
                 Debug.LogWarning($"Hero {heroName} not found in cost mapping.");
             }
         }
-        gameStateMachine.SwitchToGameplayState();
-
+    
     }
+
+    public void HandleHeroShopSelection()
+    {
+        var button = buttons[shopIndex];
+
+        buttons[shopIndex].onClick.Invoke();
+
+        if (!button.interactable)
+        {
+            Debug.LogWarning($"Cannot select {button.name}, button is disabled.");
+            return;
+        }
+        //check the coin number
+        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
+        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
+        Debug.Log("Bufffff" + CanPurchaseHero(button.name));
+
+        if (CanPurchaseHero(button.name))//0 should be the hero cost ,here shoul check whith button
+        {
+
+            spawnHero.SpawnNew(button.name, cost);
+            // UpdateShopButtons();    
+        }
+
+        SwithToGamePlayState();
+    }
+
 
 }

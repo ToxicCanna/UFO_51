@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         coinCountRed = 3;
         coinCountBlue = 3;
         coinText.text = coinCountRed.ToString();
-        AddCoinCount();
+       
         HeroOwned();
         battleBonusTextB.text = "";
     }

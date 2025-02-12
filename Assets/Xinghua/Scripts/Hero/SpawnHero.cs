@@ -91,6 +91,8 @@ public class SpawnHero : MonoBehaviour
         var heroData = hero.GetComponent<HeroData>();
         GameManager.Instance.DecreaseCoinCount(cost);
         //here need update the shop UI display
+       // UINavManager.Instance.UpdateShopButtons();
+      
 
     }
 }
