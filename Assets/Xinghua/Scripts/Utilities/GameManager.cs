@@ -156,11 +156,11 @@ public class GameManager : MonoBehaviour
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            currentTurnText.text = "Player1";
+            currentTurnText.text = "Red Player";
         }
         else
         {
-            currentTurnText.text = "Player2";
+            currentTurnText.text = "Blue Player";
         }
 
     }
