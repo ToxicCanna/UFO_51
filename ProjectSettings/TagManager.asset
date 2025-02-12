@@ -62,5 +62,8 @@ TagManager:
   - name: effect
     uniqueID: 1677486781
     locked: 0
+  - name: HpBar
+    uniqueID: 3976586723
+    locked: 0
   m_RenderingLayers:
   - Default
