@@ -122,7 +122,91 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Red_Knight_Idle
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.48, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 82
+      width: 25
+      height: 30
+    spriteID: ca72af0efaaec3e49a32a8659fce47cb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 82}
+  - name: Frame_2
+    originalName: 
+    pivot: {x: 0.48, y: 0.51724136}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 37
+      y: 42
+      width: 25
+      height: 29
+    spriteID: 61942a0c87cbd7847bdd41f97bcb47b2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 37, y: 42}
+  - name: Frame_3
+    originalName: 
+    pivot: {x: 0.48, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 37
+      y: 4
+      width: 25
+      height: 30
+    spriteID: a084ae64edd6a994b888131f7dc66caf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 37, y: 4}
+  - name: Frame_4
+    originalName: 
+    pivot: {x: 0.48, y: 0.48387095}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 43
+      width: 25
+      height: 31
+    spriteID: 85f800963a763374baa945f8bec43f30
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 43}
+  - name: Frame_0
     originalName: 
     pivot: {x: 0.48, y: 0.48387095}
     alignment: 9
@@ -134,7 +218,7 @@ ScriptedImporter:
       y: 4
       width: 25
       height: 31
-    spriteID: a8b8613eaef726342b31f841b9908155
+    spriteID: c7a6c480fd29aa74687ebc18be53cb59
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -152,7 +236,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: Red_Knight_Idle
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -160,7 +244,43 @@ ScriptedImporter:
         y: 1
         width: 25
         height: 31
-      spriteId: a8b8613eaef726342b31f841b9908155
+      spriteId: c7a6c480fd29aa74687ebc18be53cb59
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 1
+        width: 25
+        height: 30
+      spriteId: ca72af0efaaec3e49a32a8659fce47cb
+    - name: Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 1
+        width: 25
+        height: 29
+      spriteId: 61942a0c87cbd7847bdd41f97bcb47b2
+    - name: Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 1
+        width: 25
+        height: 30
+      spriteId: a084ae64edd6a994b888131f7dc66caf
+    - name: Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 1
+        width: 25
+        height: 31
+      spriteId: 85f800963a763374baa945f8bec43f30
     linkedCells: []
     parentIndex: -1
   platformSettings:

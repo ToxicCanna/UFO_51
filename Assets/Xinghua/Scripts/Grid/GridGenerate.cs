@@ -12,7 +12,7 @@ public class GrideGenerate : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
-        SetCameraPosition();
+        //SetCameraPosition();
     }
     private void GenerateGrid()
     {
@@ -21,9 +21,11 @@ public class GrideGenerate : MonoBehaviour
             for (int j = 0; j < gridHigh; j++)
             {
                 var spawnTile = Instantiate(tilePerfab, new Vector3(i, j), Quaternion.identity);
+                spawnTile.gameObject.SetActive(false);
                 spawnTile.SetColorAlpha();
                 spawnTile.name = $"Tile{i}{j}";
                 spawnTile.transform.SetParent(tileParentObject.transform);
+             
                 var isOffset = (i + j) % 2 != 0;
                 spawnTile.InitialGridColor(isOffset);
                 //tilePosition =spawnTile.transform.position;

@@ -5,11 +5,17 @@ public class HeroPocketManager : MonoBehaviour
 {
     public static HeroPocketManager Instance;
     //this is hero in the scene
-    private Dictionary<string, GameObject> redSideHeroes = new Dictionary<string, GameObject>();
-    private Dictionary<string, GameObject> blueSideHeroes = new Dictionary<string, GameObject>();
+    private List<GameObject> redSideHeroes;
+    private List<GameObject> blueSideHeroes;
+    private Dictionary<string, List<GameObject>> heroTeams = new Dictionary<string, List<GameObject>>()
+    {
+        { "Red", new List<GameObject>() },
+        { "Blue", new List<GameObject>() }
+    };
 
-    private List<GameObject> RedSideheros;//get from child gameobject
-    private List<GameObject> BlueSideheros;
+
+    private List<GameObject> startHeros;//get from child gameobject
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,60 +30,47 @@ public class HeroPocketManager : MonoBehaviour
 
     private void Start()
     {
-        RedSideheros = GetComponent<TwoSidesHero>().GetHerosRed();
-        foreach (var hero in RedSideheros)
+        startHeros = GetComponent<TwoSidesHero>().GetStartHeros();
+        HeroData heroData;
+        foreach (var hero in startHeros)
         {
-            var heroData = hero.GetComponent<HeroData>();
-            var key = hero.name;
-            GridManager.Instance.AddHero(hero);
-            RegisterHero(key, hero, "red");
+            heroData = hero.GetComponent<HeroData>();
+            var heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+            GridManager.Instance.AddHeroWithTeamInfo(heroPos, hero, heroData.side);
+            RegisterHero(heroData.side, hero);
+           
         }
-
-        //GetHeroData("hero01");
-        BlueSideheros = GetComponent<TwoSidesHero>().GetHerosBlue();
-        foreach (var hero in BlueSideheros)
-        {
-            var heroData = hero.GetComponent<HeroData>();
-            var key = hero.name;
-            //GridManager.Instance.AddOccupiedGrid(hero.transform.position);
-            GridManager.Instance.AddHero(hero);
-            RegisterHero(key, hero, "blue");
-
-        }
-        GetAllHeroes();
-
+ 
+        
     }
+    public string GetTeamByHeroObj(GameObject obj)
+    {
+        foreach (var team in heroTeams)
+        {
+            foreach (var heroData in team.Value)
+            {
+                if (heroData.gameObject == obj)
+                {
+                    return team.Key; 
+                }
+            }
+        }
 
+        return "none"; 
+    }
 
     public List<GameObject> GetAllRedSideHeroes()
     {
-        List<GameObject> heroListRedSide = new List<GameObject>(); // Create a new list
-
-        foreach (var hero in redSideHeroes)
-        {
-            string heroName = hero.Key;
-            GameObject heroObject = hero.Value;
-            heroListRedSide.Add(heroObject); // Add to list
-        }
-
-
-        return heroListRedSide; // Return the list
+        redSideHeroes = heroTeams["Red"];
+        return redSideHeroes;
+        
     }
     public List<GameObject> GetAllBlueSideHeroes()
     {
-        List<GameObject> heroListBlueSide = new List<GameObject>(); // Create a new list
-        foreach (var hero in blueSideHeroes)
-        {
-            string heroName = hero.Key;
-            GameObject heroObject = hero.Value;
+        blueSideHeroes = heroTeams["Blue"];
+        return blueSideHeroes;
+     
 
-            // Debug.Log($"Hero Name: {heroName}, Hero Object: {heroObject.name}");
-
-            heroListBlueSide.Add(heroObject); // Add to list
-        }
-
-
-        return heroListBlueSide; // Return the list
     }
 
     public List<GameObject> GetAllHeroes()
@@ -92,36 +85,81 @@ public class HeroPocketManager : MonoBehaviour
         {
             allHeroes.Add(hero);
         }
-        Debug.Log("allHero num" + allHeroes.Count);
+        //Debug.Log("allHero num" + allHeroes.Count);
         return allHeroes;
 
     }
-    public void RegisterHero(string heroId, GameObject hero, string heroColor)
+
+    public GameObject GetHeroByPosition(Vector2Int position)
     {
-        if (heroColor == "red")
+        foreach (var hero in GetAllHeroes())
         {
-            if (!redSideHeroes.ContainsKey(heroId))
+            Vector2Int heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+
+            if (heroPos == position)
             {
-                redSideHeroes.Add(heroId, hero);
+                return hero;
+            }
+        }
+        return null;
+    }
+
+    public List<GameObject> GetOppositeHeros()
+    {
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            return GetAllBlueSideHeroes();
+        }
+        else
+        {
+            return GetAllRedSideHeroes();
+        }
+    }
+
+    public GameObject GetOppositeHerosByPosition(Vector2Int position)
+    {
+
+        foreach (var hero in GetOppositeHeros())
+        {
+            Vector2Int heroPos = new Vector2Int((int)hero.transform.position.x, (int)hero.transform.position.y);
+
+            if (heroPos == position)
+            {
+                return hero;
+            }
+        }
+        return null;
+    }
+
+
+
+    // if player buy hero in the shop should also register and update this data
+    public void RegisterHero(string side, GameObject hero)
+    {
+        if (heroTeams.ContainsKey(side))
+        {
+            heroTeams[side].Add(hero);
+        }
+    }
+    //use this to remove
+    public void RemoveHero(string side, GameObject hero)
+    {
+        if (heroTeams.ContainsKey(side))
+        {
+            if (heroTeams[side].Contains(hero)) 
+            {
+                heroTeams[side].Remove(hero);
+                Debug.Log($"Pocket Removed {hero.name} from {side} team.");
+            }
+            else
+            {
+                Debug.LogWarning($"Pocket Hero {hero.name} not found in {side} team.");
             }
         }
         else
         {
-            if (!blueSideHeroes.ContainsKey(heroId))
-            {
-                blueSideHeroes.Add(heroId, hero);
-            }
+            Debug.LogWarning($"Team {side} does not exist.");
         }
     }
-
-    public void GetHeroData(string heroId)
-    {
-        var heroComponent = redSideHeroes[heroId].GetComponent<HeroData>();
-        if (heroComponent != null)
-        {
-            int heroHealth = heroComponent.heroData.cost;
-        }
-    }
-
 
 }

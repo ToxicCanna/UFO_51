@@ -7,4 +7,5 @@ public class HeroSO : ScriptableObject
     public int health, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     public string abilityScore;
     //public HeroSO Upgrade;
+    public string side;//xinghua add
 }

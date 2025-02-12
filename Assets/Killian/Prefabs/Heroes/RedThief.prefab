@@ -14,9 +14,11 @@ GameObject:
   - component: {fileID: 5669093604162091037}
   - component: {fileID: 1448581574537951956}
   - component: {fileID: -2725914680474764311}
-  m_Layer: 0
+  - component: {fileID: 8628699255205769909}
+  - component: {fileID: 2104518870434332230}
+  m_Layer: 8
   m_Name: RedThief
-  m_TagString: Untagged
+  m_TagString: RedHero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,15 +82,15 @@ SpriteRenderer:
   m_SortingLayerID: 1932192151
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 8842178168800261127, guid: 8cb678fb4675ed240b2136b177a99a93, type: 3}
+  m_Sprite: {fileID: -5498827676406481140, guid: 8cb678fb4675ed240b2136b177a99a93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 0.5}
+  m_Size: {x: 0.6875, y: 0.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &8510720407421504220
@@ -103,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: 50a72fc97c3cf81469cd85ec94e67b72, type: 2}
+  heroData: {fileID: 11400000, guid: de9cfac1e36b71e488202b631f2e57c9, type: 2}
   mySprite: {fileID: -641661416736242478, guid: 102f389ac02fc8243b9d79f85823a304, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -117,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &5669093604162091037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,12 +133,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
   currentRule: []
-  directions: []
   gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &1448581574537951956
 BoxCollider2D:
@@ -153,7 +156,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -174,9 +177,9 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5357143}
-    oldSize: {x: 0.625, y: 0.875}
-    newSize: {x: 1, y: 0.5}
+    pivot: {x: 0.5, y: 0.5555556}
+    oldSize: {x: 0.625, y: 0.84375}
+    newSize: {x: 0.625, y: 0.84375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -210,3 +213,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &8628699255205769909
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761257565495430790}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 852d4c5d5585b9643b6440bedcb2678c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2104518870434332230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761257565495430790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

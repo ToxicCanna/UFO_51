@@ -3,14 +3,9 @@ using UnityEngine;
 
 public class TwoSidesHero : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> redSideheros = new List<GameObject>();//red sice
-    [SerializeField] private List<GameObject> blueSideheros = new List<GameObject>();
-    public List<GameObject> GetHerosRed()
+    [SerializeField] private List<GameObject> startHeros = new List<GameObject>();//red sice
+    public List<GameObject> GetStartHeros()
     {
-        return redSideheros;
-    }
-    public List<GameObject> GetHerosBlue()
-    {
-        return blueSideheros;
+        return startHeros;
     }
 }

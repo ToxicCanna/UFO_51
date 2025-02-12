@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Barrier
+  - RedHero
+  - BlueHero
   layers:
   - Default
   - TransparentFX
@@ -13,7 +16,7 @@ TagManager:
   - UI
   - BackGround
   - Player
-  - 
+  - Hero
   - 
   - 
   - 
@@ -55,6 +58,9 @@ TagManager:
     locked: 0
   - name: Indicator
     uniqueID: 3085248639
+    locked: 0
+  - name: effect
+    uniqueID: 1677486781
     locked: 0
   m_RenderingLayers:
   - Default

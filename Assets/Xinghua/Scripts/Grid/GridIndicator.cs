@@ -1,28 +1,41 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 
 public class GridIndicator : MonoBehaviour
 {
     // [SerializeField] private List<ScriptableObject> items; 
-    public int minI = 0, maxI, minJ, maxJ = 7;
-    public enum PlayerTurn { PlayerRedSide, PlayerBlueSide }
-    public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
+    private int minI, maxI, minJ, maxJ;
 
     [SerializeField] private GameObject playerRedHero;
     [SerializeField] private GameObject playerBlueHero;
     GameObject selectedHero;
     private int heroPathID;
     [SerializeField] private GameObject heroPrefab;
-    // private Vector2 currentGridPosition;
+
     //[SerializeField] private GameObject startPosition;//hero spawn front of the gate
+    [SerializeField] GameStateMachine gameStateMachine;
+    public HeroData submitedTargetHero;
+    public HeroPath submitedHeroPath;
+    [SerializeField] Effect effect;
+    private HighLight highLight;
+
     private HeroSelect heroSelect;
-    public event Action finishSelection;
+    public event Action hideHighlight;
     public event Action onHeroPositon;
     public event Action heroUnselected;
-    public event Action rollingDice;//this is for the dic roll function
+    public event Action targetSelecting;
+    public event Action AttackHappenOneSpot;
     public event Action activeShop;
+    public event Action moveFinish;
+
+    //public event Action rollingDice;//this is for the dic roll function
+
 
 
     private Vector3 heroPosition;
@@ -38,45 +51,51 @@ public class GridIndicator : MonoBehaviour
     private bool isOnHeroPosition = true;
     private bool isHeroSubmited = false;
     private HashSet<Vector2Int> allowedPositions;
+    private bool isHaveTargets = false;
+    private bool isCanChooseTarget = false;
+  
+    public Vector2Int selectedHeroPosition;
+    private Vector3 submitHeroPosition;
+    private int currentSelectedHeroId;
+    private bool isAtOppositeHeroPos = false;
+    private bool isCancleSelected = false;
+    private bool isAttackEnd = false;
+
+
+
+
+    //(Killian)
+    //Reference to BattleManager
+    [SerializeField] private BattleManager battleManager;
+
     void Start()
     {
+
         currentGridPosition = WorldToGridPosition(transform.position);
+
+
         transform.position = GridToWorldPosition(currentGridPosition);
 
-        currentTurn = PlayerTurn.PlayerRedSide;
         minI = 0; maxI = 9;
         minJ = 0; maxJ = 7;
 
-        Debug.Log("Start current turn :"+ currentTurn);
+        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
+        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+        highLight = FindAnyObjectByType<HighLight>();
+        
     }
 
 
-    private void Update()
-    {
-    /*    var occupiedGrids = GridManager.Instance.GetOccupiedGrids();
-        Debug.Log("occupiedGrids" + occupiedGrids.Count);
-        foreach (var grid in occupiedGrids)
-        {
-            Debug.Log("occupied" + grid);
-            if (grid.x == transform.position.x && grid.y == transform.position.y)
-            {
-                isOnHeroPosition = true;
-            }
-            else
-            {
-                isOnHeroPosition = false;
-            }
-        }*/
-       /* Debug.Log("isOnHeroPosition" + isOnHeroPosition);
-        Debug.Log("isHeroSubmited" + isHeroSubmited);*/
-      
-    }
+
+
     public bool IsWithinBounds(Vector2Int position)
     {
         return position.x >= minI && position.x <= maxI &&
                position.y >= minJ && position.y <= maxJ;
     }
-    public bool IsWithinMoveDirection(Vector2Int centerPosition, Vector2Int newPosition)
+
+
+    public bool IsWithinMoveDirectionNew(Vector2Int centerPosition, Vector2Int newPosition)
     {
         //old 
         var oldX = centerPosition.x;
@@ -94,111 +113,122 @@ public class GridIndicator : MonoBehaviour
         }
 
     }
-
-    //private void UpdateIndicatorToSelectedHero()
-    //{
-    //    var currentHeroPosition = heroSelect.GetSelectedHeroPosition();
-    //}
-
-    public void HandleIndicatorMoveNew(Vector2 direction)
+    public bool IsWithinMoveDirection(Vector2Int centerPosition, Vector2Int newPosition)
     {
-        Debug.Log("Handle move isOnHeroPosition" + isOnHeroPosition);
-        Debug.Log("Handle move isHeroSubmited" + isHeroSubmited);
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        //old 
+        var oldX = centerPosition.x;
+        var oldY = centerPosition.y;
 
-      
-        if (isHeroSubmited && isOnHeroPosition)
+        var newX = newPosition.x;
+        var newY = newPosition.y;
+        if (oldX - 1 <= newX && newX <= oldX + 1 && oldY - 1 <= newY && newY <= oldY + 1)
         {
-            Debug.Log("move with range");
-            //move the indicator with limit
-            MoveIndicatorWithRange(intDirection);
+            return true;
         }
         else
         {
-            
-            Debug.Log("move without range");
-            // only move indicator 
-            HandleIndicatorMove(intDirection);
+            return false;
         }
     }
+
+
+    private int currentIndex = 0;
+    private bool canMove;
+
+    public void ChooseTargets(Vector2 direction)
+    {
+        if (direction.x != 0) return;
+        // Debug.Log("move in opponent side hero list");
+        var oppositHeros = GetOppositeHeros();
+        Debug.Log("opposite heros count:" + GetOppositeHeros().Count);
+        var oppositeHeroCount = GetOppositeHeros().Count;
+
+        foreach (var pos in GetOppositeHeros())
+        {
+            Debug.Log("opposite heros location:" + pos.transform.position);
+        }
+        // Determine new index based on direction
+        var x = transform.position.x;
+        var y = transform.position.y;
+
+        var nextIndex = 0;
+        for (int i = 0; i < oppositeHeroCount; i++)
+        {
+            var hero = oppositHeros[i];
+            if (x == hero.transform.position.x && y == hero.transform.position.y)
+            {
+                currentIndex = i;
+                break;
+            }
+
+        }
+        if (direction.y > 0)
+        {
+            //W 
+            nextIndex = (currentIndex + 1) % oppositeHeroCount;
+
+        }
+        else if (direction.y < 0)
+        {
+            //S
+            nextIndex = (currentIndex - 1 + oppositeHeroCount) % oppositeHeroCount;
+        }
+        else
+        {
+            return;
+        }
+
+        transform.position = GetOppositeHeros()[nextIndex].transform.position;
+        Debug.Log("Indicator moved to: " + transform.position);
+
+    }
+
+    private List<GameObject> GetCurrentTurnPlayerHeros()
+    {
+        List<GameObject> opponiteHeros = new List<GameObject>();
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            opponiteHeros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+
+        }
+        else
+        {
+            opponiteHeros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+        }
+        return opponiteHeros;
+
+    }
+    private List<GameObject> GetOppositeHeros()
+    {
+        List<GameObject> opponiteHeros = new List<GameObject>();
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            opponiteHeros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+
+        }
+        else
+        {
+            opponiteHeros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+        }
+        return opponiteHeros;
+
+    }
+
     public void HandleIndicatorMove(Vector2 direction)
     {
-
-        //Debug.Log("currentPosition x:" + currentGridPosition.x + ",y:" + currentGridPosition.y);
-        //Debug.Log("direction.x:" + direction.x+ ",direction.y:"+ direction.y);
-
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
+        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt((int)direction.x), Mathf.RoundToInt((int)direction.y));
         Vector2Int targetPosition = currentGridPosition + intDirection;
         if (IsWithinBounds(targetPosition))
         {
             //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
-
-            transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
-            Debug.Log("currentGridPosition after move" + currentGridPosition);
-            //judge if this position have hero already
-            //var heros = GridManager.Instance.GetHeros();
-
-
-
-
-            var heros = HeroPocketManager.Instance.GetAllHeroes();
-            var isHeroOccupied = false;
-
-            foreach (var hero in heros)
-            {
-                //Debug.Log("hero postion:" + hero.transform.position.x + ", " + hero.transform.position.y);
-                if (hero.transform.position.x == currentGridPosition.x && hero.transform.position.y == currentGridPosition.y)
-                {
-                    isHeroOccupied = true;
-                    Debug.Log("current position have hero");
-                    selectedHero = hero;
-                }
-            }
-            if (isHeroOccupied)
-            {
-                var heroPath = selectedHero.GetComponent<HeroPath>();
-                Debug.Log("heroData:" + heroPath);
-                heroPathID = heroPath.GetHeroMoveIndex();
-                Debug.Log("heroMoveIndex:" + heroPathID);
-                Debug.Log("heroMoveIndex with name:" + heroPath.gameObject.name);
-                // activeShop?.Invoke();
-                onHeroPositon?.Invoke();
-
-            }
-            else
-            {
-                heroUnselected?.Invoke();
-            }
-
-
-
-            newIndicatorLocation = transform.position;
+            transform.position = GridToWorldPosition(currentGridPosition);
 
         }
     }
 
 
 
-    public void MoveIndicatorWithRange(Vector2 direction)
-    {
-
-        Debug.Log("move with range direction:" + direction);
-        Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt(direction.x), Mathf.RoundToInt(direction.y));
-        Vector2Int targetPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y) + intDirection;
-        Debug.Log("move with range oldPosition:" + currentGridPosition);
-        Debug.Log("move with range targetPosition:" + targetPosition);
-        var currentIndicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        Debug.Log(" IsWithinBounds(targetPosition):" + IsWithinBounds(targetPosition));
-        Debug.Log(" IsWithinMoveDirection(targetPosition):" + IsWithinMoveDirection(currentGridPosition, targetPosition));
-        if (IsWithinBounds(targetPosition) && IsWithinMoveDirection(currentGridPosition, targetPosition))
-        {
-
-            Debug.Log("move indicator!!!!!!!!");
-            transform.position = new Vector3(targetPosition.x, targetPosition.y);
-        }
-
-    }
     private bool isWithinMoveRange()
     {
         // check the target (I,J)value is in range
@@ -208,74 +238,251 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-    public int GetHeroMoveIndex()
+    public void MoveHeroToTargetPosition()
     {
-        return heroPathID;
-    }
-
-    //private void UpdateHeroPosition()
-    //{
-    //    heroPosition = heroSelect.GetSelectedHeroPosition();
-    //}
-    public void MoveToTargetIndicator()
-    {
-        Debug.Log("MoveToTargetIndicator");
-        if (!isOnHeroPosition&& !isHeroSubmited) return;
-
-        finishSelection?.Invoke();
-        //store the location that was occupied
-
-        oldIndicatorLocation = submitHeroData.gameObject.transform.position;
-        GridManager.Instance.RemoveOccupiedGrid(oldIndicatorLocation);
-
-        submitHeroData.gameObject.transform.position = transform.position;
-        GridManager.Instance.AddOccupiedGrid(transform.position);
-
-        UpdatePlayerTurn();
-        UpdateIndicatorWhenTurnChange();
-    }
-    private void UpdateIndicatorWhenTurnChange()
-    {
-        Debug.Log("current turn:" + currentTurn);
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+        Debug.Log("!isOnHeroPosition" + !isOnHeroPosition);
+        Debug.Log("isCancleSelected" + isCancleSelected);
+        if (!isOnHeroPosition)
         {
-            //transform.position = herosInRedSide[0].transform.position;
-            transform.position = playerRedHero.transform.position;
+            //GameManager.Instance.DisplayControlText( " can not choose opposite side hero");
+            return;
+        }
+
+        if (currentGridPosition == new Vector2Int(0, 4) )//red spawn location
+        {
+            if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn ==GameManager.PlayerTurn.PlayerRedSide)
+            {
+                GameManager.Instance.DisplayErrorText("Only opponent's Basic Hero can move to this location!");
+               
+                
+                return;
+            }
+        }
+        if(currentGridPosition == new Vector2Int(8, 4))//blue spawn location
+        {
+            if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
+            {
+                GameManager.Instance.DisplayErrorText("Only opponent's Basic Hero can move to this location!");
+                return;
+            }
+
+        }
+
+        if (isCancleSelected) return;
+        currentGridPosition = WorldToGridPosition(transform.position);
+        if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
+        Debug.Log("move hero");
+        foreach (var pos in validTargetPos)
+        {
+            Debug.Log("currentGridPosition" + currentGridPosition);
+            Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
+            if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y == (int)currentGridPosition.y)
+            {
+                Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
+
+                //update the gride status ;if not occupied empty it
+                oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+
+
+                GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(oldIndicatorLocation), submitHeroData.gameObject, submitHeroData.side);
+
+
+
+                // submitHeroData.gameObject.transform.position = transform.position;//move the hero
+                StartCoroutine(MoveHeroToPosition(transform.position, 1f));
+                hideHighlight?.Invoke();//if finish move hide the highlight
+            }
+            else
+            {
+                Debug.Log("target is invalid");
+            }
+        }
+
+
+
+        gameStateMachine.SwitchToGameplayState();//this is very important
+    }
+
+
+    private IEnumerator MoveHeroToPosition(Vector2 targetPosition, float speed)
+    {
+        Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+        Vector2 startPosition = (Vector2)submitHeroData.transform.position;
+        Vector2 direction = targetPosition - startPosition;
+
+
+        bool needTurn = Mathf.Abs(direction.x) > 0 && Mathf.Abs(direction.y) > 0;
+
+        animatorSelected.SetBool("IsRun", true);
+
+        if (needTurn)
+        {
+
+            Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(intermediatePosition, speed));
+
+
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
         }
         else
         {
-            //transform.position = herosInBlueSide[0].transform.position;
-            transform.position = playerBlueHero.transform.position;
+
+            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
         }
-    }
-    private PlayerTurn GetCurrentPlayerTurn()
-    {
-        return currentTurn;
+        currentGridPosition = WorldToGridPosition(transform.position);
+
+        GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position), submitHeroData.gameObject, submitHeroData.side);
+
+        CheckAutoAttack();
+
+        if (!isAutoAttack)
+        {
+            isHeroSubmited = false;
+            GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+            UpdatePlayerTurn();
+            SetIndicatorInCurrentHeroPos();
+            isCancleSelected = false;
+
+            animatorSelected.SetBool("IsRun", false);
+        }
     }
 
-    private PlayerTurn GetNextPlayerTurn()
+
+    private IEnumerator MoveHeroToPointAndUpdatIndicator(Vector2 destination, float speed)
     {
-        if (currentTurn == PlayerTurn.PlayerRedSide)
+
+        while ((Vector2)submitHeroData.transform.position != destination)
         {
-            currentTurn = PlayerTurn.PlayerBlueSide;
+            submitHeroData.transform.position = Vector2.MoveTowards(
+                submitHeroData.transform.position,
+                destination,
+                speed * Time.deltaTime
+            );
+
+            yield return null;
         }
-        else
-        {
-            currentTurn = PlayerTurn.PlayerRedSide;
-        }
-        return currentTurn;
+
     }
+
+    bool isAutoAttack = false;
+    private void CheckAutoAttack()
+    {
+        Debug.Log("CheckAttackTargets");
+        battleManager.currentHero = submitHeroData.GetComponent<HeroData>();
+        //this just when two player in one spot attack each other
+        var herosOpposite = GetOppositeHeros();
+        foreach (var hero in herosOpposite)
+        {
+            if (WorldToGridPosition(transform.position) == WorldToGridPosition(hero.transform.position))
+            {
+                isAutoAttack = true;
+                /* Debug.Log("same pos:" + transform.position);
+                 Debug.Log("targetHero" + hero.name);*/
+                //Attack opposite
+                if (submitHeroData.gameObject != hero)
+                {
+                    Debug.Log(" attack happen");
+                    GameManager.Instance.isBattling = true;
+                    hideHighlight?.Invoke();
+                    //set target hero
+                    var targetHero = hero.GetComponent<HeroData>();
+                    StartCoroutine(RollDiceAndApplyDamage(targetHero));
+                    // AttackHappenOneSpot?.Invoke();
+                }
+
+            }
+        }
+
+    }
+
+    private IEnumerator RollDiceAndApplyDamage(HeroData targetHero)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Roll dice");
+        Effect.Instance.PlayAttackEffect(targetHero.transform.position);
+
+
+        battleManager.targetHero = targetHero.GetComponent<HeroData>();
+
+        //call attack after setting values
+        yield return new WaitForSeconds(2);
+        Effect.Instance.HideAttackEffect();
+
+        yield return new WaitForSeconds(1);
+        Debug.Log("give damage");
+        battleManager.Attack();
+        if (targetHero != null && submitHeroData != null)
+        {
+            Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+            if (isAutoAttack)
+            {
+
+                animatorSelected.SetBool("IsAtk", true);
+            }
+            else
+            {
+                animatorSelected.SetBool("IsAtk", false);
+            }
+            Animator animatorTarget = targetHero.gameObject.GetComponent<Animator>();
+
+            animatorTarget.SetBool("IsDmg", true);
+
+            yield return new WaitForSeconds(1);
+            isAttackEnd = true;
+            gameStateMachine.SwitchToGameplayState();
+            isHeroSubmited = false;
+
+
+            //must check null ,cause sometime destroyed hero die
+            if (animatorSelected != null && animatorSelected.gameObject != null)
+            {
+                animatorSelected.SetBool("IsAtk", false);
+            }
+
+            if (animatorTarget != null && animatorTarget.gameObject != null)
+            {
+                animatorTarget.SetBool("IsDmg", false);
+            }
+
+            UpdatePlayerTurn();
+            SetIndicatorInCurrentHeroPos();
+            gameStateMachine.SwitchToGameplayState();
+
+        }
+    }
+
+    private void SetIndicatorInCurrentHeroPos()
+    {
+        var heros = GetCurrentTurnPlayerHeros();
+        if (heros != null)
+        {
+            transform.position = heros[0].transform.position;
+        }
+        //Debug.Log("oppsite hero name:" + heros[0].name);
+        currentGridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+    private void SetIndicatorInOppositeHeroPos()
+    {
+        var heros = GetOppositHerosInTheScene();
+        transform.position = heros[0].transform.position;
+        Debug.Log("oppsite hero name:" + heros[0].name);
+        currentGridPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+
     private void UpdatePlayerTurn()
     {
-
-        if (currentTurn == PlayerTurn.PlayerBlueSide)
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            currentTurn = PlayerTurn.PlayerRedSide;
+            GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerBlueSide;
+            
         }
         else
         {
-            currentTurn = PlayerTurn.PlayerBlueSide;
+            GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerRedSide;
         }
+        GameManager.Instance.AddCoinCount();
     }
 
     private Vector2Int WorldToGridPosition(Vector3 worldPosition)
@@ -291,99 +498,283 @@ public class GridIndicator : MonoBehaviour
         float y = gridPosition.y;
         return new Vector3(x, y, 0);
     }
-    public void HandleSelectHero()
+
+
+    private bool IsIndicatorOnOriginalPosition(Vector2Int indicatorPosition)
     {
-       // onHeroPositon?.Invoke();//this if for path highlight to listen
-        herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
-        Debug.Log("start hero in red side :" + herosInRedSide.Count);
-        herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
-        Debug.Log("start hero in blue side :" + herosInBlueSide.Count);
-        Debug.Log("use X key to switch");
-        //Debug.Log("current indicator position" + transform.position);
-        Debug.Log("current turn" + GetCurrentPlayerTurn());
-        Debug.Log("red hero coun when select :" + herosInRedSide.Count);
-        Debug.Log("blue hero coun when select :" + herosInBlueSide.Count);
-        if (GetCurrentPlayerTurn() == PlayerTurn.PlayerRedSide)
+        var isIndicatorOnCurrentHero = false;
+        var heros = GetSameSideHerosInTheScene();
+        foreach (var hero in heros)
         {
-
-            //Debug.Log("count:"+herosInRedSide.Count);
-            var currentHeroIndex = 0;
-            for (int i = 0; i < herosInRedSide.Count; i++)
+            if (transform.position == hero.transform.position)
             {
-                Debug.Log($"Index: {i}, Value: {herosInRedSide[i]}");
-                var hero = herosInRedSide[i];
-                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
-
-                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
+                isIndicatorOnCurrentHero = true;
+            }
+        }
+        return isIndicatorOnCurrentHero;
+    }
+    private bool IsIndicatorOnSameSideHeroPosition(Vector2Int indicatorPosition)
+    {
+        var IsIndicatorOnSameSideHeroPosition = false;
+        var heros = GetSameSideHerosInTheScene();
+        foreach (var hero in heros)
+        {
+            if (hero != null)
+            {
+                if (transform.position == hero.transform.position)
                 {
-                    Debug.Log("current i :" + i);
-                    currentHeroIndex = i;
-                    break;
+                    IsIndicatorOnSameSideHeroPosition = true;
                 }
             }
-            var nextHeroIndex = (currentHeroIndex + 1) % herosInRedSide.Count;
-            var nextHero = herosInRedSide[nextHeroIndex];
-            transform.position = nextHero.transform.position;
         }
-        else if (GetCurrentPlayerTurn() == PlayerTurn.PlayerBlueSide)
-        {
-
-            //Debug.Log("count:"+herosInRedSide.Count);
-            var currentHeroIndex = 0;
-            for (int i = 0; i < herosInBlueSide.Count; i++)
-            {
-                Debug.Log($"Index: {i}, Value: {herosInBlueSide[i]}");
-                var hero = herosInBlueSide[i];
-                Debug.Log("hero position x:" + hero.transform.position.x + " y:" + hero.transform.position.y);
-
-                if (hero.transform.position.x == transform.position.x && hero.transform.position.y == transform.position.y)
-                {
-                    Debug.Log("current i :" + i);
-                    currentHeroIndex = i;
-                    break;
-                }
-            }
-            var nextHeroIndex = (currentHeroIndex + 1) % herosInBlueSide.Count;
-            var nextHero = herosInBlueSide[nextHeroIndex];
-            transform.position = nextHero.transform.position;
-        }
+        return IsIndicatorOnSameSideHeroPosition;
     }
 
-
-    //Submit current selected hero
-    public void HandleSubmitHeroSelected()
+    Vector2Int[] validTargetPos;
+    public void HandleHeroSelected()
     {
-        Debug.Log("current hero submit");
+        Debug.Log("HandleHeroSelected");
+        var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+
+        Debug.Log("isHeroSubmited" + isHeroSubmited);
+        Debug.Log("!IsIndicatorOnSameSideHeroPosition(indicatorPosition)" + !IsIndicatorOnSameSideHeroPosition(indicatorPosition));
+        // if (isHeroSubmited || !IsIndicatorOnOriginalPosition(indicatorPosition)) return;
+        // if (isHeroSubmited) return;
+        if (!IsIndicatorOnSameSideHeroPosition(indicatorPosition))
+        {
+            GameManager.Instance.DisplayErrorText(" can not choose opposite side hero");
+            return;
+        }
+        if (isHeroSubmited) return;
+        SetSelectedHero(transform.position);
+
         isOnHeroPosition = true;
-        var position = GetSubmitHeroPositon();
-      
-        GetSubmitHero(position);
-        Debug.Log("submitHeroData" + submitHeroData.gameObject.name);
+        isHeroSubmited = true;
+        isCancleSelected = false;
+        var position = GetIndicatorPositon();
+        currentSelectedHeroId = GetSubmitHeroPathIndex(position);
 
+       
+        onHeroPositon?.Invoke();//show the path
+        validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
+        GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
+        gameStateMachine.SwitchToUIState();//UI state for choose action
+        Debug.Log("Valid Target Positions when selected: " + string.Join(", ", validTargetPos) + currentSelectedHeroId);
     }
-    public Vector2 GetSubmitHeroPositon()
+
+
+    public Vector2Int GetSelectedHeroPositon()
     {
-        Debug.Log("hero submit position:" + transform.position);
+        if (submitHeroData != null)
+        {
+            Vector2Int gridPos = WorldToGridPosition(submitHeroData.transform.position);
+            return gridPos;
+        }
+        return Vector2Int.zero;
+    }
+
+    public Vector2Int GetIndicatorPositon()
+    {
         //if is occupied
-        var position = new Vector2(transform.position.x, transform.position.y);
-        currentGridPosition =new Vector2Int((int)position.x,(int)position.y);
-        return position;
+        return new Vector2Int((int)transform.position.x, (int)transform.position.y);
+    }
+
+    public void SetSelectedHero(Vector2 position)
+    {
+
+        if (isCancleSelected) submitHeroData = null;
+        else
+        {
+            var allHerosInScene = GetSameSideHerosInTheScene();
+
+            foreach (var hero in allHerosInScene)
+            {
+                if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
+                {
+
+                    //isHeroSubmited = true;
+                    var heroData = hero.GetComponent<HeroData>();
+                    var heroPath = hero.GetComponent<HeroPath>();
+
+                    UINavManager.Instance.UpdateHeroActions(heroPath);
+                    submitHeroData = heroData;
+                    Debug.Log("Set selected hero" + heroData.name);
+                    Debug.Log("Set selected hero" + heroPath.name);
+                }
+
+            }
+
+        }
 
     }
+
+
     public HeroData GetSubmitHero(Vector2 position)
     {
-        var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+        
+        
+        return submitHeroData;
+    }
 
+    public int GetSubmitHeroPathIndex(Vector2 position)
+    {
+        //var allHerosInScene = HeroPocketManager.Instance.GetAllHeroes();
+        var allHerosInScene = GetSameSideHerosInTheScene();
         foreach (var hero in allHerosInScene)
         {
             if (position.x == hero.transform.position.x && position.y == hero.transform.position.y)
             {
-                isHeroSubmited = true;
-                var heroData = hero.GetComponent<HeroData>();
-                submitHeroData = heroData;
+                //isHeroSubmited = true;
+                submitedHeroPath = hero.GetComponent<HeroPath>();
+                var submitHeroPathID = submitedHeroPath.heroPathID;
+                return submitHeroPathID;
             }
-
         }
-        return submitHeroData;
+
+        return 0;
+    }
+    public List<GameObject> GetOppositHerosInTheScene()
+    {
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            var heros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            return heros;
+        }
+        else
+        {
+            var heros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            return heros;
+        }
+    }
+
+    public List<GameObject> GetSameSideHerosInTheScene()
+    {
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            var heros = HeroPocketManager.Instance.GetAllRedSideHeroes();
+            return heros;
+        }
+        else
+        {
+            var heros = HeroPocketManager.Instance.GetAllBlueSideHeroes();
+            return heros;
+        }
+    }
+
+    public void SbumitedTarget()
+    {
+        Debug.Log("Submit target to attack");
+        //attack each other
+
+        var heros = GetOppositHerosInTheScene();
+        for (int i = 0; i < heros.Count; i++)
+        {
+            //var currentHeroIndex = 0;
+            var hero = heros[i];
+            if (transform.position.x == hero.transform.position.x || transform.position.y == hero.transform.position.y)
+            {
+                var HeroData = hero.GetComponent<HeroData>();
+
+                //(Killian)
+                //set Target in BattleManager
+                battleManager.targetHero = HeroData;
+                //Set Current Hero in BattleManager using "GetSubmitHero()"
+                battleManager.currentHero = submitHeroData;
+
+                /*                Debug.Log("Target hero selected: " + battleManager.targetHero.name);
+                                Debug.Log("Attacking with hero: " + battleManager.currentHero.name);*/
+                //end of Killians code
+            }
+        }
+        Debug.Log("kill him!!!!!!!");
+    }
+
+    internal void ActiveShopMenu()
+    {
+        gameStateMachine.SwitchToShopState();
+
+    }
+
+    internal void CancleSelected()
+    {
+        Debug.Log("cancle selected");
+        isCancleSelected = true;
+        hideHighlight?.Invoke();
+        var position = GetIndicatorPositon();
+        SetSelectedHero(position);
+        isHeroSubmited = false;
+    }
+
+    internal void HandleAttack()
+    {
+        CheckAutoAttack();
+        if (isAutoAttack) return;
+        /* Debug.Log("CheckAttackRange");
+         Debug.Log("occupied count"+ GridManager.Instance.occupiedGrids.Count);*/
+        currentGridPosition = WorldToGridPosition(transform.position);
+        Vector2Int[] validAttackRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), currentSelectedHeroId);
+        /*   
+           Debug.Log("CheckAttackRange" + validAttackRangePositions.Length);
+           Debug.Log("Valid Target Positions: " + string.Join(", ", validAttackRangePositions));*/
+        List<GameObject> heroesOpposite = HeroPocketManager.Instance.GetOppositeHeros();//all the enemy
+        //Debug.Log("occupied count" + heroesOpposite.Count);
+        foreach (var hero in heroesOpposite)
+        {
+
+            if (validAttackRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
+            {
+                /*   Debug.Log("enemy there");
+                   Debug.Log(" attack happen");*/
+                //set target hero
+                hideHighlight?.Invoke();//hide the high light
+                var targetHero = hero.GetComponent<HeroData>();
+                var currentHero = submitHeroData;
+                StartCoroutine(RollDiceAndApplyDamage(targetHero));
+            }
+            else
+            {
+                Debug.Log("clear");
+
+                gameStateMachine.SwitchToMoveHeroState();
+            }
+        }
+
+
+    }
+    public void HandleHeal()
+    {
+        Debug.Log("HandleHeal");
+        CheckHealRange();
+    }
+    public void CheckHealRange()
+    {
+        Debug.Log("CheckHealRange");
+        var herosSameSide = GetSameSideHerosInTheScene();
+        var validHealRangePositions = highLight.GetNeighborsForAbilityRange(WorldToGridPosition(submitHeroPosition), heroPathID);
+        foreach (var hero in herosSameSide)
+        {
+
+            if (validHealRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
+            {
+                //Heal hero
+                Debug.Log("Heal hero");
+                hideHighlight?.Invoke();//hide the high light
+                var targetHero = hero.GetComponent<HeroData>();
+                var currentHero = submitHeroData;
+                StartCoroutine(HealMyHeros(targetHero));
+            }
+            else
+            {
+                Debug.Log("clear");
+
+                gameStateMachine.SwitchToMoveHeroState();
+            }
+        }
+       
+
+    }
+    public IEnumerator HealMyHeros(HeroData target)
+    {
+        yield return new WaitForEndOfFrame();
     }
 }

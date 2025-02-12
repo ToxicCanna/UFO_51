@@ -11,7 +11,14 @@ public class ShopScript : MonoBehaviour
 
     private Transform spawnLoc;
 
-    private void Update()
+    private TwoSidesHero twoSidesHero;
+
+    private void Start()
+    {
+        twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
+    }
+
+  /*  private void Update()
     {
         ShopSetup(gridIndicator.currentTurn);
     }
@@ -34,17 +41,19 @@ public class ShopScript : MonoBehaviour
 
     public void Spawn(int i)
     {
+        Debug.Log("Spawn");
+
+        GameObject spawnedHero = null;
+
         if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerRedSide)
         {
-            Instantiate(shopList[i], spawnLoc);
+            spawnedHero = Instantiate(shopList[i], spawnLoc.position, Quaternion.identity);
+            twoSidesHero.GetHerosRed().Add(spawnedHero);
         }
-        if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerBlueSide)
+        else if (gridIndicator.currentTurn == GridIndicator.PlayerTurn.PlayerBlueSide)
         {
-            Instantiate(shopList[i], spawnLoc);
+            spawnedHero = Instantiate(shopList[i], spawnLoc.position, Quaternion.identity);
+            twoSidesHero.GetHerosBlue().Add(spawnedHero);
         }
-    }
-    public void Spawn()
-    {
-        Debug.Log("button pressed!");
-    }
+    }*/
 }

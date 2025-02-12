@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 4454211749483361376}
   - component: {fileID: -4159392138341884082}
   - component: {fileID: 663307913034809056}
-  m_Layer: 0
+  - component: {fileID: 555778197574573750}
+  m_Layer: 8
   m_Name: BlueRanged
-  m_TagString: Untagged
+  m_TagString: BlueHero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554569d21b7246b4c8eec3c376b46484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroData: {fileID: 11400000, guid: a3a52699da14d624580d05c04588f405, type: 2}
+  heroData: {fileID: 11400000, guid: 23802ca103786c844b2ea2f15934148c, type: 2}
   mySprite: {fileID: 1429496714160037500, guid: 1b635aae35d9b4a428f3f9a22642e75d, type: 3}
   maxHealth: 0
   currentHealth: 0
@@ -118,6 +119,7 @@ MonoBehaviour:
   moveSpeed: 0
   range: 0
   ability: 0
+  side: 
 --- !u!114 &9189664414710383191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,13 +133,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 2592349495395365212, guid: 3128a9735d6a10c479c9022efc635e51, type: 3}
+  abilityTangeTilePerfab: {fileID: 0}
   gridLayer:
     serializedVersion: 2
     m_Bits: 64
   tileSize: 1
   currentRule:
   - {fileID: 11400000, guid: f782ca90adcfc9c4a8f8b8edb288019b, type: 2}
-  directions: []
   gridIndicator: {fileID: 3119045924890637728, guid: 2f98ace02dba1af48a983aca1cf83df5, type: 3}
 --- !u!61 &4454211749483361376
 BoxCollider2D:
@@ -155,7 +157,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -176,8 +178,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4827586, y: 0.5}
-    oldSize: {x: 0.90625, y: 0.9375}
+    pivot: {x: 0.5185185, y: 0.5}
+    oldSize: {x: 0.84375, y: 0.9375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -224,5 +226,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fdfe3a4fa9fe147985c9912ae986f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroMoveRule: {fileID: 11400000, guid: 3825cc8522e562a4196a345d530db500, type: 2}
-  heroPathID: 3
+--- !u!95 &555778197574573750
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542879086375700594}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfad08fcbf7ed1749aa67e0e6af9d3e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

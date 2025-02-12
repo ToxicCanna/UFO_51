@@ -25,3 +25,4 @@ MonoBehaviour:
   range: 3
   ability: 1
   abilityScore: range
+  side: Red

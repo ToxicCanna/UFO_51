@@ -12,10 +12,14 @@ public class GameStateMachine : BaseStateMachine
     private GamePlayState gameplayState;
     private UIState uiState;
     private AttackState attackState;
+    private MoveHeroState moveState;
+    private ShopHeroState shopState;
+    private HealingState healState;
 
+    public string currentState;
     private void Awake()
     {
-        uiState = new UIState();
+        uiState = new UIState(_gridIndicator);
 
         if (_gridIndicator == null)
         {
@@ -24,24 +28,10 @@ public class GameStateMachine : BaseStateMachine
         }
 
         gameplayState = new GamePlayState(_gridIndicator);
-        attackState = new AttackState();
-    }
-
-    private void OnEnable()
-    {
-        if (_gridIndicator != null)
-        {
-            _gridIndicator.activeShop += SwitchToUIState;
-
-        }
-    }
-    private void OnDisable()
-    {
-        if (_gridIndicator != null)
-        {
-            _gridIndicator.activeShop -= SwitchToUIState;
-
-        }
+        attackState = new AttackState(_gridIndicator);
+        moveState = new MoveHeroState(_gridIndicator);
+        shopState = new ShopHeroState(_gridIndicator);
+        healState = new HealingState(_gridIndicator);
     }
     private void Start()
     {
@@ -55,16 +45,41 @@ public class GameStateMachine : BaseStateMachine
             Debug.LogError("GameplayState is null! Ensure it is initialized.");
         }
     }
+    public void SetGameState(BaseState value)
+    {
+        SetState(value);
+    }
 
     public void SwitchToUIState()
     {
 
         SetState(uiState);
     }
+    public void SwitchToShopState()
+    {
+
+        SetState(shopState);
+    }
+
 
     public void SwitchToGameplayState()
     {
         SetState(gameplayState);
+       
+    }
+    public void SwitchToAttackState()
+    {
+        SetState(attackState);
+    }
+    public void SwitchToMoveHeroState()
+    {
+        SetState(moveState);
+    
+    }
+    public void SwitchToHealState()
+    {
+        SetState(healState);
+     
     }
 }
 

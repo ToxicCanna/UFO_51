@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Confirm",
-                    "type": "Button",
-                    "id": "98663c07-4f09-4100-86dd-afbbd67f47cf",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Switch",
                     "type": "Button",
                     "id": "8667e805-61e1-405b-a98c-a5e8f830cec5",
@@ -36,6 +27,24 @@
                     "name": "Submit",
                     "type": "Button",
                     "id": "647f5a6b-be07-4383-ac56-4af2bda4b80f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shop",
+                    "type": "Button",
+                    "id": "76c6949b-0a89-476b-afc6-ecc653b51142",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancle",
+                    "type": "Button",
+                    "id": "d9ed2f94-7a25-4c72-8e28-151c06234279",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -100,17 +109,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a5e59dbd-3c91-47d5-8197-32d6424ebc48",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Confirm",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a70d9cff-1741-43de-81b3-67161af7bfb0",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -130,6 +128,28 @@
                     "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bb627fe-666f-448c-a344-19e6e20ae4a0",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc31a9ae-dacc-4e36-b3b8-88e1c8302ef6",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -147,6 +167,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Shop",
+                    "type": "Button",
+                    "id": "598096f5-7cdb-4c54-ac17-3ac32e2096ef",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancle",
+                    "type": "Button",
+                    "id": "5c90251b-d813-4189-8efd-732616143760",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Cancel",
                     "type": "Button",
                     "id": "685a8240-f1ca-4d22-bed7-25ef7340e6a7",
@@ -156,7 +194,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Submit",
+                    "name": "Selected",
                     "type": "Button",
                     "id": "14d7a490-2947-4a4f-8c80-8bc4eb8a5dbf",
                     "expectedControlType": "",
@@ -169,11 +207,11 @@
                 {
                     "name": "",
                     "id": "eac27943-6c61-46be-816a-83155d244b12",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
-                    "action": "Submit",
+                    "action": "Selected",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,6 +269,28 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2e708063-de22-4013-a863-dfd7cc5fdddb",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36ea6486-aa0c-46ac-8775-c52b36b88f6e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

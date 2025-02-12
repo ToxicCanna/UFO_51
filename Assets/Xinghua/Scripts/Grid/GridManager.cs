@@ -4,22 +4,23 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
+    public List<Vector2Int> occupiedGrids = new List<Vector2Int>();
+    public Dictionary<Vector2Int, List<HeroInfo>> occupiedGridTeams = new Dictionary<Vector2Int, List<HeroInfo>>();
 
-    //public HashSet<Vector2> occupiedGrids = new HashSet<Vector2>();
-
-    private List<Vector2> occupiedGrids = new List<Vector2>();
-    private List<GameObject> heros = new List<GameObject>();//this is for store the heros in the scene
-
-    //[SerializeField]private List<GameObject> redSideHerosScene = new List<GameObject>();
-    //[SerializeField] private List<GameObject> blueSideHerosScne = new List<GameObject>();
-    private void Start()
+    public class HeroInfo
     {
-        foreach (var hero in heros)
-        {
-            AddOccupiedGrid(hero.transform.position);
-        }
+        public GameObject heroObj;
+        public string side;
 
+        public HeroInfo(GameObject hero, string side)
+        {
+            this.heroObj = hero;
+            this.side = side;
+        }
     }
+
+    private Vector2 indicatorPos;
+
     private void Awake()
     {
         if (Instance == null)
@@ -32,44 +33,61 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void AddOccupiedGrid(Vector2 gridPosition)
+    //use this to add 
+    public void AddHeroWithTeamInfo(Vector2Int position, GameObject hero, string colorSide)
     {
-       // Debug.Log("add :"+gridPosition);
-        occupiedGrids.Add(gridPosition);
+        if (!occupiedGridTeams.ContainsKey(position))
+        {
+            occupiedGridTeams[position] = new List<HeroInfo>();//init
+        }
+        occupiedGridTeams[position].Add(new HeroInfo(hero, colorSide));
+        Debug.Log($"Grid Added {hero.name} to {position} from side {colorSide}");
     }
-    public void RemoveOccupiedGrid(Vector2 gridPosition)
+
+
+    //use this to remove
+    public void RemoveOccupiedGrid(Vector2Int position, GameObject hero, string colorSide)
     {
-        occupiedGrids.Remove(gridPosition);
-       // Debug.Log("remove :" + gridPosition);
+        occupiedGridTeams[position].Remove(new HeroInfo(hero, colorSide));
+        Debug.Log($"Grid Remove {hero.name} to {position} from Side {colorSide}");
     }
 
 
-    public void AddHero(GameObject hero)
+
+
+    public bool IsGridOccupied()
     {
-        heros.Add(hero);
+        Vector2Int redTargetPosition = new Vector2Int(0, 4);
+        Vector2Int blueTargetPosition = new Vector2Int(8, 3);
+
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
+        {
+            if (occupiedGridTeams.ContainsKey(redTargetPosition))
+            {
+                foreach (HeroInfo hero in occupiedGridTeams[redTargetPosition])
+                {
+                    if (hero.side == "Red")
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
+        {
+            if (occupiedGridTeams.ContainsKey(blueTargetPosition))
+            {
+                foreach (HeroInfo hero in occupiedGridTeams[blueTargetPosition])
+                {
+                    if (hero.side == "Blue")
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
-    public List<GameObject> GetHeros()
-    {
-        return heros;
-    }
-
-    public List<Vector2> GetOccupiedGrids()
-    {
-        // print all the position been occupied by heros
-        Debug.Log("occupiedGrids " + occupiedGrids.Count);
-        return occupiedGrids;
-    }
-    /*  public HashSet<Vector2> GetOccupiedGrids()
-      {
-          // print all the position been occupied by heros
-          Debug.Log("occupiedGrids " + occupiedGrids);
-          return occupiedGrids;
-      }*/
-
- 
-    public bool IsGridOccupied(Vector2 gridPosition)
-    {
-        return occupiedGrids.Contains(gridPosition);
-    }
 }
