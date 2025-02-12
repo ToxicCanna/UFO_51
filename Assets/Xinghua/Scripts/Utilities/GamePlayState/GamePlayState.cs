@@ -17,27 +17,27 @@ public class GamePlayState : BaseState
     public override void EnterState()
     {
         Debug.Log("Entered Gameplay State");
-        gridIndicator.controlHintText.text = "Move Indicator to choose Hero\n \n B_Buy Heros";
+        GameManager.Instance.DisplayInputText("Move Indicator to choose Hero\n \n B_Buy Heros");
     }
 
     public override void HandleInput(InputManager inputManager)
     {
-         Debug.Log("Handle GamePlay Input");
+        Debug.Log("Handle GamePlay Input");
         var controls = inputManager.GetControls();
         ExitState();
 
         currentControls = controls;
-       
+
 
         if (controls != null && gridIndicator != null)
         {
-          
+
             moveAction = ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
             submitAction = ctx => gridIndicator?.HandleHeroSelected();
             shopAction = ctx => gridIndicator?.ActiveShopMenu();
             cancelAction = ctx => gridIndicator?.CancleSelected();
 
-      
+
             currentControls.GamePlay.Move.performed += moveAction;
             currentControls.GamePlay.Submit.performed += submitAction;
             currentControls.GamePlay.Shop.performed += shopAction;

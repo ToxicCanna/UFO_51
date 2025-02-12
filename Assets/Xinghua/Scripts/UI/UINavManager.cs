@@ -282,7 +282,7 @@ public class UINavManager : MonoBehaviour
         cost = heroCost;
         if (GameManager.Instance.GetCurrentTurnCoin() < heroCost)
         {
-            GameManager.Instance.controlText.text = "Not enough coins to purchase";
+            GameManager.Instance.DisplayErrorText("Not enough coins to purchase");
             return false;
         }
 

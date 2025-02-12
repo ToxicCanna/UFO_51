@@ -60,7 +60,7 @@ public class GridIndicator : MonoBehaviour
     private bool isAtOppositeHeroPos = false;
     private bool isCancleSelected = false;
     private bool isAttackEnd = false;
-    public TMP_Text controlHintText;
+
 
 
 
@@ -82,7 +82,7 @@ public class GridIndicator : MonoBehaviour
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
         highLight = FindAnyObjectByType<HighLight>();
-        controlHintText.text = "WASD_move;Enter_submit ;Q_cancle";
+        
     }
 
 
