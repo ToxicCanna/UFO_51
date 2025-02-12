@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         coinCountRed = 3;
-        coinCountBlue = 4;
+        coinCountBlue = 3;
         coinText.text = coinCountRed.ToString();
         AddCoinCount();
         HeroOwned();
@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
             coinCountBlue++;
         }
         coinText.text = "Coin:" + "" + coinCount.ToString();
+        UINavManager.Instance.UpdateShopButtons();
     }
     public void DecreaseCoinCount(int value)
     {

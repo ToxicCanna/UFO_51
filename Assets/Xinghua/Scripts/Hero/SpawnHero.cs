@@ -35,8 +35,11 @@ public class SpawnHero : MonoBehaviour
 
     private void SetSpawnPrefab(string buttonName)
     {
+        string colorPrefix = GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide ? "Red" : "Blue";
+
+        Debug.Log("SetSpawnPrefab button name " + buttonName);
         GameObject[] heroArray;
-        spawnHeroColor = "";
+        //spawnHeroColor = "";
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             heroArray = redHeroPrefabs;
@@ -48,12 +51,18 @@ public class SpawnHero : MonoBehaviour
             spawnHeroColor = "Blue";
         }
 
+        string expectedHeroName = colorPrefix + buttonName;
         foreach (GameObject hero in heroArray)
         {
-            if (hero.name.Contains(buttonName))
-            {
+         
+           
+            Debug.Log("hero name " + hero.name);
+            Debug.Log("expectedHeroName " + expectedHeroName);
+            if (hero.name==expectedHeroName)
+             {
 
-                SpawnPrefab = hero;
+                 SpawnPrefab = hero;
+                Debug.Log("SpawnNew SpawnPrefab " + SpawnPrefab.name);
             }
         }
 
@@ -61,6 +70,8 @@ public class SpawnHero : MonoBehaviour
 
     public void SpawnNew(string buttonName,int cost)
     {
+      
+      
         SetSpawnPrefab(buttonName);
         GameObject spawnedHero = Instantiate(SpawnPrefab, spawnLoc.position, Quaternion.identity);
 
@@ -79,6 +90,7 @@ public class SpawnHero : MonoBehaviour
 
         var heroData = hero.GetComponent<HeroData>();
         GameManager.Instance.DecreaseCoinCount(cost);
+        //here need update the shop UI display
 
     }
 }

@@ -23,17 +23,17 @@ public class UINavManager : MonoBehaviour
     {
         { "Basic", new List<string> { "Move" } },
         { "Knight", new List<string> {  "Move", "Attack"} },
-        { "Thieft", new List<string> { "Move", "Attack"} },
+        { "Thief", new List<string> { "Move", "Attack"} },
         { "Range", new List<string> { "Move", "Attack"} },
         { "Healer", new List<string> { "Move", "Attack","Heal"} }
     };
     private Dictionary<string, int> heroCostMapping = new Dictionary<string, int>
     {
-        { "Ba", 1 },
-        { "Kn", 4 },
-        { "Th", 3 },
-        { "Ra", 2 },
-        { "He", 3 }
+        { "Basic", 1 },
+        { "Knight", 4 },
+        { "Thief", 3 },
+        { "Range", 2 },
+        { "Healer", 30 }
     };
 
 
@@ -47,7 +47,7 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
-
+ 
     public void UpdateHeroActions(HeroPath heroPath)
     {
         if (heroPath == null) return;
@@ -61,9 +61,9 @@ public class UINavManager : MonoBehaviour
         Debug.Log("availableActions" + availableActions.Count);
         for (int i = 0; i < buttonsHeroActions.Length; i++)
         {
-            buttonsHeroActions[i].gameObject.SetActive(true); 
-            buttonsHeroActions[i].interactable = false;       
-            SetButtonColor(buttonsHeroActions[i], false);   
+            buttonsHeroActions[i].gameObject.SetActive(true);
+            buttonsHeroActions[i].interactable = false;
+            SetButtonColor(buttonsHeroActions[i], false);
         }
 
 
@@ -104,6 +104,8 @@ public class UINavManager : MonoBehaviour
 
     private void Start()
     {
+       
+
         if (buttons.Length == 0)
         {
             Debug.LogWarning("[UISelector] No buttons assigned!");
@@ -118,6 +120,7 @@ public class UINavManager : MonoBehaviour
 
         //UpdateSelectorPosition(); // Position the selector on the first button
         StartCoroutine(FixSelectorPosition());
+        StartCoroutine(UpdateShopButtons());
     }
 
 
@@ -213,9 +216,9 @@ public class UINavManager : MonoBehaviour
     }
     public void HandleHeroShopSelection()
     {
-        string firstTwoLetters = buttons[shopIndex].name.Substring(0, 2);
-        selectedButtonName = firstTwoLetters;
-        ProcessHeroShopSelected(selectedButtonName);
+      /*  string firstTwoLetters = buttons[shopIndex].name.Substring(0, 2);
+        selectedButtonName = firstTwoLetters;*/
+        ProcessHeroShopSelected(buttons[shopIndex].name);
         buttons[shopIndex].onClick.Invoke();
     }
 
@@ -225,7 +228,7 @@ public class UINavManager : MonoBehaviour
         if (!selectedButton.interactable)
         {
             Debug.Log("Cannot select this action, button is disabled.");
-            return; 
+            return;
         }
 
         string firstTwoLetters = buttonsHeroActions[actionIndex].name.Substring(0, 2);
@@ -278,19 +281,20 @@ public class UINavManager : MonoBehaviour
     private void ProcessHeroShopSelected(string button)
     {
         //check the coin number
-        Debug.Log("ProcessHeroShopSelected nnnnnname" +button);
+        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
         Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
         Debug.Log("Bufffff" + CanPurchaseHero(button));
 
         if (CanPurchaseHero(button))//0 should be the hero cost ,here shoul check whith button
         {
-           
-            spawnHero.SpawnNew(selectedButtonName,cost);
+
+            spawnHero.SpawnNew(button, cost);
+           // UpdateShopButtons();    
         }
-     
+
         SwithToGamePlayState();
     }
-   
+
     public bool CanPurchaseHero(string heroName)
     {
         if (!heroCostMapping.TryGetValue(heroName, out int heroCost))
@@ -302,13 +306,57 @@ public class UINavManager : MonoBehaviour
         cost = heroCost;
         Debug.Log("ProcessHeroShopSelected costtttttt" + heroCost);
         Debug.Log("my money" + GameManager.Instance.GetCurrentTurnCoin());
-        if (GameManager.Instance.GetCurrentTurnCoin()< heroCost)
+        if (GameManager.Instance.GetCurrentTurnCoin() < heroCost)
         {
             Debug.Log("Not enough coins to purchase " + heroName);
             return false;
         }
 
         return true;
+    }
+
+    public IEnumerator UpdateShopButtons()
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("UpdateShopButtons ");
+        int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
+       
+        Debug.Log("playerCoin "+ playerCoin);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            string heroName = buttons[i].name;
+            Debug.Log("playerCoin hero button " + heroName);
+            if (heroCostMapping.TryGetValue(heroName, out int heroCost))
+            {
+                bool canAfford = false;
+
+                if (playerCoin >= 3)
+                {
+                    canAfford = true;
+                }
+                else if (playerCoin == 2 && (heroName == "Ra" || heroName == "Ba"))
+                {
+                    canAfford = true;
+                }
+                else if (playerCoin == 1 && heroName == "Ba")
+                {
+                    canAfford = true;
+                }
+                else if (playerCoin == 0)
+                {
+                    canAfford = false;
+                }
+
+                buttons[i].interactable = canAfford;
+                SetButtonColor(buttons[i], canAfford);
+            }
+            else
+            {
+                Debug.LogWarning($"Hero {heroName} not found in cost mapping.");
+            }
+        }
+        gameStateMachine.SwitchToGameplayState();
+
     }
 
 }
