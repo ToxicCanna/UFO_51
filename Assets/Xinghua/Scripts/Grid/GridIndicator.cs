@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -251,7 +252,9 @@ public class GridIndicator : MonoBehaviour
         {
             if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn ==GameManager.PlayerTurn.PlayerRedSide)
             {
-                Debug.Log("Move denied: Only opponent's Basic Hero can move to this location!");
+                GameManager.Instance.DisplayErrorText("Only opponent's Basic Hero can move to this location!");
+               
+                
                 return;
             }
         }
@@ -259,7 +262,7 @@ public class GridIndicator : MonoBehaviour
         {
             if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
             {
-                Debug.Log("Move denied: Only opponent's Basic Hero can move to this location!");
+                GameManager.Instance.DisplayErrorText("Only opponent's Basic Hero can move to this location!");
                 return;
             }
 
@@ -539,7 +542,7 @@ public class GridIndicator : MonoBehaviour
         // if (isHeroSubmited) return;
         if (!IsIndicatorOnSameSideHeroPosition(indicatorPosition))
         {
-            GameManager.Instance.DisplayControlText(" can not choose opposite side hero");
+            GameManager.Instance.DisplayErrorText(" can not choose opposite side hero");
             return;
         }
         if (isHeroSubmited) return;

@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString() + "/10";
 
     }
-    public void DisplayControlText(string value)
+    public void DisplayErrorText(string value)
     {
         controlText.text = controlTextValue;
         Debug.Log("8888" + value);

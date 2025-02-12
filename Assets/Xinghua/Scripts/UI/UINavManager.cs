@@ -280,13 +280,16 @@ public class UINavManager : MonoBehaviour
             return false;
         }
         cost = heroCost;
-        Debug.Log("ProcessHeroShopSelected costtttttt" + heroCost);
-        Debug.Log("my money" + GameManager.Instance.GetCurrentTurnCoin());
         if (GameManager.Instance.GetCurrentTurnCoin() < heroCost)
         {
             GameManager.Instance.controlText.text = "Not enough coins to purchase";
-            Debug.Log("Not enough coins to purchase " + heroName);
             return false;
+        }
+
+
+        if(GridManager.Instance.IsGridOccupied())//spawn location was occupied
+        {
+            GameManager.Instance.DisplayErrorText("Move the hero in spawn location first");
         }
 
         return true;
@@ -294,7 +297,7 @@ public class UINavManager : MonoBehaviour
 
     public void UpdateShopButtons()
     {
-        //yield return new WaitForSeconds(1);
+
         Debug.Log("UpdateShopButtons ");
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
       
@@ -345,7 +348,7 @@ public class UINavManager : MonoBehaviour
         if (!button.interactable)
         {
      
-            GameManager.Instance.controlText.text = "Cannot select disabled button";
+            GameManager.Instance.DisplayErrorText("Cannot select disabled button");
             return;
         }
 
@@ -354,7 +357,7 @@ public class UINavManager : MonoBehaviour
         {
 
             spawnHero.SpawnNew(button.name, cost);
-            // UpdateShopButtons();    
+  
         }
 
         SwithToGamePlayState();

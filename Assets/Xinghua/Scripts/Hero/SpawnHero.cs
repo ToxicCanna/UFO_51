@@ -74,10 +74,6 @@ public class SpawnHero : MonoBehaviour
       
         SetSpawnPrefab(buttonName);
         GameObject spawnedHero = Instantiate(SpawnPrefab, spawnLoc.position, Quaternion.identity);
-
-
-
-
         HeroPocketManager.Instance.RegisterHero(spawnHeroColor, spawnedHero);
         var pos = new Vector2Int((int)spawnedHero.transform.position.x, (int)spawnedHero.transform.position.y);
         GridManager.Instance.AddHeroWithTeamInfo(pos, spawnedHero, spawnHeroColor);

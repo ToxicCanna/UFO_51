@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class GridManager : MonoBehaviour
     public class HeroInfo
     {
         public GameObject heroObj;
-        public string side; 
+        public string side;
 
         public HeroInfo(GameObject hero, string side)
         {
@@ -35,7 +34,7 @@ public class GridManager : MonoBehaviour
     }
 
     //use this to add 
-    public void AddHeroWithTeamInfo(Vector2Int position,GameObject hero,string colorSide)
+    public void AddHeroWithTeamInfo(Vector2Int position, GameObject hero, string colorSide)
     {
         if (!occupiedGridTeams.ContainsKey(position))
         {
@@ -55,32 +54,40 @@ public class GridManager : MonoBehaviour
 
 
 
-/*    public void CheckOccupiedHero(Vector2 position)
-    {
 
-        indicatorPos = position;
-        foreach (var indicatorPos in occupiedGrids)
+    public bool IsGridOccupied()
+    {
+        Vector2Int redTargetPosition = new Vector2Int(0, 4);
+        Vector2Int blueTargetPosition = new Vector2Int(8, 3);
+
+        if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            if (!indicatorPos.Equals(position))
+            if (occupiedGridTeams.ContainsKey(redTargetPosition))
             {
-                Debug.Log("hero here");
+                foreach (HeroInfo hero in occupiedGridTeams[redTargetPosition])
+                {
+                    if (hero.side == "Red")
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
+        {
+            if (occupiedGridTeams.ContainsKey(blueTargetPosition))
+            {
+                foreach (HeroInfo hero in occupiedGridTeams[blueTargetPosition])
+                {
+                    if (hero.side == "Blue")
+                    {
+                        return true;
+                    }
+                }
             }
         }
 
+        return false;
     }
 
-
-*//*    public List<Vector2Int> GetOccupiedGrids()
-    {
-        // print all the position been occupied by heros
-        Debug.Log("occupiedGrids " + occupiedGrids.Count);
-        return occupiedGrids;
-    }
-
-*//*
-
-    public bool IsGridOccupied(Vector2Int gridPosition)
-    {
-        return occupiedGrids.Contains(gridPosition);
-    }*/
 }
