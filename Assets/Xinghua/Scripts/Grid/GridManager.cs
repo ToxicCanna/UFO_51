@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour
             occupiedGridTeams[position] = new List<HeroInfo>();//init
         }
         occupiedGridTeams[position].Add(new HeroInfo(hero, colorSide));
-        Debug.Log($"Grid Added {hero.name} to {position} from side {colorSide}");
+
     }
 
 
@@ -49,45 +49,45 @@ public class GridManager : MonoBehaviour
     public void RemoveOccupiedGrid(Vector2Int position, GameObject hero, string colorSide)
     {
         occupiedGridTeams[position].Remove(new HeroInfo(hero, colorSide));
-        Debug.Log($"Grid Remove {hero.name} to {position} from Side {colorSide}");
+
     }
 
 
 
 
-    public bool IsGridOccupied()
+
+    public string GetGridOccupiedHeroType(Vector2Int position)
     {
-        Vector2Int redTargetPosition = new Vector2Int(0, 4);
-        Vector2Int blueTargetPosition = new Vector2Int(8, 3);
+    
 
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            if (occupiedGridTeams.ContainsKey(redTargetPosition))
+            if (occupiedGridTeams.ContainsKey(position))
             {
-                foreach (HeroInfo hero in occupiedGridTeams[redTargetPosition])
+                foreach (HeroInfo hero in occupiedGridTeams[position])
                 {
                     if (hero.side == "Red")
                     {
-                        return true;
+                        return "Red";
                     }
                 }
             }
         }
         else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
         {
-            if (occupiedGridTeams.ContainsKey(blueTargetPosition))
+            if (occupiedGridTeams.ContainsKey(position))
             {
-                foreach (HeroInfo hero in occupiedGridTeams[blueTargetPosition])
+                foreach (HeroInfo hero in occupiedGridTeams[position])
                 {
                     if (hero.side == "Blue")
                     {
-                        return true;
+                        return "Blue";
                     }
                 }
             }
         }
 
-        return false;
+        return "";
     }
 
 }

@@ -287,21 +287,19 @@ public class UINavManager : MonoBehaviour
         }
 
 
-        if(GridManager.Instance.IsGridOccupied())//spawn location was occupied
+     /*   if(GridManager.Instance.GetGridOccupiedHeroType())//spawn location was occupied
         {
             GameManager.Instance.DisplayErrorText("Move the hero in spawn location first");
-        }
+        }*/
 
         return true;
     }
 
     public void UpdateShopButtons()
     {
-
-        Debug.Log("UpdateShopButtons ");
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
       
-        Debug.Log("playerCoin "+ playerCoin);
+
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
