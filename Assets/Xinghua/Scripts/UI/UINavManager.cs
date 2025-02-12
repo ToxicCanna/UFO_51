@@ -348,10 +348,7 @@ public class UINavManager : MonoBehaviour
             GameManager.Instance.controlText.text = "Cannot select disabled button";
             return;
         }
-        //check the coin number
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("Bufffff" + CanPurchaseHero(button.name));
+
 
         if (CanPurchaseHero(button.name))//0 should be the hero cost ,here shoul check whith button
         {

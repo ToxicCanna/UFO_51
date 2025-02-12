@@ -246,6 +246,25 @@ public class GridIndicator : MonoBehaviour
             //GameManager.Instance.DisplayControlText( " can not choose opposite side hero");
             return;
         }
+
+        if (currentGridPosition == new Vector2Int(0, 4) )//red spawn location
+        {
+            if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn ==GameManager.PlayerTurn.PlayerRedSide)
+            {
+                Debug.Log("Move denied: Only opponent's Basic Hero can move to this location!");
+                return;
+            }
+        }
+        if(currentGridPosition == new Vector2Int(8, 4))//blue spawn location
+        {
+            if (submitedHeroPath.heroType != "Basic" || GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
+            {
+                Debug.Log("Move denied: Only opponent's Basic Hero can move to this location!");
+                return;
+            }
+
+        }
+
         if (isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
