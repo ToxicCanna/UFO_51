@@ -284,6 +284,7 @@ public class UINavManager : MonoBehaviour
         Debug.Log("my money" + GameManager.Instance.GetCurrentTurnCoin());
         if (GameManager.Instance.GetCurrentTurnCoin() < heroCost)
         {
+            GameManager.Instance.controlText.text = "Not enough coins to purchase";
             Debug.Log("Not enough coins to purchase " + heroName);
             return false;
         }
@@ -343,7 +344,8 @@ public class UINavManager : MonoBehaviour
 
         if (!button.interactable)
         {
-            Debug.LogWarning($"Cannot select {button.name}, button is disabled.");
+     
+            GameManager.Instance.controlText.text = "Cannot select disabled button";
             return;
         }
         //check the coin number
