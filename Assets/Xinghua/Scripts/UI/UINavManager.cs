@@ -32,8 +32,8 @@ public class UINavManager : MonoBehaviour
         { "Basic", 1 },
         { "Knight", 4 },
         { "Thief", 3 },
-        { "Range", 2 },
-        { "Healer", 30 }
+        { "Ranged", 2 },
+        { "Healer", 3 }
     };
 
 
@@ -325,7 +325,7 @@ public class UINavManager : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
-            Debug.Log("playerCoin hero button " + heroName);
+
             if (heroCostMapping.TryGetValue(heroName, out int heroCost))
             {
                 bool canAfford = false;

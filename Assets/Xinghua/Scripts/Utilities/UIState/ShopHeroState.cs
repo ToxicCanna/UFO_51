@@ -11,7 +11,7 @@ public class ShopHeroState : BaseState
     public override void EnterState()
     {
         Debug.Log("Enter shop State");
-        gridIndicator.controlHintText.text = "W and D to select, Enter key to submit";
+        gridIndicator.controlHintText.text = "W and D to select hero to buy, Enter key to submit";
         UINavManager.Instance.InitSelectorPositionInHeroShopZone();
     }
     public ShopHeroState(GridIndicator gridIndicator)
