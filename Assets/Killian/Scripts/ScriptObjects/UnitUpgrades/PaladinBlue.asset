@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e41a21da5945ff4d948b44ed7b783f2, type: 3}
+  m_Name: PaladinBlue
+  m_EditorClassIdentifier: 
+  sprite: {fileID: -8458411491143126635, guid: d17c4d9319bb59d48b37757d76871f54, type: 3}
+  health: 15
+  cost: 5
+  atk: 1
+  atkSize: 6
+  def: 3
+  defSize: 6
+  heal: 0
+  healSize: 6
+  moveSpeed: 2
+  range: 1
+  ability: 1
+  abilityScore: atk
+  side: Blue

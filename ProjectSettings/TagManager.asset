@@ -2,8 +2,11 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - Barrier
+  - RedHero
+  - BlueHero
   layers:
   - Default
   - TransparentFX
@@ -11,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - BackGround
+  - Player
+  - Hero
   - 
   - 
   - 
@@ -41,3 +44,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1590243421
+    locked: 0
+  - name: BGrid
+    uniqueID: 1193479705
+    locked: 0
+  - name: ActualGrid
+    uniqueID: 412874613
+    locked: 0
+  - name: Player
+    uniqueID: 1932192151
+    locked: 0
+  - name: Indicator
+    uniqueID: 3085248639
+    locked: 0
+  - name: effect
+    uniqueID: 1677486781
+    locked: 0
+  m_RenderingLayers:
+  - Default
