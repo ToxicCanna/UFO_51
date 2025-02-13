@@ -9,10 +9,26 @@ public class SceneLoader : MonoBehaviour
     public void LoadScene(string name)
     {
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene(name);
+        StartCoroutine(ReinitializeAfterSceneLoad());
     }
 
-  
+    private IEnumerator ReinitializeAfterSceneLoad()
+    {
+        yield return new WaitForSeconds(0.1f); 
+
+        GridIndicator gridIndicator = FindAnyObjectByType<GridIndicator>();
+        if (gridIndicator == null)
+        {
+            Debug.LogError("GridIndicator is still null after scene reload!");
+        }
+        else
+        {
+            Debug.Log("GridIndicator successfully reinitialized after replay.");
+        }
+
+       // HandleInput(InputManager.Instance); 
+    }
+
 
     public void QuitGame()
     {

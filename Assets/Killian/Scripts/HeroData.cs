@@ -1,6 +1,7 @@
 using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroData : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class HeroData : MonoBehaviour
     public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
     private string abilityScore;
     private TwoSidesHero twoSidesHero;
+
+    [SerializeField] private Image _HPBar;
+    [SerializeField] private Gradient _gradient;
+    private float _target;
+
     //xinghua add
     public string side;
     private void Awake()
@@ -57,10 +63,15 @@ public class HeroData : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         currentHealth -= Mathf.Clamp(amount, 0, maxHealth);
+        _target = ((float)currentHealth / (float)maxHealth);
+        Debug.Log($"{_target} hb fill");
+        _HPBar.fillAmount = _target;
+        CheckHealthBarGradientAmount();
+
         if (currentHealth <= 0)
         {
             //die
-           // RemoveFromHeroList();
+            // RemoveFromHeroList();
             //Xinghua add here befor you destroy need update data
             HeroPocketManager.Instance.RemoveHero(heroData.side, gameObject);
            
@@ -70,29 +81,31 @@ public class HeroData : MonoBehaviour
             Debug.Log("destroy:" + gameObject.name);
             GameManager.Instance.AddbattleBonus(heroData.side, heroData.cost);//this for the battle kill point add
             GameManager.Instance.isBattling = false;
+
+
              //xinghua code end
         }
     }
-/*    private void RemoveFromHeroList()
-    {
-        // Determine which side the hero belongs to (assuming red or blue side)
-        if (twoSidesHero != null)
+    /*    private void RemoveFromHeroList()
         {
-            // Check the hero's affiliation, red or blue
-            if (this.CompareTag("RedHero"))
+            // Determine which side the hero belongs to (assuming red or blue side)
+            if (twoSidesHero != null)
             {
-                twoSidesHero.GetHerosRed().Remove(gameObject);
+                // Check the hero's affiliation, red or blue
+                if (this.CompareTag("RedHero"))
+                {
+                    twoSidesHero.GetHerosRed().Remove(gameObject);
+                }
+                else if (this.CompareTag("BlueHero"))
+                {
+                    twoSidesHero.GetHerosBlue().Remove(gameObject);
+                }
             }
-            else if (this.CompareTag("BlueHero"))
+            else
             {
-                twoSidesHero.GetHerosBlue().Remove(gameObject);
+                Debug.LogWarning("TwoSidesHero reference not found.");
             }
-        }
-        else
-        {
-            Debug.LogWarning("TwoSidesHero reference not found.");
-        }
-    }*/
+        }*/
 
     /*public void UpgradeUnit()
     {
@@ -102,6 +115,10 @@ public class HeroData : MonoBehaviour
             SetStats();
         }
     }*/
+    private void CheckHealthBarGradientAmount()
+    {
+        _HPBar.color = _gradient.Evaluate(_HPBar.fillAmount);
+    }
     public void PowerUp()
     {
         switch (abilityScore.Trim().ToLower())

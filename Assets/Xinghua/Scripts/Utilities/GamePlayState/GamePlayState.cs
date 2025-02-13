@@ -17,51 +17,94 @@ public class GamePlayState : BaseState
     public override void EnterState()
     {
         Debug.Log("Entered Gameplay State");
-        gridIndicator.controlHintText.text = "Move Indicator to choose Hero\n \n B_Buy Heros";
+        GameManager.Instance.DisplayInputText("Move Indicator to choose Hero\n \n B_Buy Heros");
     }
 
     public override void HandleInput(InputManager inputManager)
     {
-         Debug.Log("Handle GamePlay Input");
+        if (gridIndicator == null)
+        {
+            Debug.LogWarning("GridIndicator is missing! Attempting to reassign.");
+            gridIndicator = GameObject.FindAnyObjectByType<GridIndicator>(); 
+            if (gridIndicator == null)
+            {
+                Debug.LogError("GridIndicator is still null, skipping input handling.");
+                return; 
+            }
+        }
+       
+
+        // Debug.Log("Handle GamePlay Input");
         var controls = inputManager.GetControls();
         ExitState();
 
         currentControls = controls;
-       
+
+
 
         if (controls != null && gridIndicator != null)
         {
-          
-            moveAction = ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
-            submitAction = ctx => gridIndicator?.HandleHeroSelected();
-            shopAction = ctx => gridIndicator?.ActiveShopMenu();
-            cancelAction = ctx => gridIndicator?.CancleSelected();
+            if (moveAction == null)
+            {
+                moveAction = ctx =>
+                {
+                    if (gridIndicator == null) return;
+                    gridIndicator.HandleIndicatorMove(ctx.ReadValue<Vector2>());
+                };
+            }
 
-      
+            shopAction = ctx => gridIndicator?.ActiveShopMenu();
+
+
             currentControls.GamePlay.Move.performed += moveAction;
-            currentControls.GamePlay.Submit.performed += submitAction;
+
             currentControls.GamePlay.Shop.performed += shopAction;
+            if (submitAction == null)
+            {
+                submitAction = ctx =>
+                {
+                    if (gridIndicator == null) return;
+                    gridIndicator.HandleHeroSelected();
+                };
+                currentControls.GamePlay.Submit.performed += submitAction;
+            }
+
+            cancelAction = ctx => gridIndicator?.CancleSelected();
             currentControls.GamePlay.Cancle.performed += cancelAction;
         }
+        
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exited Gameplay State");
+        //Debug.Log("Exited Gameplay State");
         if (currentControls == null)
         {
 
             currentControls = InputManager.Instance.GetControls();
         }
+     
+
+        if (gridIndicator == null)
+        {
+            Debug.LogWarning("GridIndicator has been destroyed. Skipping event unbinding.");
+            return;
+        }
+
         if (moveAction != null) currentControls.GamePlay.Move.performed -= moveAction;
-        if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
+       
         if (shopAction != null) currentControls.GamePlay.Shop.performed -= shopAction;
-        if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
+      
 
 
         moveAction = null;
+
+        if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
         submitAction = null;
+
         shopAction = null;
+
+        if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
         cancelAction = null;
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
@@ -21,8 +22,10 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text battleBonusTextR;
     public TMP_Text battleBonusTextB;
-    public TMP_Text controlText;
-    public string controlTextValue;
+    public TMP_Text errorText;
+    public TMP_Text inputText;
+
+   // public string controlTextValue { get; set; }
     public int battleBonus { get; private set; }
 
     public string diceResult;
@@ -38,7 +41,15 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void ReplayGame()
+    {
+       
+        
+           // Time.timeScale = 1.0f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
 
+    }
     private void Start()
     {
         coinCountRed = 3;
@@ -47,6 +58,7 @@ public class GameManager : MonoBehaviour
        
         HeroOwned();
         battleBonusTextB.text = "";
+        inputText.text = "WASD_move;Enter_submit ;Q_cancle";
     }
     private void Update()
     {
@@ -57,18 +69,22 @@ public class GameManager : MonoBehaviour
         battleBonusTextB.text = "Point2:" + battleBonusBlue.ToString() + "/10";
 
     }
-    public void DisplayControlText(string value)
+    public void DisplayErrorText(string value)
     {
-        controlText.text = controlTextValue;
-        Debug.Log("8888" + value);
-        controlText.text = value;
+        inputText.text = "";
+        errorText.text = value;
         StartCoroutine(ClearTextAfterDelay(5f));
+    }
+
+    public void DisplayInputText(string value)
+    {
+        inputText.text = value;
     }
 
     private IEnumerator ClearTextAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        controlText.text = ""; 
+        errorText.text = ""; 
         Debug.Log("Text cleared after " + delay + " seconds");
     }
 
@@ -148,11 +164,11 @@ public class GameManager : MonoBehaviour
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            currentTurnText.text = "Player1";
+            currentTurnText.text = "Red Player";
         }
         else
         {
-            currentTurnText.text = "Player2";
+            currentTurnText.text = "Blue Player";
         }
 
     }

@@ -15,6 +15,7 @@ public class HeroPocketManager : MonoBehaviour
 
 
     private List<GameObject> startHeros;//get from child gameobject
+   
 
     private void Awake()
     {
@@ -43,6 +44,9 @@ public class HeroPocketManager : MonoBehaviour
  
         
     }
+
+
+
     public string GetTeamByHeroObj(GameObject obj)
     {
         foreach (var team in heroTeams)

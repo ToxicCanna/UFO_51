@@ -13,7 +13,7 @@ public class HealingState : BaseState
     public override void EnterState()
     {
         Debug.Log("enter Heal state");
-        gridIndicator.controlHintText.text = "Check if have enemy with range";
+        GameManager.Instance.DisplayInputText("Check if have enemy with range");
         gridIndicator.HandleHeal();
     }
 

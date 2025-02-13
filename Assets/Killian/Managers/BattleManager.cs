@@ -19,12 +19,48 @@ public class BattleManager : MonoBehaviour
         //    Attack();
         //}
     }
-
-    public void Heal(HeroData target)
+    //xinghua code start
+    private void OnEnable()
     {
-        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
+        Debug.Log("BattleManager Enabled");
 
+        var healManager =FindAnyObjectByType<GridIndicator>();
+        if (healManager != null)
+        {
+            healManager.healHero += Heal;
+        }
+        else
+        {
+            Debug.LogWarning("CheckHealRange not found in scene!");
+        }
+    }
+
+    private void OnDisable()
+    {
+        var healManager = FindAnyObjectByType<GridIndicator>();
+        if (healManager != null)
+        {
+            healManager.healHero -= Heal;
+        }
+    }
+
+
+    public void Heal(HeroData target,HeroData current)
+    {
+       
+        if (target == null)
+        {
+            Debug.LogError("Heal called with null target!");
+            return;
+        }
+        Debug.Log("Heal currentHero" + current);
+        Debug.Log("Heal target" + target);
+        currentHero = current;
+        //xinghua code end
+        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
+        Debug.Log("healValue" + healValue);
         target.currentHealth += healValue;
+        targetHero.UpdateHealth(target.currentHealth);//xinghua add this
     }
 
     public void Attack()

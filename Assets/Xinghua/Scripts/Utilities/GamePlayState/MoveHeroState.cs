@@ -16,7 +16,7 @@ public class MoveHeroState : BaseState
     public override void EnterState()
     {
         Debug.Log("Entered move Hero State");
-        gridIndicator.controlHintText.text = "Choose target positon ";
+        GameManager.Instance.DisplayInputText("Choose target positon ");
     }
 
     public override void HandleInput(InputManager inputManager)
@@ -24,7 +24,7 @@ public class MoveHeroState : BaseState
         // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
       
-        ExitState();
+       
         currentControls = controls;
      
         if (controls != null && gridIndicator != null)

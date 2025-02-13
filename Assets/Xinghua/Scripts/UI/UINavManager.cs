@@ -23,10 +23,10 @@ public class UINavManager : MonoBehaviour
     private Dictionary<string, List<string>> heroActionsMapping = new Dictionary<string, List<string>>
     {
         { "Basic", new List<string> { "Move" } },
-        { "Knight", new List<string> {  "Move", "Attack"} },
-        { "Thief", new List<string> { "Move", "Attack"} },
+        { "Knight", new List<string> {  "Move"} },
+        { "Thief", new List<string> { "Move" } },
         { "Range", new List<string> { "Move", "Attack"} },
-        { "Healer", new List<string> { "Move", "Attack","Heal"} }
+        { "Healer", new List<string> { "Move", "Heal"} }
     };
     private Dictionary<string, int> heroCostMapping = new Dictionary<string, int>
     {
@@ -245,7 +245,6 @@ public class UINavManager : MonoBehaviour
         {
             // hero begin heal ;before use this function need check selectes is heal or not
             //active button should have 2 state, if selected hero is not heal , the button should disable
-            Debug.Log("heal function called");//but function do not write here
             gameStateMachine.SwitchToHealState();
         }
         else
@@ -280,11 +279,16 @@ public class UINavManager : MonoBehaviour
             return false;
         }
         cost = heroCost;
-        Debug.Log("ProcessHeroShopSelected costtttttt" + heroCost);
-        Debug.Log("my money" + GameManager.Instance.GetCurrentTurnCoin());
         if (GameManager.Instance.GetCurrentTurnCoin() < heroCost)
         {
-            Debug.Log("Not enough coins to purchase " + heroName);
+            GameManager.Instance.DisplayErrorText("Not enough coins to purchase");
+            return false;
+        }
+       
+
+        if (GridManager.Instance.IsSpawnOccupied())//spawn location was occupied
+        {
+            GameManager.Instance.DisplayErrorText("Move the hero in spawn location first");
             return false;
         }
 
@@ -293,11 +297,9 @@ public class UINavManager : MonoBehaviour
 
     public void UpdateShopButtons()
     {
-        //yield return new WaitForSeconds(1);
-        Debug.Log("UpdateShopButtons ");
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
       
-        Debug.Log("playerCoin "+ playerCoin);
+
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
@@ -343,19 +345,17 @@ public class UINavManager : MonoBehaviour
 
         if (!button.interactable)
         {
-            Debug.LogWarning($"Cannot select {button.name}, button is disabled.");
+     
+            GameManager.Instance.DisplayErrorText("Cannot select disabled button");
             return;
         }
-        //check the coin number
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("ProcessHeroShopSelected nnnnnname" + button);
-        Debug.Log("Bufffff" + CanPurchaseHero(button.name));
+
 
         if (CanPurchaseHero(button.name))//0 should be the hero cost ,here shoul check whith button
         {
 
             spawnHero.SpawnNew(button.name, cost);
-            // UpdateShopButtons();    
+  
         }
 
         SwithToGamePlayState();

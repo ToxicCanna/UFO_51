@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,6 +17,7 @@ public class CastleAttack : MonoBehaviour
         DiceRoller = FindFirstObjectByType<DiceRoller>();
         twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
     }
+    //xinghua code：before check castle and destroy,  need check if hero from opposite there, if yes , attact hero first
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,7 +25,7 @@ public class CastleAttack : MonoBehaviour
         if (castle != null)
         {
             int damage = DiceRoller.RollTotal(heroData.atk, heroData.atkSize);
-            StartCoroutine(DestroyAfterDelay(0.5f,damage,castle));
+            StartCoroutine(DestroyAfterDelay(0.5f, damage, castle));
             Debug.Log($"attacked castle for {damage}");
             anim = gameObject.GetComponent<Animator>();
         }
