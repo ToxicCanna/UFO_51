@@ -48,9 +48,27 @@ public class GridManager : MonoBehaviour
     //use this to remove
     public void RemoveOccupiedGrid(Vector2Int position, GameObject hero, string colorSide)
     {
-        occupiedGridTeams[position].Remove(new HeroInfo(hero, colorSide));
+        if (occupiedGridTeams.ContainsKey(position))
+        {
+            int beforeCount = occupiedGridTeams[position].Count;
 
+            occupiedGridTeams[position].RemoveAll(h => h.heroObj == hero && h.side == colorSide);
+
+            int afterCount = occupiedGridTeams[position].Count;
+            Debug.Log($"Before removal: {beforeCount}, After removal: {afterCount}");
+
+            if (occupiedGridTeams[position].Count == 0)
+            {
+                occupiedGridTeams.Remove(position);
+                Debug.Log("Position " + position + " is now empty and removed from occupiedGridTeams.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to remove from a position that doesn't exist in occupiedGridTeams: " + position);
+        }
     }
+
 
 
 

@@ -250,20 +250,21 @@ public class GridIndicator : MonoBehaviour
         if (isCancleSelected) return;
         currentGridPosition = WorldToGridPosition(transform.position);
         if (IsIndicatorOnOriginalPosition(currentGridPosition)) return;//this make the player can not choose curent selected hero positon as target
-        Debug.Log("move hero");
+     
+        Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
         foreach (var pos in validTargetPos)
         {
-            Debug.Log("currentGridPosition" + currentGridPosition);
-            Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
+          /*  Debug.Log("MoveHeroToTargetPosition submit hero" + submitHeroData);
+            Debug.Log("currentGridPosition" + currentGridPosition);//right*/
+           
             if ((int)pos.x == (int)currentGridPosition.x && (int)pos.y == (int)currentGridPosition.y)
             {
-                Debug.Log("Valid Target Positions: " + string.Join(", ", validTargetPos));
 
                 //update the gride status ;if not occupied empty it
-                oldIndicatorLocation = submitHeroData.gameObject.transform.position;
+               // oldIndicatorLocation = submitHeroData.gameObject.transform.position;
 
 
-                GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(oldIndicatorLocation), submitHeroData.gameObject, submitHeroData.side);
+               // GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(oldIndicatorLocation), submitHeroData.gameObject, submitHeroData.side);
                 StartCoroutine(MoveHeroToPosition(transform.position, 1f));//move the hero
                 hideHighlight?.Invoke();//if finish move hide the highlight
             }
@@ -281,7 +282,17 @@ public class GridIndicator : MonoBehaviour
 
     private IEnumerator MoveHeroToPosition(Vector2 targetPosition, float speed)
     {
-        Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+        Debug.Log("submit hero when move:"+submitHeroData);
+        Animator animatorSelected =null;
+        if (submitHeroData !=null)
+        {
+            animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+        }
+        else
+        {
+            Debug.Log("submit hero when move to target is null");
+        }
+      
         Vector2 startPosition = (Vector2)submitHeroData.transform.position;
         Vector2 direction = targetPosition - startPosition;
 
@@ -522,7 +533,6 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("HandleHeroSelected");
         var indicatorPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
-        Debug.Log("isHeroSubmited" + isHeroSubmited);
         Debug.Log("!IsIndicatorOnSameSideHeroPosition(indicatorPosition)" + !IsIndicatorOnSameSideHeroPosition(indicatorPosition));
         // if (isHeroSubmited || !IsIndicatorOnOriginalPosition(indicatorPosition)) return;
         // if (isHeroSubmited) return;
@@ -542,13 +552,15 @@ public class GridIndicator : MonoBehaviour
 
 
         onHeroPositon?.Invoke();//show the path
-        validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
+                           
+        validTargetPos = highLight.GetNeighbors(WorldToGridPosition(transform.position), currentSelectedHeroId);
+      
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         gameStateMachine.SwitchToUIState();//UI state for choose action
         Debug.Log("Valid move Target Pos when selected: " + string.Join(", ", validTargetPos) + currentSelectedHeroId);
+        SetSelectedHero(WorldToGridPosition(transform.position));
+        Debug.Log("submit hero when selected finish:" + submitHeroData);
 
-        
-       
     }
 
 
@@ -683,8 +695,13 @@ public class GridIndicator : MonoBehaviour
         isCancleSelected = true;
         hideHighlight?.Invoke();
         submitHeroData =null;
-      /*  var position = GetIndicatorPositon();
-        SetSelectedHero(position);*/
+       if(submitHeroData ==null)
+         {
+            Debug.Log("cancle after submitHeroData null");
+
+        }
+        //var position = GetIndicatorPositon();
+       // SetSelectedHero(position);
         isHeroSubmited = false;
     }
 

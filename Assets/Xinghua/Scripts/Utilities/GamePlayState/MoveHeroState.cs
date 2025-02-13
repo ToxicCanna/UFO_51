@@ -24,7 +24,7 @@ public class MoveHeroState : BaseState
         // Debug.Log("Handle GamePlay State");
         var controls = inputManager.GetControls();
       
-        ExitState();
+       
         currentControls = controls;
      
         if (controls != null && gridIndicator != null)
