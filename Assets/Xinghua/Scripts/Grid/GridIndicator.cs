@@ -417,9 +417,9 @@ public class GridIndicator : MonoBehaviour
             animatorTarget.SetBool("IsDmg", true);
 
             yield return new WaitForSeconds(1);
-            //isAttackEnd = true;
-            isHeroSubmited = false;
-
+            isHeroSubmited = false;//damage end here
+            UpdatePlayerTurn();
+           
 
             //must check null ,cause sometime destroyed hero die
             if (animatorSelected != null && animatorSelected.gameObject != null)
@@ -684,7 +684,7 @@ public class GridIndicator : MonoBehaviour
         isHeroSubmited = false;
     }
 
-    internal void HandleAttack()
+    internal void HandleRangeAttack()
     {
         if (bAutoAttack()) return;
         Debug.Log("CheckAttackRange");
@@ -712,7 +712,6 @@ public class GridIndicator : MonoBehaviour
             else
             {
                 Debug.Log("clear");
-
                 gameStateMachine.SwitchToMoveHeroState();
             }
         }
