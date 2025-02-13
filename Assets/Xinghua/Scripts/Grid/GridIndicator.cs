@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UIElements;
 
 
@@ -57,7 +58,7 @@ public class GridIndicator : MonoBehaviour
 
     void Start()
     {
-
+        
         currentGridPosition = WorldToGridPosition(transform.position);
 
 
@@ -69,7 +70,7 @@ public class GridIndicator : MonoBehaviour
         herosInRedSide = HeroPocketManager.Instance.GetAllRedSideHeroes();
         herosInBlueSide = HeroPocketManager.Instance.GetAllBlueSideHeroes();
         highLight = FindAnyObjectByType<HighLight>();
-
+       
     }
 
 
@@ -203,13 +204,13 @@ public class GridIndicator : MonoBehaviour
 
     public void HandleIndicatorMove(Vector2 direction)
     {
+        //Debug.Log("move indicator");
         Vector2Int intDirection = new Vector2Int(Mathf.RoundToInt((int)direction.x), Mathf.RoundToInt((int)direction.y));
         Vector2Int targetPosition = currentGridPosition + intDirection;
         if (IsWithinBounds(targetPosition))
         {
-            //Debug.Log("move indicator");
             currentGridPosition = targetPosition;
-            transform.position = GridToWorldPosition(currentGridPosition);
+           transform.position = GridToWorldPosition(currentGridPosition);
 
         }
     }
@@ -739,8 +740,9 @@ public class GridIndicator : MonoBehaviour
         List<GameObject> herosSameSide = GetSameSideHerosInTheScene();
         var validHealRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), GetSubmitHeroPathIndex(GetSelectedHeroPositon()));
         List<GameObject> damagedHero =new List<GameObject>();
-        foreach (var hero in herosSameSide)
+        for (int i = 0;i < herosSameSide.Count; i++)
         {
+           var hero = herosSameSide[i];
             if (validHealRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
                 

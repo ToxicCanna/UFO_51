@@ -37,8 +37,6 @@ public class BattleManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("BattleManager Disabled");
-
         var healManager = FindAnyObjectByType<GridIndicator>();
         if (healManager != null)
         {

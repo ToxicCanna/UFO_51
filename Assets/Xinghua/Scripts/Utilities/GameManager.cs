@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
@@ -40,7 +41,15 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void ReplayGame()
+    {
+       
+        
+           // Time.timeScale = 1.0f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
 
+    }
     private void Start()
     {
         coinCountRed = 3;
