@@ -28,18 +28,12 @@ public class GridIndicator : MonoBehaviour
     private HeroSelect heroSelect;
     public event Action hideHighlight;
     public event Action onHeroPositon;
-    public event Action heroUnselected;
-    public event Action targetSelecting;
-    public event Action AttackHappenOneSpot;
-    public event Action activeShop;
-    public event Action moveFinish;
 
-    //public event Action rollingDice;//this is for the dic roll function
 
 
 
     private Vector3 heroPosition;
-    //grid Occupied
+  
     private Vector3 newIndicatorLocation;
     private Vector3 oldIndicatorLocation;
 
@@ -51,18 +45,11 @@ public class GridIndicator : MonoBehaviour
     private bool isOnHeroPosition = true;
     private bool isHeroSubmited = false;
     private HashSet<Vector2Int> allowedPositions;
-    private bool isHaveTargets = false;
-    private bool isCanChooseTarget = false;
 
     public Vector2Int selectedHeroPosition;
     private Vector3 submitHeroPosition;
     private int currentSelectedHeroId;
-    private bool isAtOppositeHeroPos = false;
     private bool isCancleSelected = false;
-    private bool isAttackEnd = false;
-
-
-
 
     //(Killian)
     //Reference to BattleManager
@@ -317,6 +304,7 @@ public class GridIndicator : MonoBehaviour
         }
         currentGridPosition = WorldToGridPosition(transform.position);//move the indicator action finished
         GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position), submitHeroData.gameObject, submitHeroData.side);
+        GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(transform.position), submitHeroData.gameObject, submitHeroData.side);
         Debug.Log("current turn when move hero finish" + GameManager.Instance.currentTurn);
 
         if (bAutoAttack())

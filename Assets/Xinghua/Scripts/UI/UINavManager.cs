@@ -284,12 +284,13 @@ public class UINavManager : MonoBehaviour
             GameManager.Instance.DisplayErrorText("Not enough coins to purchase");
             return false;
         }
+       
 
-
-     /*   if(GridManager.Instance.GetGridOccupiedHeroType())//spawn location was occupied
+        if (GridManager.Instance.IsSpawnOccupied())//spawn location was occupied
         {
             GameManager.Instance.DisplayErrorText("Move the hero in spawn location first");
-        }*/
+            return false;
+        }
 
         return true;
     }

@@ -4,9 +4,11 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance { get; private set; }
-    public List<Vector2Int> occupiedGrids = new List<Vector2Int>();
+    //public List<Vector2Int> occupiedGrids = new List<Vector2Int>();
     public Dictionary<Vector2Int, List<HeroInfo>> occupiedGridTeams = new Dictionary<Vector2Int, List<HeroInfo>>();
 
+    private List<GameObject> herosAtRedSpawnPosition = new List<GameObject>();
+    private List<GameObject> herosAtBlueSpawnPosition = new List<GameObject>();
     public class HeroInfo
     {
         public GameObject heroObj;
@@ -20,6 +22,20 @@ public class GridManager : MonoBehaviour
     }
 
     private Vector2 indicatorPos;
+    public void AddSpawnHero(GameObject hero, string color)
+    {
+        if (color == "Red")
+        {
+            herosAtRedSpawnPosition.Add(hero);
+        }
+        else if (color == "Blue")
+        {
+            herosAtBlueSpawnPosition.Add(hero);
+        }
+        Debug.Log("herosAtRedSpawnPosition" + herosAtRedSpawnPosition.Count);
+        Debug.Log("herosAtBlueSpawnPosition" + herosAtBlueSpawnPosition.Count);
+
+    }
 
     private void Awake()
     {
@@ -41,7 +57,7 @@ public class GridManager : MonoBehaviour
             occupiedGridTeams[position] = new List<HeroInfo>();//init
         }
         occupiedGridTeams[position].Add(new HeroInfo(hero, colorSide));
-
+        // Debug.Log("occupiedGridTeams count" + occupiedGridTeams.Count);
     }
 
 
@@ -52,60 +68,73 @@ public class GridManager : MonoBehaviour
         {
             int beforeCount = occupiedGridTeams[position].Count;
 
+
             occupiedGridTeams[position].RemoveAll(h => h.heroObj == hero && h.side == colorSide);
 
-            int afterCount = occupiedGridTeams[position].Count;
-            Debug.Log($"Before removal: {beforeCount}, After removal: {afterCount}");
 
             if (occupiedGridTeams[position].Count == 0)
             {
                 occupiedGridTeams.Remove(position);
-                Debug.Log("Position " + position + " is now empty and removed from occupiedGridTeams.");
+                Debug.Log($"Position {position} is now empty and removed from occupiedGridTeams.");
             }
+
+            int afterCount = occupiedGridTeams.Count;
+            Debug.Log($"Before: {beforeCount}, After: {afterCount}, Dictionary Count: {occupiedGridTeams.Count}");
         }
-        else
-        {
-            Debug.LogWarning("Attempted to remove from a position that doesn't exist in occupiedGridTeams: " + position);
-        }
+
     }
 
 
 
 
-
-
-    public string GetGridOccupiedHeroType(Vector2Int position)
+    public bool IsSpawnOccupied()
     {
-    
 
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
-            if (occupiedGridTeams.ContainsKey(position))
+            foreach (var hero in herosAtRedSpawnPosition)
             {
-                foreach (HeroInfo hero in occupiedGridTeams[position])
+                if (hero.transform.position.x == 0 && hero.transform.position.y == 4)
                 {
-                    if (hero.side == "Red")
-                    {
-                        return "Red";
-                    }
+                    return true;
                 }
+
+
             }
         }
         else if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerBlueSide)
         {
-            if (occupiedGridTeams.ContainsKey(position))
+            foreach (var hero in herosAtBlueSpawnPosition)
             {
-                foreach (HeroInfo hero in occupiedGridTeams[position])
+                if (hero.transform.position.x == 9 && hero.transform.position.y == 3)
                 {
-                    if (hero.side == "Blue")
-                    {
-                        return "Blue";
-                    }
+                    return true;
                 }
             }
         }
 
-        return "";
+        return false;
     }
+
+    /*    public List<Vector2Int> GetAllOccupiedPositions()
+        {
+
+            occupiedGrids.Clear(); 
+            Debug.Log("Printing all occupied positions:");
+
+            foreach (var entry in occupiedGridTeams)
+            {
+                Vector2Int position = entry.Key;
+                List<HeroInfo> heroes = entry.Value;
+
+                if (heroes.Count > 0)
+                {
+                    occupiedGrids.Add(position);
+                    Debug.Log($"Position: {position} | Hero Count: {heroes.Count}");
+                }
+            }
+            return occupiedGrids;
+        }*/
+
 
 }

@@ -25,7 +25,7 @@ public class HeroPath : MonoBehaviour
         {
             yield return null; 
         }
-    }
+    } 
    
     private void SetHeroAttributes()
     {

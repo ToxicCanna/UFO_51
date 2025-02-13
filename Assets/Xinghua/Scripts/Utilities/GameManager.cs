@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
     public void DisplayErrorText(string value)
     {
         inputText.text = "";
-        Debug.Log("8888" + value);
         errorText.text = value;
         StartCoroutine(ClearTextAfterDelay(5f));
     }
