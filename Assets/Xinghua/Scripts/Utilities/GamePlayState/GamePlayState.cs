@@ -33,15 +33,20 @@ public class GamePlayState : BaseState
         {
 
             moveAction = ctx => gridIndicator?.HandleIndicatorMove(ctx.ReadValue<Vector2>());
-            submitAction = ctx => gridIndicator?.HandleHeroSelected();
+           
             shopAction = ctx => gridIndicator?.ActiveShopMenu();
-            cancelAction = ctx => gridIndicator?.CancleSelected();
-
+           
 
             currentControls.GamePlay.Move.performed += moveAction;
-            currentControls.GamePlay.Submit.performed += submitAction;
+            
             currentControls.GamePlay.Shop.performed += shopAction;
+
+            submitAction = ctx => gridIndicator?.HandleHeroSelected();
+            currentControls.GamePlay.Submit.performed += submitAction;
+
+            cancelAction = ctx => gridIndicator?.CancleSelected();
             currentControls.GamePlay.Cancle.performed += cancelAction;
+
         }
     }
 
@@ -54,14 +59,19 @@ public class GamePlayState : BaseState
             currentControls = InputManager.Instance.GetControls();
         }
         if (moveAction != null) currentControls.GamePlay.Move.performed -= moveAction;
-        if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
+       
         if (shopAction != null) currentControls.GamePlay.Shop.performed -= shopAction;
-        if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
+      
 
 
         moveAction = null;
+
+        if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
         submitAction = null;
+
         shopAction = null;
+
+        if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
         cancelAction = null;
     }
 

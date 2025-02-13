@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AttackState : BaseState
 {
     private GridIndicator gridIndicator;
     private PlayerControls currentControls;
+
+    private System.Action<InputAction.CallbackContext> submitAction;
+    private System.Action<InputAction.CallbackContext> cancelAction;
     public AttackState(GridIndicator gridIndicator)
     {
         this.gridIndicator = gridIndicator;
@@ -32,8 +36,13 @@ public class AttackState : BaseState
         if (currentControls != null && gridIndicator != null)
         {
             //currentControls.GamePlay.Move.performed += ctx => gridIndicator?.ChooseTargets(ctx.ReadValue<Vector2>());
-            currentControls.GamePlay.Submit.performed += ctx => gridIndicator?.SbumitedTarget();
+         
 
+            submitAction = ctx => gridIndicator?.MoveHeroToTargetPosition();
+            currentControls.GamePlay.Submit.performed += submitAction;
+
+            cancelAction = ctx => gridIndicator?.CancleSelected();
+            currentControls.GamePlay.Cancle.performed += cancelAction;
 
         }
         else
@@ -47,7 +56,13 @@ public class AttackState : BaseState
         if (currentControls != null && gridIndicator != null)
         {
             //currentControls.GamePlay.Move.performed -=ctx => gridIndicator?.ChooseTargets(ctx.ReadValue<Vector2>());
-            currentControls.GamePlay.Submit.performed -= ctx => gridIndicator?.SbumitedTarget();
+           
+
+            if (cancelAction != null) currentControls.GamePlay.Cancle.performed -= cancelAction;
+            cancelAction = null;
+
+            if (submitAction != null) currentControls.GamePlay.Submit.performed -= submitAction;
+            submitAction = null;
         }
         else
         {
