@@ -2444,7 +2444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
       propertyPath: maxHP
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
       propertyPath: tMPro
@@ -14337,7 +14337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: maxHP
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: tMPro

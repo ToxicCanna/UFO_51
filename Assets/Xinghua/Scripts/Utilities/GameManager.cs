@@ -129,16 +129,18 @@ public class GameManager : MonoBehaviour
     }
     public void DecreaseCoinCount(int value)
     {
-        // Debug.Log("cost is " + value);
+         Debug.Log("cost is " + value);
 
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             coinCountRed -= value;
+            Debug.Log("red coin " + coinCountRed);
             coinText.text = "Coin:" + "" + coinCountRed.ToString();
         }
         else
         {
             coinCountBlue -= value;
+            Debug.Log("red coin " + coinCountRed);
             coinText.text = "Coin:" + "" + coinCountBlue.ToString();
         }
 

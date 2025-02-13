@@ -59,9 +59,18 @@ public class HeroData : MonoBehaviour
         side = heroData.side;
         //end
     }
-
+    //xinghua add
+    public void UpdateHealthWithHealValue(int amount)
+    {
+        Debug.Log("UpdateHealth" + amount);
+        Debug.Log("UpdateHealth max" + maxHealth);
+        _target = ((float)currentHealth / (float)maxHealth);
+        _HPBar.fillAmount = _target;
+    }
+  
     public void UpdateHealth(int amount)
     {
+       
         currentHealth -= Mathf.Clamp(amount, 0, maxHealth);
         _target = ((float)currentHealth / (float)maxHealth);
         Debug.Log($"{_target} hb fill");

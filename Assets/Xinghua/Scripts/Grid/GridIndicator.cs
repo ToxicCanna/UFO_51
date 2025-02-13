@@ -272,59 +272,55 @@ public class GridIndicator : MonoBehaviour
     {
         Debug.Log("submit hero when move:"+submitHeroData);
         Animator animatorSelected =null;
-        if (submitHeroData !=null)
+        if (submitHeroData != null)
         {
             animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+
+
+            Vector2 startPosition = (Vector2)submitHeroData.transform.position;
+            Vector2 direction = targetPosition - startPosition;
+
+
+            bool needTurn = Mathf.Abs(direction.x) > 0 && Mathf.Abs(direction.y) > 0;
+
+            animatorSelected.SetBool("IsRun", true);
+
+            if (needTurn)
+            {
+
+                Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
+                yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(intermediatePosition, speed));
+
+
+                yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
+            }
+            else
+            {
+
+                yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
+            }
+            currentGridPosition = WorldToGridPosition(transform.position);//move the indicator action finished
+            GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position), submitHeroData.gameObject, submitHeroData.side);
+            GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(transform.position), submitHeroData.gameObject, submitHeroData.side);
+            Debug.Log("current turn when move hero finish" + GameManager.Instance.currentTurn);
+
+            if (bAutoAttack())
+            {
+                SetAutoAttack();
+                PlayAttackEffect();
+                StartCoroutine(ApplyDamage(targetHero));
+            }
+            else
+            {
+                UpdatePlayerTurn();
+            }
+
+            isHeroSubmited = false;
+            GameManager.Instance.UpdateHeroSubmissionState(false);
+            gameStateMachine.SwitchToGameplayState();//this is important
+            isCancleSelected = false;
+            animatorSelected.SetBool("IsRun", false);
         }
-        else
-        {
-            Debug.Log("submit hero when move to target is null");
-        }
-      
-        Vector2 startPosition = (Vector2)submitHeroData.transform.position;
-        Vector2 direction = targetPosition - startPosition;
-
-
-        bool needTurn = Mathf.Abs(direction.x) > 0 && Mathf.Abs(direction.y) > 0;
-
-        animatorSelected.SetBool("IsRun", true);
-
-        if (needTurn)
-        {
-
-            Vector2 intermediatePosition = new Vector2(targetPosition.x, startPosition.y);
-            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(intermediatePosition, speed));
-
-
-            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
-        }
-        else
-        {
-
-            yield return StartCoroutine(MoveHeroToPointAndUpdatIndicator(targetPosition, speed));
-        }
-        currentGridPosition = WorldToGridPosition(transform.position);//move the indicator action finished
-        GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position), submitHeroData.gameObject, submitHeroData.side);
-        GridManager.Instance.RemoveOccupiedGrid(WorldToGridPosition(transform.position), submitHeroData.gameObject, submitHeroData.side);
-        Debug.Log("current turn when move hero finish" + GameManager.Instance.currentTurn);
-
-        if (bAutoAttack())
-        {
-            SetAutoAttack();
-            PlayAttackEffect();
-            StartCoroutine(ApplyDamage(targetHero));
-        }
-        else
-        {
-            UpdatePlayerTurn();
-        }
-
-        isHeroSubmited = false;
-        GameManager.Instance.UpdateHeroSubmissionState(false);
-        gameStateMachine.SwitchToGameplayState();//this is important
-        isCancleSelected = false;
-        animatorSelected.SetBool("IsRun", false);
-
 
     }
 
@@ -386,7 +382,10 @@ public class GridIndicator : MonoBehaviour
     private void PlayAttackEffect()
     {
         Debug.Log("play effect");
+        if(targetHero !=null)
+        { 
         Effect.Instance.PlayAttackEffect(targetHero.transform.position);
+        }
 
     }
     private void HideAttackEffect()
@@ -397,7 +396,10 @@ public class GridIndicator : MonoBehaviour
     private IEnumerator ApplyDamage(HeroData targetHero)
     {
         Debug.Log("give damage");
-        battleManager.targetHero = targetHero.GetComponent<HeroData>();
+        if (targetHero != null)
+        {
+            battleManager.targetHero = targetHero.GetComponent<HeroData>();
+        }
         yield return new WaitForSeconds(1);
         HideAttackEffect();
         battleManager.Attack();
@@ -734,9 +736,13 @@ public class GridIndicator : MonoBehaviour
         CheckHealRange();
     }
     public event Action<HeroData, HeroData> healHero;
+    private bool hasHealed = false;
     public void CheckHealRange()
     {
         Debug.Log("CheckHealRange");
+        if (hasHealed)return;
+      
+       
         List<GameObject> herosSameSide = GetSameSideHerosInTheScene();
         var validHealRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), GetSubmitHeroPathIndex(GetSelectedHeroPositon()));
         List<GameObject> damagedHero =new List<GameObject>();
@@ -745,16 +751,12 @@ public class GridIndicator : MonoBehaviour
            var hero = herosSameSide[i];
             if (validHealRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
-                
-                //Check the hero get damaged
-                
-                
                 if (hero.GetComponent<HeroData>().currentHealth < hero.GetComponent<HeroData>().maxHealth)
                 {
                     damagedHero.Add(hero);
                 }
                
-                if(damagedHero.Count ==1)
+                if(damagedHero.Count ==1 && hasHealed == false)
                 {
                     healHero?.Invoke(damagedHero[0].GetComponent<HeroData>(),submitHeroData);
                 }
@@ -762,12 +764,14 @@ public class GridIndicator : MonoBehaviour
             }
             else
             {
-                Debug.Log("clear");
+                
                 GameManager.Instance.DisplayErrorText("no hero to heal, choose hero again");
                 hideHighlight?.Invoke();
                 isHeroSubmited = false;
-                gameStateMachine.SwitchToGameplayState();
+                
             }
+            UpdatePlayerTurn();
+            gameStateMachine.SwitchToGameplayState();
             hideHighlight?.Invoke();//hide the high light
         }
 

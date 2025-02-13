@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour
         var healManager =FindAnyObjectByType<GridIndicator>();
         if (healManager != null)
         {
+            healManager.healHero -= Heal;
             healManager.healHero += Heal;
         }
         else
@@ -59,8 +60,18 @@ public class BattleManager : MonoBehaviour
         //xinghua code end
         int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
         Debug.Log("healValue" + healValue);
-        target.currentHealth += healValue;
-        targetHero.UpdateHealth(target.currentHealth);//xinghua add this
+        // target.currentHealth += healValue;
+        if (target.currentHealth + healValue > target.maxHealth)
+        {
+            target.currentHealth = target.maxHealth;
+        }
+        else
+        {
+            target.currentHealth = target.currentHealth + healValue;
+        }
+
+       // target.currentHealth = Mathf.Min(target.currentHealth + healValue, target.maxHealth);
+        targetHero.UpdateHealthWithHealValue(target.currentHealth);//xinghua add this;
     }
 
     public void Attack()
