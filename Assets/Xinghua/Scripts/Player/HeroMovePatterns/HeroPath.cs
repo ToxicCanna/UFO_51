@@ -18,14 +18,14 @@ public class HeroPath : MonoBehaviour
         heroData = GetComponent<HeroData>();
         StartCoroutine(WaitForSide());  
     }
+
     private IEnumerator WaitForSide()
     {
         while (string.IsNullOrEmpty(heroData.side))
         {
             yield return null; 
         }
-        Debug.Log(this.name + " side after wait: " + heroData.side);
-    }
+    } 
    
     private void SetHeroAttributes()
     {

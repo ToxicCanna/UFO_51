@@ -148,25 +148,7 @@ public class HighLight : MonoBehaviour
         List<Vector2Int> neighbors = new List<Vector2Int>();
         if (ID == 4)
         {
-            Vector2Int[] directions = new Vector2Int[]
-            {
-                new Vector2Int(0, 1),
-                new Vector2Int(0, -1),
-                new Vector2Int(-1, 0),
-                new Vector2Int(1, 0),
-
-                new Vector2Int(1, 1),
-                new Vector2Int(1, -1),
-                new Vector2Int(-1, 1),
-                new Vector2Int(-1, -1)
-            };
-
-            foreach (var direction in directions)
-            {
-                neighbors.Add(currentPosition + direction);
-                neighbors.Add(currentPosition + direction * 2);
-
-            }
+       
             for (int x = -2; x <= 2; x++)
             {
                 for (int y = -2; y <= 2; y++)
@@ -198,7 +180,7 @@ public class HighLight : MonoBehaviour
     public Vector2Int[] GetNeighbors(Vector2Int currentPosition, int ID)
     {
         List<Vector2Int> neighbors = new List<Vector2Int>();
-        Debug.Log("9999ID"+ID);
+   
 
         if (ID == 0 || ID == 4)
         {

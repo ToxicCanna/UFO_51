@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
@@ -40,7 +41,15 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void ReplayGame()
+    {
+       
+        
+           // Time.timeScale = 1.0f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
 
+    }
     private void Start()
     {
         coinCountRed = 3;
@@ -63,7 +72,6 @@ public class GameManager : MonoBehaviour
     public void DisplayErrorText(string value)
     {
         inputText.text = "";
-        Debug.Log("8888" + value);
         errorText.text = value;
         StartCoroutine(ClearTextAfterDelay(5f));
     }
@@ -156,11 +164,11 @@ public class GameManager : MonoBehaviour
     {
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
-            currentTurnText.text = "Player1";
+            currentTurnText.text = "Red Player";
         }
         else
         {
-            currentTurnText.text = "Player2";
+            currentTurnText.text = "Blue Player";
         }
 
     }

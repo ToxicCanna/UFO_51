@@ -47,7 +47,6 @@ public class UIState : BaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update UI state");
         InputManager.Instance.SetInputMode(InputManager.InputMode.UI);
     }
 }

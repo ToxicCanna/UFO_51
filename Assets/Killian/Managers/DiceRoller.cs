@@ -12,6 +12,7 @@ public class DiceRoller : MonoBehaviour
     }
     public int RollTotal(int amount, int size)
     {
+        Debug.Log("rool dice");
         //clear Data
         dTotal = 0;
 
