@@ -67,7 +67,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 12}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 196
+  controlID: 168
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 129
+  controlID: 104
   draggingID: 0
 --- !u!114 &16
 MonoBehaviour:
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 130
+  controlID: 95
   draggingID: 0
 --- !u!114 &17
 MonoBehaviour:
@@ -1151,8 +1151,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Tile Palette\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 2568
-    y: 31
+    x: 0
+    y: 26
     width: 2544
     height: 1327
   m_SerializedDataModeController:
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 844
+    y: 789
     width: 1954
     height: 502
   m_SerializedDataModeController:
@@ -1258,9 +1258,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 5ab70000
-    m_LastClickedID: 46938
-    m_ExpandedIDs: 00000000dcb40000deb40000e0b40000e2b40000e4b40000e6b40000e8b40000eab40000ecb40000eeb40000f0b40000f2b4000056b7000000ca9a3bffffff7f
+    m_SelectedIDs: 6cb70000
+    m_LastClickedID: 46956
+    m_ExpandedIDs: 00000000b0b70000b2b70000b4b70000b6b70000b8b70000bab70000bcb70000beb70000c0b70000c2b70000c4b70000c6b70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1289,7 +1289,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dcb40000deb40000e0b40000e2b40000e4b40000e6b40000e8b40000eab40000ecb40000eeb40000f0b40000f2b40000
+    m_ExpandedIDs: 00000000b0b70000b2b70000b4b70000b6b70000b8b70000bab70000bcb70000beb70000c0b70000c2b70000c4b70000c6b70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1368,8 +1368,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1955
-    y: 79
+    x: 1956
+    y: 24
     width: 604
     height: 1267
   m_SerializedDataModeController:
@@ -1418,7 +1418,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 483
     height: 739
   m_SerializedDataModeController:
@@ -1435,9 +1435,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d8af0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0cfbffff
+      m_ExpandedIDs: 0cfbffff40ae0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1483,8 +1483,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 484
-    y: 79
+    x: 485
+    y: 24
     width: 1469
     height: 739
   m_SerializedDataModeController:
@@ -2027,9 +2027,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.65577966, y: 0.1655712, z: 0.0038091494}
+    m_Target: {x: -5.512975, y: -0.93051434, z: -0.03255172}
     speed: 2
-    m_Value: {x: -0.65577966, y: 0.1655712, z: 0.0038091494}
+    m_Value: {x: -5.512975, y: -0.93051434, z: -0.03255172}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2079,9 +2079,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 2.6670797
+    m_Target: 6.3031607
     speed: 2
-    m_Value: 2.6670797
+    m_Value: 6.3031607
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -2133,8 +2133,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 10
-    y: -1417
+    x: 0
+    y: 26
     width: 2560
     height: 1343
   m_SerializedDataModeController:
