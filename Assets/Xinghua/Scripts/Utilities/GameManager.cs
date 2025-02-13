@@ -2,7 +2,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,21 +10,27 @@ public class GameManager : MonoBehaviour
     public PlayerTurn currentTurn = PlayerTurn.PlayerRedSide;
     public HeroPath heroPath;
     public bool IsHeroSubmitted { get; private set; }
+
+    public TMP_Text coinText;
     private int coinCountRed;
     private int coinCountBlue = 3;
 
+    public TMP_Text battleBonusTextR;
+    public TMP_Text battleBonusTextB;
     private int pointCountRed;
     private int pointCountBlue;
-    public TMP_Text coinText;
+    [SerializeField] private int winPoint;
+    [SerializeField] private GameObject winMenu;
+    [SerializeField] private TMP_Text WinnerText;
+
+
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
 
-    public TMP_Text battleBonusTextR;
-    public TMP_Text battleBonusTextB;
     public TMP_Text errorText;
     public TMP_Text inputText;
 
-   // public string controlTextValue { get; set; }
+    // public string controlTextValue { get; set; }
     public int battleBonus { get; private set; }
 
     public string diceResult;
@@ -43,22 +48,28 @@ public class GameManager : MonoBehaviour
 
     public void ReplayGame()
     {
-       
-        
-           // Time.timeScale = 1.0f;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
+
+
+        // Time.timeScale = 1.0f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
 
     }
+   
     private void Start()
     {
         coinCountRed = 3;
         coinCountBlue = 3;
         coinText.text = coinCountRed.ToString();
-       
+
         HeroOwned();
         battleBonusTextB.text = "";
         inputText.text = "WASD_move;Enter_submit ;Q_cancle";
+        GameInit();
+    }
+    public void GameInit()
+    {
+        winMenu.gameObject.SetActive(false);
     }
     private void Update()
     {
@@ -84,7 +95,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator ClearTextAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        errorText.text = ""; 
+        errorText.text = "";
         Debug.Log("Text cleared after " + delay + " seconds");
     }
 
@@ -129,7 +140,7 @@ public class GameManager : MonoBehaviour
     }
     public void DecreaseCoinCount(int value)
     {
-         Debug.Log("cost is " + value);
+        Debug.Log("cost is " + value);
 
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
@@ -150,16 +161,16 @@ public class GameManager : MonoBehaviour
         if (currentTurn == PlayerTurn.PlayerRedSide)
         {
             return coinCountRed;
-           
+
         }
         else
         {
             return coinCountBlue;
         }
 
-       
+
     }
-        
+
 
 
     public void UpdatePlayerTurn()
@@ -217,14 +228,29 @@ public class GameManager : MonoBehaviour
             battleBonusTextR.text = "Point1:" + battleBonusRed.ToString();
         }
 
-
+        CheckWin(side);
 
     }
-
-    public void CheckGameWin()
+    private void CheckWin(string side)
     {
-        //if one of the player point reach 10,the player can win
+        Debug.Log("CheckWin");
+        if (battleBonusRed >= winPoint || battleBonusBlue >= winPoint)
+        {
+            Debug.Log(currentTurn + "some one win");
+            StartCoroutine(ShowWinner( side));
+        }
+
     }
+
+    private IEnumerator ShowWinner(string side)
+    {
+        Debug.Log("side"+side);
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Player " +side + "win");
+        winMenu.gameObject.SetActive(true);
+        WinnerText.text = currentTurn.ToString() +"Win";
+    }
+
 
 }
 
