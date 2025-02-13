@@ -16,13 +16,13 @@ public class GamePlayState : BaseState
 
     public override void EnterState()
     {
-        Debug.Log("Entered Gameplay State");
+        //Debug.Log("Entered Gameplay State");
         GameManager.Instance.DisplayInputText("Move Indicator to choose Hero\n \n B_Buy Heros");
     }
 
     public override void HandleInput(InputManager inputManager)
     {
-        Debug.Log("Handle GamePlay Input");
+       // Debug.Log("Handle GamePlay Input");
         var controls = inputManager.GetControls();
         ExitState();
 
@@ -47,7 +47,7 @@ public class GamePlayState : BaseState
 
     public override void ExitState()
     {
-        Debug.Log("Exited Gameplay State");
+        //Debug.Log("Exited Gameplay State");
         if (currentControls == null)
         {
 

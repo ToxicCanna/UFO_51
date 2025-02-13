@@ -314,12 +314,13 @@ public class GridIndicator : MonoBehaviour
             PlayAttackEffect();
             StartCoroutine(ApplyDamage(targetHero));
         }
-
+        else
+        {
+            UpdatePlayerTurn();
+        }
 
         isHeroSubmited = false;
         GameManager.Instance.UpdateHeroSubmissionState(false);
-        UpdatePlayerTurn();
-        SetIndicatorInCurrentHeroPos();
         gameStateMachine.SwitchToGameplayState();//this is important
         isCancleSelected = false;
         animatorSelected.SetBool("IsRun", false);
@@ -459,12 +460,14 @@ public class GridIndicator : MonoBehaviour
         if (GameManager.Instance.currentTurn == GameManager.PlayerTurn.PlayerRedSide)
         {
             GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerBlueSide;
+         
 
         }
         else
         {
             GameManager.Instance.currentTurn = GameManager.PlayerTurn.PlayerRedSide;
         }
+        SetIndicatorInCurrentHeroPos();
         GameManager.Instance.AddCoinCount();
     }
 
@@ -679,8 +682,9 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("cancle selected");
         isCancleSelected = true;
         hideHighlight?.Invoke();
-        var position = GetIndicatorPositon();
-        SetSelectedHero(position);
+        submitHeroData =null;
+      /*  var position = GetIndicatorPositon();
+        SetSelectedHero(position);*/
         isHeroSubmited = false;
     }
 

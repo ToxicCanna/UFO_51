@@ -11,14 +11,14 @@ public class AttackState : BaseState
 
     public override void EnterState()
     {
-        Debug.Log("enter attack state");
+        //Debug.Log("enter attack state");
         GameManager.Instance.DisplayInputText("Check if have enemy with range\nKill hero get point, Reach 10 will win");
         gridIndicator.HandleRangeAttack();
     }
 
     public override void UpdateState()
     {
-        Debug.Log("update attack state");
+        //Debug.Log("update attack state");
         InputManager.Instance.SetInputMode(InputManager.InputMode.Gameplay);
     }
 
@@ -27,7 +27,7 @@ public class AttackState : BaseState
     public override void HandleInput(InputManager inputManager)
     {
 
-        Debug.Log("Handle attack State");
+        //Debug.Log("Handle attack State");
         currentControls = inputManager.GetControls();
         if (currentControls != null && gridIndicator != null)
         {
