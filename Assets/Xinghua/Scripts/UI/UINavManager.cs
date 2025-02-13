@@ -23,10 +23,10 @@ public class UINavManager : MonoBehaviour
     private Dictionary<string, List<string>> heroActionsMapping = new Dictionary<string, List<string>>
     {
         { "Basic", new List<string> { "Move" } },
-        { "Knight", new List<string> {  "Move", "Attack"} },
-        { "Thief", new List<string> { "Move", "Attack"} },
+        { "Knight", new List<string> {  "Move"} },
+        { "Thief", new List<string> { "Move" } },
         { "Range", new List<string> { "Move", "Attack"} },
-        { "Healer", new List<string> { "Move", "Attack","Heal"} }
+        { "Healer", new List<string> { "Move", "Heal"} }
     };
     private Dictionary<string, int> heroCostMapping = new Dictionary<string, int>
     {
@@ -245,7 +245,6 @@ public class UINavManager : MonoBehaviour
         {
             // hero begin heal ;before use this function need check selectes is heal or not
             //active button should have 2 state, if selected hero is not heal , the button should disable
-            Debug.Log("heal function called");//but function do not write here
             gameStateMachine.SwitchToHealState();
         }
         else

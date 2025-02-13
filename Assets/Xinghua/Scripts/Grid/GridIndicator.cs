@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class GridIndicator : MonoBehaviour
@@ -306,13 +308,13 @@ public class GridIndicator : MonoBehaviour
         GridManager.Instance.AddHeroWithTeamInfo(WorldToGridPosition(submitHeroData.gameObject.transform.position), submitHeroData.gameObject, submitHeroData.side);
         Debug.Log("current turn when move hero finish" + GameManager.Instance.currentTurn);
 
-        if(bAutoAttack())
+        if (bAutoAttack())
         {
             SetAutoAttack();
             PlayAttackEffect();
             StartCoroutine(ApplyDamage(targetHero));
         }
-       
+
 
         isHeroSubmited = false;
         GameManager.Instance.UpdateHeroSubmissionState(false);
@@ -362,7 +364,7 @@ public class GridIndicator : MonoBehaviour
             }
 
         }
-        isAutoAttack =false;
+        isAutoAttack = false;
         return isAutoAttack;
     }
     HeroData targetHero;
@@ -375,7 +377,7 @@ public class GridIndicator : MonoBehaviour
             hideHighlight?.Invoke();
             //set target hero
             targetHero = autoAttackHero.GetComponent<HeroData>();
-         
+
             // AttackHappenOneSpot?.Invoke();
         }
     }
@@ -396,7 +398,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("give damage");
         battleManager.targetHero = targetHero.GetComponent<HeroData>();
         yield return new WaitForSeconds(1);
-         HideAttackEffect();
+        HideAttackEffect();
         battleManager.Attack();
         if (targetHero != null && submitHeroData != null)
         {
@@ -417,7 +419,7 @@ public class GridIndicator : MonoBehaviour
             yield return new WaitForSeconds(1);
             //isAttackEnd = true;
             isHeroSubmited = false;
-          
+
 
             //must check null ,cause sometime destroyed hero die
             if (animatorSelected != null && animatorSelected.gameObject != null)
@@ -540,7 +542,10 @@ public class GridIndicator : MonoBehaviour
         validTargetPos = highLight.GetNeighbors(GetSelectedHeroPositon(), currentSelectedHeroId);
         GameManager.Instance.UpdateHeroSubmissionState(isHeroSubmited);
         gameStateMachine.SwitchToUIState();//UI state for choose action
-        Debug.Log("Valid Target Positions when selected: " + string.Join(", ", validTargetPos) + currentSelectedHeroId);
+        Debug.Log("Valid move Target Pos when selected: " + string.Join(", ", validTargetPos) + currentSelectedHeroId);
+
+        
+       
     }
 
 
@@ -580,7 +585,6 @@ public class GridIndicator : MonoBehaviour
                     UINavManager.Instance.UpdateHeroActions(heroPath);
                     submitHeroData = heroData;
                     Debug.Log("Set selected hero" + heroData.name);
-                    Debug.Log("Set selected hero" + heroPath.name);
                 }
 
             }
@@ -720,35 +724,44 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("HandleHeal");
         CheckHealRange();
     }
+    public event Action<HeroData, HeroData> healHero;
     public void CheckHealRange()
     {
         Debug.Log("CheckHealRange");
-        var herosSameSide = GetSameSideHerosInTheScene();
-        var validHealRangePositions = highLight.GetNeighborsForAbilityRange(WorldToGridPosition(submitHeroPosition), heroPathID);
+        List<GameObject> herosSameSide = GetSameSideHerosInTheScene();
+        var validHealRangePositions = highLight.GetNeighborsForAbilityRange(GetSelectedHeroPositon(), GetSubmitHeroPathIndex(GetSelectedHeroPositon()));
+        List<GameObject> damagedHero =new List<GameObject>();
         foreach (var hero in herosSameSide)
         {
-
             if (validHealRangePositions.Contains(WorldToGridPosition(hero.transform.position)))
             {
-                //Heal hero
-                Debug.Log("Heal hero");
-                hideHighlight?.Invoke();//hide the high light
-                var targetHero = hero.GetComponent<HeroData>();
-                var currentHero = submitHeroData;
-                StartCoroutine(HealMyHeros(targetHero));
+                
+                //Check the hero get damaged
+                
+                
+                if (hero.GetComponent<HeroData>().currentHealth < hero.GetComponent<HeroData>().maxHealth)
+                {
+                    damagedHero.Add(hero);
+                }
+               
+                if(damagedHero.Count ==1)
+                {
+                    healHero?.Invoke(damagedHero[0].GetComponent<HeroData>(),submitHeroData);
+                }
+
             }
             else
             {
                 Debug.Log("clear");
-
-                gameStateMachine.SwitchToMoveHeroState();
+                GameManager.Instance.DisplayErrorText("no hero to heal, choose hero again");
+                hideHighlight?.Invoke();
+                isHeroSubmited = false;
+                gameStateMachine.SwitchToGameplayState();
             }
+            hideHighlight?.Invoke();//hide the high light
         }
 
 
     }
-    public IEnumerator HealMyHeros(HeroData target)
-    {
-        yield return new WaitForEndOfFrame();
-    }
+
 }
