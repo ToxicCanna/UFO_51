@@ -36,12 +36,16 @@ public class Castle : MonoBehaviour
         castleHP -= damage;
         Debug.Log($"castle HP: {castleHP}");
 
+        AudioManager.Instance.Play("Atk_Castle");
+        Debug.Log("Castle Atk snd played");
+
         _target = castleHP/maxHP;
         Debug.Log($"HealthBar fill: {_target}");
 
         _HPBar.fillAmount = _target;
         _UIHPBar.fillAmount = _target;
         CheckHealthBarGradientAmount();
+
         if (castleHP <= 0)
         {
             LoseGame();

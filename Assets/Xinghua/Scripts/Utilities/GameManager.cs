@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance.Play("Music", true);
+        
         coinCountRed = 3;
         coinCountBlue = 3;
         coinText.text ="Coin:" +coinCountRed.ToString();

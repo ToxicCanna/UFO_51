@@ -24,6 +24,8 @@ public class DiceRoller : MonoBehaviour
         {
             rolls[i] = dice.Roll(size);  // Store each roll result in the array
             dTotal += rolls[i];
+
+            AudioManager.Instance.Play("RollDice");
         }
         return dTotal;
     }
