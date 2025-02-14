@@ -272,15 +272,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 472623566}
+  - {fileID: 122079038}
+  - {fileID: 1158118879}
+  - {fileID: 1675840435}
+  - {fileID: 733353985}
   buttonsHeroActions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 870048481}
+  - {fileID: 1822031648}
+  - {fileID: 311960701}
   activeSprites:
   - {fileID: -7961243765231346456, guid: f3e5b6ebe29467841a397cfa82a3d5ab, type: 3}
   - {fileID: 2835589098734735643, guid: 31ee5542a5cefa148895935a1173faee, type: 3}
@@ -1300,6 +1300,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235673059}
   m_CullTransparentMesh: 1
+--- !u!1 &245971727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245971728}
+  - component: {fileID: 245971729}
+  m_Layer: 0
+  m_Name: EffectsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &245971728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245971727}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.8046186, y: -2.0381684, z: 0.011461488}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469706333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &245971729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245971727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639537141393f1b48bbca51c39541e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 809367367}
 --- !u!1 &252701337
 GameObject:
   m_ObjectHideFlags: 0
@@ -11803,6 +11848,8 @@ Transform:
   - {fileID: 394367766}
   - {fileID: 1449965826}
   - {fileID: 50868579}
+  - {fileID: 245971728}
+  - {fileID: 2038291728}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1514948383 stripped
@@ -14857,6 +14904,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036581276}
   m_CullTransparentMesh: 1
+--- !u!1 &2038291727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038291728}
+  - component: {fileID: 2038291729}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038291728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038291727}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 809.10803, y: 318.90356, z: -17.855936}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1469706333}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038291729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038291727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992f4024b7dddd941abebcbdbe9f9618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: SelectorMove
+    clip: {fileID: 8300000, guid: b6cc397549439ed4190716bceb9c40d7, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: BgMusic
+    clip: {fileID: 8300000, guid: 40e91b6df05bd8943a075a99ecd04c28, type: 3}
+    volume: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: Damaged
+    clip: {fileID: 8300000, guid: 8b22340a61b158540be60dfce4eca098, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: 4c9043a837ab9104f800f19e86ffc702, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AttackCastle
+    clip: {fileID: 8300000, guid: a90229c13ac640a45ad68c20a9901b4d, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &2047521310
 GameObject:
   m_ObjectHideFlags: 0
