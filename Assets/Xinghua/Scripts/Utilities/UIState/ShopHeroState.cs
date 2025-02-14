@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +10,9 @@ public class ShopHeroState : BaseState
     public override void EnterState()
     {
         Debug.Log("Enter shop State");
-       GameManager.Instance.DisplayInputText( "W and D to select hero to buy, Enter key to submit");
+        GameManager.Instance.DisplayInputText("W and D to select hero to buy, Enter key to submit");
         UINavManager.Instance.InitSelectorPositionInHeroShopZone();
+        //UINavManager.Instance.UpdateShopButtons();
     }
     public ShopHeroState(GridIndicator gridIndicator)
     {
@@ -52,7 +52,7 @@ public class ShopHeroState : BaseState
         if (cancelAction != null)
             controls.UI.Cancle.performed -= cancelAction;
 
-    
+
         navigateAction = null;
         selectAction = null;
         cancelAction = null;

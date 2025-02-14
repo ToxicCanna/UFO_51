@@ -272,8 +272,18 @@ MonoBehaviour:
   - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
   - {fileID: -8251269073568423392, guid: da7cc83b80a0a1a458f3da8e07c735f3, type: 3}
   - {fileID: 5587490792075934148, guid: 7863edbd63813d04db700404c2b2a730, type: 3}
-  activeShopSprites: []
-  inactiveShopSprites: []
+  activeShopSprites:
+  - {fileID: 6708709319691909641, guid: c98bbaae64379704db63972d4196442f, type: 3}
+  - {fileID: 5618488646990125239, guid: d12f380133ca4cb418d1e239692a1026, type: 3}
+  - {fileID: 8371621380770453477, guid: 5c490eef5cf126b4ba5330e16b85e49a, type: 3}
+  - {fileID: -3749268934158462028, guid: 04b0af237b8dfef438a77d8306a07d1b, type: 3}
+  - {fileID: -7204954822806857700, guid: 7731febee673bc2449cd35168aa4429b, type: 3}
+  inactiveShopSprites:
+  - {fileID: -7484353196753122922, guid: 38a2306a51af17d48a979a6fd2425633, type: 3}
+  - {fileID: -4464940170827978036, guid: 88e741dd846ec3941aa1f0a74341ce52, type: 3}
+  - {fileID: -5226155543654244529, guid: c0cc41009dd35db40a7be8f431b44de5, type: 3}
+  - {fileID: 1845097683105825768, guid: d16ed47a9ddc8484498b3b543f42bfc2, type: 3}
+  - {fileID: 734235765543540813, guid: 692c631968a0b4e4c9b3b88495a3af71, type: 3}
   selector: {fileID: 260385017}
   gameStateMachine: {fileID: 1978772880}
   spawnHero: {fileID: 394367767}
@@ -9789,7 +9799,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 80}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1343758456
 MonoBehaviour:
@@ -9867,8 +9877,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -9211708600806668862, guid: 615d5a05254d124409daf9e194db3466, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

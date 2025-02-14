@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UINavManager : MonoBehaviour
 {
     public static UINavManager Instance;
-    public Button[] buttons;
+    public Button[] buttons;//those buttons for hero shop
     public Button[] buttonsHeroActions;
 
     public List<Sprite> activeSprites;   
@@ -56,7 +56,10 @@ public class UINavManager : MonoBehaviour
         Instance = this;
     }
 
-
+    private void FixedUpdate()
+    {
+        UpdateShopButtons();
+    }
     public void UpdateHeroActions(HeroPath heroPath)
     {
         if (heroPath == null) return;
@@ -85,16 +88,16 @@ public class UINavManager : MonoBehaviour
         }
     }
 
-    /* private void SetButtonColor(Button button, bool isActive)
-     {
-         Color targetColor = isActive ? Color.white : Color.gray;
+    private void SetButtonColor(Button button, bool isActive)
+    {
+        Color targetColor = isActive ? Color.white : Color.gray;
 
-         Image buttonImage = button.GetComponent<Image>();
-         if (buttonImage != null)
-         {
-             buttonImage.color = targetColor;
-         }
-     }*/
+        Image buttonImage = button.GetComponent<Image>();
+        if (buttonImage != null)
+        {
+            buttonImage.color = targetColor;
+        }
+    }
     private void SetButtonSprite(Button button, bool isActive, Sprite activeSprite, Sprite inactiveSprite)
     {
         if (button == null) return;
@@ -137,7 +140,7 @@ public class UINavManager : MonoBehaviour
 
         //UpdateSelectorPosition(); // Position the selector on the first button
         StartCoroutine(FixSelectorPosition());
-        //StartCoroutine(UpdateShopButtons());
+        UpdateShopButtons();
     }
 
   
@@ -311,8 +314,8 @@ public class UINavManager : MonoBehaviour
     public void UpdateShopButtons()
     {
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
-      
 
+        Debug.Log("UpdateShopButtons" + playerCoin);
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
@@ -340,8 +343,13 @@ public class UINavManager : MonoBehaviour
                 }
 
                 buttons[i].interactable = canAfford;
-                //SetButtonColor(buttons[i], canAfford);
-                //SetButtonSprite(buttonsHeroActions[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
+                // SetButtonColor(buttons[i], canAfford);
+                Debug.Log("activeShopSprites count" + activeShopSprites.Count);
+                Debug.Log("inactiveShopSprites count" + inactiveShopSprites.Count);
+                if (i < activeShopSprites.Count && i < inactiveShopSprites.Count)
+                {
+                    SetButtonSprite(buttons[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
+                }
             }
             else
             {
@@ -353,6 +361,7 @@ public class UINavManager : MonoBehaviour
 
     public void HandleHeroShopSelection()
     {
+     
         var button = buttons[shopIndex];
 
         buttons[shopIndex].onClick.Invoke();
@@ -369,9 +378,10 @@ public class UINavManager : MonoBehaviour
         {
 
             spawnHero.SpawnNew(button.name, cost);
+            //UpdateShopButtons();
   
         }
-
+      
         SwithToGamePlayState();
     }
 
