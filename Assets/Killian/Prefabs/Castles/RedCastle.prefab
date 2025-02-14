@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a109d32abc9542b07f971cc854b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
-  castleHP: 10
+  maxHP: 5
+  castleHP: 5
   _HPBar: {fileID: 0}
   _UIHPBar: {fileID: 0}
   _gradient:

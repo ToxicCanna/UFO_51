@@ -3389,10 +3389,6 @@ PrefabInstance:
       value: BlueCastle
       objectReference: {fileID: 0}
     - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
-      propertyPath: maxHP
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
       propertyPath: tMPro
       value: 
       objectReference: {fileID: 2036581278}
@@ -3404,10 +3400,6 @@ PrefabInstance:
       propertyPath: _UIHPBar
       value: 
       objectReference: {fileID: 2001288779}
-    - target: {fileID: 1653131784577686243, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
-      propertyPath: castleHP
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4237698622293100807, guid: d9734cd09c7d4bc409d826d3851da3cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
@@ -16351,10 +16343,6 @@ PrefabInstance:
       value: RedCastle
       objectReference: {fileID: 0}
     - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
-      propertyPath: maxHP
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: tMPro
       value: 
       objectReference: {fileID: 1887958264}
@@ -16366,10 +16354,6 @@ PrefabInstance:
       propertyPath: _UIHPBar
       value: 
       objectReference: {fileID: 1145139713}
-    - target: {fileID: 2043706631071565958, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
-      propertyPath: castleHP
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3266201478351129393, guid: 99379bc14086a5442a9c47bd4fe0d2bf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
