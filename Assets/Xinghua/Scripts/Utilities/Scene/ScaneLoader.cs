@@ -29,7 +29,10 @@ public class SceneLoader : MonoBehaviour
 
        // HandleInput(InputManager.Instance); 
     }
-
+    public void LoadSceneMainMenu(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
 
     public void QuitGame()
     {
