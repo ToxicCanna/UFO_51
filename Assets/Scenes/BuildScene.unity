@@ -2505,7 +2505,7 @@ MonoBehaviour:
   battleBonusTextB: {fileID: 979673659}
   winPoint: 0
   winMenu: {fileID: 193893649}
-  WinnerText: {fileID: 0}
+  WinnerText: {fileID: 356866893}
   currentTurnText: {fileID: 789427797140152679}
   owenedHeroText: {fileID: 1289670754}
   errorText: {fileID: 1542613942422290037}
