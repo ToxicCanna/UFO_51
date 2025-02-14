@@ -264,16 +264,16 @@ public class GameManager : MonoBehaviour
         if (battleBonusRed >= winPoint || battleBonusBlue >= winPoint)
         {
             Debug.Log(currentTurn + "some one win");
-            StartCoroutine(ShowWinner( side));
+            ShowWinner( side);
         }
 
     }
 
-    private IEnumerator ShowWinner(string side)
+    public void ShowWinner(string side)
     {
         Debug.Log("side"+side);
-        yield return new WaitForSeconds(1f);
-        Debug.Log("Player " +side + "win");
+        //yield return new WaitForSeconds(1f);
+        Debug.Log(side+"Player " + "win");
         winMenu.gameObject.SetActive(true);
         WinnerText.text = currentTurn.ToString() +"Win";
     }
