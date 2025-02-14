@@ -144,6 +144,8 @@ public class UINavManager : MonoBehaviour
         shopIndex = (shopIndex +(int) direction.x + buttons.Length) % buttons.Length; // Wrap around
         Debug.Log($"After move: currentIndex = {shopIndex}");
         UpdateSelectorPositionShop();
+
+        AudioManager.Instance.Play("SelectorMove");
     }
 
     public void MoveSelectorWithHeroActions(int direction)
@@ -152,6 +154,9 @@ public class UINavManager : MonoBehaviour
 
         actionIndex = (actionIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
         UpdateSelectorPositionAction();
+
+        // Play the selection sound
+        AudioManager.Instance.Play("SelectorMove");
     }
     public void InitSelectorPositionInHeroActionsZone()
     {

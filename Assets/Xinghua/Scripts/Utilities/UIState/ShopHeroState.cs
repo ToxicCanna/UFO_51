@@ -62,7 +62,7 @@ public class ShopHeroState : BaseState
 
     public override void UpdateState()
     {
-        Debug.Log("Update shop state");
+        //Debug.Log("Update shop state");
         InputManager.Instance.SetInputMode(InputManager.InputMode.UI);
     }
 }
