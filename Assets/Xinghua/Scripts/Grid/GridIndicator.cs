@@ -74,7 +74,11 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-
+    public void PauseGame()
+    {
+        Debug.Log("Pause in gridindicator");
+        GameManager.Instance.HandlePauseGame();
+    }
 
     public bool IsWithinBounds(Vector2Int position)
     {
@@ -211,6 +215,7 @@ public class GridIndicator : MonoBehaviour
         {
             currentGridPosition = targetPosition;
            transform.position = GridToWorldPosition(currentGridPosition);
+           AudioManager.Instance.Play("SelectorMove");
 
         }
     }
@@ -410,6 +415,7 @@ public class GridIndicator : MonoBehaviour
             {
 
                 animatorSelected.SetBool("IsAtk", true);
+                AudioManager.Instance.Play("Damaged");
             }
             else
             {
@@ -418,6 +424,7 @@ public class GridIndicator : MonoBehaviour
             Animator animatorTarget = targetHero.gameObject.GetComponent<Animator>();
 
             animatorTarget.SetBool("IsDmg", true);
+            AudioManager.Instance.Play("Damaged");
 
             yield return new WaitForSeconds(1);
             isHeroSubmited = false;//damage end here
@@ -759,6 +766,7 @@ public class GridIndicator : MonoBehaviour
                 if(damagedHero.Count ==1 && hasHealed == false)
                 {
                     healHero?.Invoke(damagedHero[0].GetComponent<HeroData>(),submitHeroData);
+                    AudioManager.Instance.Play("Heal");
                 }
 
             }

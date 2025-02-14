@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winMenu;
     [SerializeField] private TMP_Text WinnerText;
 
-
+    [SerializeField] private PauseMenu pauseMenu;
+    private bool isGamePaused;
     public TMP_Text currentTurnText;
     public TMP_Text owenedHeroText;
 
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-
+  
     public void ReplayGame()
     {
 
@@ -55,7 +57,26 @@ public class GameManager : MonoBehaviour
 
 
     }
-   
+    public void HandlePauseGame()
+    {
+        Debug.Log("Pause in gameManager");
+        //pause game
+        if (pauseMenu != null && isGamePaused ==false)
+        {
+            pauseMenu.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+            isGamePaused = true;
+        }else if(isGamePaused == true)
+        {
+            pauseMenu.gameObject.SetActive(false);
+            Time.timeScale = 1f;
+            isGamePaused = false;
+        }
+
+
+    }
+    
+
     private void Start()
     {
         coinCountRed = 3;
@@ -66,10 +87,14 @@ public class GameManager : MonoBehaviour
         battleBonusTextB.text = "";
         inputText.text = "WASD_move;Enter_submit ;Q_cancle";
         GameInit();
+
     }
     public void GameInit()
     {
+        isGamePaused = false;
         winMenu.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
+     
     }
     private void Update()
     {

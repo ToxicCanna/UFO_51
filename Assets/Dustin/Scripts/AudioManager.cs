@@ -43,6 +43,10 @@ public class AudioManager : MonoBehaviour
 
         Debug.Log("AudioManager initialized with " + sounds.Length + " sounds.");
     }
+    private void Start()
+    {
+        Play("BgMusic");
+    }
 
     // Play a sound by name
     public void Play(string soundName)

@@ -9,6 +9,7 @@ public class GamePlayState : BaseState
     private System.Action<InputAction.CallbackContext> submitAction;
     private System.Action<InputAction.CallbackContext> shopAction;
     private System.Action<InputAction.CallbackContext> cancelAction;
+    private System.Action<InputAction.CallbackContext> pauseAction;
     public GamePlayState(GridIndicator gridIndicator)
     {
         this.gridIndicator = gridIndicator;
@@ -71,6 +72,9 @@ public class GamePlayState : BaseState
 
             cancelAction = ctx => gridIndicator?.CancleSelected();
             currentControls.GamePlay.Cancle.performed += cancelAction;
+
+            pauseAction = ctx => gridIndicator?.PauseGame();
+            currentControls.GamePlay.Pause.performed += pauseAction;
         }
         
     }

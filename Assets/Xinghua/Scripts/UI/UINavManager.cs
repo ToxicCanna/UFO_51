@@ -97,7 +97,7 @@ public class UINavManager : MonoBehaviour
         if (buttonImage != null)
         {
             buttonImage.sprite = isActive ? activeSprite : inactiveSprite;
-            Debug.Log($"Setting sprite for {button.name}: {(isActive ? "Active" : "Inactive")}");
+            //Debug.Log($"Setting sprite for {button.name}: {(isActive ? "Active" : "Inactive")}");
         }
         else
         {
@@ -311,7 +311,7 @@ public class UINavManager : MonoBehaviour
     {
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
 
-        Debug.Log("UpdateShopButtons" + playerCoin);
+        //Debug.Log("UpdateShopButtons" + playerCoin);
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
