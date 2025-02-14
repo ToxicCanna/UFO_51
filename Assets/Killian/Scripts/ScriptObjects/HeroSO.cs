@@ -8,4 +8,5 @@ public class HeroSO : ScriptableObject
     public string abilityScore;
     //public HeroSO Upgrade;
     public string side;//xinghua add
+    public string heroType; // dustin add
 }
