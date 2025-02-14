@@ -263,8 +263,18 @@ public class GameManager : MonoBehaviour
         Debug.Log("CheckWin");
         if (battleBonusRed >= winPoint || battleBonusBlue >= winPoint)
         {
-            Debug.Log(currentTurn + "some one win");
-            ShowWinner( side);
+            if (battleBonusRed >= winPoint)
+            {
+                // Red side wins
+                Debug.Log("Red wins");
+                ShowWinner("Red");
+            }
+            else if (battleBonusBlue >= winPoint)
+            {
+                // Blue side wins
+                Debug.Log("Blue wins");
+                ShowWinner("Blue");
+            }
         }
 
     }
@@ -275,7 +285,7 @@ public class GameManager : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         Debug.Log(side+"Player " + "win");
         winMenu.gameObject.SetActive(true);
-        WinnerText.text = currentTurn.ToString() +"Win";
+        WinnerText.text = side + " Player Wins";
     }
 
 
