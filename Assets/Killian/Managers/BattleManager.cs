@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
@@ -12,13 +14,12 @@ public class BattleManager : MonoBehaviour
     int clashDamage;
     bool poweredUp;
     bool ability = false;
-
+    private GameObject[] atkDice;
+    private GameObject[] defDice;
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    Attack();
-        //}
+        atkDice = (currentHero.side == "Red") ? redDice : blueDice;
+        defDice = (currentHero.side == "Red") ? blueDice : redDice;
     }
     //xinghua code start
     private void OnEnable()
@@ -77,8 +78,6 @@ public class BattleManager : MonoBehaviour
 
     public void Attack()
     {
-        GameObject[] atkDice = (currentHero.side == "Red") ? redDice : blueDice;
-        GameObject[] defDice = (currentHero.side == "Red") ? blueDice : redDice;
         if (currentHero == null || targetHero == null)
         {
             if (currentHero == null)
@@ -105,6 +104,7 @@ public class BattleManager : MonoBehaviour
 
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
         RevealDice(atkDice, currentHero.atk);
+
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
         RevealDice(defDice, targetHero.def);
 
@@ -140,12 +140,13 @@ public class BattleManager : MonoBehaviour
     }
     private void RevealDice(GameObject[] dice, int statValue)
     {
+        StartCoroutine(HideDice(dice));
         for (int i = 0; i < dice.Length; i++)
         {
             if (i < statValue)
             {
                 dice[i].SetActive(true);
-                int rollResult = diceroller.RollTotal(1, currentHero.atkSize);
+                int rollResult = diceroller.rolls[i];
                 dice[i].GetComponent<VisualRollGen>().ShowRoll(rollResult);
             }
             else
@@ -154,10 +155,20 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    private IEnumerator HideDice(GameObject[] dice)
+    {
+        yield return new WaitForSeconds(5f);
+        foreach (var item in dice)
+        {
+            item.SetActive(false);
+        }
+    }
     void Clash(HeroData target)
     {
         int clashAtkValue = diceroller.RollTotal(1, 6);
         int clashDefValue = diceroller.RollTotal(1, 6);
+        RevealDice(atkDice, currentHero.atk);
+        RevealDice(defDice, targetHero.def);
 
         if (clashAtkValue > clashDefValue)
         {
