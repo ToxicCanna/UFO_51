@@ -5159,16 +5159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHeros:
-  - {fileID: 0}
   - {fileID: 547869783}
   - {fileID: 798349606}
-  - {fileID: 0}
   - {fileID: 2084673628}
-  - {fileID: 0}
   - {fileID: 585028599}
   - {fileID: 1660780984}
   - {fileID: 348752649}
-  - {fileID: 0}
 --- !u!224 &1145139712 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2101975199783468095, guid: 9f3ed393c2d00344da31343b15d9efd9, type: 3}
