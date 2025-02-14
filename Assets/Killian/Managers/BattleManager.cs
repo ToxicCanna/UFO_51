@@ -19,11 +19,7 @@ public class BattleManager : MonoBehaviour
     bool ability = false;
     private GameObject[] atkDice;
     private GameObject[] defDice;
-    private void Update()
-    {
-        atkDice = (currentHero.side == "Red") ? redDice : blueDice;
-        defDice = (currentHero.side == "Red") ? blueDice : redDice;
-    }
+
     //xinghua code start
     private void OnEnable()
     {
@@ -81,6 +77,8 @@ public class BattleManager : MonoBehaviour
 
     public void Attack()
     {
+        atkDice = (currentHero.side == "Red") ? redDice : blueDice;
+        defDice = (currentHero.side == "Red") ? blueDice : redDice;
         if (currentHero == null || targetHero == null)
         {
             if (currentHero == null)
