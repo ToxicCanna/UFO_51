@@ -37,10 +37,10 @@ public class UINavManager : MonoBehaviour
     private Dictionary<string, int> heroCostMapping = new Dictionary<string, int>
     {
         { "Basic", 1 },
-        { "Knight", 4 },
-        { "Thief", 3 },
-        { "Ranged", 2 },
-        { "Healer", 3 }
+        { "Knight", 5 },
+        { "Thief", 5 },
+        { "Ranged", 3 },
+        { "Healer", 7 }
     };
 
 
