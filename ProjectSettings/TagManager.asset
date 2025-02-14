@@ -65,5 +65,8 @@ TagManager:
   - name: HpBar
     uniqueID: 3976586723
     locked: 0
+  - name: VisualDice
+    uniqueID: 630720461
+    locked: 0
   m_RenderingLayers:
   - Default

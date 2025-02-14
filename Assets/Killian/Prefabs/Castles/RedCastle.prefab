@@ -46,14 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d70a109d32abc9542b07f971cc854b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
-  castleHP: 10
-  _image: {fileID: 0}
+  maxHP: 2
+  castleHP: 1
+  _HPBar: {fileID: 0}
+  _UIHPBar: {fileID: 0}
   _gradient:
     serializedVersion: 2
     key0: {r: 1, g: 0, b: 0, a: 1}
     key1: {r: 1, g: 1, b: 0, a: 1}
-    key2: {r: 0, g: 1, b: 0, a: 0}
+    key2: {r: 0.5058824, g: 0.08235294, b: 0.08627451, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -133,7 +134,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955342853722709075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

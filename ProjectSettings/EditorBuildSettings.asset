@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 784221972e8929a4587ee4a749ada006
   - enabled: 1
-    path: Assets/Xinghua/XinghuaGym 2.unity
-    guid: c25f3bbb81bb28a40b51f53a31c13ccb
+    path: Assets/Scenes/BuildScene.unity
+    guid: 7f8dd354ed105a94cbc309b9d34f617f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
