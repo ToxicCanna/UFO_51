@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
+using TMPro;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private DiceRoller diceroller;
+    [SerializeField] private GameObject clashText;
     [SerializeField] private GameObject[] redDice;
     [SerializeField] private GameObject[] blueDice;
+
+
     public HeroData currentHero;
     public HeroData targetHero;
     int damage;
@@ -60,7 +63,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Heal target" + target);
         currentHero = current;
         //xinghua code end
-        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
+        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize) + currentHero.flatHeal;
         Debug.Log("healValue" + healValue);
         // target.currentHealth += healValue;
         if (target.currentHealth + healValue > target.maxHealth)
@@ -69,7 +72,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            target.currentHealth = target.currentHealth + healValue;
+            target.currentHealth += healValue;
         }
 
        // target.currentHealth = Mathf.Min(target.currentHealth + healValue, target.maxHealth);
@@ -102,13 +105,11 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"target {targetHero.name}");
 
 
-        int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
+        int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize) + currentHero.flatAtk;
         RevealDice(atkDice, currentHero.atk);
 
-        int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
+        int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize) + targetHero.flatDef;
         RevealDice(defDice, targetHero.def);
-
-        //gen.ShowRoll(atkValue);
 
         if (atkValue > defValue)
         {
@@ -126,7 +127,7 @@ public class BattleManager : MonoBehaviour
         {
             damage = 0;
             //(atkValue = defValue)! Clash!
-            Clash(targetHero);
+            StartCoroutine(Clash(targetHero));
             Debug.Log($"Rolled {atkValue}atk against {defValue}def to Clash!!!");
 
         }
@@ -138,9 +139,17 @@ public class BattleManager : MonoBehaviour
             poweredUp = false;
         }
     }
+    private Coroutine hideDiceCoroutine;
     private void RevealDice(GameObject[] dice, int statValue)
     {
         StartCoroutine(HideDice(dice));
+        if (hideDiceCoroutine != null)
+        {
+            StopCoroutine(hideDiceCoroutine);
+        }
+
+        // Start the new HideDice coroutine
+        hideDiceCoroutine = StartCoroutine(HideDice(dice));
         for (int i = 0; i < dice.Length; i++)
         {
             if (i < statValue)
@@ -162,12 +171,17 @@ public class BattleManager : MonoBehaviour
         {
             item.SetActive(false);
         }
+        clashText.SetActive(false);
     }
-    void Clash(HeroData target)
+    private IEnumerator Clash(HeroData target)
     {
+        clashText.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+
         int clashAtkValue = diceroller.RollTotal(1, 6);
-        int clashDefValue = diceroller.RollTotal(1, 6);
         RevealDice(atkDice, currentHero.atk);
+
+        int clashDefValue = diceroller.RollTotal(1, 6);
         RevealDice(defDice, targetHero.def);
 
         if (clashAtkValue > clashDefValue)
@@ -188,7 +202,7 @@ public class BattleManager : MonoBehaviour
         {
             damage = 0;
             //(clashAtkValue = clashDefValue)! Clash!
-            Clash(target);
+            StartCoroutine(Clash(target));
             Debug.Log($"Rolled {clashAtkValue} Clash atk against {clashDefValue} Clash def to clash again!!!");
 
         }

@@ -34,7 +34,7 @@ public class VisualRollGen : MonoBehaviour
         randomSide = UnityEngine.Random.Range(0, sides.Length);
         sprite = sides[randomSide];
         spriteRen.sprite = sprite;
-        Debug.Log($"{randomSide + 1} rolled visual");
+        //Debug.Log($"{randomSide + 1} rolled visual");
     }
 
     private IEnumerator RollDelaySetResult(float tick, int result)
@@ -42,6 +42,6 @@ public class VisualRollGen : MonoBehaviour
         yield return new WaitForSeconds(tick);
         sprite = sides[result-1];
         spriteRen.sprite = sprite;
-        Debug.Log($"{result} rolled visual");
+        //Debug.Log($"{result} rolled visual");
     }
 }
