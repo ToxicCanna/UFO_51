@@ -2562,7 +2562,7 @@ MonoBehaviour:
   coinText: {fileID: 1514948384}
   battleBonusTextR: {fileID: 917760639}
   battleBonusTextB: {fileID: 979673659}
-  winPoint: 0
+  winPoint: 10
   winMenu: {fileID: 193893649}
   WinnerText: {fileID: 356866893}
   pauseMenu: {fileID: 995113705}
