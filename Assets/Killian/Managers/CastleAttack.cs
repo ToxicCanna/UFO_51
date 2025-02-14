@@ -45,6 +45,7 @@ public class CastleAttack : MonoBehaviour
         if (castle!= null)
         {
             castle.TakeDamage(damage);
+            AudioManager.Instance.Play("AttackCastle");
             HeroPocketManager.Instance.RemoveHero(heroData.side,gameObject); //xinghua note :before destroy any game object remove first or will error
             Destroy(gameObject);
             GameManager.Instance.UpdatePlayerTurn();

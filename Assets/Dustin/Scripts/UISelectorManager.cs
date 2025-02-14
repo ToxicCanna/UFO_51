@@ -45,10 +45,12 @@ public class UISelectorManager : MonoBehaviour
         if (direction.x > 0)
         {
             MoveSelector(1); // Move to the next button
+            AudioManager.Instance.Play("SelectorMove");
         }
         else if (direction.x < 0)
         {
             MoveSelector(-1); // Move to the previous button
+            AudioManager.Instance.Play("SelectorMove");
         }
         /* if (Input.GetKeyDown(KeyCode.RightArrow))
          {
