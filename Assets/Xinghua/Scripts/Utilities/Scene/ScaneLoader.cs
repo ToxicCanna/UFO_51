@@ -10,6 +10,7 @@ public class SceneLoader : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         StartCoroutine(ReinitializeAfterSceneLoad());
+        GameManager.Instance.GameInit();
     }
 
     private IEnumerator ReinitializeAfterSceneLoad()
