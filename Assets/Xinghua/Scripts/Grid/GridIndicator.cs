@@ -74,7 +74,11 @@ public class GridIndicator : MonoBehaviour
     }
 
 
-
+    public void PauseGame()
+    {
+        Debug.Log("Pause in gridindicator");
+        GameManager.Instance.HandlePauseGame();
+    }
 
     public bool IsWithinBounds(Vector2Int position)
     {
