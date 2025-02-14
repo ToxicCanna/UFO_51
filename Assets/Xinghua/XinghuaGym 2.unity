@@ -219,6 +219,23 @@ MonoBehaviour:
   - {fileID: 1972607170}
   - {fileID: 311960701}
   - {fileID: 571430699}
+  activeSprites:
+  - {fileID: -7961243765231346456, guid: f3e5b6ebe29467841a397cfa82a3d5ab, type: 3}
+  - {fileID: 2835589098734735643, guid: 31ee5542a5cefa148895935a1173faee, type: 3}
+  - {fileID: 1505781512566939406, guid: de61927bb4fdfcc4f88e3ab5cc9fec23, type: 3}
+  - {fileID: 158459382525207319, guid: 1394adf6dfdbf1f469905b39d873a8ad, type: 3}
+  - {fileID: -4716566367321326018, guid: dda20da9c412f2746bb699680d38ad0d, type: 3}
+  inactiveSprites:
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  - {fileID: -728980288, guid: 3b180b1274dd2d54a86ec797e21b69a0, type: 3}
+  activeShopSprites: []
+  inactiveShopSprites: []
   selector: {fileID: 260385017}
   gameStateMachine: {fileID: 1978772880}
   spawnHero: {fileID: 394367767}

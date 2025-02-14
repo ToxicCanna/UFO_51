@@ -9,6 +9,13 @@ public class UINavManager : MonoBehaviour
     public static UINavManager Instance;
     public Button[] buttons;
     public Button[] buttonsHeroActions;
+
+    public List<Sprite> activeSprites;   
+    public List<Sprite> inactiveSprites;
+
+    public List<Sprite> activeShopSprites;
+    public List<Sprite> inactiveShopSprites;
+
     public RectTransform selector; // Assign the selector GameObject
 
     private int shopIndex = 0;
@@ -48,10 +55,7 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
-    private void Update()
-    {
-        UpdateShopButtons();
-    }
+
 
     public void UpdateHeroActions(HeroPath heroPath)
     {
@@ -63,42 +67,50 @@ public class UINavManager : MonoBehaviour
             Debug.LogWarning($"Hero type {heroType} not found in action mapping.");
             return;
         }
-        Debug.Log("availableActions" + availableActions.Count);
-        for (int i = 0; i < buttonsHeroActions.Length; i++)
-        {
-            buttonsHeroActions[i].gameObject.SetActive(true);
-            buttonsHeroActions[i].interactable = false;
-            SetButtonColor(buttonsHeroActions[i], false);
-        }
 
+        Debug.Log("availableActions count: " + availableActions.Count);
 
         for (int i = 0; i < buttonsHeroActions.Length; i++)
         {
             string actionName = buttonsHeroActions[i].name;
+            bool isActive = availableActions.Contains(actionName);
 
-            if (availableActions.Contains(actionName))
+            buttonsHeroActions[i].gameObject.SetActive(true);
+            buttonsHeroActions[i].interactable = isActive;
+
+            if (i < activeSprites.Count && i < inactiveSprites.Count)
             {
-                buttonsHeroActions[i].interactable = true;
-                SetButtonColor(buttonsHeroActions[i], true);
-            }
-            else
-            {
-                buttonsHeroActions[i].interactable = false;
-                SetButtonColor(buttonsHeroActions[i], false);
+                SetButtonSprite(buttonsHeroActions[i], isActive, activeSprites[i], inactiveSprites[i]);
             }
         }
-
     }
-    private void SetButtonColor(Button button, bool isActive)
-    {
-        Color targetColor = isActive ? Color.white : Color.gray;
 
-        Image buttonImage = button.GetComponent<Image>();
+    /* private void SetButtonColor(Button button, bool isActive)
+     {
+         Color targetColor = isActive ? Color.white : Color.gray;
+
+         Image buttonImage = button.GetComponent<Image>();
+         if (buttonImage != null)
+         {
+             buttonImage.color = targetColor;
+         }
+     }*/
+    private void SetButtonSprite(Button button, bool isActive, Sprite activeSprite, Sprite inactiveSprite)
+    {
+        if (button == null) return;
+
+        Image buttonImage = button.GetComponentInChildren<Image>(); 
         if (buttonImage != null)
         {
-            buttonImage.color = targetColor;
+            buttonImage.sprite = isActive ? activeSprite : inactiveSprite;
+            Debug.Log($"Setting sprite for {button.name}: {(isActive ? "Active" : "Inactive")}");
+        }
+        else
+        {
+            Debug.LogWarning($"No Image component found for button {button.name}");
         }
     }
+
 
 
     private IEnumerator FixSelectorPosition()
@@ -217,6 +229,7 @@ public class UINavManager : MonoBehaviour
 
     public void HandleActionsSelection()
     {
+
         Button selectedButton = buttonsHeroActions[actionIndex];
         if (!selectedButton.interactable)
         {
@@ -327,7 +340,8 @@ public class UINavManager : MonoBehaviour
                 }
 
                 buttons[i].interactable = canAfford;
-                SetButtonColor(buttons[i], canAfford);
+               // SetButtonColor(buttons[i], canAfford);
+                SetButtonSprite(buttonsHeroActions[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
             }
             else
             {
