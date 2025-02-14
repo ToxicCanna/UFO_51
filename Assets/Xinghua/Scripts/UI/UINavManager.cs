@@ -151,7 +151,7 @@ public class UINavManager : MonoBehaviour
         Debug.Log($"After move: currentIndex = {shopIndex}");
         UpdateSelectorPositionShop();
 
-        AudioManager.Instance.Play("SelectorMove");
+        AudioManager.Instance.Play("Select");
     }
 
     public void MoveSelectorWithHeroActions(int direction)
@@ -161,8 +161,8 @@ public class UINavManager : MonoBehaviour
         actionIndex = (actionIndex + direction + buttonsHeroActions.Length) % buttonsHeroActions.Length; // Wrap around
         UpdateSelectorPositionAction();
 
-        // Play the selection sound
-        AudioManager.Instance.Play("SelectorMove");
+        // Play the select sound
+        AudioManager.Instance.Play("Select");
     }
     public void InitSelectorPositionInHeroActionsZone()
     {
@@ -235,6 +235,8 @@ public class UINavManager : MonoBehaviour
             Debug.Log("Cannot select this action, button is disabled.");
             return;
         }
+
+        AudioManager.Instance.Play("Selected");
 
         string firstTwoLetters = buttonsHeroActions[actionIndex].name.Substring(0, 2);
         selectedButtonName = firstTwoLetters;
@@ -376,6 +378,8 @@ public class UINavManager : MonoBehaviour
             //UpdateShopButtons();
 
         }
+
+        AudioManager.Instance.Play("Selected");
 
         SwithToGamePlayState();
     }

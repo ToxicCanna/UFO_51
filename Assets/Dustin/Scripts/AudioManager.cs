@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play a sound by name
-    public void Play(string soundName)
+    public void Play(string soundName, bool loop = false)
     {
         Sound s = System.Array.Find(sounds, sound => sound.name == soundName);
         if (s == null)
@@ -53,8 +53,10 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("Sound: " + soundName + " not found!");
             return;
         }
-        Debug.Log("Playing sound: " + soundName);
+
+        s.source.loop = loop; // Allow looping to be controlled at runtime
         s.source.Play();
+        Debug.Log("Playing sound: " + soundName + " | Looping: " + loop);
     }
 
     // Stop a sound by name

@@ -398,6 +398,7 @@ public class GridIndicator : MonoBehaviour
         Debug.Log("give damage");
         if (targetHero != null)
         {
+            AudioManager.Instance.Play("Damaged");
             battleManager.targetHero = targetHero.GetComponent<HeroData>();
         }
         yield return new WaitForSeconds(1);
@@ -405,7 +406,10 @@ public class GridIndicator : MonoBehaviour
         battleManager.Attack();
         if (targetHero != null && submitHeroData != null)
         {
+            AudioManager.Instance.Play(submitHeroData.heroData.heroType == "Archer" ? "Archer_Atk" : "Melee_Atk"); // Play attack sound
+            
             Animator animatorSelected = submitHeroData.gameObject.GetComponent<Animator>();
+
             if (isAutoAttack)
             {
 
@@ -759,6 +763,8 @@ public class GridIndicator : MonoBehaviour
                 if(damagedHero.Count ==1 && hasHealed == false)
                 {
                     healHero?.Invoke(damagedHero[0].GetComponent<HeroData>(),submitHeroData);
+
+                    AudioManager.Instance.Play("Heal");
                 }
 
             }
