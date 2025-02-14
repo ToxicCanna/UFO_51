@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e488d404-3d45-47f8-8fd0-0aab25899e4b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +179,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2972c97e-f4df-4831-99b3-b8467849d578"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -337,6 +357,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_GamePlay_Submit = m_GamePlay.FindAction("Submit", throwIfNotFound: true);
         m_GamePlay_Shop = m_GamePlay.FindAction("Shop", throwIfNotFound: true);
         m_GamePlay_Cancle = m_GamePlay.FindAction("Cancle", throwIfNotFound: true);
+        m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -416,6 +437,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Submit;
     private readonly InputAction m_GamePlay_Shop;
     private readonly InputAction m_GamePlay_Cancle;
+    private readonly InputAction m_GamePlay_Pause;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -425,6 +447,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Submit => m_Wrapper.m_GamePlay_Submit;
         public InputAction @Shop => m_Wrapper.m_GamePlay_Shop;
         public InputAction @Cancle => m_Wrapper.m_GamePlay_Cancle;
+        public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -449,6 +472,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Cancle.started += instance.OnCancle;
             @Cancle.performed += instance.OnCancle;
             @Cancle.canceled += instance.OnCancle;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -468,6 +494,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Cancle.started -= instance.OnCancle;
             @Cancle.performed -= instance.OnCancle;
             @Cancle.canceled -= instance.OnCancle;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -570,6 +599,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSubmit(InputAction.CallbackContext context);
         void OnShop(InputAction.CallbackContext context);
         void OnCancle(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

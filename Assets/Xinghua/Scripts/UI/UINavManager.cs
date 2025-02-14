@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UINavManager : MonoBehaviour
 {
     public static UINavManager Instance;
-    public Button[] buttons;
+    public Button[] buttons;//those buttons for hero shop
     public Button[] buttonsHeroActions;
+
+    public List<Sprite> activeSprites;
+    public List<Sprite> inactiveSprites;
+
+    public List<Sprite> activeShopSprites;
+    public List<Sprite> inactiveShopSprites;
+
     public RectTransform selector; // Assign the selector GameObject
 
     private int shopIndex = 0;
@@ -48,11 +54,12 @@ public class UINavManager : MonoBehaviour
         }
         Instance = this;
     }
-    private void Update()
+
+
+    private void FixedUpdate()
     {
         UpdateShopButtons();
     }
-
     public void UpdateHeroActions(HeroPath heroPath)
     {
         if (heroPath == null) return;
@@ -63,42 +70,41 @@ public class UINavManager : MonoBehaviour
             Debug.LogWarning($"Hero type {heroType} not found in action mapping.");
             return;
         }
-        Debug.Log("availableActions" + availableActions.Count);
-        for (int i = 0; i < buttonsHeroActions.Length; i++)
-        {
-            buttonsHeroActions[i].gameObject.SetActive(true);
-            buttonsHeroActions[i].interactable = false;
-            SetButtonColor(buttonsHeroActions[i], false);
-        }
 
+        Debug.Log("availableActions count: " + availableActions.Count);
 
         for (int i = 0; i < buttonsHeroActions.Length; i++)
         {
             string actionName = buttonsHeroActions[i].name;
+            bool isActive = availableActions.Contains(actionName);
 
-            if (availableActions.Contains(actionName))
+            buttonsHeroActions[i].gameObject.SetActive(true);
+            buttonsHeroActions[i].interactable = isActive;
+
+            if (i < activeSprites.Count && i < inactiveSprites.Count)
             {
-                buttonsHeroActions[i].interactable = true;
-                SetButtonColor(buttonsHeroActions[i], true);
-            }
-            else
-            {
-                buttonsHeroActions[i].interactable = false;
-                SetButtonColor(buttonsHeroActions[i], false);
+                SetButtonSprite(buttonsHeroActions[i], isActive, activeSprites[i], inactiveSprites[i]);
             }
         }
-
     }
-    private void SetButtonColor(Button button, bool isActive)
-    {
-        Color targetColor = isActive ? Color.white : Color.gray;
 
-        Image buttonImage = button.GetComponent<Image>();
+
+    private void SetButtonSprite(Button button, bool isActive, Sprite activeSprite, Sprite inactiveSprite)
+    {
+        if (button == null) return;
+
+        Image buttonImage = button.GetComponentInChildren<Image>();
         if (buttonImage != null)
         {
-            buttonImage.color = targetColor;
+            buttonImage.sprite = isActive ? activeSprite : inactiveSprite;
+            Debug.Log($"Setting sprite for {button.name}: {(isActive ? "Active" : "Inactive")}");
+        }
+        else
+        {
+            Debug.LogWarning($"No Image component found for button {button.name}");
         }
     }
+
 
 
     private IEnumerator FixSelectorPosition()
@@ -109,8 +115,8 @@ public class UINavManager : MonoBehaviour
 
     private void Start()
     {
-       
 
+        UpdateShopButtons();
         if (buttons.Length == 0)
         {
             Debug.LogWarning("[UISelector] No buttons assigned!");
@@ -125,10 +131,10 @@ public class UINavManager : MonoBehaviour
 
         //UpdateSelectorPosition(); // Position the selector on the first button
         StartCoroutine(FixSelectorPosition());
-        //StartCoroutine(UpdateShopButtons());
+        UpdateShopButtons();
     }
 
-  
+
 
     public void HandleNavigationInActionsZone(Vector2 direction)
     {
@@ -141,7 +147,7 @@ public class UINavManager : MonoBehaviour
         if (buttons.Length == 0) return;
         Debug.Log("buttons.Length" + buttons.Length);
 
-        shopIndex = (shopIndex +(int) direction.x + buttons.Length) % buttons.Length; // Wrap around
+        shopIndex = (shopIndex + (int)direction.x + buttons.Length) % buttons.Length; // Wrap around
         Debug.Log($"After move: currentIndex = {shopIndex}");
         UpdateSelectorPositionShop();
 
@@ -222,6 +228,7 @@ public class UINavManager : MonoBehaviour
 
     public void HandleActionsSelection()
     {
+
         Button selectedButton = buttonsHeroActions[actionIndex];
         if (!selectedButton.interactable)
         {
@@ -289,7 +296,7 @@ public class UINavManager : MonoBehaviour
             GameManager.Instance.DisplayErrorText("Not enough coins to purchase");
             return false;
         }
-       
+
 
         if (GridManager.Instance.IsSpawnOccupied())//spawn location was occupied
         {
@@ -303,8 +310,8 @@ public class UINavManager : MonoBehaviour
     public void UpdateShopButtons()
     {
         int playerCoin = GameManager.Instance.GetCurrentTurnCoin();
-      
 
+        Debug.Log("UpdateShopButtons" + playerCoin);
         for (int i = 0; i < buttons.Length; i++)
         {
             string heroName = buttons[i].name;
@@ -332,25 +339,31 @@ public class UINavManager : MonoBehaviour
                 }
 
                 buttons[i].interactable = canAfford;
-                SetButtonColor(buttons[i], canAfford);
+
+
+                if (i < activeShopSprites.Count && i < inactiveShopSprites.Count)
+                {
+                    SetButtonSprite(buttons[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
+                }
             }
             else
             {
                 Debug.LogWarning($"Hero {heroName} not found in cost mapping.");
             }
         }
-    
+
     }
 
     public void HandleHeroShopSelection()
     {
+
         var button = buttons[shopIndex];
 
         buttons[shopIndex].onClick.Invoke();
 
         if (!button.interactable)
         {
-     
+
             GameManager.Instance.DisplayErrorText("Cannot select disabled button");
             return;
         }
@@ -360,7 +373,8 @@ public class UINavManager : MonoBehaviour
         {
 
             spawnHero.SpawnNew(button.name, cost);
-  
+            //UpdateShopButtons();
+
         }
 
         SwithToGamePlayState();

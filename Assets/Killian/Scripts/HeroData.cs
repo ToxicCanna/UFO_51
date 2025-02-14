@@ -9,9 +9,9 @@ public class HeroData : MonoBehaviour
 
     public Sprite mySprite;
 
-    public int maxHealth, currentHealth, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
+    public int maxHealth, currentHealth, cost, atk, atkSize, flatAtk, def, defSize, flatDef, heal, healSize, flatHeal, moveSpeed, range, ability;
     private string abilityScore;
-    private TwoSidesHero twoSidesHero;
+    //private TwoSidesHero twoSidesHero;
 
     [SerializeField] private Image _HPBar;
     [SerializeField] private Gradient _gradient;
@@ -33,7 +33,7 @@ public class HeroData : MonoBehaviour
 
     void Start()
     {
-        twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
+        //twoSidesHero = FindFirstObjectByType<TwoSidesHero>();
         SetStats();
     }
 
@@ -45,10 +45,13 @@ public class HeroData : MonoBehaviour
         cost = heroData.cost;
         atk = heroData.atk;
         atkSize = heroData.atkSize;
+        flatAtk = heroData.flatAtk;
         def = heroData.def;
-        defSize = heroData.defSize;           
+        defSize = heroData.defSize;
+        flatDef = heroData.flatDef;
         heal = heroData.heal;
         healSize = heroData.healSize;
+        flatHeal = heroData.flatHeal;
         moveSpeed = heroData.moveSpeed;            
         range = heroData.range;
         ability = heroData.ability;
@@ -59,9 +62,18 @@ public class HeroData : MonoBehaviour
         side = heroData.side;
         //end
     }
-
+    //xinghua add
+    public void UpdateHealthWithHealValue(int amount)
+    {
+        Debug.Log("UpdateHealth" + amount);
+        Debug.Log("UpdateHealth max" + maxHealth);
+        _target = ((float)currentHealth / (float)maxHealth);
+        _HPBar.fillAmount = _target;
+    }
+  
     public void UpdateHealth(int amount)
     {
+       
         currentHealth -= Mathf.Clamp(amount, 0, maxHealth);
         _target = ((float)currentHealth / (float)maxHealth);
         Debug.Log($"{_target} hb fill");

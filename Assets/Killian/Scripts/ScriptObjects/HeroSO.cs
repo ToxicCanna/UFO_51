@@ -4,7 +4,7 @@ using UnityEngine;
 public class HeroSO : ScriptableObject
 {
     public Sprite sprite;
-    public int health, cost, atk, atkSize, def, defSize, heal, healSize, moveSpeed, range, ability;
+    public int health, cost, atk, atkSize, flatAtk, def, defSize, flatDef, heal, healSize, flatHeal, moveSpeed, range, ability;
     public string abilityScore;
     //public HeroSO Upgrade;
     public string side;//xinghua add

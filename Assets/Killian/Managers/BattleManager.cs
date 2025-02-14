@@ -1,32 +1,38 @@
-using Unity.Collections.LowLevel.Unsafe;
+using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private DiceRoller diceroller;
-    [SerializeField] private VisualRollGen gen;
+    [SerializeField] private GameObject clashText;
+    [SerializeField] private GameObject[] redDice;
+    [SerializeField] private GameObject[] blueDice;
+
+
     public HeroData currentHero;
     public HeroData targetHero;
     int damage;
     int clashDamage;
     bool poweredUp;
     bool ability = false;
-
+    private GameObject[] atkDice;
+    private GameObject[] defDice;
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.O))
-        //{
-        //    Attack();
-        //}
+        atkDice = (currentHero.side == "Red") ? redDice : blueDice;
+        defDice = (currentHero.side == "Red") ? blueDice : redDice;
     }
     //xinghua code start
     private void OnEnable()
     {
         Debug.Log("BattleManager Enabled");
 
-        var healManager =FindAnyObjectByType<GridIndicator>();
+        var healManager = FindAnyObjectByType<GridIndicator>();
         if (healManager != null)
         {
+            healManager.healHero -= Heal;
             healManager.healHero += Heal;
         }
         else
@@ -45,9 +51,9 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    public void Heal(HeroData target,HeroData current)
+    public void Heal(HeroData target, HeroData current)
     {
-       
+
         if (target == null)
         {
             Debug.LogError("Heal called with null target!");
@@ -57,15 +63,25 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Heal target" + target);
         currentHero = current;
         //xinghua code end
-        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize);
+        int healValue = diceroller.RollTotal(currentHero.heal, currentHero.healSize) + currentHero.flatHeal;
         Debug.Log("healValue" + healValue);
-        target.currentHealth += healValue;
-        targetHero.UpdateHealth(target.currentHealth);//xinghua add this
+        // target.currentHealth += healValue;
+        if (target.currentHealth + healValue > target.maxHealth)
+        {
+            target.currentHealth = target.maxHealth;
+        }
+        else
+        {
+            target.currentHealth += healValue;
+        }
+
+       // target.currentHealth = Mathf.Min(target.currentHealth + healValue, target.maxHealth);
+        targetHero.UpdateHealthWithHealValue(target.currentHealth);//xinghua add this;
     }
 
     public void Attack()
     {
-        if(currentHero == null || targetHero == null)
+        if (currentHero == null || targetHero == null)
         {
             if (currentHero == null)
             {
@@ -89,10 +105,11 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"target {targetHero.name}");
 
 
-        int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
-        int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
+        int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize) + currentHero.flatAtk;
+        RevealDice(atkDice, currentHero.atk);
 
-        //gen.ShowRoll(atkValue);
+        int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize) + targetHero.flatDef;
+        RevealDice(defDice, targetHero.def);
 
         if (atkValue > defValue)
         {
@@ -110,7 +127,7 @@ public class BattleManager : MonoBehaviour
         {
             damage = 0;
             //(atkValue = defValue)! Clash!
-            Clash(targetHero);
+            StartCoroutine(Clash(targetHero));
             Debug.Log($"Rolled {atkValue}atk against {defValue}def to Clash!!!");
 
         }
@@ -121,12 +138,51 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"{currentHero.atk}");
             poweredUp = false;
         }
-        //start next turn
     }
-    void Clash(HeroData target)
+    private Coroutine hideDiceCoroutine;
+    private void RevealDice(GameObject[] dice, int statValue)
     {
+        StartCoroutine(HideDice(dice));
+        if (hideDiceCoroutine != null)
+        {
+            StopCoroutine(hideDiceCoroutine);
+        }
+
+        // Start the new HideDice coroutine
+        hideDiceCoroutine = StartCoroutine(HideDice(dice));
+        for (int i = 0; i < dice.Length; i++)
+        {
+            if (i < statValue)
+            {
+                dice[i].SetActive(true);
+                int rollResult = diceroller.rolls[i];
+                dice[i].GetComponent<VisualRollGen>().ShowRoll(rollResult);
+            }
+            else
+            {
+                dice[i].SetActive(false);
+            }
+        }
+    }
+    private IEnumerator HideDice(GameObject[] dice)
+    {
+        yield return new WaitForSeconds(5f);
+        foreach (var item in dice)
+        {
+            item.SetActive(false);
+        }
+        clashText.SetActive(false);
+    }
+    private IEnumerator Clash(HeroData target)
+    {
+        clashText.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+
         int clashAtkValue = diceroller.RollTotal(1, 6);
+        RevealDice(atkDice, currentHero.atk);
+
         int clashDefValue = diceroller.RollTotal(1, 6);
+        RevealDice(defDice, targetHero.def);
 
         if (clashAtkValue > clashDefValue)
         {
@@ -146,7 +202,7 @@ public class BattleManager : MonoBehaviour
         {
             damage = 0;
             //(clashAtkValue = clashDefValue)! Clash!
-            Clash(target);
+            StartCoroutine(Clash(target));
             Debug.Log($"Rolled {clashAtkValue} Clash atk against {clashDefValue} Clash def to clash again!!!");
 
         }
