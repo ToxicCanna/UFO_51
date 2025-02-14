@@ -22,7 +22,7 @@ public class VisualRollGen : MonoBehaviour
             }
             else if (i == 6)
             {
-                coroutine = RollDelaySetsResult((i + 1) * 0.25f, result);
+                coroutine = RollDelaySetResult((i + 1) * 0.25f, result);
                 StartCoroutine(coroutine);
             }
         }
@@ -31,13 +31,13 @@ public class VisualRollGen : MonoBehaviour
     private IEnumerator RollDelay(float tick)
     {
         yield return new WaitForSeconds(tick);
-                randomSide = UnityEngine.Random.Range(0, sides.Length);
+        randomSide = UnityEngine.Random.Range(0, sides.Length);
         sprite = sides[randomSide];
         spriteRen.sprite = sprite;
         Debug.Log($"{randomSide + 1} rolled visual");
     }
 
-    private IEnumerator RollDelaySetsResult(float tick, int result)
+    private IEnumerator RollDelaySetResult(float tick, int result)
     {
         yield return new WaitForSeconds(tick);
         sprite = sides[result-1];

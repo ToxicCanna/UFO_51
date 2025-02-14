@@ -4,7 +4,8 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private DiceRoller diceroller;
-    [SerializeField] private VisualRollGen gen;
+    [SerializeField] private GameObject[] redDice;
+    [SerializeField] private GameObject[] blueDice;
     public HeroData currentHero;
     public HeroData targetHero;
     int damage;
@@ -24,7 +25,7 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("BattleManager Enabled");
 
-        var healManager =FindAnyObjectByType<GridIndicator>();
+        var healManager = FindAnyObjectByType<GridIndicator>();
         if (healManager != null)
         {
             healManager.healHero += Heal;
@@ -45,9 +46,9 @@ public class BattleManager : MonoBehaviour
     }
 
 
-    public void Heal(HeroData target,HeroData current)
+    public void Heal(HeroData target, HeroData current)
     {
-       
+
         if (target == null)
         {
             Debug.LogError("Heal called with null target!");
@@ -65,7 +66,9 @@ public class BattleManager : MonoBehaviour
 
     public void Attack()
     {
-        if(currentHero == null || targetHero == null)
+        GameObject[] atkDice = (currentHero.side == "Red") ? redDice : blueDice;
+        GameObject[] defDice = (currentHero.side == "Red") ? blueDice : redDice;
+        if (currentHero == null || targetHero == null)
         {
             if (currentHero == null)
             {
@@ -90,7 +93,9 @@ public class BattleManager : MonoBehaviour
 
 
         int atkValue = diceroller.RollTotal(currentHero.atk, currentHero.atkSize);
+        RevealDice(atkDice, currentHero.atk);
         int defValue = diceroller.RollTotal(targetHero.def, targetHero.defSize);
+        RevealDice(defDice, targetHero.def);
 
         //gen.ShowRoll(atkValue);
 
@@ -121,7 +126,22 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"{currentHero.atk}");
             poweredUp = false;
         }
-        //start next turn
+    }
+    private void RevealDice(GameObject[] dice, int statValue)
+    {
+        for (int i = 0; i < dice.Length; i++)
+        {
+            if (i < statValue)
+            {
+                dice[i].SetActive(true);
+                int rollResult = diceroller.RollTotal(1, currentHero.atkSize);
+                dice[i].GetComponent<VisualRollGen>().ShowRoll(rollResult);
+            }
+            else
+            {
+                dice[i].SetActive(false);
+            }
+        }
     }
     void Clash(HeroData target)
     {
