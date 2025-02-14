@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         Debug.Log(side+"Player " + "win");
         winMenu.gameObject.SetActive(true);
-        WinnerText.text = currentTurn.ToString() +"Win";
+        WinnerText.text = side + " Player Wins";
     }
 
 
