@@ -340,8 +340,8 @@ public class UINavManager : MonoBehaviour
                 }
 
                 buttons[i].interactable = canAfford;
-               // SetButtonColor(buttons[i], canAfford);
-                SetButtonSprite(buttonsHeroActions[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
+                //SetButtonColor(buttons[i], canAfford);
+                //SetButtonSprite(buttonsHeroActions[i], canAfford, activeShopSprites[i], inactiveShopSprites[i]);
             }
             else
             {
